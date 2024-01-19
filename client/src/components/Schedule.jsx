@@ -1,7 +1,3 @@
-import { Link } from "react-router-dom";
-
-import Auth from "../utils/auth";
-
 const Schedule = () => {
   return (
     <div className="schedule-container-jg">
@@ -10,7 +6,7 @@ const Schedule = () => {
         const minutes = index % 2 === 0 ? "00" : "30";
         const time = `${hour}:${minutes}`;
         return (
-          <div id={(index + "-block-jg")} className="schedule-block-jg">
+          <div key={index} id={(index + "-block-jg")} className="schedule-block-jg">
             {time}
           </div>
         );

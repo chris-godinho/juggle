@@ -6,38 +6,69 @@ export const QUERY_USER = gql`
       _id
       username
       email
-      thoughts {
+      firstName
+      middleName
+      lastName
+      colorModeSetting
+      eventSubtypes {
+        subtype
+        category
+      }
+      events {
         _id
-        thoughtText
-        createdAt
+        user
+        title
+        type
+        subtype
+        details
+        startDate
+        startTime
+        endDate
+        endTime
+        location
+        links
+        files
       }
     }
   }
 `;
 
-export const QUERY_THOUGHTS = gql`
-  query getThoughts {
-    thoughts {
+export const QUERY_EVENTS = gql`
+  query getEvents($username: String) {
+    events(username: $username) {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
+      user
+      title
+      type
+      subtype
+      details
+      startDate
+      startTime
+      endDate
+      endTime
+      location
+      links
+      files
     }
   }
 `;
 
-export const QUERY_SINGLE_THOUGHT = gql`
-  query getSingleThought($thoughtId: ID!) {
-    thought(thoughtId: $thoughtId) {
+export const QUERY_SINGLE_EVENT = gql`
+  query getSingleEvent($eventId: ID!) {
+    event(eventId: $eventId) {
       _id
-      thoughtText
-      thoughtAuthor
-      createdAt
-      comments {
-        _id
-        commentText
-        createdAt
-      }
+      user
+      title
+      type
+      subtype
+      details
+      startDate
+      startTime
+      endDate
+      endTime
+      location
+      links
+      files
     }
   }
 `;

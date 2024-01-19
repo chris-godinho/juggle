@@ -4,22 +4,27 @@ const typeDefs = `
     username: String
     email: String
     password: String
-    thoughts: [Thought]!
+    firstName: String
+    middleName: String
+    lastName: String
+    colorModeSetting: String
+    events: [Event]!
   }
 
-  type Thought {
+  type Event {
     _id: ID
-    thoughtText: String
-    thoughtAuthor: String
-    createdAt: String
-    comments: [Comment]!
-  }
-
-  type Comment {
-    _id: ID
-    commentText: String
-    commentAuthor: String
-    createdAt: String
+    user: ID
+    title: String
+    type: String
+    subtype: String
+    details: String
+    startDate: String
+    startTime: String
+    endDate: String
+    endTime: String
+    location: String
+    links: [String]
+    files: [String]
   }
 
   type Auth {
@@ -30,21 +35,15 @@ const typeDefs = `
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+    events(username: String): [Event]
+    event(eventtId: ID!): Event
   }
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!, firstName: String!, middleName: String, lastName: String): Auth
     login(username: String!, password: String!): Auth
-    addThought(thoughtText: String!, thoughtAuthor: String!): Thought
-    addComment(
-      thoughtId: ID!
-      commentText: String!
-      commentAuthor: String!
-    ): Thought
-    removeThought(thoughtId: ID!): Thought
-    removeComment(thoughtId: ID!, commentId: ID!): Thought
+    addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, startDate: String, startTime: String, endDate: String, endTime: String, location: String, links: [String], files: [String]): Event
+    removeEvent(eventId: ID!): Event
   }
 `;
 

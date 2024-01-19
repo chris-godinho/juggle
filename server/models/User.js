@@ -14,13 +14,13 @@ const userSchema = new Schema({
     type: String,
     required: true,
     unique: true,
-    match: [/.+@.+\..+/, 'Must match an email address!'],
+    match: [/.+@.+\..+/, 'Must match an email address.'],
   },
   password: {
     type: String,
     required: true,
     minlength: 8,
-    match: [/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d])/, 'Must contain at least one letter, one number, and one special character!'],
+    match: [/^(?=.*[a-zA-Z])(?=.*\d)(?=.*[^a-zA-Z\d])/, 'Must contain at least one letter, one number, and one special character.'],
   },
   firstName: {
     type: String,
@@ -32,6 +32,39 @@ const userSchema = new Schema({
   lastName: {
     type: String,
   },
+  colorModeSetting: {
+    type: String,
+    default: "default-mode-jg",
+  },
+  eventSubtypes: {
+    type: [
+      {
+        subtype: String,
+        category: {
+          type: String,
+          enum: ['life', 'work'],
+        },
+      },
+    ],
+    default: [
+      { subtype: 'Family', category: 'life' },
+      { subtype: 'Health', category: 'life' },
+      { subtype: 'Fitness', category: 'life' },
+      { subtype: 'Financial', category: 'life' },
+      { subtype: 'Leisure', category: 'life' },
+      { subtype: 'Shift', category: 'work' },
+      { subtype: 'Meeting', category: 'work' },
+      { subtype: 'Project', category: 'work' },
+      { subtype: 'Networking', category: 'work' },
+      { subtype: 'Education', category: 'work' },
+    ],
+  },
+  events: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Event',
+    },
+  ],
 });
 
 userSchema.pre('save', async function (next) {

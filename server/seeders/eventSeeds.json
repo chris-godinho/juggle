@@ -1,0 +1,182 @@
+[
+  {
+    "title": "Get milk",
+    "description": "Make sure it's cow's 2% milk",
+    "startDate": "01/19/2024",
+    "startTime": "4:00 PM",
+    "endDate": "01/19/2024",
+    "endTime": "5:00 PM",
+    "location": "Loblaws"
+  },
+  {
+    "title": "Meeting with Client",
+    "description": "Discuss project requirements",
+    "startDate": "01/20/2024",
+    "startTime": "10:00 AM",
+    "endDate": "01/20/2024",
+    "endTime": "11:00 AM",
+    "location": "Office"
+  },
+  {
+    "title": "Gym Session",
+    "description": "Work on strength training",
+    "startDate": "01/21/2024",
+    "startTime": "6:30 PM",
+    "endDate": "01/21/2024",
+    "endTime": "7:30 PM",
+    "location": "Local Gym"
+  },
+  {
+    "title": "Dinner with Friends",
+    "description": "Try out the new restaurant",
+    "startDate": "01/22/2024",
+    "startTime": "8:00 PM",
+    "endDate": "01/22/2024",
+    "endTime": "10:00 PM",
+    "location": "New Bistro"
+  },
+  {
+    "title": "Read a Book",
+    "description": "Relax and unwind",
+    "startDate": "01/23/2024",
+    "startTime": "3:00 PM",
+    "endDate": "01/23/2024",
+    "endTime": "4:30 PM",
+    "location": "Home"
+  },
+  {
+    "title": "Coding Practice",
+    "description": "Work on coding challenges",
+    "startDate": "01/24/2024",
+    "startTime": "2:00 PM",
+    "endDate": "01/24/2024",
+    "endTime": "4:00 PM",
+    "location": "Co-Working Space"
+  },
+  {
+    "title": "Visit Art Gallery",
+    "description": "Explore new exhibits",
+    "startDate": "01/25/2024",
+    "startTime": "11:00 AM",
+    "endDate": "01/25/2024",
+    "endTime": "1:00 PM",
+    "location": "City Art Gallery"
+  },
+  {
+    "title": "Hiking Trip",
+    "description": "Enjoy nature and scenic views",
+    "startDate": "01/26/2024",
+    "startTime": "9:00 AM",
+    "endDate": "01/26/2024",
+    "endTime": "3:00 PM",
+    "location": "Mountain Trail"
+  },
+  {
+    "title": "Write Blog Post",
+    "description": "Share insights on technology",
+    "startDate": "01/27/2024",
+    "startTime": "1:00 PM",
+    "endDate": "01/27/2024",
+    "endTime": "3:00 PM",
+    "location": "Home Office"
+  },
+  {
+    "title": "Cooking Class",
+    "description": "Learn new recipes",
+    "startDate": "01/28/2024",
+    "startTime": "6:00 PM",
+    "endDate": "01/28/2024",
+    "endTime": "8:00 PM",
+    "location": "Culinary School"
+  },
+  {
+    "title": "Family Movie Night",
+    "description": "Watch a favorite family movie",
+    "startDate": "01/29/2024",
+    "startTime": "7:30 PM",
+    "endDate": "01/29/2024",
+    "endTime": "10:00 PM",
+    "location": "Home"
+  },
+  {
+    "title": "Grocery Shopping",
+    "description": "Restock essentials",
+    "startDate": "01/19/2024",
+    "startTime": "11:00 AM",
+    "endDate": "01/19/2024",
+    "endTime": "12:00 PM",
+    "location": "Supermarket"
+  },
+  {
+    "title": "Yoga Class",
+    "description": "Practice mindfulness",
+    "startDate": "01/20/2024",
+    "startTime": "6:00 AM",
+    "endDate": "01/20/2024",
+    "endTime": "7:00 AM",
+    "location": "Yoga Studio"
+  },
+  {
+    "title": "Game Night with Friends",
+    "description": "Play board games and have fun",
+    "startDate": "01/21/2024",
+    "startTime": "7:00 PM",
+    "endDate": "01/21/2024",
+    "endTime": "10:00 PM",
+    "location": "Friend's House"
+  },
+  {
+    "title": "Visit Farmer's Market",
+    "description": "Explore fresh produce",
+    "startDate": "01/22/2024",
+    "startTime": "9:30 AM",
+    "endDate": "01/22/2024",
+    "endTime": "11:00 AM",
+    "location": "Local Market"
+  },
+  {
+    "title": "Online Course",
+    "description": "Attend a web development course",
+    "startDate": "01/23/2024",
+    "startTime": "2:00 PM",
+    "endDate": "01/23/2024",
+    "endTime": "4:00 PM",
+    "location": "Virtual Classroom"
+  },
+  {
+    "title": "Volunteer at Animal Shelter",
+    "description": "Spend time with animals in need",
+    "startDate": "01/24/2024",
+    "startTime": "1:00 PM",
+    "endDate": "01/24/2024",
+    "endTime": "3:00 PM",
+    "location": "Shelter"
+  },
+  {
+    "title": "Weekend Picnic",
+    "description": "Enjoy a picnic in the park",
+    "startDate": "01/25/2024",
+    "startTime": "12:00 PM",
+    "endDate": "01/25/2024",
+    "endTime": "2:00 PM",
+    "location": "City Park"
+  },
+  {
+    "title": "Book Club Meeting",
+    "description": "Discuss the latest book",
+    "startDate": "01/26/2024",
+    "startTime": "8:00 PM",
+    "endDate": "01/26/2024",
+    "endTime": "9:30 PM",
+    "location": "Library"
+  },
+  {
+    "title": "Home DIY Project",
+    "description": "Work on a creative home project",
+    "startDate": "01/27/2024",
+    "startTime": "3:30 PM",
+    "endDate": "01/27/2024",
+    "endTime": "6:00 PM",
+    "location": "Home"
+  }
+]
