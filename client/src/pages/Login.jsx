@@ -1,12 +1,12 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../utils/mutations';
+import { useState } from "react";
+import { useMutation } from "@apollo/client";
+import { LOGIN_USER } from "../utils/mutations";
 
-import Auth from '../utils/auth';
+import Auth from "../utils/auth";
+import Header from "../components/Header";
 
 const Login = (props) => {
-  const [formState, setFormState] = useState({ email: '', password: '' });
+  const [formState, setFormState] = useState({ username: "", password: "" });
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
   // update state based on form input changes
@@ -35,42 +35,44 @@ const Login = (props) => {
 
     // clear form values
     setFormState({
-      email: '',
-      password: '',
+      username: "",
+      password: "",
     });
   };
 
   return (
-    <main className='main-jg'>
-        <div className='box-jg login-signup-box-jg'>
+    <main className="main-jg">
+      <Header />
+      <div className="login-signup-box-container-jg">
+        <div className="box-jg login-signup-box-jg">
           <h4>Login</h4>
-          <div className='login-signup-form-jg'>
+          <div className="login-signup-form-jg">
             {data ? (
-              <p>
-                Success! You may now head{' '}
-                <Link to="/">back to the homepage.</Link>
-              </p>
+              <p>Login successful! Preparing your dashboard... </p>
             ) : (
-              <form className="login-signup-form-fields-jg" onSubmit={handleFormSubmit}>
+              <form
+                className="login-signup-form-fields-jg"
+                onSubmit={handleFormSubmit}
+              >
                 <input
                   className="form-input login-signup-input-jg"
-                  placeholder="Your email"
-                  name="email"
-                  type="email"
-                  value={formState.email}
+                  placeholder="Your username"
+                  name="username"
+                  type="text"
+                  value={formState.name}
                   onChange={handleChange}
                 />
                 <input
                   className="form-input login-signup-input-jg"
-                  placeholder="******"
+                  placeholder="Your password"
                   name="password"
                   type="password"
                   value={formState.password}
                   onChange={handleChange}
                 />
                 <button
-                  className="button-jg"
-                  style={{ cursor: 'pointer' }}
+                  className="button-jg login-signup-button-jg"
+                  style={{ cursor: "pointer" }}
                   type="submit"
                 >
                   Submit
@@ -78,13 +80,10 @@ const Login = (props) => {
               </form>
             )}
 
-            {error && (
-              <div>
-                {error.message}
-              </div>
-            )}
+            {error && <div>{error.message}</div>}
           </div>
         </div>
+      </div>
     </main>
   );
 };

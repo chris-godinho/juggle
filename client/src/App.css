@@ -4,12 +4,15 @@
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
 
-  --input-background-color: rgba(238, 241, 239, 1);
-  --input-text-color: rgba(28, 35, 33, 1);
+  --input-background-color: rgba(28, 35, 33, 1);
+  --input-text-color: rgba(238, 241, 239, 1);
+  --input-placeholder-text-color: rgba(148, 151, 149, 1);
 
-  --life-event-color: rgba(0, 156, 255, 1);
-  --life-event-color-light: rgba(20, 176, 255, 1);
-  --life-event-color-dark: rgba(0, 136, 235, 1);
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(136, 25, 226, 1);
+  --life-event-color-light: rgba(156, 45, 246, 1);
+  --life-event-color-dark: rgba(176, 65, 255, 1);
   --work-event-color: rgba(255, 100, 0, 1);
   --work-event-color-light: rgba(255, 120, 20, 1);
   --work-event-color-dark: rgba(235, 80, 0, 1);
@@ -25,6 +28,9 @@
   
   --input-background-color: rgba(238, 241, 239, 1);
   --input-text-color: rgba(28, 35, 33, 1);
+  --input-placeholder-text-color: rgba(148, 151, 149, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(0, 156, 255, 1);
   --life-event-color-light: rgba(20, 176, 255, 1);
@@ -38,23 +44,27 @@
   --main-font-family: "Mulish", sans-serif;
 }
 
+/* General rules */
 html,
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   width: 100%;
+  overflow-y: hidden;
 }
 
 #root {
   background-color: var(--main-background-color);
   font-family: var(--main-font-family);
   color: var(--main-text-color);
+  overflow-y: hidden;
 }
 
 .main-jg {
   min-height: 100vh;
   padding: 0.5em;
+  overflow-y: hidden;
 }
 
 a {
@@ -62,12 +72,22 @@ a {
   text-decoration: none;
 }
 
-input {
+input, select {
   background-color: var(--input-background-color);
   color: var(--input-text-color);
   font-family: var(--main-font-family);
-  border-radius: 0.6em;
+  border: none;
+  border-bottom: 1px solid var(--input-text-color);
   padding: 0.5em;
+}
+
+input:focus, select:focus, input:active, select:active {
+  outline: none;
+  background-color: transparent;
+}
+
+input::placeholder, select::placeholder {
+  color: var(--input-placeholder-text-color);
 }
 
 .box-jg {
@@ -79,23 +99,107 @@ input {
 }
 
 .button-jg {
-  padding: 0.5em 1em;
+  padding: 0.6em 1.1em;
   color: var(--main-text-color);
   font-size: 1em;
   font-weight: bold;
   background-color: var(--life-event-color);
   font-family: var(--main-font-family);
+  border: none;
   border-radius: 0.7em;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
 .button-jg:hover {
   background-color: var(--life-event-color-light);
+  transform: scale(0.98);
 }
 
 .button-jg:focus, .button-jg:active {
   background-color: var(--life-event-color-dark);
 }
 
+.modal-overlay-jg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--box-shadow-color); /* Semi-transparent black overlay */
+  z-index: 1000; /* Make sure the overlay is on top of other elements */
+}
+
+.modal-jg {
+  display: flex;
+  flex-direction: column;
+  background: var(--main-background-color);
+  min-width: 60%;
+  padding: 30px 45px;
+  border-radius: 10px;
+  z-index: 1001;
+  text-align: center;
+  box-shadow: 10px 10px 7px 5px var(--box-shadow-color);
+}
+
+.modal-form-jg {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-input-jg {
+  margin-bottom: 1em;
+  width: 90%;
+}
+
+.modal-datepicker-select-tray-jg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  min-width: calc(90% + 0.5em + 6px);
+}
+
+.modal-datepicker-select-label-jg {
+  font-size: 0.8em;
+  color: var(--input-placeholder-text-color);
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  text-align: left;
+  flex: 1;
+}
+
+.modal-datepicker-jg {
+  margin-bottom: 1em;
+  min-width: 85%;
+  max-width: 85%;
+}
+
+.modal-select-jg {
+  margin-bottom: 1em;
+  min-width: calc(85% + 0.5em + 6px);
+  max-width: calc(85% + 0.5em + 6px);
+}
+
+.modal-button-tray-jg {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 100%;
+}
+
+.modal-button-jg {
+  margin-top: 1em;
+  margin-left: 1em;
+}
+
+/* Header rules */
 .header-jg {
   display: flex;
   align-items: center;
@@ -112,24 +216,62 @@ input {
 }
 
 .header-button-jg {
-  margin-left: 0.8em;
+  margin-right: 1em;
 }
 
+/* Home page rules */
 .home-welcome-jg {
   min-height: 85vh;
-  text-align: center;
-  vertical-align: middle;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 1em 3.5em;
 }
 
+.home-welcome-image-container-jg {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-welcome-clown-jg {
+  height: 80vh;
+}
+
+.home-welcome-text-jg {
+  flex: 2;
+  text-align: center;
+  padding: 0 20vh;
+  margin-bottom: 7vh;
+}
+
+.home-welcome-text-jg h1, p {
+  margin-bottom: 2em;
+}
+
+/* Footer rules */
 .footer-jg {
   padding: 1em;
   text-align: right;
+}
+
+/* Login/Signup page rules */
+.login-signup-box-container-jg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 85vh;
 }
 
 .login-signup-box-jg {
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.login-signup-box-jg h4 {
+  margin-bottom: 2em;
 }
 
 .login-signup-form-fields-jg {
@@ -139,7 +281,40 @@ input {
   width: 100%;
 }
 
+.login-signup-row-jg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .login-signup-input-jg {
   width: 100%;
-  margin-bottom: 1em;
+  margin-bottom: 2em;
+  margin-left: 2em;
+  background-color: var(--main-background-color-accent);
+}
+.login-signup-button-jg {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+}
+
+/* Dashboard page rules */
+.dashboard-grid-jg {
+  display: flex;
+  text-align: center;
+}
+
+.dashboard-side-panel-jg {
+  flex-grow: 1;
+}
+
+.dashboard-main-panel-jg {
+  flex-grow: 3;
+}
+
+.dashboard-main-top-row-jg {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
 }

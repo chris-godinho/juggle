@@ -17,10 +17,16 @@ const eventSchema = new Schema({
   details: {
     type: String,
   },
-  date: {
+  startDate: {
     type: Date,
   },
-  time: {
+  startTime: {
+    type: String,
+  },
+  endDate: {
+    type: Date,
+  },
+  endTime: {
     type: String,
   },
   location: {

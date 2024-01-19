@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="header-jg">
       <img
-        src="/logo_1024x1024_black.png"
+        src="/logo_1024x1024_transparent.png"
         alt="juggler logo"
         className="header-logo-jg"
       />

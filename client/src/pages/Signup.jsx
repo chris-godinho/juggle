@@ -1,16 +1,20 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 
 import { useMutation } from "@apollo/client";
 import { ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
+import Header from "../components/Header";
+
 const Signup = () => {
   const [formState, setFormState] = useState({
     username: "",
     email: "",
     password: "",
+    firstName: "",
+    middleName: "",
+    lastName: "",
   });
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
@@ -40,19 +44,19 @@ const Signup = () => {
 
   return (
     <main className="main-jg">
+      <Header />
+      <div className="login-signup-box-container-jg">
       <div className="box-jg login-signup-box-jg">
         <h4>Sign Up</h4>
         <div className="login-signup-form-jg">
           {data ? (
-            <p>
-              Success! You may now head{" "}
-              <Link to="/">back to the homepage.</Link>
-            </p>
+            <p>Sign up successful! Preparing your dashboard... </p>
           ) : (
             <form
               className="login-signup-form-fields-jg"
               onSubmit={handleFormSubmit}
             >
+              <div className="login-signup-row-jg">
               <input
                 className="form-input login-signup-input-jg"
                 placeholder="Your username"
@@ -69,16 +73,45 @@ const Signup = () => {
                 value={formState.email}
                 onChange={handleChange}
               />
+              </div>
+              <div className="login-signup-row-jg">
               <input
                 className="form-input login-signup-input-jg"
-                placeholder="******"
+                placeholder="Your first name"
+                name="firstName"
+                type="text"
+                value={formState.name}
+                onChange={handleChange}
+              />
+              <input
+                className="form-input login-signup-input-jg"
+                placeholder="Your middle name"
+                name="middleName"
+                type="text"
+                value={formState.name}
+                onChange={handleChange}
+              />
+              <input
+                className="form-input login-signup-input-jg"
+                placeholder="Your last name"
+                name="lastName"
+                type="text"
+                value={formState.name}
+                onChange={handleChange}
+              />
+              </div>
+              <div className="login-signup-row-jg">
+              <input
+                className="form-input login-signup-input-jg"
+                placeholder="Your password"
                 name="password"
                 type="password"
                 value={formState.password}
                 onChange={handleChange}
               />
+              </div>
               <button
-                className="button-jg"
+                className="button-jg login-signup-button-jg"
                 style={{ cursor: "pointer" }}
                 type="submit"
               >
@@ -89,6 +122,7 @@ const Signup = () => {
 
           {error && <div>{error.message}</div>}
         </div>
+      </div>
       </div>
     </main>
   );
