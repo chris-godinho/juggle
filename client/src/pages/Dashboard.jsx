@@ -4,10 +4,18 @@ import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
 import PopUpModal from "../components/PopUpModal";
+import Schedule from "../components/Schedule";
 
 import Auth from "../utils/auth";
 
 export default function Dashboard() {
+  const logout = (event) => {
+    // Log user out and return them to welcome page
+    event.preventDefault();
+    Auth.logout();
+    window.location.href = "/";
+  };
+
   const [isModalOpen, setModalOpen] = useState(false);
   const [startDate, setStartDate] = useState(new Date());
   const [startTime, setStartTime] = useState(new Date());
@@ -18,20 +26,14 @@ export default function Dashboard() {
     setModalOpen(true);
   };
 
-  const closeModal = () => {
-    setModalOpen(false);
-  };
-
-  const logout = (event) => {
-    // Log user out and return them to welcome page
-    event.preventDefault();
-    Auth.logout();
-    window.location.href = "/";
-  };
-
   const handleModalClose = (choice, formData) => {
     console.log(choice); // Handle the user's choice
-    console.log(formData); // Access the form data
+    if (choice === "Submit") {
+      console.log(formData); // Access the form data
+      setModalOpen(false);
+    } else {
+      setModalOpen(false);
+    }
   };
 
   const customFormModalConfig = {
@@ -59,9 +61,7 @@ export default function Dashboard() {
             data-date-format="m/d/Y"
             data-allow-input={true}
             value={startDate}
-            onChange={([startDate]) => {
-              this.setState({ startDate });
-            }}
+            onChange={handleInputChange}
           />
         </div>
         <div className="modal-datepicker-select-tray-jg">
@@ -72,9 +72,7 @@ export default function Dashboard() {
             data-enable-time
             data-allow-input={true}
             value={startTime}
-            onChange={([startTime]) => {
-              this.setState({ startTime });
-            }}
+            onChange={handleInputChange}
           />
         </div>
         <div className="modal-datepicker-select-tray-jg">
@@ -84,9 +82,7 @@ export default function Dashboard() {
             data-date-format="m/d/Y"
             data-allow-input={true}
             value={endDate}
-            onChange={([endDate]) => {
-              this.setState({ endDate });
-            }}
+            onChange={handleInputChange}
           />
         </div>
         <div className="modal-datepicker-select-tray-jg">
@@ -97,9 +93,7 @@ export default function Dashboard() {
             data-enable-time
             data-allow-input={true}
             value={endTime}
-            onChange={([endTime]) => {
-              this.setState({ endTime });
-            }}
+            onChange={handleInputChange}
           />
         </div>
         <div className="modal-datepicker-select-tray-jg">
@@ -123,7 +117,7 @@ export default function Dashboard() {
       </form>
     ),
     buttons: [
-      { label: "Submit", onClick: () => handleModalClose("Save", formData) },
+      { label: "Submit", onClick: () => handleModalClose("Submit", formData) },
       { label: "Cancel", onClick: () => handleModalClose("Cancel", formData) },
     ],
   };
@@ -131,22 +125,50 @@ export default function Dashboard() {
   return (
     <main className="main-jg">
       <div className="dashboard-grid-jg">
-        <div className="dashboard-side-panel-jg">
-          <h3>Work</h3>
+        <div className="dashboard-side-panel-jg work-side-jg">
+          <div className="side-panel-top-jg">
+            <h3>Work</h3>
+          </div>
+          <div className="side-panel-middle-jg">
+            <h1>50%</h1>
+          </div>
+          <div className="side-panel-bottom-jg">
+            <p>of your day</p>
+          </div>
         </div>
         <div className="dashboard-main-panel-jg">
           <div className="dashboard-main-top-row-jg">
-            <button className="button-jg" onClick={logout}>
-              Logout
+            <button className="round-button-jg work-border-jg" onClick={logout}>
+              <img
+                className="dashboard-profile-picture-jg"
+                src="/test-prof-pic.jpg"
+                alt="profile picture"
+              />
             </button>
             <h3>Today</h3>
-            <button className="button-jg" onClick={openModal}>
-              Add Event
+            <button
+              className="round-button-jg life-border-jg"
+              onClick={openModal}
+            >
+              <img
+                className="add-event-picture-jg"
+                src="/plus_sign.png"
+                alt="profile picture"
+              />
             </button>
           </div>
+          <Schedule />
         </div>
-        <div className="dashboard-side-panel-jg">
-          <h3>Life</h3>
+        <div className="dashboard-side-panel-jg life-side-jg">
+          <div className="side-panel-top-jg">
+            <h3>Life</h3>
+          </div>
+          <div className="side-panel-middle-jg">
+            <h1>50%</h1>
+          </div>
+          <div className="side-panel-bottom-jg">
+            <p>of your day</p>
+          </div>
         </div>
       </div>
       <PopUpModal
