@@ -21,10 +21,8 @@ export const QUERY_USER = gql`
         type
         subtype
         details
-        startDate
-        startTime
-        endDate
-        endTime
+        eventStart
+        eventEnd
         location
         links
         files
@@ -33,19 +31,35 @@ export const QUERY_USER = gql`
   }
 `;
 
-export const QUERY_EVENTS = gql`
-  query getEvents($username: String) {
-    events(username: $username) {
+export const QUERY_EVENTS_BY_USER = gql`
+  query getEventsByUser($user: ID!) {
+    eventsByUser(user: $user) {
       _id
       user
       title
       type
       subtype
       details
-      startDate
-      startTime
-      endDate
-      endTime
+      eventStart
+      eventEnd
+      location
+      links
+      files
+    }
+  }
+`;
+
+export const QUERY_EVENTS_BY_DATE = gql`
+  query getEventsByDate($user: ID!, $eventStart: DateTime) {
+    eventsByDate(user: $user, eventStart: $eventStart) {
+      _id
+      user
+      title
+      type
+      subtype
+      details
+      eventStart
+      eventEnd
       location
       links
       files
@@ -62,10 +76,8 @@ export const QUERY_SINGLE_EVENT = gql`
       type
       subtype
       details
-      startDate
-      startTime
-      endDate
-      endTime
+      eventStart
+      eventEnd
       location
       links
       files

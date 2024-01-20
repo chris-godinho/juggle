@@ -3,7 +3,7 @@
 :root {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
-  
+
   --main-separator-color: rgba(148, 151, 149, 0.5);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
@@ -24,13 +24,13 @@
 
   --main-text-color: rgba(238, 241, 239, 1);
 
-  --main-font-family: 'Exo 2', sans-serif;
+  --main-font-family: "Exo 2", sans-serif;
 }
 
 #root.light-mode-jg {
   --main-background-color: rgba(238, 241, 239, 1);
   --main-background-color-accent: rgba(218, 221, 219, 1);
-  
+
   --input-background-color: rgba(238, 241, 239, 1);
   --input-text-color: rgba(28, 35, 33, 1);
   --input-placeholder-text-color: rgba(148, 151, 149, 1);
@@ -48,7 +48,7 @@
 
   --main-text-color: rgba(28, 35, 33, 1);
 
-  --main-font-family: 'Exo 2', sans-serif;
+  --main-font-family: "Exo 2", sans-serif;
 }
 
 /* General rules */
@@ -61,19 +61,6 @@ body {
   overflow-y: hidden;
 }
 
-#root {
-  background-color: var(--main-background-color);
-  font-family: var(--main-font-family);
-  color: var(--main-text-color);
-  overflow-y: hidden;
-}
-
-.main-jg {
-  min-height: 100vh;
-  padding: 0.5em;
-  overflow-y: hidden;
-}
-
 a {
   color: var(--main-text-color);
   text-decoration: none;
@@ -83,7 +70,8 @@ p {
   line-height: 1.5em;
 }
 
-input, select {
+input,
+select {
   background-color: var(--input-background-color);
   color: var(--input-text-color);
   font-family: var(--main-font-family);
@@ -92,12 +80,16 @@ input, select {
   padding: 0.5em;
 }
 
-input:focus, select:focus, input:active, select:active {
+input:focus,
+select:focus,
+input:active,
+select:active {
   outline: none;
   background-color: transparent;
 }
 
-input::placeholder, select::placeholder {
+input::placeholder,
+select::placeholder {
   color: var(--input-placeholder-text-color);
 }
 
@@ -120,6 +112,23 @@ input::placeholder, select::placeholder {
 
 ::-webkit-scrollbar-track:hover {
   background-color: rgba(50, 50, 50, 0.5);
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+#root {
+  background-color: var(--main-background-color);
+  font-family: var(--main-font-family);
+  color: var(--main-text-color);
+  overflow-y: hidden;
+}
+
+.main-jg {
+  min-height: 100vh;
+  padding: 0.5em;
+  overflow-y: hidden;
 }
 
 .box-jg {
@@ -149,10 +158,12 @@ input::placeholder, select::placeholder {
   transform: scale(0.98);
 }
 
-.button-jg:focus, .button-jg:active {
+.button-jg:focus,
+.button-jg:active {
   background-color: var(--life-event-color-dark);
 }
 
+/* Modal Window rules */
 .modal-overlay-jg {
   position: fixed;
   top: 0;
@@ -235,6 +246,42 @@ input::placeholder, select::placeholder {
   margin-left: 1em;
 }
 
+/* Loading Spinner rules */
+.lds-ripple {
+  margin: auto;
+  background: none;
+  display: block;
+  shape-rendering: auto;
+}
+
+.lds-ripple circle {
+  animation: lds-ripple 1.2195121951219512s cubic-bezier(0, 0.2, 0.8, 1)
+    infinite;
+}
+
+@keyframes lds-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+.lds-ripple circle:nth-child(1) {
+  fill: var(--life-event-color);
+}
+
+.lds-ripple circle:nth-child(2) {
+  fill: var(--work-event-color);
+}
+
+.lds-ripple circle:nth-child(3) {
+  fill: var(--life-event-color);
+}
+
 /* Datepicker/Timepicker rules */
 .flatpickr-calendar,
 .flatpickr-month,
@@ -296,7 +343,8 @@ input::placeholder, select::placeholder {
   margin-bottom: 7vh;
 }
 
-.home-welcome-text-jg h1, p {
+.home-welcome-text-jg h1,
+p {
   margin-bottom: 2em;
 }
 
@@ -364,11 +412,11 @@ input::placeholder, select::placeholder {
 }
 
 .work-side-jg {
-  color: var(--work-event-color)
+  color: var(--work-event-color);
 }
 
 .life-side-jg {
-  color: var(--life-event-color)
+  color: var(--life-event-color);
 }
 
 .side-panel-top-jg,
@@ -413,13 +461,32 @@ input::placeholder, select::placeholder {
 .dashboard-main-top-row-jg {
   display: flex;
   justify-content: space-between;
-  margin: 0 3em;
+  margin: 2em 3em 0 3em;
+}
+
+.selected-date-container-jg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+}
+
+.selected-date-box-jg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0em 1.5em;
+  margin: 0em 1em;
+  width: 50vh;
+}
+
+.selected-date-box-jg h3 {
+  margin: 0;
 }
 
 .round-button-jg {
   height: 2.2em;
   width: 2.2em;
-  margin-top: 1.5em;
   border-radius: 50%;
   background-color: var(--main-background-color);
   color: var(--button-text-color);
@@ -484,10 +551,31 @@ input::placeholder, select::placeholder {
 
 .schedule-block-jg {
   display: flex;
-  min-height: 2em;
+  min-height: 1.5em;
+  max-height: 1.5em;
   padding: 0.5em 0.7em;
   border-top: 1px dashed var(--main-separator-color);
   border-bottom: 1px dashed var(--main-separator-color);
+}
+
+.schedule-block-time-jg {
+  min-width: 5em;
   font-size: 0.7em;
   color: var(--input-placeholder-text-color);
+}
+
+.schedule-block-title-jg {
+  margin-left: 2em;
+}
+
+/* Error Page rules */
+#error-page-jg {
+  display: flex;
+  margin-top: 25vh;
+  margin-left: 10vw;
+}
+
+.clown-error-jg {
+  margin-right: 3vw;
+  height: 35vh;
 }

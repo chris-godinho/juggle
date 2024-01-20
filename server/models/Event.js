@@ -21,17 +21,11 @@ const eventSchema = new Schema({
   details: {
     type: String,
   },
-  startDate: {
+  eventStart: {
     type: Date,
   },
-  startTime: {
-    type: String,
-  },
-  endDate: {
+  eventEnd: {
     type: Date,
-  },
-  endTime: {
-    type: String,
   },
   location: {
     type: String,

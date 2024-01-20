@@ -25,18 +25,16 @@ export const ADD_USER = gql`
 `;
 
 export const ADD_EVENT = gql`
-  mutation addEvent($user: ID!, $title: String!, $type: String, $subtype: String, $details: String, $startDate: String, $startTime: String, $endDate: String, $endTime: String, $location: String, $links: [String], $files: [String]) {
-    addEvent(user: $user, title: $title, type: $type, subtype: $subtype, details: $details, startDate: $startDate, startTime: $startTime, endDate: $endDate, endTime: $endTime, location: $location, links: $links, files: $files) {
+  mutation addEvent($user: ID!, $title: String!, $type: String, $subtype: String, $details: String, $eventStart: DateTime, $eventEnd: DateTime, $location: String, $links: [String], $files: [String]) {
+    addEvent(user: $user, title: $title, type: $type, subtype: $subtype, details: $details, eventStart: $eventStart, eventEnd: $eventEnd, location: $location, links: $links, files: $files) {
       _id
       user
       title
       type
       subtype
       details
-      startDate
-      startTime
-      endDate
-      endTime
+      eventStart
+      eventEnd
       location
       links 
       files
@@ -53,10 +51,8 @@ export const REMOVE_EVENT = gql`
       type
       subtype
       details
-      startDate
-      startTime
-      endDate
-      endTime
+      eventStart
+      eventEnd
       location
       links
       files
