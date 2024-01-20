@@ -5,8 +5,10 @@ import "flatpickr/dist/themes/dark.css";
 
 import PopUpModal from "../components/PopUpModal";
 import Schedule from "../components/Schedule";
+import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
-import { useMutation } from "@apollo/client";
+import { useQuery, useMutation } from "@apollo/client";
+import { QUERY_USER } from "../utils/queries.js";
 import { ADD_EVENT } from "../utils/mutations";
 
 import Auth from "../utils/auth";
@@ -39,12 +41,6 @@ export default function Dashboard() {
   const localDate = new Date();
   const midnightLocalDate = new Date(localDate);
   midnightLocalDate.setHours(0, 0, 0, 0);
-  const timeZoneOffset = localDate.getTimezoneOffset();
-  const utcMiliseconds = localDate.getTime() + timeZoneOffset * 60 * 1000;
-  const currentDate = new Date(utcMiliseconds);
-  console.log("[Dashboard.jsx] localDate:", localDate);
-  console.log("[Dashboard.jsx] timeZoneOffset:", timeZoneOffset);
-  console.log("[Dashboard.jsx] currentDate (UTC):", currentDate);
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
 
   const userProfile = AuthService.getProfile();
@@ -78,6 +74,32 @@ export default function Dashboard() {
 
   // Set up modal window
   const [isModalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  console.log("[Dashboard.jsx] username:", userProfile.data.username);
+
+  const {
+    loading: subtypeLoading,
+    data: subtypeData,
+    error: subtypeError,
+  } = useQuery(QUERY_USER, {
+    variables: { username: userProfile.data.username },
+  });
+
+  if (subtypeLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (subtypeError) {
+    console.error("[Dashboard.jsx] GraphQL Error:", error);
+    return <div>Error fetching data.</div>;
+  }
+
+  console.log("[Dashboard.jsx] subtypeData:", subtypeData);
+
+  const eventSubtypes = subtypeData?.user.eventSubtypes;
+
+  console.log("[Dashboard.jsx] eventSubtypes:", eventSubtypes);
 
   const openModal = () => {
     setModalOpen(true);
@@ -107,6 +129,7 @@ export default function Dashboard() {
         const { data } = await addEvent({
           variables: { user: userId, ...finalFormData },
         });
+        setFormData({});
         handleRefetch();
       } catch (e) {
         console.error(e);
@@ -124,6 +147,7 @@ export default function Dashboard() {
         <input
           type="text"
           name="title"
+          value={formData.title || ""}
           className="modal-input-jg"
           placeholder="Title"
           onChange={handleInputChange}
@@ -131,6 +155,7 @@ export default function Dashboard() {
         <input
           type="text"
           name="details"
+          value={formData.details || ""}
           className="modal-input-jg"
           placeholder="Details"
           onChange={handleInputChange}
@@ -139,6 +164,7 @@ export default function Dashboard() {
           <p className="modal-datepicker-select-label-jg">Start Date</p>
           <Flatpickr
             name="startDate"
+            value={formData.startDate || ""}
             options={{
               dateFormat: "m/d/Y",
               allowInput: true,
@@ -166,6 +192,7 @@ export default function Dashboard() {
           <p className="modal-datepicker-select-label-jg">Start Time</p>
           <Flatpickr
             name="startTime"
+            value={formData.startTime || ""}
             className="modal-datepicker-jg"
             options={{
               noCalendar: true,
@@ -195,6 +222,7 @@ export default function Dashboard() {
           <p className="modal-datepicker-select-label-jg">End Date</p>
           <Flatpickr
             name="endDate"
+            value={formData.endDate || ""}
             className="modal-datepicker-jg"
             options={{
               dateFormat: "m/d/Y",
@@ -222,6 +250,7 @@ export default function Dashboard() {
           <p className="modal-datepicker-select-label-jg">End Time</p>
           <Flatpickr
             name="endTime"
+            value={formData.endTime || ""}
             className="modal-datepicker-jg"
             options={{
               noCalendar: true,
@@ -248,12 +277,29 @@ export default function Dashboard() {
           />
         </div>
         <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">Event Type</p>
+          <p className="modal-datepicker-select-label-jg">Category</p>
           <select
-            className="modal-select-jg"
-            name="type"
+            className="modal-select-jg modal-halfsize-jg modal-halfsize-left-jg"
+            name="subtype"
+            value={formData.subtype || ""}
             onChange={handleInputChange}
           >
+            <option value=""></option>
+            {eventSubtypes &&
+              eventSubtypes.map((subtype, index) => (
+                <option key={index} value={subtype.subtype}>
+                  {subtype.subtype}
+                </option>
+              ))}
+          </select>
+          <p className="modal-datepicker-select-label-jg">Type</p>
+          <select
+            className="modal-select-jg modal-halfsize-jg"
+            name="type"
+            value={formData.type || ""}
+            onChange={handleInputChange}
+          >
+            <option value=""></option>
             <option value="work">Work</option>
             <option value="life">Life</option>
           </select>
@@ -261,6 +307,7 @@ export default function Dashboard() {
         <input
           type="text"
           name="location"
+          value={formData.location || ""}
           className="modal-input-jg"
           placeholder="Location"
           onChange={handleInputChange}
@@ -276,7 +323,7 @@ export default function Dashboard() {
   return (
     <main className="main-jg">
       <div className="dashboard-grid-jg">
-        <div className="dashboard-side-panel-jg work-side-jg">
+        <div className="dashboard-side-panel-jg work-text-jg">
           <div className="side-panel-top-jg">
             <h3>Work</h3>
           </div>
@@ -333,7 +380,7 @@ export default function Dashboard() {
             shouldRefetch={shouldRefetch}
           />
         </div>
-        <div className="dashboard-side-panel-jg life-side-jg">
+        <div className="dashboard-side-panel-jg life-text-jg">
           <div className="side-panel-top-jg">
             <h3>Life</h3>
           </div>
@@ -349,6 +396,9 @@ export default function Dashboard() {
         isOpen={isModalOpen}
         onClose={handleModalClose}
         modalConfig={customFormModalConfig}
+        eventSubtypes={eventSubtypes}
+        formData={formData}
+        setFormData={setFormData}
       />
     </main>
   );

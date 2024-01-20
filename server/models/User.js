@@ -40,23 +40,24 @@ const userSchema = new Schema({
     type: [
       {
         subtype: String,
-        category: {
+        parentType: {
           type: String,
           enum: ['life', 'work'],
         },
       },
     ],
+    unique: true,
     default: [
-      { subtype: 'Family', category: 'life' },
-      { subtype: 'Health', category: 'life' },
-      { subtype: 'Fitness', category: 'life' },
-      { subtype: 'Financial', category: 'life' },
-      { subtype: 'Leisure', category: 'life' },
-      { subtype: 'Shift', category: 'work' },
-      { subtype: 'Meeting', category: 'work' },
-      { subtype: 'Project', category: 'work' },
-      { subtype: 'Networking', category: 'work' },
-      { subtype: 'Education', category: 'work' },
+      { subtype: 'Family', parentType: 'life' },
+      { subtype: 'Health', parentType: 'life' },
+      { subtype: 'Fitness', parentType: 'life' },
+      { subtype: 'Financial', parentType: 'life' },
+      { subtype: 'Leisure', parentType: 'life' },
+      { subtype: 'Shift', parentType: 'work' },
+      { subtype: 'Meeting', parentType: 'work' },
+      { subtype: 'Project', parentType: 'work' },
+      { subtype: 'Networking', parentType: 'work' },
+      { subtype: 'Education', parentType: 'work' },
     ],
   },
   events: [

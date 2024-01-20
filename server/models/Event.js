@@ -36,6 +36,22 @@ const eventSchema = new Schema({
   files: {
     type: [String],
   },
+  priority: {
+    type: String,
+    enum: ["Low", "Normal", "High"],
+    default: "Normal",
+  },
+  setReminder: {
+    type: Boolean,
+    default: false,
+  },
+  reminderTime: {
+    type: Date,
+  },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Event = model("Event", eventSchema);

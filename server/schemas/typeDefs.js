@@ -8,7 +8,13 @@ const typeDefs = `
     middleName: String
     lastName: String
     colorModeSetting: String
+    eventSubtypes: [EventSubtype]
     events: [Event]!
+  }
+
+  type EventSubtype {
+    subtype: String
+    parentType: String
   }
 
   type Event {
@@ -23,6 +29,10 @@ const typeDefs = `
     location: String
     links: [String]
     files: [String]
+    priority: String
+    setReminder: Boolean
+    reminderTime: DateTime
+    completed: Boolean
   }
 
   type Auth {
@@ -43,7 +53,7 @@ const typeDefs = `
   type Mutation {
     addUser(username: String!, email: String!, password: String!, firstName: String!, middleName: String, lastName: String): Auth
     login(username: String!, password: String!): Auth
-    addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String]): Event
+    addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime): Event
     removeEvent(eventId: ID!): Event
   }
 `;

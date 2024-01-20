@@ -4,6 +4,7 @@
     "description": "Make sure it's cow's 2% milk",
     "eventStart": "2024-01-19T16:00:00",
     "eventEnd": "2024-01-19T17:00:00",
+    "type": "life",
     "location": "Loblaws"
   },
   {
@@ -11,6 +12,7 @@
     "description": "Discuss project requirements",
     "eventStart": "2024-01-20T10:00:00",
     "eventEnd": "2024-01-20T11:00:00",
+    "type": "work",
     "location": "Office"
   },
   {
@@ -18,6 +20,7 @@
     "description": "Work on strength training",
     "eventStart": "2024-01-21T18:30:00",
     "eventEnd": "2024-01-21T19:30:00",
+    "type": "life",
     "location": "Local Gym"
   },
   {
@@ -25,6 +28,7 @@
     "description": "Try out the new restaurant",
     "eventStart": "2024-01-22T20:00:00",
     "eventEnd": "2024-01-22T22:00:00",
+    "type": "life",
     "location": "New Bistro"
   },
   {
@@ -32,6 +36,7 @@
     "description": "Relax and unwind",
     "eventStart": "2024-01-23T15:00:00",
     "eventEnd": "2024-01-23T16:30:00",
+    "type": "life",
     "location": "Home"
   },
   {
@@ -39,6 +44,7 @@
     "description": "Work on coding challenges",
     "eventStart": "2024-01-24T14:00:00",
     "eventEnd": "2024-01-24T16:00:00",
+    "type": "work",
     "location": "Co-Working Space"
   },
   {
@@ -46,6 +52,7 @@
     "description": "Explore new exhibits",
     "eventStart": "2024-01-25T11:00:00",
     "eventEnd": "2024-01-25T13:00:00",
+    "type": "life",
     "location": "City Art Gallery"
   },
   {
@@ -53,6 +60,7 @@
     "description": "Enjoy nature and scenic views",
     "eventStart": "2024-01-26T09:00:00",
     "eventEnd": "2024-01-26T15:00:00",
+    "type": "life",
     "location": "Mountain Trail"
   },
   {
@@ -60,6 +68,7 @@
     "description": "Share insights on technology",
     "eventStart": "2024-01-27T13:00:00",
     "eventEnd": "2024-01-27T15:00:00",
+    "type": "work",
     "location": "Home Office"
   },
   {
@@ -67,6 +76,7 @@
     "description": "Learn new recipes",
     "eventStart": "2024-01-28T18:00:00",
     "eventEnd": "2024-01-28T20:00:00",
+    "type": "work",
     "location": "Culinary School"
   },
   {
@@ -74,6 +84,7 @@
     "description": "Watch a favorite family movie",
     "eventStart": "2024-01-29T19:30:00",
     "eventEnd": "2024-01-29T22:00:00",
+    "type": "life",
     "location": "Home"
   },
   {
@@ -81,6 +92,7 @@
     "description": "Restock essentials",
     "eventStart": "2024-01-19T11:00:00",
     "eventEnd": "2024-01-19T12:00:00",
+    "type": "life",
     "location": "Supermarket"
   },
   {
@@ -88,6 +100,7 @@
     "description": "Practice mindfulness",
     "eventStart": "2024-01-20T06:00:00",
     "eventEnd": "2024-01-20T07:00:00",
+    "type": "life",
     "location": "Yoga Studio"
   },
   {
@@ -95,6 +108,7 @@
     "description": "Play board games and have fun",
     "eventStart": "2024-01-21T19:00:00",
     "eventEnd": "2024-01-21T22:00:00",
+    "type": "life",
     "location": "Friend's House"
   },
   {
@@ -102,6 +116,7 @@
     "description": "Explore fresh produce",
     "eventStart": "2024-01-22T09:30:00",
     "eventEnd": "2024-01-22T11:00:00",
+    "type": "life",
     "location": "Local Market"
   },
   {
@@ -109,6 +124,7 @@
     "description": "Attend a web development course",
     "eventStart": "2024-01-23T14:00:00",
     "eventEnd": "2024-01-23T16:00:00",
+    "type": "work",
     "location": "Virtual Classroom"
   },
   {
@@ -116,6 +132,7 @@
     "description": "Spend time with animals in need",
     "eventStart": "2024-01-24T13:00:00",
     "eventEnd": "2024-01-24T15:00:00",
+    "type": "life",
     "location": "Shelter"
   },
   {
@@ -123,6 +140,7 @@
     "description": "Enjoy a picnic in the park",
     "eventStart": "2024-01-25T12:00:00",
     "eventEnd": "2024-01-25T14:00:00",
+    "type": "life",
     "location": "City Park"
   },
   {
@@ -130,6 +148,7 @@
     "description": "Discuss the latest book",
     "eventStart": "2024-01-26T20:00:00",
     "eventEnd": "2024-01-26T21:30:00",
+    "type": "life",
     "location": "Library"
   },
   {
@@ -137,6 +156,7 @@
     "description": "Work on a creative home project",
     "eventStart": "2024-01-27T15:30:00",
     "eventEnd": "2024-01-27T18:00:00",
+    "type": "work",
     "location": "Home"
   }
 ]

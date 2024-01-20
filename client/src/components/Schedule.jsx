@@ -19,11 +19,7 @@ const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
   });
 
   if (loading) {
-    return (
-      <div>
-        <LoadingSpinner />
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {
@@ -32,6 +28,8 @@ const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
   }
 
   const events = data?.eventsByDate || [];
+
+  console.log("[Schedule.jsx] events:", events);
 
   const formatTime = (dateObject) => {
     const result = dateObject.toLocaleString("en-US", {
@@ -65,7 +63,15 @@ const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
             <div className="schedule-block-time-jg">
               {formatTime(currentDisplayTime)}
             </div>
-            <div className="schedule-block-title-jg">
+            <div
+              className={
+                event && event.type === "work"
+                  ? "schedule-block-title-jg work-text-jg"
+                  : event && event.type === "life"
+                  ? "schedule-block-title-jg life-text-jg"
+                  : "schedule-block-title-jg"
+              }
+            >
               {event ? event.title : ""}
             </div>
           </div>

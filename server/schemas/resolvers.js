@@ -89,6 +89,9 @@ const resolvers = {
         location,
         links,
         files,
+        priority,
+        setReminder,
+        reminderTime
       }
     ) => {
       console.log(
@@ -111,7 +114,13 @@ const resolvers = {
         "links =",
         links,
         "files =",
-        files
+        files,
+        "priority =",
+        priority,
+        "setReminder =",
+        setReminder,
+        "reminderTime =",
+        reminderTime
       );
       const event = await Event.create({
         user,
@@ -124,6 +133,9 @@ const resolvers = {
         location,
         links,
         files,
+        priority,
+        setReminder,
+        reminderTime
       });
 
       await User.findOneAndUpdate(

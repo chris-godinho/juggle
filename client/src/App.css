@@ -205,8 +205,9 @@ select::placeholder {
 .modal-datepicker-select-tray-jg {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   min-width: calc(90% + 0.5em + 6px);
+  max-width: calc(90% + 0.5em + 6px);
 }
 
 .modal-datepicker-select-label-jg {
@@ -228,6 +229,17 @@ select::placeholder {
   margin-bottom: 1em;
   min-width: calc(85% + 0.5em + 6px);
   max-width: calc(85% + 0.5em + 6px);
+}
+
+.modal-halfsize-left-jg {
+  margin-right: 5.5%;
+}
+
+.modal-halfsize-jg {
+  margin-bottom: 1em;
+  margin-left: calc(5.5% - 0.5em);
+  min-width: calc(34%);
+  max-width: calc(34%);
 }
 
 .modal-select-jg option {
@@ -411,11 +423,11 @@ p {
   min-height: 95vh;
 }
 
-.work-side-jg {
+.work-text-jg {
   color: var(--work-event-color);
 }
 
-.life-side-jg {
+.life-text-jg {
   color: var(--life-event-color);
 }
 

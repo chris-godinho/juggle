@@ -12,7 +12,7 @@ export const QUERY_USER = gql`
       colorModeSetting
       eventSubtypes {
         subtype
-        category
+        parentType
       }
       events {
         _id
@@ -26,6 +26,10 @@ export const QUERY_USER = gql`
         location
         links
         files
+        priority
+        setReminder
+        reminderTime
+        completed
       }
     }
   }
@@ -45,6 +49,10 @@ export const QUERY_EVENTS_BY_USER = gql`
       location
       links
       files
+      priority
+      setReminder
+      reminderTime
+      completed
     }
   }
 `;
@@ -63,6 +71,10 @@ export const QUERY_EVENTS_BY_DATE = gql`
       location
       links
       files
+      priority
+      setReminder
+      reminderTime
+      completed
     }
   }
 `;
@@ -81,6 +93,10 @@ export const QUERY_SINGLE_EVENT = gql`
       location
       links
       files
+      priority
+      setReminder
+      reminderTime
+      completed
     }
   }
 `;
