@@ -6,12 +6,10 @@ import { QUERY_EVENTS_BY_DATE } from "../utils/queries";
 
 import LoadingSpinner from "./LoadingSpinner";
 
-const Schedule = ({ userId, selectedDate, timeZoneOffset, shouldRefetch }) => {
+const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
   useEffect(() => {
     refetch();
   }, [shouldRefetch]);
-
-  console.log("[Schedule.jsx] userId:", userId, "selectedDate:", selectedDate);
 
   const displayTime = new Date(selectedDate);
   displayTime.setHours(0, 0, 0, 0);
@@ -36,13 +34,11 @@ const Schedule = ({ userId, selectedDate, timeZoneOffset, shouldRefetch }) => {
   const events = data?.eventsByDate || [];
 
   const formatTime = (dateObject) => {
-    // console.log("[Schedule.jsx] formatTime dateObject:", dateObject);
     const result = dateObject.toLocaleString("en-US", {
       hour: "numeric",
       minute: "numeric",
       hour12: true,
     });
-    // console.log("[Schedule.jsx] formatTime result:", result);
     return result;
   };
 

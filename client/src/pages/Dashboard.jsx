@@ -57,7 +57,6 @@ export default function Dashboard() {
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   const handleRefetch = () => {
-    console.log("[Dashboard.jsx] handleRefetch");
     // Toggle the refetch flag
     setShouldRefetch(!shouldRefetch);
   };
@@ -85,31 +84,16 @@ export default function Dashboard() {
   };
 
   const handleModalClose = async (choice, formData) => {
-    console.log("[Dashboard.jsx] choice:", choice); // Handle the user's choice
     if (choice === "Submit") {
-      console.log("[Dashboard.jsx] formData:", formData); // Access the form data
-
       // Combine startDate and startTime into eventStart
       const eventStartDate = formData.startDate;
       const eventStartTime = formData.startTime || "00:00";
       const eventStart = new Date(`${eventStartDate} ${eventStartTime}`);
-      console.log("[Dashboard.jsx] eventStart:", eventStart);
-      /*
-      const convertedEventStart = eventStart.getTime() + timeZoneOffset * 60 * 1000;
-      const utcEventStart = new Date(convertedEventStart);
-      console.log("[Dashboard.jsx] utcEventStart:", utcEventStart);
-      */
 
       // Combine endDate and endTime into eventEnd
       const eventEndDate = formData.endDate;
       const eventEndTime = formData.endTime || "00:00";
       const eventEnd = new Date(`${eventEndDate} ${eventEndTime}`);
-      console.log("[Dashboard.jsx] eventEnd:", eventEnd);
-      /*
-      const convertedEventEnd = eventEnd.getTime() + timeZoneOffset * 60 * 1000;
-      const utcEventEnd = new Date(convertedEventEnd);
-      console.log("[Dashboard.jsx] utcEventEnd:", utcEventEnd);
-      */
 
       // Create the final form data
       const finalFormData = {
@@ -118,14 +102,11 @@ export default function Dashboard() {
         eventEnd,
       };
 
-      console.log("[Dashboard.jsx] finalFormData:", finalFormData);
-
       // Add event to database
       try {
         const { data } = await addEvent({
           variables: { user: userId, ...finalFormData },
         });
-        console.log("[Dashboard.jsx] data:", data);
         handleRefetch();
       } catch (e) {
         console.error(e);
@@ -349,7 +330,6 @@ export default function Dashboard() {
             key={selectedDate.getTime()}
             userId={userId}
             selectedDate={selectedDate}
-            timeZoneOffset={timeZoneOffset}
             shouldRefetch={shouldRefetch}
           />
         </div>
