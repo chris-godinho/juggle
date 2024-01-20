@@ -57,6 +57,7 @@ export default function Dashboard() {
   const [shouldRefetch, setShouldRefetch] = useState(false);
 
   const handleRefetch = () => {
+    console.log("[Dashboard.jsx] handleRefetch");
     // Toggle the refetch flag
     setShouldRefetch(!shouldRefetch);
   };

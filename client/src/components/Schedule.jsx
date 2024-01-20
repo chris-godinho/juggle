@@ -8,9 +8,7 @@ import LoadingSpinner from "./LoadingSpinner";
 
 const Schedule = ({ userId, selectedDate, timeZoneOffset, shouldRefetch }) => {
   useEffect(() => {
-    if (shouldRefetch) {
-      refetch();
-    }
+    refetch();
   }, [shouldRefetch]);
 
   console.log("[Schedule.jsx] userId:", userId, "selectedDate:", selectedDate);
