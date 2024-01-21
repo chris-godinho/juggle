@@ -1,3 +1,5 @@
+// main.jsx
+
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
@@ -9,10 +11,6 @@ import Dashboard from './pages/Dashboard';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-import Settings from './pages/Settings';
-import Donate from './pages/Donate';
-import UserProfile from './pages/UserProfile';
-
 
 const router = createBrowserRouter([
   {
@@ -29,16 +27,7 @@ const router = createBrowserRouter([
       }, {
         path: '/signup',
         element: <Signup />
-      }, {
-        path: '/settings',
-        element: <Settings />
-      }, {
-        path: '/donate',
-        element: <Donate />
-      }, {
-        path: '/userprofile',
-        element: <UserProfile />
-      }, 
+      },
     ]
   },
 ]);

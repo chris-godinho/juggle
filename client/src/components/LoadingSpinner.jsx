@@ -1,4 +1,5 @@
-// Loading spinner component
+// LoadingSpinner.jsx
+
 const LoadingSpinner = () => {
   return (
     <div className="spinner-container-jg">

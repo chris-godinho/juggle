@@ -1,6 +1,6 @@
-import { Link } from "react-router-dom";
+// Header.jsx
 
-import Auth from "../utils/auth";
+import { Link } from "react-router-dom";
 
 const Header = () => {
   return (

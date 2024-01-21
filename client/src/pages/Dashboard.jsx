@@ -2,16 +2,14 @@
 
 import React, { useEffect, useState } from "react";
 
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/dark.css";
+import { useModal } from "../components/ModalProvider.jsx";
 
-import PopUpModal from "../components/PopUpModal";
 import Schedule from "../components/Schedule";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
+import NewEvent from "../components/NewEvent.jsx";
 
 import { useQuery, useMutation } from "@apollo/client";
 import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
-import { ADD_EVENT } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 import AuthService from "../utils/auth.js";
@@ -51,16 +49,11 @@ export default function Dashboard() {
 
   console.log("[Dashboard.jsx] selectedDate:", selectedDate);
 
+  const { openModal } = useModal();
+
   useEffect(() => {
     eventsRefetch();
   }, [selectedDate]);
-
-  // Set up modal window
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [formData, setFormData] = useState({});
-
-  // Set up GraphQL mutation for adding events
-  const [addEvent, { error, data }] = useMutation(ADD_EVENT);
 
   const logout = (event) => {
     // Log user out and return them to welcome page
@@ -110,13 +103,18 @@ export default function Dashboard() {
   const sleepingHours = 8 * 60;
   const totalAllottedTime = 24 * 60 - sleepingHours;
   let workPercentage;
-  workTotalTime > 0 ? workPercentage = Math.round((workTotalTime / totalAllottedTime) * 100) : workPercentage = 0;
+  workTotalTime > 0
+    ? (workPercentage = Math.round((workTotalTime / totalAllottedTime) * 100))
+    : (workPercentage = 0);
   let lifePercentage;
-  lifeTotalTime > 0 ? lifePercentage = Math.round((lifeTotalTime / totalAllottedTime) * 100) : lifePercentage = 0;
+  lifeTotalTime > 0
+    ? (lifePercentage = Math.round((lifeTotalTime / totalAllottedTime) * 100))
+    : (lifePercentage = 0);
   const unalottedTimePercentage = 100 - workPercentage - lifePercentage;
 
   // TODO: Make the workPercentage and lifePercentage values display in the side panels
   // TODO: Create a third percentage for unalotted time
+  // TODO: Refine the stats to adapt to several options in Settings (unused variables: sleepingHours, totalAllottedTime, unalottedTimePercentage)
 
   const eventSubtypes = subtypeData?.user.eventSubtypes;
 
@@ -128,224 +126,9 @@ export default function Dashboard() {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
   };
 
-  const openModal = () => {
-    setModalOpen(true);
-  };
-
-  const handleModalClose = async (choice, formData) => {
-    if (choice === "Submit") {
-      // Combine startDate and startTime into eventStart
-      const eventStartDate = formData.startDate;
-      const eventStartTime = formData.startTime || "00:00";
-      const eventStart = new Date(`${eventStartDate} ${eventStartTime}`);
-
-      // Combine endDate and endTime into eventEnd
-      const eventEndDate = formData.endDate;
-      const eventEndTime = formData.endTime || "00:00";
-      const eventEnd = new Date(`${eventEndDate} ${eventEndTime}`);
-
-      // Create the final form data
-      const finalFormData = {
-        ...formData,
-        eventStart,
-        eventEnd,
-      };
-
-      // Add event to database
-      try {
-        const { data } = await addEvent({
-          variables: { user: userId, ...finalFormData },
-        });
-        setFormData({});
-        eventsRefetch();
-      } catch (e) {
-        console.error(e);
-      }
-      setModalOpen(false);
-    } else {
-      setModalOpen(false);
-    }
-  };
-
-  const customFormModalConfig = {
-    content: (handleInputChange) => (
-      <form className="modal-form-jg">
-        <h3>New Event</h3>
-        <input
-          type="text"
-          name="title"
-          value={formData.title || ""}
-          className="modal-input-jg"
-          placeholder="Title"
-          onChange={handleInputChange}
-        />
-        <input
-          type="text"
-          name="details"
-          value={formData.details || ""}
-          className="modal-input-jg"
-          placeholder="Details"
-          onChange={handleInputChange}
-        />
-        <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">Start Date</p>
-          <Flatpickr
-            name="startDate"
-            value={formData.startDate || ""}
-            options={{
-              dateFormat: "m/d/Y",
-              allowInput: true,
-              closeOnSelect: true,
-              clickOpens: true,
-            }}
-            className="modal-datepicker-jg"
-            onChange={(selectedDates, dateString, instance) => {
-              console.log(
-                "[Dashboard.jsx] startDate onChange:",
-                selectedDates,
-                dateString,
-                instance
-              );
-              handleInputChange({
-                target: {
-                  name: "startDate",
-                  value: dateString,
-                },
-              });
-            }}
-          />
-        </div>
-        <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">Start Time</p>
-          <Flatpickr
-            name="startTime"
-            value={formData.startTime || ""}
-            className="modal-datepicker-jg"
-            options={{
-              noCalendar: true,
-              enableTime: true,
-              allowInput: true,
-              dateFormat: "h:i K",
-              closeOnSelect: true,
-              clickOpens: true,
-            }}
-            onChange={(selectedDates, dateString, instance) => {
-              console.log(
-                "[Dashboard.jsx] startTime onChange:",
-                selectedDates,
-                dateString,
-                instance
-              );
-              handleInputChange({
-                target: {
-                  name: "startTime",
-                  value: dateString,
-                },
-              });
-            }}
-          />
-        </div>
-        <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">End Date</p>
-          <Flatpickr
-            name="endDate"
-            value={formData.endDate || ""}
-            className="modal-datepicker-jg"
-            options={{
-              dateFormat: "m/d/Y",
-              allowInput: true,
-              closeOnSelect: true,
-              clickOpens: true,
-            }}
-            onChange={(selectedDates, dateString, instance) => {
-              console.log(
-                "[Dashboard.jsx] endDate onChange:",
-                selectedDates,
-                dateString,
-                instance
-              );
-              handleInputChange({
-                target: {
-                  name: "endDate",
-                  value: dateString,
-                },
-              });
-            }}
-          />
-        </div>
-        <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">End Time</p>
-          <Flatpickr
-            name="endTime"
-            value={formData.endTime || ""}
-            className="modal-datepicker-jg"
-            options={{
-              noCalendar: true,
-              enableTime: true,
-              allowInput: true,
-              dateFormat: "h:i K",
-              closeOnSelect: true,
-              clickOpens: true,
-            }}
-            onChange={(selectedDates, dateString, instance) => {
-              console.log(
-                "[Dashboard.jsx] endTime onChange:",
-                selectedDates,
-                dateString,
-                instance
-              );
-              handleInputChange({
-                target: {
-                  name: "endTime",
-                  value: dateString,
-                },
-              });
-            }}
-          />
-        </div>
-        <div className="modal-datepicker-select-tray-jg">
-          <p className="modal-datepicker-select-label-jg">Category</p>
-          <select
-            className="modal-select-jg modal-halfsize-jg modal-halfsize-left-jg"
-            name="subtype"
-            value={formData.subtype || ""}
-            onChange={handleInputChange}
-          >
-            <option value=""></option>
-            {eventSubtypes &&
-              eventSubtypes.map((subtype, index) => (
-                <option key={index} value={subtype.subtype}>
-                  {subtype.subtype}
-                </option>
-              ))}
-          </select>
-          <p className="modal-datepicker-select-label-jg">Type</p>
-          <select
-            className="modal-select-jg modal-halfsize-jg"
-            name="type"
-            value={formData.type || ""}
-            onChange={handleInputChange}
-          >
-            <option value=""></option>
-            <option value="work">Work</option>
-            <option value="life">Life</option>
-          </select>
-        </div>
-        <input
-          type="text"
-          name="location"
-          value={formData.location || ""}
-          className="modal-input-jg"
-          placeholder="Location"
-          onChange={handleInputChange}
-        />
-      </form>
-    ),
-    buttons: [
-      { label: "Submit", onClick: () => handleModalClose("Submit", formData) },
-      { label: "Cancel", onClick: () => handleModalClose("Cancel", formData) },
-    ],
-  };
+  const handleNewEventModalClose = () => {
+    eventsRefetch();
+  }
 
   return (
     <main className="main-jg">
@@ -391,7 +174,9 @@ export default function Dashboard() {
             </div>
             <button
               className="round-button-jg life-border-jg"
-              onClick={openModal}
+              onClick={() =>
+                openModal(<NewEvent eventSubtypes={eventSubtypes} handleNewEventModalClose={handleNewEventModalClose} userId={userId} />)
+              }
             >
               <img
                 className="add-event-picture-jg"
@@ -418,14 +203,6 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
-      <PopUpModal
-        isOpen={isModalOpen}
-        onClose={handleModalClose}
-        modalConfig={customFormModalConfig}
-        eventSubtypes={eventSubtypes}
-        formData={formData}
-        setFormData={setFormData}
-      />
     </main>
   );
 }
