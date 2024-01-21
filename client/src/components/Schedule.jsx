@@ -1,35 +1,9 @@
 // Schedule.jsx
 
-import { useEffect } from "react";
-import { useQuery } from "@apollo/client";
-import { QUERY_EVENTS_BY_DATE } from "../utils/queries";
-
-import LoadingSpinner from "./LoadingSpinner";
-
-const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
-  useEffect(() => {
-    refetch();
-  }, [shouldRefetch]);
-
-  const displayTime = new Date(selectedDate);
-  displayTime.setHours(0, 0, 0, 0);
-
-  const { loading, data, error, refetch } = useQuery(QUERY_EVENTS_BY_DATE, {
-    variables: { user: userId, eventStart: displayTime },
-  });
-
-  if (loading) {
-    return <LoadingSpinner />;
-  }
-
-  if (error) {
-    console.error("[Schedule.jsx] GraphQL Error:", error);
-    return <div>Error fetching data.</div>;
-  }
-
-  const events = data?.eventsByDate || [];
-
-  console.log("[Schedule.jsx] events:", events);
+const Schedule = ({ events, selectedDate }) => {
+  
+  const displayDate = new Date(selectedDate);
+  displayDate.setHours(0, 0, 0, 0);
 
   const formatTime = (dateObject) => {
     const result = dateObject.toLocaleString("en-US", {
@@ -43,7 +17,7 @@ const Schedule = ({ userId, selectedDate, shouldRefetch }) => {
   return (
     <div className="schedule-container-jg">
       {Array.from(Array(48).keys()).map((index) => {
-        const currentDisplayTime = new Date(displayTime);
+        const currentDisplayTime = new Date(displayDate);
         currentDisplayTime.setMinutes(
           currentDisplayTime.getMinutes() + index * 30
         );

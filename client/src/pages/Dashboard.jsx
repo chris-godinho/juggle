@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+// Dashboard.jsx
+
+import React, { useEffect, useState } from "react";
 
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
@@ -8,13 +10,15 @@ import Schedule from "../components/Schedule";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 
 import { useQuery, useMutation } from "@apollo/client";
-import { QUERY_USER } from "../utils/queries.js";
+import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 import { ADD_EVENT } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 import AuthService from "../utils/auth.js";
+import { calculateEventStats } from "../utils/eventUtils.js";
 
 export default function Dashboard() {
+  // Set up date variables for display
   const weekDays = [
     "Sunday",
     "Monday",
@@ -38,24 +42,25 @@ export default function Dashboard() {
     "November",
     "December",
   ];
+
+  // Set up date variables for queries and new events
   const localDate = new Date();
   const midnightLocalDate = new Date(localDate);
   midnightLocalDate.setHours(0, 0, 0, 0);
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
 
-  const userProfile = AuthService.getProfile();
-  console.log("[Dashboard.jsx] userProfile:", userProfile);
-  const userId = userProfile.data._id;
+  console.log("[Dashboard.jsx] selectedDate:", selectedDate);
 
+  useEffect(() => {
+    eventsRefetch();
+  }, [selectedDate]);
+
+  // Set up modal window
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [formData, setFormData] = useState({});
+
+  // Set up GraphQL mutation for adding events
   const [addEvent, { error, data }] = useMutation(ADD_EVENT);
-
-  // Add a state to track a refetch flag
-  const [shouldRefetch, setShouldRefetch] = useState(false);
-
-  const handleRefetch = () => {
-    // Toggle the refetch flag
-    setShouldRefetch(!shouldRefetch);
-  };
 
   const logout = (event) => {
     // Log user out and return them to welcome page
@@ -64,19 +69,19 @@ export default function Dashboard() {
     window.location.href = "/";
   };
 
-  const selectPreviousDay = (event) => {
-    setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
-  };
+  // Get user profile
+  const userProfile = AuthService.getProfile();
+  const userId = userProfile.data._id;
 
-  const selectNextDay = (event) => {
-    setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
-  };
-
-  // Set up modal window
-  const [isModalOpen, setModalOpen] = useState(false);
-  const [formData, setFormData] = useState({});
-
-  console.log("[Dashboard.jsx] username:", userProfile.data.username);
+  // Query events for the selected date
+  const {
+    loading: eventsLoading,
+    data: eventsData,
+    error: eventsError,
+    refetch: eventsRefetch,
+  } = useQuery(QUERY_EVENTS_BY_DATE, {
+    variables: { user: userId, eventStart: selectedDate },
+  });
 
   const {
     loading: subtypeLoading,
@@ -86,20 +91,42 @@ export default function Dashboard() {
     variables: { username: userProfile.data.username },
   });
 
-  if (subtypeLoading) {
+  if (eventsLoading || subtypeLoading) {
     return <LoadingSpinner />;
   }
 
-  if (subtypeError) {
-    console.error("[Dashboard.jsx] GraphQL Error:", error);
+  if (eventsError || subtypeError) {
+    console.error("[Schedule.jsx] GraphQL Error:", error);
     return <div>Error fetching data.</div>;
   }
 
-  console.log("[Dashboard.jsx] subtypeData:", subtypeData);
+  const events = eventsData?.eventsByDate || [];
+
+  console.log("[Schedule.jsx] events:", events);
+
+  const { workCount, workTotalTime, lifeCount, lifeTotalTime } =
+    calculateEventStats(events);
+
+  const sleepingHours = 8 * 60;
+  const totalAllottedTime = 24 * 60 - sleepingHours;
+  let workPercentage;
+  workTotalTime > 0 ? workPercentage = Math.round((workTotalTime / totalAllottedTime) * 100) : workPercentage = 0;
+  let lifePercentage;
+  lifeTotalTime > 0 ? lifePercentage = Math.round((lifeTotalTime / totalAllottedTime) * 100) : lifePercentage = 0;
+  const unalottedTimePercentage = 100 - workPercentage - lifePercentage;
+
+  // TODO: Make the workPercentage and lifePercentage values display in the side panels
+  // TODO: Create a third percentage for unalotted time
 
   const eventSubtypes = subtypeData?.user.eventSubtypes;
 
-  console.log("[Dashboard.jsx] eventSubtypes:", eventSubtypes);
+  const selectPreviousDay = (event) => {
+    setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
+  };
+
+  const selectNextDay = (event) => {
+    setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
+  };
 
   const openModal = () => {
     setModalOpen(true);
@@ -130,7 +157,7 @@ export default function Dashboard() {
           variables: { user: userId, ...finalFormData },
         });
         setFormData({});
-        handleRefetch();
+        eventsRefetch();
       } catch (e) {
         console.error(e);
       }
@@ -328,10 +355,10 @@ export default function Dashboard() {
             <h3>Work</h3>
           </div>
           <div className="side-panel-middle-jg">
-            <h1>50%</h1>
+            <h1>{workPercentage}%</h1>
           </div>
           <div className="side-panel-bottom-jg">
-            <p>of your day</p>
+            <p>of your waking hours</p>
           </div>
         </div>
         <div className="dashboard-main-panel-jg">
@@ -375,9 +402,8 @@ export default function Dashboard() {
           </div>
           <Schedule
             key={selectedDate.getTime()}
-            userId={userId}
+            events={events}
             selectedDate={selectedDate}
-            shouldRefetch={shouldRefetch}
           />
         </div>
         <div className="dashboard-side-panel-jg life-text-jg">
@@ -385,10 +411,10 @@ export default function Dashboard() {
             <h3>Life</h3>
           </div>
           <div className="side-panel-middle-jg">
-            <h1>50%</h1>
+            <h1>{lifePercentage}%</h1>
           </div>
           <div className="side-panel-bottom-jg">
-            <p>of your day</p>
+            <p>of your waking hours</p>
           </div>
         </div>
       </div>
