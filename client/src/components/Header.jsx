@@ -2,7 +2,18 @@
 
 import { Link } from "react-router-dom";
 
+import Auth from "../utils/auth";
+import AuthService from "../utils/auth.js";
+
 const Header = () => {
+  
+  const logout = (event) => {
+    // Log user out and return them to welcome page
+    event.preventDefault();
+    Auth.logout();
+    window.location.href = "/";
+  };
+
   return (
     <header className="header-jg">
       <img
@@ -16,12 +27,23 @@ const Header = () => {
         </Link>
       </div>
       <div>
-        <button className="button-jg header-button-jg">
-          <Link to="/login">Login</Link>
-        </button>
-        <button className="button-jg header-button-jg">
-          <Link to="/signup">Signup</Link>
-        </button>
+        {Auth.loggedIn() ? (
+          <>
+            <p className="loggedin-text-jg">{AuthService.getProfile().data.username}</p>
+            <button onClick={logout} className="button-jg header-button-jg">
+              Logout
+            </button>
+          </>
+        ) : (
+          <>
+            <button className="button-jg header-button-jg">
+              <Link to="/login">Login</Link>
+            </button>
+            <button className="button-jg header-button-jg">
+              <Link to="/signup">Signup</Link>
+            </button>
+          </>
+        )}
       </div>
     </header>
   );

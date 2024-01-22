@@ -3,6 +3,7 @@
 :root {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
+  --main-background-color-darker-accent: rgba(20, 27, 25, 1);
 
   --main-separator-color: rgba(148, 151, 149, 0.5);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
@@ -66,6 +67,10 @@ a {
   text-decoration: none;
 }
 
+.text-link-jg {
+  color: var(--work-event-color);
+}
+
 p {
   line-height: 1.5em;
 }
@@ -127,7 +132,6 @@ select::placeholder {
 
 .main-jg {
   min-height: 100vh;
-  padding: 0.5em;
   overflow-y: hidden;
 }
 
@@ -163,6 +167,16 @@ select::placeholder {
   background-color: var(--life-event-color-dark);
 }
 
+.hidden-jg {
+  display: none;
+}
+
+.disabled-jg {
+  cursor: default;
+  pointer-events: none;
+  color: var(--main-separator-color-light);
+}
+
 /* Modal Window rules */
 .modal-overlay-jg {
   position: fixed;
@@ -189,12 +203,24 @@ select::placeholder {
   box-shadow: 10px 10px 7px 5px var(--box-shadow-color);
 }
 
-.modal-form-jg {
+.modal-content-jg {
   flex: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+.modal-close-button-jg {
+  position: absolute;
+  top: -0.8em;
+  right: -1.5em;
+  color: var(--main-separator-color-light);
+}
+
+.modal-close-button-jg:hover {
+  color: var(--main-text-color);
 }
 
 .modal-input-jg {
@@ -308,16 +334,23 @@ select::placeholder {
 .header-jg {
   display: flex;
   align-items: center;
-  padding: 0em;
+  padding: 0.3em 1em;
+  background-color: var(--main-background-color-darker-accent);
+  box-shadow: 0px 5px 5px -1px var(--box-shadow-color);
 }
 
 .header-logo-jg {
-  height: 4em;
-  margin-right: 0.8em;
+  height: 2.5em;
+  margin-right: 1em;
 }
 
 .header-brand-name-jg {
   flex: 1;
+}
+
+.loggedin-text-jg {
+  display: inline;
+  margin-right: 2em;
 }
 
 .header-button-jg {
@@ -329,7 +362,7 @@ select::placeholder {
 }
 
 /* Home page rules */
-.home-welcome-jg {
+.home-jg {
   min-height: 85vh;
   display: flex;
   align-items: center;
@@ -337,26 +370,26 @@ select::placeholder {
   padding: 1em 3.5em;
 }
 
-.home-welcome-image-container-jg {
+.home-image-container-jg {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.home-welcome-clown-jg {
+.home-clown-jg {
   height: 70vh;
 }
 
-.home-welcome-text-jg {
+.home-text-jg {
   flex: 2;
   text-align: center;
   padding: 0 20vh;
   margin-bottom: 7vh;
 }
 
-.home-welcome-text-jg h1,
-p {
+.home-text-jg h1,
+.home-text-jg p {
   margin-bottom: 2em;
 }
 
@@ -407,6 +440,151 @@ p {
 .login-signup-button-jg {
   margin-top: 1em;
   margin-bottom: 1.5em;
+}
+
+/* Welcome page rules */
+.welcome-jg {
+  min-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-screen-jg {
+  margin-top: 2em;
+  margin-bottom: 0.5em;
+  min-height: 58vh;
+}
+
+.welcome-text-container-jg {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 80vw;
+}
+
+.welcome-text-jg {
+  display: flex;
+  flex-direction: column;
+  max-width: 80vw;
+}
+
+.welcome-text-jg h1,
+.welcome-text-jg p {
+  margin-bottom: 1em;
+}
+
+.upload-area-jg {
+  margin-left: 10vw;
+  height: 35vh;
+  width: 35vh;
+  border: 2px dashed var(--main-separator-color);
+  border-radius: 10%;
+}
+
+.welcome-work-life-slider-jg {
+  width: 50%;
+  height: 1em;
+  background-color: var(--work-event-color);
+}
+
+.sleep-dropdown-area-jg {
+  min-width: 50%;
+  margin-left: 10vw;
+}
+
+.sleep-dropdown-day-jg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sleep-dropdown-day-jg p {
+  margin-left: 2em;
+}
+
+.sleep-dropdown-day-title-jg,
+.sleep-dropdown-day-to-jg {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.sleep-dropdown-day-title-jg {
+  width: 20%;
+}
+
+.sleep-select-jg {
+  width: 30%;
+  margin-left: 2em;
+}
+
+.work-life-activities-list-jg {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.work-life-activity-checkbox-jg {
+  margin-right: 1em;
+  margin-bottom: 1em;
+  width: 20%;
+}
+
+.color-scheme-table-jg {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.color-scheme-card-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+}
+
+.color-scheme-sample-jg {
+  height: 10vh;
+  border-radius: 10%;
+  border: 1px solid var(--main-background-color-accent);
+  overflow: hidden;
+  box-shadow: 5px 5px 10px 3px var(--box-shadow-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-scheme-sample-jg:hover {
+  transform: scale(0.98);
+}
+
+.color-scheme-name-jg {
+  margin-top: 0.4em;
+  margin-bottom: 1em;
+}
+
+.welcome-progress-bar-jg {
+  width: 100vw;
+  height: 0.5vh;
+}
+
+.welcome-progress-bar-filled-jg {
+  width: 0%;
+  min-width: 0%;
+  height: 100%;
+  background-color: var(--life-event-color);
+  transition: min-width 0.5s ease-in-out;
+}
+
+.navigation-arrow-container-jg {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 90vw;
+  margin-top: 2em;
 }
 
 /* Dashboard page rules */
@@ -580,6 +758,22 @@ p {
   margin-left: 2em;
 }
 
+/* User Menu rules */
+.user-profile-picture-jg {
+  height: 10em;
+  width: 10em;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.user-menu-link-jg {
+  margin-bottom: 1em;
+}
+
 /* Error Page rules */
 #error-page-jg {
   display: flex;
@@ -590,4 +784,11 @@ p {
 .clown-error-jg {
   margin-right: 3vw;
   height: 35vh;
+}
+
+.error-button-tray-jg {
+  display: flex;
+  width: 50%;
+  justify-content: space-between;
+  margin-top: 3em;
 }

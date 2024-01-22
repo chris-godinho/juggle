@@ -5,15 +5,15 @@ const Home = () => {
   return (
     <main className="main-jg">
       <Header />
-      <div className="home-welcome-jg">
-        <div className="home-welcome-image-container-jg">
+      <div className="home-jg">
+        <div className="home-image-container-jg">
           <img
             src="/clown_welcome.png"
-            className="home-welcome-clown-jg"
+            className="home-clown-jg"
             alt="Juggler Clown"
           />
         </div>
-        <div className="home-welcome-text-jg">
+        <div className="home-text-jg">
           <h1>Welcome to Juggler.</h1>
           <p>
             Introducing Juggler, the ultimate web organizer designed to

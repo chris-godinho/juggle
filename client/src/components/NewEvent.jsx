@@ -101,7 +101,7 @@ const NewEvent = ({ eventSubtypes, handleNewEventModalClose, userId }) => {
 
   return (
     <div>
-      <form className="modal-form-jg">
+      <form className="modal-content-jg">
         <h3>New Event</h3>
         <input
           type="text"

@@ -8,12 +8,12 @@ import Schedule from "../components/Schedule";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import NewEvent from "../components/NewEvent.jsx";
 
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
-import Auth from "../utils/auth";
 import AuthService from "../utils/auth.js";
 import { calculateEventStats } from "../utils/eventUtils.js";
+import UserMenu from "../components/UserMenu.jsx";
 
 export default function Dashboard() {
   // Set up date variables for display
@@ -55,16 +55,12 @@ export default function Dashboard() {
     eventsRefetch();
   }, [selectedDate]);
 
-  const logout = (event) => {
-    // Log user out and return them to welcome page
-    event.preventDefault();
-    Auth.logout();
-    window.location.href = "/";
-  };
-
   // Get user profile
   const userProfile = AuthService.getProfile();
   const userId = userProfile.data._id;
+  const username = userProfile.data.username;
+
+  console.log("[Dashboard.jsx] userProfile:", userProfile);
 
   // Query events for the selected date
   const {
@@ -116,6 +112,8 @@ export default function Dashboard() {
   // TODO: Create a third percentage for unalotted time
   // TODO: Refine the stats to adapt to several options in Settings (unused variables: sleepingHours, totalAllottedTime, unalottedTimePercentage)
 
+  console.log("[Dashboard.jsx] subtypeData:", subtypeData);
+
   const eventSubtypes = subtypeData?.user.eventSubtypes;
 
   const selectPreviousDay = (event) => {
@@ -128,7 +126,7 @@ export default function Dashboard() {
 
   const handleNewEventModalClose = () => {
     eventsRefetch();
-  }
+  };
 
   return (
     <main className="main-jg">
@@ -146,7 +144,10 @@ export default function Dashboard() {
         </div>
         <div className="dashboard-main-panel-jg">
           <div className="dashboard-main-top-row-jg">
-            <button className="round-button-jg work-border-jg" onClick={logout}>
+            <button
+              className="round-button-jg work-border-jg"
+              onClick={() => openModal(<UserMenu username={username} userId={userId} />)}
+            >
               <img
                 className="dashboard-profile-picture-jg"
                 src="/test-prof-pic.jpg"
@@ -175,7 +176,13 @@ export default function Dashboard() {
             <button
               className="round-button-jg life-border-jg"
               onClick={() =>
-                openModal(<NewEvent eventSubtypes={eventSubtypes} handleNewEventModalClose={handleNewEventModalClose} userId={userId} />)
+                openModal(
+                  <NewEvent
+                    eventSubtypes={eventSubtypes}
+                    handleNewEventModalClose={handleNewEventModalClose}
+                    userId={userId}
+                  />
+                )
               }
             >
               <img
