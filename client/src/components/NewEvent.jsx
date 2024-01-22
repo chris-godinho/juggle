@@ -100,8 +100,15 @@ const NewEvent = ({ eventSubtypes, handleNewEventModalClose, userId }) => {
   };
 
   return (
-    <div>
+    <div className="modal-jg new-event-modal-container-jg">
       <form className="modal-content-jg">
+        <a
+          href="#"
+          className="modal-close-button-jg"
+          onClick={() => handleModalClose("Cancel", formData)}
+        >
+          <span className="material-symbols-outlined">close</span>
+        </a>
         <h3>New Event</h3>
         <input
           type="text"

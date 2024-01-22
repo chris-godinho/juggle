@@ -1,53 +1,58 @@
 // UserMenu.jsx
 
+import React, { useState } from "react";
+
 import { useModal } from "./ModalProvider";
 
-import Auth from "../utils/auth";
+import UserMenuOptions from "./UserMenuOptions";
+import UserProfile from "./UserProfile";
+import WorkLifeStats from "./WorkLifeStats";
+import Settings from "./Settings";
+import Donate from "./Donate";
 
 export default function UserMenu({ username, userId }) {
+  const [userMenuModalContent, setUserMenuModalContent] =
+    useState("UserMenuOptions");
+
   const { closeModal } = useModal();
 
-  const logout = (event) => {
-    // Log user out and return them to welcome page
-    event.preventDefault();
-    Auth.logout();
-    window.location.href = "/";
+  const backToMenu = (event) => {
+    setUserMenuModalContent("UserMenuOptions");
+  };
+
+  const renderContent = () => {
+    switch (userMenuModalContent) {
+      case "UserMenuOptions":
+        return (
+          <UserMenuOptions
+            username={username}
+            setUserMenuModalContent={setUserMenuModalContent}
+          />
+        );
+      case "UserProfile":
+        return <UserProfile />;
+      case "WorkLifeStats":
+        return <WorkLifeStats />;
+      case "Settings":
+        return <Settings />;
+      case "Donate":
+        return <Donate />;
+      default:
+        return null;
+    }
   };
 
   return (
-    <div className="modal-content-jg">
-      <a href="#" className="modal-close-button-jg" onClick={closeModal}>
-        <span className="material-symbols-outlined">close</span>
-      </a>
-      <div className="user-profile-picture-jg">
-        <a href="#" className="user-menu-link-jg">
-          <img
-            className="dashboard-profile-picture-jg"
-            src="/test-prof-pic.jpg"
-            alt="profile picture"
-          />
+    <div className="modal-jg user-menu-modal-container-jg">
+      <div className="modal-content-jg">
+        <a href="#" className={userMenuModalContent === "UserMenuOptions" ? "modal-back-button-jg hidden-jg" : "modal-back-button-jg"} onClick={backToMenu}>
+          <span className="material-symbols-outlined">arrow_back_ios_new</span>
         </a>
+        <a href="#" className="modal-close-button-jg" onClick={closeModal}>
+          <span className="material-symbols-outlined">close</span>
+        </a>
+        {renderContent()}
       </div>
-      <h1>
-        <a href="#" className="user-menu-link-jg">
-          {username}
-        </a>
-      </h1>
-      <a href="#" className="user-menu-link-jg">
-        View/Edit Profile
-      </a>
-      <a href="#" className="user-menu-link-jg">
-        View Stats
-      </a>
-      <a href="#" className="user-menu-link-jg">
-        User Settings
-      </a>
-      <a href="#" className="user-menu-link-jg">
-        Support Us
-      </a>
-      <a href="#" onClick={logout} className="user-menu-link-jg">
-        Logout
-      </a>
     </div>
   );
 }

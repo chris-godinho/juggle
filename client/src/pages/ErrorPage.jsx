@@ -33,7 +33,7 @@ export default function ErrorPage() {
           </p>
           <div className="error-button-tray-jg">
             <BackButton />
-            <button onClick={logout} className="button-jg">
+            <button onClick={logout} className="button-jg error-button-jg">
               Logout
             </button>
           </div>

@@ -23,9 +23,7 @@ export const ModalProvider = ({ children }) => {
       {children}
       {isModalOpen && modalContent && (
         <div className="modal-overlay-jg">
-          <div className="modal-jg">
             {modalContent}
-          </div>
         </div>
       )}
     </ModalContext.Provider>

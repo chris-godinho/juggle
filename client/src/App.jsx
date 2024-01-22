@@ -9,6 +9,10 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { ModalProvider } from "./components/ModalProvider.jsx";
+import {
+  ColorSchemeProvider,
+  useColorScheme,
+} from "./components/ColorSchemeProvider.jsx";
 import { Outlet } from "react-router-dom";
 
 // Construct our main GraphQL API endpoint
@@ -38,11 +42,23 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ModalProvider>
-        <Outlet />
-      </ModalProvider>
+      <ColorSchemeProvider>
+        <AppContent />
+      </ColorSchemeProvider>
     </ApolloProvider>
   );
 }
+
+const AppContent = () => {
+  const { colorScheme } = useColorScheme();
+
+  return (
+    <div id="color-scheme-jg" className={colorScheme}>
+      <ModalProvider>
+        <Outlet />
+      </ModalProvider>
+    </div>
+  );
+};
 
 export default App;

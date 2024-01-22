@@ -146,7 +146,14 @@ export default function Dashboard() {
           <div className="dashboard-main-top-row-jg">
             <button
               className="round-button-jg work-border-jg"
-              onClick={() => openModal(<UserMenu username={username} userId={userId} />)}
+              onClick={() =>
+                openModal(
+                  <UserMenu
+                    username={username}
+                    userId={userId}
+                  />
+                )
+              }
             >
               <img
                 className="dashboard-profile-picture-jg"
