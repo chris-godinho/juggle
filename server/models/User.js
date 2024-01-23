@@ -32,6 +32,9 @@ const userSchema = new Schema({
   lastName: {
     type: String,
   },
+  birthDate: {
+    type: Date,
+  },
   colorModeSetting: {
     type: String,
     default: "default-mode-jg",

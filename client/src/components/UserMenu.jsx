@@ -13,6 +13,7 @@ import Donate from "./Donate";
 export default function UserMenu({ username, userId }) {
   const [userMenuModalContent, setUserMenuModalContent] =
     useState("UserMenuOptions");
+  const [userDeleted, setUserDeleted] = useState(false);
 
   const { closeModal } = useModal();
 
@@ -30,7 +31,7 @@ export default function UserMenu({ username, userId }) {
           />
         );
       case "UserProfile":
-        return <UserProfile />;
+        return <UserProfile username={username} backToMenu={backToMenu} setUserDeleted={setUserDeleted} />;
       case "WorkLifeStats":
         return <WorkLifeStats />;
       case "Settings":
@@ -45,12 +46,26 @@ export default function UserMenu({ username, userId }) {
   return (
     <div className="modal-jg user-menu-modal-container-jg">
       <div className="modal-content-jg">
-        <a href="#" className={userMenuModalContent === "UserMenuOptions" ? "modal-back-button-jg hidden-jg" : "modal-back-button-jg"} onClick={backToMenu}>
-          <span className="material-symbols-outlined">arrow_back_ios_new</span>
-        </a>
-        <a href="#" className="modal-close-button-jg" onClick={closeModal}>
-          <span className="material-symbols-outlined">close</span>
-        </a>
+        {!userDeleted && (
+          <>
+            <a
+              href="#"
+              className={
+                userMenuModalContent === "UserMenuOptions"
+                  ? "modal-back-button-jg hidden-jg"
+                  : "modal-back-button-jg"
+              }
+              onClick={backToMenu}
+            >
+              <span className="material-symbols-outlined">
+                arrow_back_ios_new
+              </span>
+            </a>
+            <a href="#" className="modal-close-button-jg" onClick={closeModal}>
+              <span className="material-symbols-outlined">close</span>
+            </a>
+          </>
+        )}
         {renderContent()}
       </div>
     </div>

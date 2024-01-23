@@ -25,7 +25,7 @@ export default function UserMenuOptions({
           />
         </a>
       </div>
-      <h1>
+      <h1 className="user-menu-username-jg">
         <a
           href="#"
           className="user-menu-link-jg"

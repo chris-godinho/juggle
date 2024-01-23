@@ -7,6 +7,7 @@ const typeDefs = `
     firstName: String
     middleName: String
     lastName: String
+    birthDate: DateTime
     colorModeSetting: String
     eventSubtypes: [EventSubtype]
     events: [Event]!
@@ -40,6 +41,11 @@ const typeDefs = `
     user: User
   }
 
+  type DeleteUserResponse {
+    success: Boolean!
+    message: String!
+  }
+
   scalar DateTime
 
   type Query {
@@ -52,6 +58,8 @@ const typeDefs = `
 
   type Mutation {
     addUser(username: String!, email: String!, password: String!, firstName: String!, middleName: String, lastName: String): Auth
+    updateUser(username: String!, email: String!, password: String, birthDate: DateTime): User
+    deleteUser(username: String!): DeleteUserResponse
     login(username: String!, password: String!): Auth
     addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime): Event
     removeEvent(eventId: ID!): Event

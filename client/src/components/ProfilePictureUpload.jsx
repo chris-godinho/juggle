@@ -3,7 +3,7 @@ import { useDropzone } from "react-dropzone";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
-const ProfilePictureUpload = ({ onCrop }) => {
+const ProfilePictureUpload = () => {
   const [uploadedImage, setUploadedImage] = useState(null);
   const [cropper, setCropper] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -73,6 +73,7 @@ const ProfilePictureUpload = ({ onCrop }) => {
     return new Blob([ab], { type: "image/png" });
   }
 
+  // TODO: Add the option to have the profile picture as the background to the upload area
   return (
     <div>
       {!uploadedImage && (

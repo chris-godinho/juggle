@@ -15,6 +15,8 @@
 
   --button-text-color: rgba(28, 35, 33, 1);
 
+  --warning-color: rgba(255, 0, 0, 1);
+
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(42, 203, 152, 1);
@@ -25,6 +27,7 @@
   --work-event-color-dark: rgba(235, 80, 0, 1);
 
   --main-text-color: rgba(238, 241, 239, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -42,6 +45,8 @@
   --input-placeholder-text-color: rgba(118, 111, 119, 1);
 
   --button-text-color: rgba(28, 35, 33, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -53,6 +58,7 @@
   --work-event-color-dark: rgba(235, 80, 0, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
+  --secondary-text-color: rgba(28, 35, 33, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -70,17 +76,20 @@
   --input-placeholder-text-color: rgba(148, 151, 149, 1);
 
   --button-text-color: rgba(28, 35, 33, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(148, 151, 149, 1);
-  --life-event-color-light: rgba(168, 171, 169, 1);
-  --life-event-color-dark: rgba(128, 131, 129, 1);
-  --work-event-color: rgba(108, 111, 119, 1);
-  --work-event-color-light: rgba(128, 131, 139, 1);
-  --work-event-color-dark: rgba(88, 91, 99, 1);
+  --life-event-color: rgba(218, 221, 219, 1);
+  --life-event-color-light: rgba(248, 251, 249, 1);
+  --life-event-color-dark: rgba(188, 191, 189, 1);
+  --work-event-color: rgba(148, 151, 149, 1);
+  --work-event-color-light: rgba(178, 181, 179, 1);
+  --work-event-color-dark: rgba(118, 121, 119, 1);
 
   --main-text-color: rgba(238, 241, 239, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -90,25 +99,28 @@
   --main-background-color-accent: rgba(76, 106, 148, 1);
   --main-background-color-darker-accent: rgba(29, 47, 74, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(238, 241, 239, 0.8);
+  --main-separator-color-light: rgba(238, 241, 239, 0.6);
 
   --input-background-color: rgba(53, 73, 94, 1);
   --input-text-color: rgba(238, 241, 239, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-placeholder-text-color: rgba(238, 241, 239, 0.8);
 
   --button-text-color: rgba(28, 35, 33, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(0, 194, 203, 1);
   --life-event-color-light: rgba(20, 214, 223, 1);
   --life-event-color-dark: rgba(0, 174, 183, 1);
-  --work-event-color: rgba(20, 143, 108, 1);
-  --work-event-color-light: rgba(40, 163, 128, 1);
-  --work-event-color-dark: rgba(0, 123, 88, 1);
+  --work-event-color: rgba(60, 223, 148, 1);
+  --work-event-color-light: rgba(90, 253, 178, 1);
+  --work-event-color-dark: rgba(30, 193, 118, 1);
 
   --main-text-color: rgba(238, 241, 239, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -116,27 +128,30 @@
 #color-scheme-jg.beige-mode-jg {
   --main-background-color: rgba(249, 224, 217, 1);
   --main-background-color-accent: rgba(53, 33, 44, 1);
-  --main-background-color-darker-accent: rgba(105, 87, 83, 1);
+  --main-background-color-darker-accent: rgba(145, 127, 123, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(98, 101, 99, 0.8);
+  --main-separator-color-light: rgba(98, 101, 99, 0.8);
 
   --input-background-color: rgba(249, 224, 217, 1);
   --input-text-color: rgba(28, 35, 33, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-placeholder-text-color: rgba(128, 121, 129, 1);
 
   --button-text-color: rgba(238, 241, 239, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(63, 43, 54, 1);
-  --life-event-color-light: rgba(83, 63, 74, 1);
-  --life-event-color-dark: rgba(43, 23, 34, 1);
-  --work-event-color: rgba(147, 109, 121, 1);
-  --work-event-color-light: rgba(167, 129, 141, 1);
-  --work-event-color-dark: rgba(127, 89, 101, 1);
+  --life-event-color: rgba(102, 41, 70, 1);
+  --life-event-color-light: rgba(132, 71, 100, 1);
+  --life-event-color-dark: rgba(72, 31, 40, 1);
+  --work-event-color: rgba(57, 79, 91, 1);
+  --work-event-color-light: rgba(87, 109, 121, 1);
+  --work-event-color-dark: rgba(27, 49, 61, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -150,21 +165,24 @@
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
   --input-background-color: rgba(62, 12, 4, 1);
-  --input-text-color: rgba(232, 226, 168, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-text-color: rgba(252, 246, 188, 1);
+  --input-placeholder-text-color: rgba(168, 161, 169, 1);
 
-  --button-text-color: rgba(232, 226, 168, 1);
+  --button-text-color: rgba(28, 35, 33, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(125, 103, 81, 1);
-  --life-event-color-light: rgba(145, 123, 101, 1);
-  --life-event-color-dark: rgba(105, 83, 61, 1);
-  --work-event-color: rgba(202, 196, 138, 1);
+  --life-event-color: rgba(154, 251, 173, 1);
+  --life-event-color-light: rgba(184, 255, 203, 1);
+  --life-event-color-dark: rgba(124, 221, 143, 1);
+  --work-event-color: rgba(247, 199, 61, 1);
   --work-event-color-light: rgba(222, 216, 158, 1);
   --work-event-color-dark: rgba(182, 176, 118, 1);
 
-  --main-text-color: rgba(232, 226, 168, 1);
+  --main-text-color: rgba(252, 246, 188, 1);
+  --secondary-text-color: rgba(252, 246, 188, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -174,53 +192,59 @@
   --main-background-color-accent: rgba(44, 101, 103, 1);
   --main-background-color-darker-accent: rgba(229, 88, 18, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(248, 251, 249, 0.5);
+  --main-separator-color-light: rgba(248, 251, 249, 0.5);
 
   --input-background-color: rgba(14, 71, 73, 1);
   --input-text-color: rgba(239, 231, 218, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-placeholder-text-color: rgba(218, 211, 219, 0.8);
 
   --button-text-color: rgba(28, 35, 33, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(149, 198, 35, 1);
   --life-event-color-light: rgba(169, 218, 55, 1);
   --life-event-color-dark: rgba(129, 178, 15, 1);
-  --work-event-color: rgba(80, 80, 57, 1);
-  --work-event-color-light: rgba(100, 100, 77, 1);
-  --work-event-color-dark: rgba(60, 60, 37, 1);
+  --work-event-color: rgba(249, 108, 38, 1);
+  --work-event-color-light: rgba(255, 138, 68, 1);
+  --work-event-color-dark: rgba(219, 78, 8, 1);
 
   --main-text-color: rgba(239, 231, 218, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
 
 #color-scheme-jg.purple-mode-jg {
-  --main-background-color: rgba(0, 53, 169, 1);
+  --main-background-color: rgba(0, 33, 139, 1);
   --main-background-color-accent: rgba(30, 83, 199, 1);
-  --main-background-color-darker-accent: rgba(0, 23, 139, 1);
+  --main-background-color-darker-accent: rgba(115, 37, 111, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(238, 241, 239, 0.5);
+  --main-separator-color-light: rgba(238, 241, 239, 0.5);
 
-  --input-background-color: rgba(0, 53, 169, 1);
+  --input-background-color: rgba(0, 33, 139, 1);
   --input-text-color: rgba(238, 241, 239, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-placeholder-text-color: rgba(178, 171, 179, 1);
 
   --button-text-color: rgba(238, 241, 239, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(215, 0, 112, 1);
-  --life-event-color-light: rgba(235, 20, 132, 1);
-  --life-event-color-dark: rgba(195, 0, 92, 1);
-  --work-event-color: rgba(155, 77, 151, 1);
-  --work-event-color-light: rgba(155, 77, 151, 1);
-  --work-event-color-dark: rgba(155, 77, 151, 1);
+  --life-event-color: rgba(255, 40, 142, 1);
+  --life-event-color-light: rgba(255, 60, 162, 1);
+  --life-event-color-dark: rgba(225, 20, 122, 1);
+  --work-event-color: rgba(255, 197, 255, 1);
+  --work-event-color-light: rgba(255, 177, 251, 1);
+  --work-event-color-dark: rgba(195, 117, 191, 1);
 
   --main-text-color: rgba(238, 241, 239, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -230,14 +254,16 @@
   --main-background-color-accent: rgba(25, 130, 196, 1);
   --main-background-color-darker-accent: rgba(255, 89, 94, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(28, 35, 33, 1);
+  --main-separator-color-light: rgba(28, 35, 33, 1);
 
   --input-background-color: rgba(255, 202, 58, 1);
   --input-text-color: rgba(28, 35, 33, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-placeholder-text-color: rgba(238, 241, 239, 0.7);
 
   --button-text-color: rgba(238, 241, 239, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -249,34 +275,38 @@
   --work-event-color-dark: rgba(76, 46, 117, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
+  --secondary-text-color: rgba(238, 241, 239, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
 
 #color-scheme-jg.pastel-mode-jg {
-  --main-background-color: rgba(224, 142, 69, 1);
+  --main-background-color: rgba(174, 92, 19, 1);
   --main-background-color-accent: rgba(214, 208, 93, 1);
-  --main-background-color-darker-accent: rgba(244, 238, 123, 1);
+  --main-background-color-darker-accent: rgba(57, 67, 183, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(87, 19, 35, 1);
+  --main-separator-color-light: rgba(87, 19, 35, 1);
 
-  --input-background-color: rgba(244, 238, 123, 1);
-  --input-text-color: rgba(107, 39, 55, 1);
-  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+  --input-background-color: rgba(174, 92, 19, 1);
+  --input-text-color: rgba(244, 238, 123, 1);
+  --input-placeholder-text-color: rgba(87, 19, 35, 0.8);
 
-  --button-text-color: rgba(238, 241, 239, 1);
+  --button-text-color: rgba(87, 19, 35, 1);
+  
+  --warning-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(57, 67, 183, 1);
-  --life-event-color-light: rgba(87, 97, 213, 1);
-  --life-event-color-dark: rgba(27, 37, 153, 1);
-  --work-event-color: rgba(155, 243, 145, 1);
-  --work-event-color-light: rgba(185, 255, 175, 1);
-  --work-event-color-dark: rgba(125, 213, 115, 1);
+  --life-event-color: rgba(145, 255, 135, 1);
+  --life-event-color-light: rgba(185, 255, 175, 1);
+  --life-event-color-dark: rgba(125, 213, 115, 1);
+  --work-event-color: rgba(137, 147, 253, 1);
+  --work-event-color-light: rgba(167, 177, 255, 1);
+  --work-event-color-dark: rgba(107, 117, 223, 1);
 
-  --main-text-color: rgba(87, 19, 35, 1);
+  --main-text-color: rgba(244, 238, 123, 1);
+  --secondary-text-color: rgba(87, 19, 35, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -377,10 +407,17 @@ select::placeholder {
 
 .box-jg {
   background-color: var(--main-background-color-accent);
+  color: var(--secondary-text-color);
   margin: 0vh 25vw;
   min-width: 30vw;
   border-radius: 1em;
   padding: 2em;
+  box-shadow: 5px 5px 7px 1px var(--box-shadow-color);
+}
+
+.box-jg input {
+  border-color: var(--secondary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .crop-area-jg button,
@@ -454,6 +491,8 @@ input[type="checkbox"] {
 
   display: grid;
   place-content: center;
+
+  cursor: pointer;
 }
 
 input[type="checkbox"]::before {
@@ -812,7 +851,7 @@ input[type="checkbox"]:disabled {
 }
 
 .upload-area-jg {
-  color: var(--input-placeholder-text-color);
+  color: var(--main-separator-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1208,16 +1247,127 @@ input[type="checkbox"]:disabled {
 .user-profile-picture-jg {
   height: 10em;
   width: 10em;
+  border: 3px solid var(--work-event-color);
   border-radius: 50%;
   position: relative;
   overflow: hidden;
   box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
   margin-top: 1em;
   margin-bottom: 1em;
+  transition: scale 0.2s ease-in-out, border 0.2s ease-in-out;
+}
+
+.user-profile-picture-jg:hover {
+  scale: 0.98;
+  border: 3px solid var(--work-event-color-light);
+}
+
+.user-menu-username-jg a {
+  color: var(--work-event-color);
+}
+
+.user-menu-username-jg a:hover {
+  color: var(--work-event-color-light);
 }
 
 .user-menu-link-jg {
   margin-bottom: 1em;
+}
+
+/* User Profile page rules */
+.user-profile-container-jg {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  margin-top: 2em;
+}
+
+.profile-picture-upload-area-jg {
+  color: var(--input-placeholder-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
+  margin-right: 2em;
+  height: 36vh;
+  width: 36vh;
+  border: 3px solid var(--work-event-color);
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.user-profile-info-jg {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  margin-left: 2em;
+}
+
+.user-profile-info-jg h1 {
+  text-align: left;
+}
+
+.user-profile-form-fields-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.user-profile-input-jg {
+  width: 100%;
+  margin-bottom: 1.4em;
+  width: 96.5%;
+}
+
+.user-profile-disabled-input-jg {
+  color: var(--input-placeholder-text-color);
+}
+
+.user-profile-datepicker-tray-jg {
+  display: flex;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.user-profile-datepicker-label-jg {
+  font-size: 0.8em;
+  color: var(--input-placeholder-text-color);
+  margin-right: 1.5em;
+  margin-left: 0.5em;
+  text-align: left;
+}
+
+.user-profile-datepicker-jg {
+  min-width: 40%;
+  flex: 1;
+}
+
+.user-profile-button-tray-jg {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  margin-top: 1.5em;
+}
+
+.login-signup-delete-button-jg {
+  background-color: var(--warning-color);
+}
+
+.login-signup-delete-button-jg:hover {
+  background-color: var(--warning-color);
+  filter: brightness(1.5);
+}
+
+.user-profile-confirm-jg {
+  text-align: left;
+}
+
+.user-profile-confirm-jg button {
+  margin-top: 2em;;
 }
 
 /* Donate page rules */

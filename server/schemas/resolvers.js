@@ -76,6 +76,50 @@ const resolvers = {
 
       return { token, user };
     },
+    updateUser: async (parent, { username, email, password, birthDate }) => {
+      console.log(
+        "[resolvers.js] updateUser: email =",
+        email,
+        "password =",
+        password,
+        "birthDate =",
+        birthDate
+      );
+    
+      // Create an object to store the fields with values
+      const updateFields = {};
+    
+      // Add non-empty and defined fields to the updateFields object
+      if (email !== "") updateFields.email = email;
+      if (password !== "") updateFields.password = password;
+      if (birthDate !== "") updateFields.birthDate = birthDate;
+    
+      console.log("[resolvers.js] updateUser: updateFields =", updateFields);
+    
+      // Use the $set operator to update only the specified fields
+      const user = await User.findOneAndUpdate(
+        { username },
+        { $set: updateFields },
+        { new: true }
+      );
+    
+      console.log("[resolvers.js] updateUser: user =", user);
+      return { user };
+    },
+    deleteUser: async (parent, { username }) => {
+      console.log("[resolvers.js] deleteUser: username =", username);
+
+      try {
+        // Find and remove the user
+        const deletedUser = await User.findOneAndDelete({ username });
+
+        console.log("[resolvers.js] deleteUser: user deleted =", deletedUser);
+        return { success: true, message: "User deleted successfully." };
+      } catch (error) {
+        console.error("[resolvers.js] deleteUser error:", error);
+        return { success: false, message: "Error deleting user." };
+      }
+    },
     addEvent: async (
       parent,
       {
@@ -91,7 +135,7 @@ const resolvers = {
         files,
         priority,
         setReminder,
-        reminderTime
+        reminderTime,
       }
     ) => {
       console.log(
@@ -135,7 +179,7 @@ const resolvers = {
         files,
         priority,
         setReminder,
-        reminderTime
+        reminderTime,
       });
 
       await User.findOneAndUpdate(

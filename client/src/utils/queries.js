@@ -9,6 +9,7 @@ export const QUERY_USER = gql`
       firstName
       middleName
       lastName
+      birthDate
       colorModeSetting
       eventSubtypes {
         subtype

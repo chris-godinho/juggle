@@ -112,7 +112,6 @@ const Signup = () => {
               </div>
               <button
                 className="button-jg login-signup-button-jg"
-                style={{ cursor: "pointer" }}
                 type="submit"
               >
                 Submit
