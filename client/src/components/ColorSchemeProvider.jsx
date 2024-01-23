@@ -12,7 +12,8 @@ const ColorSchemeProvider = ({ children }) => {
 
   const changeColorScheme = (newColorScheme) => {
     setColorScheme((prevScheme) => {
-        localStorage.setItem('colorScheme', newColorScheme ? newColorScheme : prevScheme);
+        const newScheme = newColorScheme ? newColorScheme : prevScheme;
+        localStorage.setItem('colorScheme', newScheme);
         return newScheme;
       });
   };

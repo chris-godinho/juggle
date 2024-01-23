@@ -34,12 +34,12 @@
   --main-background-color-accent: rgba(198, 201, 199, 1);
   --main-background-color-darker-accent: rgba(218, 221, 219, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
-  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+  --main-separator-color: rgba(28, 35, 33, 0.8);
+  --main-separator-color-light: rgba(48, 55, 53, 0.8);
 
-  --input-background-color: rgba(28, 35, 33, 1);
-  --input-text-color: rgba(238, 241, 239, 1);
-  --input-placeholder-text-color: rgba(148, 151, 149, 1);
+  --input-background-color: rgba(238, 241, 239, 1);
+  --input-text-color: rgba(28, 35, 33, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
 
   --button-text-color: rgba(28, 35, 33, 1);
 
@@ -53,6 +53,230 @@
   --work-event-color-dark: rgba(235, 80, 0, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.mono-mode-jg {
+  --main-background-color: rgba(28, 35, 33, 1);
+  --main-background-color-accent: rgba(48, 55, 53, 1);
+  --main-background-color-darker-accent: rgba(20, 27, 25, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(28, 35, 33, 1);
+  --input-text-color: rgba(238, 241, 239, 1);
+  --input-placeholder-text-color: rgba(148, 151, 149, 1);
+
+  --button-text-color: rgba(28, 35, 33, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(148, 151, 149, 1);
+  --life-event-color-light: rgba(168, 171, 169, 1);
+  --life-event-color-dark: rgba(128, 131, 129, 1);
+  --work-event-color: rgba(108, 111, 119, 1);
+  --work-event-color-light: rgba(128, 131, 139, 1);
+  --work-event-color-dark: rgba(88, 91, 99, 1);
+
+  --main-text-color: rgba(238, 241, 239, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.blue-mode-jg {
+  --main-background-color: rgba(53, 73, 94, 1);
+  --main-background-color-accent: rgba(76, 106, 148, 1);
+  --main-background-color-darker-accent: rgba(29, 47, 74, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(53, 73, 94, 1);
+  --input-text-color: rgba(238, 241, 239, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(28, 35, 33, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(0, 194, 203, 1);
+  --life-event-color-light: rgba(20, 214, 223, 1);
+  --life-event-color-dark: rgba(0, 174, 183, 1);
+  --work-event-color: rgba(20, 143, 108, 1);
+  --work-event-color-light: rgba(40, 163, 128, 1);
+  --work-event-color-dark: rgba(0, 123, 88, 1);
+
+  --main-text-color: rgba(238, 241, 239, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.beige-mode-jg {
+  --main-background-color: rgba(249, 224, 217, 1);
+  --main-background-color-accent: rgba(53, 33, 44, 1);
+  --main-background-color-darker-accent: rgba(105, 87, 83, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(249, 224, 217, 1);
+  --input-text-color: rgba(28, 35, 33, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(238, 241, 239, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(63, 43, 54, 1);
+  --life-event-color-light: rgba(83, 63, 74, 1);
+  --life-event-color-dark: rgba(43, 23, 34, 1);
+  --work-event-color: rgba(147, 109, 121, 1);
+  --work-event-color-light: rgba(167, 129, 141, 1);
+  --work-event-color-dark: rgba(127, 89, 101, 1);
+
+  --main-text-color: rgba(28, 35, 33, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.brown-mode-jg {
+  --main-background-color: rgba(62, 12, 4, 1);
+  --main-background-color-accent: rgba(82, 32, 24, 1);
+  --main-background-color-darker-accent: rgba(122, 45, 33, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(62, 12, 4, 1);
+  --input-text-color: rgba(232, 226, 168, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(232, 226, 168, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(125, 103, 81, 1);
+  --life-event-color-light: rgba(145, 123, 101, 1);
+  --life-event-color-dark: rgba(105, 83, 61, 1);
+  --work-event-color: rgba(202, 196, 138, 1);
+  --work-event-color-light: rgba(222, 216, 158, 1);
+  --work-event-color-dark: rgba(182, 176, 118, 1);
+
+  --main-text-color: rgba(232, 226, 168, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.green-mode-jg {
+  --main-background-color: rgba(14, 71, 73, 1);
+  --main-background-color-accent: rgba(44, 101, 103, 1);
+  --main-background-color-darker-accent: rgba(229, 88, 18, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(14, 71, 73, 1);
+  --input-text-color: rgba(239, 231, 218, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(28, 35, 33, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(149, 198, 35, 1);
+  --life-event-color-light: rgba(169, 218, 55, 1);
+  --life-event-color-dark: rgba(129, 178, 15, 1);
+  --work-event-color: rgba(80, 80, 57, 1);
+  --work-event-color-light: rgba(100, 100, 77, 1);
+  --work-event-color-dark: rgba(60, 60, 37, 1);
+
+  --main-text-color: rgba(239, 231, 218, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.purple-mode-jg {
+  --main-background-color: rgba(0, 53, 169, 1);
+  --main-background-color-accent: rgba(30, 83, 199, 1);
+  --main-background-color-darker-accent: rgba(0, 23, 139, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(0, 53, 169, 1);
+  --input-text-color: rgba(238, 241, 239, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(238, 241, 239, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(215, 0, 112, 1);
+  --life-event-color-light: rgba(235, 20, 132, 1);
+  --life-event-color-dark: rgba(195, 0, 92, 1);
+  --work-event-color: rgba(155, 77, 151, 1);
+  --work-event-color-light: rgba(155, 77, 151, 1);
+  --work-event-color-dark: rgba(155, 77, 151, 1);
+
+  --main-text-color: rgba(238, 241, 239, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.yellow-mode-jg {
+  --main-background-color: rgba(255, 202, 58, 1);
+  --main-background-color-accent: rgba(25, 130, 196, 1);
+  --main-background-color-darker-accent: rgba(255, 89, 94, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(255, 202, 58, 1);
+  --input-text-color: rgba(28, 35, 33, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(238, 241, 239, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(108, 171, 8, 1);
+  --life-event-color-light: rgba(138, 201, 38, 1);
+  --life-event-color-dark: rgba(78, 141, 0, 1);
+  --work-event-color: rgba(106, 76, 147, 1);
+  --work-event-color-light: rgba(136, 106, 177, 1);
+  --work-event-color-dark: rgba(76, 46, 117, 1);
+
+  --main-text-color: rgba(28, 35, 33, 1);
+
+  --main-font-family: "Exo 2", sans-serif;
+}
+
+#color-scheme-jg.pastel-mode-jg {
+  --main-background-color: rgba(224, 142, 69, 1);
+  --main-background-color-accent: rgba(214, 208, 93, 1);
+  --main-background-color-darker-accent: rgba(244, 238, 123, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color-light: rgba(158, 171, 169, 0.5);
+
+  --input-background-color: rgba(244, 238, 123, 1);
+  --input-text-color: rgba(107, 39, 55, 1);
+  --input-placeholder-text-color: rgba(118, 111, 119, 1);
+
+  --button-text-color: rgba(238, 241, 239, 1);
+
+  --box-shadow-color: rgba(0, 0, 0, 0.5);
+
+  --life-event-color: rgba(57, 67, 183, 1);
+  --life-event-color-light: rgba(87, 97, 213, 1);
+  --life-event-color-dark: rgba(27, 37, 153, 1);
+  --work-event-color: rgba(155, 243, 145, 1);
+  --work-event-color-light: rgba(185, 255, 175, 1);
+  --work-event-color-dark: rgba(125, 213, 115, 1);
+
+  --main-text-color: rgba(87, 19, 35, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -138,6 +362,15 @@ select::placeholder {
   color: var(--main-text-color);
 }
 
+.juggler-logo-jg :nth-child(1) {
+  fill: var(--work-event-color);
+}
+
+.juggler-logo-jg :nth-child(2) {
+  fill: var(--life-event-color);
+}
+
+
 .main-jg {
   min-height: 100vh;
   overflow-y: hidden;
@@ -189,6 +422,62 @@ select::placeholder {
   cursor: default;
   pointer-events: none;
   color: var(--main-background-color);
+}
+
+/* Checkbox rules (Credit: Stephanie Eckles - https://moderncss.dev/pure-css-custom-checkbox-style/) */
+.checkbox-jg {
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 1em;
+}
+
+input[type="checkbox"] {
+  /* Add if not using autoprefixer */
+  -webkit-appearance: none;
+  /* Remove most all native input styles */
+  appearance: none;
+  /* For iOS < 15 */
+  background-color: var(--main-background-color);
+  /* Not removed via appearance */
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  box-shadow: inset 1em 1em var(--life-event-color);
+  /* Windows High Contrast Mode */
+  background-color: CanvasText;
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:focus {
+  outline: max(2px, 0.15em) solid currentColor;
+  outline-offset: max(2px, 0.15em);
+}
+
+input[type="checkbox"]:disabled {
+  color: var(--input-placeholder-text-color);
+  cursor: not-allowed;
 }
 
 /* Modal Window rules */
@@ -371,6 +660,7 @@ select::placeholder {
 
 .header-logo-jg {
   height: 2.5em;
+  width: 2.5em;
   margin-right: 1em;
 }
 
@@ -521,9 +811,65 @@ select::placeholder {
 }
 
 .welcome-work-life-slider-jg {
-  width: 50%;
-  height: 1em;
-  background-color: var(--work-event-color);
+  width: 100%;
+  margin-top: 2em;
+}
+
+.welcome-work-life-labels-jg {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 1em;
+  margin-right: 0.1em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  font-size: 1.5em;
+}
+
+.slider-jg-value {
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+/* Credit: https://www.w3schools.com/howto/howto_js_rangeslider.asp */
+.slider-jg {
+  -webkit-appearance: none;  /* Override default CSS styles */
+  appearance: none;
+  width: 100%; /* Full-width */
+  height: 0.1em;
+  border: 0;
+  border-radius: 5em;  
+  background: linear-gradient(
+    90deg,
+    var(--work-event-color),
+    var(--life-event-color)
+  );
+  outline: none; /* Remove outline */
+  opacity: 1; /* Set transparency (for mouse-over effects on hover) */
+  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider-jg:hover {
+  filter: brightness(1.2);
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider-jg::-webkit-slider-thumb {
+  -webkit-appearance: none; /* Override default look */
+  appearance: none;
+  width: 2em; /* Set a specific slider handle width */
+  height: 2em; /* Slider handle height */
+  border-radius: 50%;
+  background: var(--main-text-color); /* Green background */
+  cursor: pointer; /* Cursor on hover */
+}
+
+.slider-jg::-moz-range-thumb {
+  width: 25px; /* Set a specific slider handle width */
+  height: 25px; /* Slider handle height */
+  background: var(--main-text-color); /* Green background */
+  cursor: pointer; /* Cursor on hover */
 }
 
 .sleep-dropdown-area-jg {
@@ -774,6 +1120,10 @@ select::placeholder {
   transform: translate(-50%, -50%);
 }
 
+.add-event-picture-jg {
+  fill: var(--main-text-color);
+}
+
 /* New Event page rules */
 .new-event-modal-container-jg {
   min-width: 60%;
@@ -829,6 +1179,7 @@ select::placeholder {
 /* Donate page rules */
 .donate-logo-jg {
   height: 5em;
+  width: 5em;
   margin-top: 2em;
   margin-bottom: 1em;
 }

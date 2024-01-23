@@ -12,6 +12,7 @@ import { QUERY_USER } from "../utils/queries.js";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
 
 import AuthService from "../utils/auth.js";
 
@@ -256,6 +257,27 @@ const Welcome = () => {
     },
   ];
 
+  const colorSchemes = [
+    {
+      name: "Dark (Default)",
+      key: "default-mode-jg",
+      image: "ColorTheme1.png",
+    },
+    { name: "Light", key: "light-mode-jg", image: "ColorTheme2.png" },
+    {
+      name: "Dark (Monochrome)",
+      key: "mono-mode-jg",
+      image: "ColorTheme3.png",
+    },
+    { name: "Aqua", key: "blue-mode-jg", image: "ColorTheme4.png" },
+    { name: "Dulcet", key: "beige-mode-jg", image: "ColorTheme5.png" },
+    { name: "Ligneous", key: "brown-mode-jg", image: "ColorTheme6.png" },
+    { name: "Kumquat", key: "green-mode-jg", image: "ColorTheme7.png" },
+    { name: "Spectrum", key: "purple-mode-jg", image: "ColorTheme8.png" },
+    { name: "Retinicide", key: "yellow-mode-jg", image: "ColorTheme9.png" },
+    { name: "Abuela", key: "pastel-mode-jg", image: "ColorTheme10.png" },
+  ];
+
   const nextScreen = () => {
     console.log("[Welcome.jsx] nextScreen() triggered.");
     if (currentScreen === 8) {
@@ -365,9 +387,7 @@ const Welcome = () => {
                 Move the slider to the left or right to adjust your desired
                 work/life balance goal.
               </p>
-              <div className="welcome-work-life-slider-jg">
-                SLIDER GOES HERE
-              </div>
+              <WorkLifeSlider />
             </div>
           </div>
         </div>
@@ -471,7 +491,7 @@ const Welcome = () => {
                 {lifeGoalActivities.map((activity, index) => (
                   <label
                     key={index}
-                    className="work-life-activity-checkbox-jg"
+                    className="work-life-activity-checkbox-jg checkbox-jg"
                     title={activity.description}
                   >
                     <input type="checkbox" name={`workActivity${index + 1}`} />
@@ -498,7 +518,7 @@ const Welcome = () => {
                 {workGoalActivities.map((activity, index) => (
                   <label
                     key={index}
-                    className="work-life-activity-checkbox-jg"
+                    className="work-life-activity-checkbox-jg checkbox-jg"
                     title={activity.description}
                   >
                     <input type="checkbox" name={`workActivity${index + 1}`} />
@@ -521,116 +541,20 @@ const Welcome = () => {
                 always change this later in your user settings.
               </p>
               <div className="color-scheme-table-jg">
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <a
-                      href="#"
-                      onClick={() => changeColorScheme("default-mode-jg")}
-                    >
-                      <img
-                        src="/colorSchemes/DefaultDark.png"
-                        alt="Color Scheme Sample"
-                        className="color-scheme-sample-image-jg"
-                      />
-                    </a>
+                {colorSchemes.map((scheme, index) => (
+                  <div key={index} className="color-scheme-card-jg">
+                    <div className="color-scheme-sample-jg">
+                      <a href="#" onClick={() => changeColorScheme(scheme.key)}>
+                        <img
+                          src={`/colorSchemes/${scheme.image}`}
+                          alt={`Color Scheme Sample ${index + 1}`}
+                          className="color-scheme-sample-image-jg"
+                        />
+                      </a>
+                    </div>
+                    <p className="color-scheme-name-jg">{scheme.name}</p>
                   </div>
-                  <p className="color-scheme-name-jg">Dark (Default)</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <a
-                      href="#"
-                      onClick={() => changeColorScheme("light-mode-jg")}
-                    >
-                      <img
-                        src="https://via.placeholder.com/150"
-                        alt="Color Scheme Sample"
-                        className="color-scheme-sample-image-jg"
-                      />
-                    </a>
-                  </div>
-                  <p className="color-scheme-name-jg">Light</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Dark (Monochrome)</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Aqua</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Dulcet</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Ligneous</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Kumquat</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Spectrum</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Retinicide</p>
-                </div>
-                <div className="color-scheme-card-jg">
-                  <div className="color-scheme-sample-jg">
-                    <img
-                      src="https://via.placeholder.com/150"
-                      alt="Color Scheme Sample"
-                      className="color-scheme-sample-image-jg"
-                    />
-                  </div>
-                  <p className="color-scheme-name-jg">Zen</p>
-                </div>
+                ))}
               </div>
             </div>
           </div>
