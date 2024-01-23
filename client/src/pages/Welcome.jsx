@@ -13,6 +13,7 @@ import { QUERY_USER } from "../utils/queries.js";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
+import ProfilePictureUpload from "../components/ProfilePictureUpload.jsx";
 
 import AuthService from "../utils/auth.js";
 
@@ -363,7 +364,7 @@ const Welcome = () => {
                   image.
                 </p>
               </div>
-              <div className="upload-area-jg">UPLOAD AREA GOES HERE</div>
+              <ProfilePictureUpload />
             </div>
           </div>
         </div>

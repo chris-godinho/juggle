@@ -11,10 +11,13 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.14",
+    "cropperjs": "^1.6.1",
     "graphql": "^16.6.0",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",
+    "react-cropper": "^2.3.3",
     "react-dom": "^18.2.0",
+    "react-dropzone": "^14.2.3",
     "react-flatpickr": "^3.10.13",
     "react-router-dom": "^6.11.1"
   },

@@ -370,7 +370,6 @@ select::placeholder {
   fill: var(--life-event-color);
 }
 
-
 .main-jg {
   min-height: 100vh;
   overflow-y: hidden;
@@ -384,6 +383,7 @@ select::placeholder {
   padding: 2em;
 }
 
+.crop-area-jg button,
 .button-jg {
   padding: 0.6em 1.1em;
   color: var(--button-text-color);
@@ -398,11 +398,14 @@ select::placeholder {
   transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
 }
 
+.crop-area-jg button:hover,
 .button-jg:hover {
   background-color: var(--life-event-color-light);
   transform: scale(0.98);
 }
 
+.crop-area-jg button:focus,
+.crop-area-jg button:active,
 .button-jg:focus,
 .button-jg:active {
   background-color: var(--life-event-color-dark);
@@ -653,19 +656,25 @@ input[type="checkbox"]:disabled {
 .header-jg {
   display: flex;
   align-items: center;
-  padding: 0.3em 1em;
+  padding: 0.1em 4em;
   background-color: var(--main-background-color-darker-accent);
   box-shadow: 0px 5px 5px -1px var(--box-shadow-color);
 }
 
 .header-logo-jg {
-  height: 2.5em;
-  width: 2.5em;
-  margin-right: 1em;
+  height: 2em;
+  width: 2em;
+  margin-right: 0.5em;
 }
 
 .header-brand-name-jg {
   flex: 1;
+  font-size: 1.3em;
+}
+
+.header-brand-name-jg a h2 {
+  margin-top: 0.6em;
+  margin-bottom: 0.6em;
 }
 
 .loggedin-text-jg {
@@ -803,11 +812,49 @@ input[type="checkbox"]:disabled {
 }
 
 .upload-area-jg {
+  color: var(--input-placeholder-text-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex-wrap: wrap;
   margin-left: 10vw;
-  height: 35vh;
-  width: 35vh;
+  height: 36vh;
+  width: 36vh;
   border: 2px dashed var(--main-separator-color);
-  border-radius: 10%;
+  border-radius: 50%;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.upload-area-jg span {
+  font-size: 4em;
+}
+
+.upload-area-jg p {
+  width: 40%;
+}
+
+.crop-area-jg {
+  margin-left: 10vw;
+  height: 36vh;
+  width: 36vh;
+  text-align: center;
+}
+
+.crop-area-jg div {
+  border-radius: 50%;
+  overflow: hidden;
+}
+
+.cropper-crop-box {
+  border: 2px dashed var(--main-separator-color);
+}
+
+.crop-area-jg section {
+  padding: 0 23%;
+  font-size: 0.85em;
 }
 
 .welcome-work-life-slider-jg {
@@ -830,11 +877,10 @@ input[type="checkbox"]:disabled {
   margin-right: 1em;
 }
 
-/* Credit: https://www.w3schools.com/howto/howto_js_rangeslider.asp */
 .slider-jg {
-  -webkit-appearance: none;  /* Override default CSS styles */
+  -webkit-appearance: none;
   appearance: none;
-  width: 100%; /* Full-width */
+  width: 100%;
   height: 0.1em;
   border: 0;
   border-radius: 5em;  
@@ -843,33 +889,31 @@ input[type="checkbox"]:disabled {
     var(--work-event-color),
     var(--life-event-color)
   );
-  outline: none; /* Remove outline */
-  opacity: 1; /* Set transparency (for mouse-over effects on hover) */
-  -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+  outline: none;
+  opacity: 1;
+  -webkit-transition: .2s;
   transition: opacity .2s;
 }
 
-/* Mouse-over effects */
 .slider-jg:hover {
   filter: brightness(1.2);
 }
 
-/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
 .slider-jg::-webkit-slider-thumb {
-  -webkit-appearance: none; /* Override default look */
+  -webkit-appearance: none;
   appearance: none;
-  width: 2em; /* Set a specific slider handle width */
-  height: 2em; /* Slider handle height */
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
-  background: var(--main-text-color); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  background: var(--main-text-color);
+  cursor: pointer;
 }
 
 .slider-jg::-moz-range-thumb {
-  width: 25px; /* Set a specific slider handle width */
-  height: 25px; /* Slider handle height */
-  background: var(--main-text-color); /* Green background */
-  cursor: pointer; /* Cursor on hover */
+  width: 25px;
+  height: 25px;
+  background: var(--main-text-color);
+  cursor: pointer;
 }
 
 .sleep-dropdown-area-jg {

@@ -15,7 +15,7 @@ export default function WorkLifeSlider() {
         min="0"
         max="100"
         value={sliderValue}
-        class="slider-jg"
+        className="slider-jg"
         onChange={handleSliderChange}
       />
       <div className="welcome-work-life-labels-jg">

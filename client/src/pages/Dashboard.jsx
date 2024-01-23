@@ -195,11 +195,11 @@ export default function Dashboard() {
                 viewBox="0 0 512 512"
                 version="1.1"
               >
-                <path d="" stroke="none" fill-rule="evenodd" />
+                <path d="" stroke="none" fillRule="evenodd" />
                 <path
                   d="M 242.184 209.500 L 242.629 243 205.314 243 L 168 243 168 255.500 L 168 268 205.500 268 L 243 268 243 301.500 L 243 335 256 335 L 269 335 269 301.500 L 269 268 306.500 268 L 344 268 344 255.500 L 344 243 306.686 243 L 269.371 243 269.816 209.500 L 270.260 176 256 176 L 241.740 176 242.184 209.500"
                   stroke="none"
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                 />
               </svg>
             </button>
