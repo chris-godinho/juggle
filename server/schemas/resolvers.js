@@ -191,6 +191,80 @@ const resolvers = {
 
       return event;
     },
+    updateEvent: async (
+      parent,
+      {
+        eventId,
+        title,
+        type,
+        subtype,
+        details,
+        eventStart,
+        eventEnd,
+        location,
+        links,
+        files,
+        priority,
+        setReminder,
+        reminderTime,
+        completed,
+      }
+    ) => {
+      console.log(
+        "[resolvers.js] updateEvent: eventId =",
+        eventId,
+        "title =",
+        title,
+        "type =",
+        type,
+        "subtype =",
+        subtype,
+        "details =",
+        details,
+        "eventStart =",
+        eventStart,
+        "eventEnd =",
+        eventEnd,
+        "location =",
+        location,
+        "links =",
+        links,
+        "files =",
+        files,
+        "priority =",
+        priority,
+        "setReminder =",
+        setReminder,
+        "reminderTime =",
+        reminderTime,
+        "completed =",
+        completed
+      );
+
+      const event = await Event.findOneAndUpdate(
+        { _id: eventId },
+        {
+          title,
+          type,
+          subtype,
+          details,
+          eventStart,
+          eventEnd,
+          location,
+          links,
+          files,
+          priority,
+          setReminder,
+          reminderTime,
+          completed,
+        },
+        { new: true }
+      );
+
+      console.log("[resolvers.js] updateEvent: event =", event);
+
+      return event;
+    },
     removeEvent: async (parent, { eventId }) => {
       return Event.findOneAndDelete({ _id: eventId });
     },

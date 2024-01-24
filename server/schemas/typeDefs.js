@@ -62,6 +62,7 @@ const typeDefs = `
     deleteUser(username: String!): DeleteUserResponse
     login(username: String!, password: String!): Auth
     addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime): Event
+    updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime, completed: Boolean): Event
     removeEvent(eventId: ID!): Event
   }
 `;

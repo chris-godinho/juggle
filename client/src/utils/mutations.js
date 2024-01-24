@@ -66,6 +66,28 @@ export const ADD_EVENT = gql`
   }
 `;
 
+export const UPDATE_EVENT = gql`
+  mutation updateEvent($eventId: ID!, $title: String!, $type: String, $subtype: String, $details: String, $eventStart: DateTime, $eventEnd: DateTime, $location: String, $links: [String], $files: [String], $priority: String, $setReminder: Boolean, $reminderTime: DateTime, $completed: Boolean) {
+    updateEvent(eventId: $eventId, title: $title, type: $type, subtype: $subtype, details: $details, eventStart: $eventStart, eventEnd: $eventEnd, location: $location, links: $links, files: $files, priority: $priority, setReminder: $setReminder, reminderTime: $reminderTime, completed: $completed) {
+      _id
+      user
+      title
+      type
+      subtype
+      details
+      eventStart
+      eventEnd
+      location
+      links
+      files
+      priority
+      setReminder
+      reminderTime
+      completed
+    }
+  }
+`;
+
 export const REMOVE_EVENT = gql`
   mutation removeEvent($eventId: ID!) {
     removeEvent(eventId: $eventId) {

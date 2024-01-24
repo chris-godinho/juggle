@@ -33,15 +33,6 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
     return <div>Error fetching data.</div>;
   }
 
-  /*
-  const formattedUserBirthDate = "";
-
-  if (userData?.user.birthDate) {
-    userBirthDate = new Date(userData?.user.birthDate);
-    formattedUserBirthDate = `${userBirthDate.getMonth()}/${userBirthDate.getDate()}/${userBirthDate.getFullYear()}`;
-  }
-  */
-
   const [formData, setFormData] = useState({
     username: userData?.user.username || "",
     email: userData?.user.email || "",

@@ -6,37 +6,5 @@
     "firstName": "Helenice",
     "middleName": "Gomes",
     "lastName": "Barboza"
-  },
-  {
-    "username": "AliceJohnson",
-    "email": "ajohnson@example.com",
-    "password": "password02%",
-    "firstName": "Alice",
-    "middleName": "Marie",
-    "lastName": "Johnson"
-  },
-  {
-    "username": "CharlieBrown",
-    "email": "cbrown@example.com",
-    "password": "password03%",
-    "firstName": "Charlie",
-    "middleName": "Robert",
-    "lastName": "Brown"
-  },
-  {
-    "username": "DianaSmith",
-    "email": "dsmith@example.com",
-    "password": "password04%",
-    "firstName": "Diana",
-    "middleName": "Louise",
-    "lastName": "Smith"
-  },
-  {
-    "username": "EdwardMiller",
-    "email": "emiller@example.com",
-    "password": "password05%",
-    "firstName": "Edward",
-    "middleName": "James",
-    "lastName": "Miller"
   }
 ]

@@ -569,6 +569,7 @@ input[type="checkbox"]:disabled {
   top: -0.5em;
   left: -1.4em;
   color: var(--main-separator-color-light);
+  transition: color 0.2s ease-in-out;
 }
 
 .modal-close-button-jg {
@@ -576,6 +577,7 @@ input[type="checkbox"]:disabled {
   top: -0.5em;
   right: -1.4em;
   color: var(--main-separator-color-light);
+  transition: color 0.2s ease-in-out;
 }
 
 .modal-close-button-jg:hover,
@@ -1125,11 +1127,19 @@ input[type="checkbox"]:disabled {
   margin: 2em 3em 0 3em;
 }
 
+.date-percentage-container-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 50%;
+}
+
 .selected-date-container-jg {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 50%;
+  width: 100%;
 }
 
 .selected-date-box-jg {
@@ -1143,6 +1153,11 @@ input[type="checkbox"]:disabled {
 
 .selected-date-box-jg h3 {
   margin: 0;
+}
+
+.unalotted-percentage-jg p {
+  color: var(--input-placeholder-text-color);
+  font-size: 0.9em;
 }
 
 .round-button-jg {
@@ -1236,6 +1251,114 @@ input[type="checkbox"]:disabled {
 
 .schedule-block-title-jg {
   margin-left: 2em;
+}
+
+.schedule-event-line-jg {
+  color: inherit;
+}
+
+/* Event details page rules */
+.event-details-modal-container-jg {
+  max-height: 80vh;
+  min-width: 60%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 3em 4em;
+}
+
+.event-details-title-line-jg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+  margin-left: 0.4em;
+  margin-top: 1em;
+}
+
+.event-title-jg {
+  text-align: left;
+  margin-left: 0.7em;
+  margin-bottom: 0.9em;
+  transition: color 0.2s ease-in-out;
+  position: relative;
+}
+
+.event-details-title-line-jg a {
+  flex: 1;
+  text-align: right;
+}
+
+.priority-icon-jg {
+  font-size: 2.1em;
+}
+
+#priority-icon-high-jg {
+  filter: brightness(1.5);  
+}
+
+#priority-icon-low-jg {
+  filter: brightness(0.5);
+}
+
+/* Credit: https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline */
+.event-title-jg::after {
+  top: 50%;
+  left: -3%;
+  position: absolute;
+  content: '';
+  width: 0px;
+  height: 0.15em;
+  display: block;
+  background: var(--main-text-color);
+  border-radius: 5px;
+  transition: 300ms;
+}
+
+#strikethrough-jg::after {
+  width: 106%;
+}
+
+.event-details-line-jg {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-bottom: 1em;
+}
+
+.event-details-label-jg {
+  font-size: 0.8em;
+  color: var(--input-placeholder-text-color);
+  margin-right: 0.5em;
+  margin-left: 0.5em;
+  text-align: left;
+  min-width: 6em;
+}
+
+.event-input-jg {
+  flex: 1;
+}
+
+.event-middle-label-jg {
+  margin-left: 1.5em;
+}
+
+.event-details-button-tray-jg {
+  margin-top: 3em;
+}
+
+.event-delete-button-jg {
+  background-color: var(--work-event-color);
+  margin-left: 2em;
+  transition: color 0.2s ease-in-out scale 0.2s ease-in-out;
+}
+
+.event-delete-button-jg:hover {
+  background-color: var(--work-event-color-light);
+}
+
+.event-delete-button-jg:focus,
+.event-delete-button-jg:active {
+  background-color: var(--work-event-color-dark);
 }
 
 /* User Menu rules */

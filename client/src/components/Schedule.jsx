@@ -1,7 +1,11 @@
 // Schedule.jsx
 
-const Schedule = ({ events, selectedDate }) => {
-  
+import { useModal } from "../components/ModalProvider.jsx";
+import EventDetails from "./EventDetails.jsx";
+
+const Schedule = ({ events, selectedDate, eventSubtypes }) => {
+  const { openModal } = useModal();
+
   const displayDate = new Date(selectedDate);
   displayDate.setHours(0, 0, 0, 0);
 
@@ -46,7 +50,33 @@ const Schedule = ({ events, selectedDate }) => {
                   : "schedule-block-title-jg"
               }
             >
-              {event ? event.title : ""}
+              <a
+                className="schedule-event-line-jg"
+                href="#"
+                onClick={() =>
+                  openModal(
+                    <EventDetails
+                      eventId={event._id}
+                      eventTitle={event.title}
+                      eventType={event.type}
+                      eventSubtype={event.subtype}
+                      eventDescription={event.details}
+                      eventStart={event.eventStart}
+                      eventEnd={event.eventEnd}
+                      eventLocation={event.location}
+                      eventLinks={event.links}
+                      eventFiles={event.files}
+                      eventPriority={event.priority}
+                      eventSetReminder={event.setReminder}
+                      eventReminderTime={event.reminderTime}
+                      eventCompleted={event.completed}
+                      eventSubtypes={eventSubtypes}
+                    />
+                  )
+                }
+              >
+                {event ? event.title : ""}
+              </a>
             </div>
           </div>
         );

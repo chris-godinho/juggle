@@ -7,13 +7,13 @@ import { useModal } from "../components/ModalProvider.jsx";
 import Schedule from "../components/Schedule";
 import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import NewEvent from "../components/NewEvent.jsx";
+import UserMenu from "../components/UserMenu.jsx";
 
 import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
 import AuthService from "../utils/auth.js";
 import { calculateEventStats } from "../utils/eventUtils.js";
-import UserMenu from "../components/UserMenu.jsx";
 
 export default function Dashboard() {
   // Set up date variables for display
@@ -108,7 +108,6 @@ export default function Dashboard() {
     : (lifePercentage = 0);
   const unalottedTimePercentage = 100 - workPercentage - lifePercentage;
 
-  // TODO: Make the workPercentage and lifePercentage values display in the side panels
   // TODO: Create a third percentage for unalotted time
   // TODO: Refine the stats to adapt to several options in Settings (unused variables: sleepingHours, totalAllottedTime, unalottedTimePercentage)
 
@@ -156,24 +155,29 @@ export default function Dashboard() {
                 alt="profile picture"
               />
             </button>
-            <div className="selected-date-container-jg">
-              <a href="#" onClick={selectPreviousDay}>
-                <span className="material-symbols-outlined">
-                  arrow_back_ios_new
-                </span>
-              </a>
-              <div className="selected-date-box-jg">
-                <h3>{`${
-                  weekDays[selectedDate.getDay()]
-                }, ${selectedDate.getDate()} ${
-                  months[selectedDate.getMonth()]
-                } ${selectedDate.getFullYear()}`}</h3>
+            <div className="date-percentage-container-jg">
+              <div className="selected-date-container-jg">
+                <a href="#" onClick={selectPreviousDay}>
+                  <span className="material-symbols-outlined">
+                    arrow_back_ios_new
+                  </span>
+                </a>
+                <div className="selected-date-box-jg">
+                  <h3>{`${
+                    weekDays[selectedDate.getDay()]
+                  }, ${selectedDate.getDate()} ${
+                    months[selectedDate.getMonth()]
+                  } ${selectedDate.getFullYear()}`}</h3>
+                </div>
+                <a href="#" onClick={selectNextDay}>
+                  <span className="material-symbols-outlined">
+                    arrow_forward_ios
+                  </span>
+                </a>
               </div>
-              <a href="#" onClick={selectNextDay}>
-                <span className="material-symbols-outlined">
-                  arrow_forward_ios
-                </span>
-              </a>
+              <div className="unalotted-percentage-jg">
+                <p>Unalotted Time: {unalottedTimePercentage}% of your waking hours</p>
+              </div>
             </div>
             <button
               className="round-button-jg life-border-jg"
@@ -208,6 +212,7 @@ export default function Dashboard() {
             key={selectedDate.getTime()}
             events={events}
             selectedDate={selectedDate}
+            eventSubtypes={eventSubtypes}
           />
         </div>
         <div className="dashboard-side-panel-jg life-text-jg">
