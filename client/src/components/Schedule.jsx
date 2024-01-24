@@ -3,7 +3,7 @@
 import { useModal } from "../components/ModalProvider.jsx";
 import EventDetails from "./EventDetails.jsx";
 
-const Schedule = ({ events, selectedDate, eventSubtypes }) => {
+const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
   const { openModal } = useModal();
 
   const displayDate = new Date(selectedDate);
@@ -71,6 +71,7 @@ const Schedule = ({ events, selectedDate, eventSubtypes }) => {
                       eventReminderTime={event.reminderTime}
                       eventCompleted={event.completed}
                       eventSubtypes={eventSubtypes}
+                      eventsRefetch={eventsRefetch}
                     />
                   )
                 }

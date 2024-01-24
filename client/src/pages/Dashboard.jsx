@@ -213,6 +213,7 @@ export default function Dashboard() {
             events={events}
             selectedDate={selectedDate}
             eventSubtypes={eventSubtypes}
+            eventsRefetch={eventsRefetch}
           />
         </div>
         <div className="dashboard-side-panel-jg life-text-jg">

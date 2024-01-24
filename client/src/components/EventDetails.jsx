@@ -26,6 +26,7 @@ export default function EventDetails({
   eventReminderTime,
   eventCompleted,
   eventSubtypes,
+  eventsRefetch
 }) {
   console.log("[EventDetails.jsx] Component is rendering");
 
@@ -46,6 +47,14 @@ export default function EventDetails({
   const formattedEndTime = `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
 
   const [eventScreen, setEventScreen] = useState("EventDetails");
+  const [isTitleEditable, setIsTitleEditable] = useState(false);
+
+  console.log(
+    "[EventDetails.jsx] eventCompleted:",
+    eventCompleted,
+    "typeof eventCompleted:",
+    typeof eventCompleted
+  );
 
   const [formData, setFormData] = useState({
     title: eventTitle || "",
@@ -181,10 +190,23 @@ export default function EventDetails({
 
       console.log("[UserProfile.jsx] removeEvent:", removedEvent);
 
+      eventsRefetch();
       closeModal();
     } catch (e) {
       console.error(e);
     }
+  };
+
+  // ... (existing code)
+
+  const handleTitleClick = () => {
+    // Set the edit mode to true when the title is clicked
+    setIsTitleEditable(true);
+  };
+
+  const handleTitleBlur = () => {
+    // Set the edit mode to false when the input field loses focus
+    setIsTitleEditable(false);
   };
 
   // TODO: Make title editable (click to edit)
@@ -201,23 +223,42 @@ export default function EventDetails({
                 <input
                   type="checkbox"
                   name="completed"
-                  value={formData.completed || ""}
+                  checked={formData.completed || ""}
                   onChange={handleInputChange}
                 />
                 <label key="event-complete-jg" title="Click to Edit">
-                  <h1
-                    className={
-                      formData.type === "work"
-                        ? "event-title-jg work-text-jg"
-                        : "event-title-jg life-text-jg"
-                    }
-                    id={formData.completed ? "strikethrough-jg" : ""}
-                  >
-                    {eventTitle}
-                  </h1>
+                  {isTitleEditable ? (
+                    // Render an input field when in edit mode
+                    <input
+                      type="text"
+                      name="title"
+                      value={formData.title || ""}
+                      onChange={handleInputChange}
+                      onBlur={handleTitleBlur}
+                      className={
+                        formData.type === "work"
+                          ? "event-title-input-jg work-text-jg"
+                          : "event-title-input-jg life-text-jg"
+                      }
+                    />
+                  ) : (
+                    // Render a non-editable h1 element when not in edit mode
+                    <h1
+                      className={
+                        formData.type === "work"
+                          ? "event-title-jg work-text-jg"
+                          : "event-title-jg life-text-jg"
+                      }
+                      id={formData.completed ? "strikethrough-jg" : ""}
+                      onClick={handleTitleClick}
+                    >
+                      {formData.title}
+                    </h1>
+                  )}
                 </label>
-                <a href="#" onClick={togglePriority}>
+                <div className="priority-icon-container-jg">
                   <span
+                    onClick={togglePriority}
                     className={
                       formData.type === "work"
                         ? "material-symbols-outlined priority-icon-jg work-text-jg"
@@ -237,7 +278,7 @@ export default function EventDetails({
                       ? "pending"
                       : "arrow_circle_down"}
                   </span>
-                </a>
+                </div>
               </div>
               <div className="event-details-line-jg">
                 <p className="event-details-label-jg">Details</p>

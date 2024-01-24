@@ -1275,7 +1275,8 @@ input[type="checkbox"]:disabled {
   margin-top: 1em;
 }
 
-.event-title-jg {
+.event-title-jg,
+.event-title-input-jg {
   text-align: left;
   margin-left: 0.7em;
   margin-bottom: 0.9em;
@@ -1283,21 +1284,14 @@ input[type="checkbox"]:disabled {
   position: relative;
 }
 
-.event-details-title-line-jg a {
-  flex: 1;
-  text-align: right;
-}
-
-.priority-icon-jg {
-  font-size: 2.1em;
-}
-
-#priority-icon-high-jg {
-  filter: brightness(1.5);  
-}
-
-#priority-icon-low-jg {
-  filter: brightness(0.5);
+.event-title-input-jg {
+  font-size: 2em;
+  font-weight: bold;
+  border: none;
+  padding: 0.1em 0.5em;
+  background-color: var(--main-background-color-accent) !important;
+  margin-top: 0.8em;
+  border-radius: 3em;
 }
 
 /* Credit: https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline */
@@ -1316,6 +1310,24 @@ input[type="checkbox"]:disabled {
 
 #strikethrough-jg::after {
   width: 106%;
+}
+
+.priority-icon-container-jg {
+  flex: 1;
+  text-align: right;
+}
+
+.priority-icon-jg {
+  font-size: 2.1em;
+  cursor: pointer;
+}
+
+#priority-icon-high-jg {
+  filter: brightness(1.5);  
+}
+
+#priority-icon-low-jg {
+  filter: brightness(0.5);
 }
 
 .event-details-line-jg {
