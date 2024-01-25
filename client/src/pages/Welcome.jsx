@@ -5,17 +5,18 @@ import { useQuery } from "@apollo/client";
 
 import { useColorScheme } from "../components/ColorSchemeProvider.jsx";
 
-import Flatpickr from "react-flatpickr";
-import "flatpickr/dist/themes/dark.css";
-
 import { QUERY_USER } from "../utils/queries.js";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
 import ProfilePictureUpload from "../components/ProfilePictureUpload.jsx";
+import SleepDropdownArea from "../components/SleepDropdownArea.jsx";
 
 import AuthService from "../utils/auth.js";
+
+import { lifeGoalActivities, workGoalActivities } from "../utils/preferredActivities.js";
+import { colorSchemes } from "../utils/colorSchemes.js";
 
 const Welcome = () => {
   console.log("[Welcome.jsx] Starting new render cycle.");
@@ -55,229 +56,6 @@ const Welcome = () => {
   }
 
   const userFirstName = userData?.user.firstName;
-
-  const daysOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const lifeGoalActivities = [
-    {
-      title: "Mindful Meditation",
-      description: "Practice mindfulness to enhance focus and reduce stress.",
-    },
-    {
-      title: "Regular Exercise",
-      description: "Engage in physical activities for a healthy body and mind.",
-    },
-    {
-      title: "Reading",
-      description: "Explore different worlds and gain knowledge through books.",
-    },
-    {
-      title: "Healthy Cooking",
-      description: "Prepare nutritious meals for a balanced diet.",
-    },
-    {
-      title: "Yoga Practice",
-      description: "Improve flexibility, strength, and mental well-being.",
-    },
-    {
-      title: "Learning a New Skill",
-      description: "Expand your knowledge and abilities with a new skill.",
-    },
-    {
-      title: "Volunteering",
-      description: "Give back to the community and make a positive impact.",
-    },
-    {
-      title: "Nature Walks",
-      description: "Connect with nature for relaxation and fresh air.",
-    },
-    {
-      title: "Journaling",
-      description: "Reflect on thoughts and experiences for personal growth.",
-    },
-    {
-      title: "Digital Detox",
-      description:
-        "Take a break from screens to reduce stress and improve sleep.",
-    },
-    {
-      title: "Traveling",
-      description: "Explore new places and cultures for a broader perspective.",
-    },
-    {
-      title: "Socializing",
-      description:
-        "Build and strengthen relationships with friends and family.",
-    },
-    {
-      title: "Artistic Expression",
-      description: "Express emotions and creativity through art or music.",
-    },
-    {
-      title: "Mind-Boosting Games",
-      description: "Engage in puzzles or games to keep the mind sharp.",
-    },
-    {
-      title: "Quality Sleep",
-      description:
-        "Prioritize sufficient and restful sleep for overall well-being.",
-    },
-    {
-      title: "Hydration",
-      description:
-        "Maintain good health by staying hydrated throughout the day.",
-    },
-    {
-      title: "Goal Setting",
-      description: "Set personal goals to work towards self-improvement.",
-    },
-    {
-      title: "Digital Learning",
-      description:
-        "Expand knowledge through online courses and educational platforms.",
-    },
-    {
-      title: "Hobbies",
-      description: "Find joy and relaxation in activities you love to do.",
-    },
-    {
-      title: "Gratitude Practice",
-      description:
-        "Cultivate gratitude to focus on the positive aspects of life.",
-    },
-  ];
-
-  const workGoalActivities = [
-    {
-      title: "Daily Goal Reflection",
-      description:
-        "Spend 10 minutes each morning reviewing and setting clear work objectives for the day.",
-    },
-    {
-      title: "Task Prioritization",
-      description:
-        "Use a priority system to tackle the most crucial tasks first for increased productivity.",
-    },
-    {
-      title: "Project Mind Mapping",
-      description:
-        "Visualize project structures and ideas through mind mapping to enhance creativity and planning.",
-    },
-    {
-      title: "Weekly Progress Reports",
-      description:
-        "Set aside time each week to evaluate your accomplishments and adjust goals as needed.",
-    },
-    {
-      title: "Learning Sessions",
-      description:
-        "Dedicate time for skill development or staying updated on industry trends.",
-    },
-    {
-      title: "Networking Events",
-      description:
-        "Attend industry conferences, workshops, or virtual events to expand professional connections.",
-    },
-    {
-      title: "Mentorship Meetings",
-      description:
-        "Seek guidance from a mentor to gain insights and perspectives on your career path.",
-    },
-    {
-      title: "Feedback Sessions",
-      description:
-        "Regularly request feedback from colleagues or supervisors to refine your work approach.",
-    },
-    {
-      title: "Health Breaks",
-      description:
-        "Schedule short breaks for physical activities or mindfulness to boost overall well-being.",
-    },
-    {
-      title: "Daily Stand-ups",
-      description:
-        "Quick team meetings to discuss goals, progress, and challenges for the day.",
-    },
-    {
-      title: "Brainstorming Sessions",
-      description:
-        "Collaborate with colleagues to generate innovative ideas and solutions.",
-    },
-    {
-      title: "Skill Workshops",
-      description:
-        "Attend workshops or online courses to enhance specific skills relevant to your role.",
-    },
-    {
-      title: "Team-building Activities",
-      description:
-        "Engage in team-building exercises to foster a positive and collaborative work environment.",
-    },
-    {
-      title: "Customer Feedback Analysis",
-      description:
-        "Regularly review customer feedback to improve products or services.",
-    },
-    {
-      title: "Technology Integration",
-      description:
-        "Explore and implement new technologies that can streamline work processes.",
-    },
-    {
-      title: "Task Automation",
-      description:
-        "Identify and automate repetitive tasks to save time and reduce errors.",
-    },
-    {
-      title: "Cross-functional Collaboration",
-      description:
-        "Work with colleagues from different departments to gain diverse insights.",
-    },
-    {
-      title: "Industry Research",
-      description:
-        "Stay informed about industry trends, competitors, and emerging technologies.",
-    },
-    {
-      title: "Quality Assurance Checks",
-      description:
-        "Implement quality control measures to ensure high standards in work output.",
-    },
-    {
-      title: "Celebrating Milestones",
-      description:
-        "Acknowledge and celebrate achievements and milestones to boost team morale.",
-    },
-  ];
-
-  const colorSchemes = [
-    {
-      name: "Dark (Default)",
-      key: "default-mode-jg",
-      image: "ColorTheme1.png",
-    },
-    { name: "Light", key: "light-mode-jg", image: "ColorTheme2.png" },
-    {
-      name: "Dark (Monochrome)",
-      key: "mono-mode-jg",
-      image: "ColorTheme3.png",
-    },
-    { name: "Aqua", key: "blue-mode-jg", image: "ColorTheme4.png" },
-    { name: "Dulcet", key: "beige-mode-jg", image: "ColorTheme5.png" },
-    { name: "Ligneous", key: "brown-mode-jg", image: "ColorTheme6.png" },
-    { name: "Kumquat", key: "green-mode-jg", image: "ColorTheme7.png" },
-    { name: "Spectrum", key: "purple-mode-jg", image: "ColorTheme8.png" },
-    { name: "Retinicide", key: "yellow-mode-jg", image: "ColorTheme9.png" },
-    { name: "Abuela", key: "pastel-mode-jg", image: "ColorTheme10.png" },
-  ];
 
   const nextScreen = () => {
     console.log("[Welcome.jsx] nextScreen() triggered.");
@@ -388,7 +166,9 @@ const Welcome = () => {
                 Move the slider to the left or right to adjust your desired
                 work/life balance goal.
               </p>
-              <WorkLifeSlider />
+              <div className="welcome-work-life-container-jg">
+                <WorkLifeSlider />
+              </div>
             </div>
           </div>
         </div>
@@ -411,67 +191,8 @@ const Welcome = () => {
                   goal.
                 </p>
               </div>
-              <div className="sleep-dropdown-area-jg">
-                {daysOfWeek.map((day, index) => (
-                  <div key={index} className="sleep-dropdown-day-jg">
-                    <p className="sleep-dropdown-day-title-jg">{day}</p>
-                    <Flatpickr
-                      name={`day-${index + 1}-sleep-start`}
-                      value={"11:00 PM"} // default value, you can change this as needed
-                      className="sleep-select-jg"
-                      options={{
-                        noCalendar: true,
-                        enableTime: true,
-                        allowInput: true,
-                        dateFormat: "h:i K",
-                        closeOnSelect: true,
-                        clickOpens: true,
-                      }}
-                      onChange={(selectedDates, dateString, instance) => {
-                        console.log(
-                          `[Dashboard.jsx] day${index + 1}SleepStart onChange:`,
-                          selectedDates,
-                          dateString,
-                          instance
-                        );
-                        handleInputChange({
-                          target: {
-                            name: `day${index + 1}SleepStart`,
-                            value: dateString,
-                          },
-                        });
-                      }}
-                    />
-                    <p className="sleep-dropdown-day-to-jg">to</p>
-                    <Flatpickr
-                      name={`day-${index + 1}-sleep-end`}
-                      value={"7:00 AM"} // default value, you can change this as needed
-                      className="sleep-select-jg"
-                      options={{
-                        noCalendar: true,
-                        enableTime: true,
-                        allowInput: true,
-                        dateFormat: "h:i K",
-                        closeOnSelect: true,
-                        clickOpens: true,
-                      }}
-                      onChange={(selectedDates, dateString, instance) => {
-                        console.log(
-                          `[Dashboard.jsx] day${index + 1}SleepEnd onChange:`,
-                          selectedDates,
-                          dateString,
-                          instance
-                        );
-                        handleInputChange({
-                          target: {
-                            name: `day${index + 1}SleepEnd`,
-                            value: dateString,
-                          },
-                        });
-                      }}
-                    />
-                  </div>
-                ))}
+              <div className="welcome-sleep-dropdown-container-jg">
+                <SleepDropdownArea />
               </div>
             </div>
           </div>

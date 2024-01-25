@@ -44,7 +44,7 @@ export default function UserMenu({ username, userId }) {
   };
 
   return (
-    <div className="modal-jg user-menu-modal-container-jg">
+    <div className={userMenuModalContent === "Settings" ? "modal-jg settings-modal-container-jg" : "modal-jg user-menu-modal-container-jg"}>
       <div className="modal-content-jg">
         {!userDeleted && (
           <>
