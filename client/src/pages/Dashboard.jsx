@@ -14,6 +14,9 @@ import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
 import AuthService from "../utils/auth.js";
 import { calculateEventStats } from "../utils/eventUtils.js";
+import SidePanelStats from "../components/SidePanelStats.jsx";
+import SidePanelEvents from "../components/SidePanelEvents.jsx";
+import SidePanelRecommendations from "../components/SidePanelRecommendations.jsx";
 
 export default function Dashboard() {
   // Set up date variables for display
@@ -49,11 +52,11 @@ export default function Dashboard() {
 
   console.log("[Dashboard.jsx] selectedDate:", selectedDate);
 
-  const { openModal } = useModal();
-
   useEffect(() => {
     eventsRefetch();
   }, [selectedDate]);
+
+  const { openModal } = useModal();
 
   // Get user profile
   const userProfile = AuthService.getProfile();
@@ -61,6 +64,18 @@ export default function Dashboard() {
   const username = userProfile.data.username;
 
   console.log("[Dashboard.jsx] userProfile:", userProfile);
+
+  const sidePanelSpinnerStyle = {
+    spinnerWidth: "16%",
+    spinnerHeight: "95vh",
+    spinnerElWidthHeight: "100px",
+  };
+
+  const scheduleSpinnerStyle = {
+    spinnerWidth: "100%",
+    spinnerHeight: "80vh",
+    spinnerElWidthHeight: "100px",
+  };
 
   // Query events for the selected date
   const {
@@ -73,18 +88,14 @@ export default function Dashboard() {
   });
 
   const {
-    loading: subtypeLoading,
-    data: subtypeData,
-    error: subtypeError,
+    loading: userLoading,
+    data: userData,
+    error: userError,
   } = useQuery(QUERY_USER, {
     variables: { username: userProfile.data.username },
   });
 
-  if (eventsLoading || subtypeLoading) {
-    return <LoadingSpinner />;
-  }
-
-  if (eventsError || subtypeError) {
+  if (eventsError || userError) {
     console.error("[Schedule.jsx] GraphQL Error:", error);
     return <div>Error fetching data.</div>;
   }
@@ -93,27 +104,12 @@ export default function Dashboard() {
 
   console.log("[Schedule.jsx] events:", events);
 
-  const { workCount, workTotalTime, lifeCount, lifeTotalTime } =
+  const { eventCount, totalAlottedTime, unalottedTimePercentage } =
     calculateEventStats(events);
 
-  const sleepingHours = 8 * 60;
-  const totalAllottedTime = 24 * 60 - sleepingHours;
-  let workPercentage;
-  workTotalTime > 0
-    ? (workPercentage = Math.round((workTotalTime / totalAllottedTime) * 100))
-    : (workPercentage = 0);
-  let lifePercentage;
-  lifeTotalTime > 0
-    ? (lifePercentage = Math.round((lifeTotalTime / totalAllottedTime) * 100))
-    : (lifePercentage = 0);
-  const unalottedTimePercentage = 100 - workPercentage - lifePercentage;
+  console.log("[Dashboard.jsx] userData:", userData);
 
-  // TODO: Create a third percentage for unalotted time
-  // TODO: Refine the stats to adapt to several options in Settings (unused variables: sleepingHours, totalAllottedTime, unalottedTimePercentage)
-
-  console.log("[Dashboard.jsx] subtypeData:", subtypeData);
-
-  const eventSubtypes = subtypeData?.user.eventSubtypes;
+  const eventSubtypes = userData?.user.eventSubtypes;
 
   const selectPreviousDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
@@ -127,19 +123,40 @@ export default function Dashboard() {
     eventsRefetch();
   };
 
+  const hasMatchingWorkEvents = events.some(
+    (event) => "work" === event.type.toLowerCase()
+  );
+
+  const hasMatchingLifeEvents = events.some(
+    (event) => "life" === event.type.toLowerCase()
+  );
+
   return (
     <main className="main-jg">
       <div className="dashboard-grid-jg">
         <div className="dashboard-side-panel-jg work-text-jg">
-          <div className="side-panel-top-jg">
-            <h3>Work</h3>
-          </div>
-          <div className="side-panel-middle-jg">
-            <h1>{workPercentage}%</h1>
-          </div>
-          <div className="side-panel-bottom-jg">
-            <p>of your waking hours</p>
-          </div>
+          {eventsLoading || userLoading ? (
+            <LoadingSpinner
+              spinnerStyle={sidePanelSpinnerStyle}
+              spinnerElWidthHeight="100px"
+            />
+          ) : (
+            <>
+              <SidePanelStats events={events} eventType="Work" />
+              {hasMatchingWorkEvents && (
+                <>
+                  <hr className="side-panel-hr-jg work-hr-jg" />
+                  <SidePanelEvents
+                    events={events}
+                    eventType="Work"
+                    eventCount={eventCount}
+                    totalAlottedTime={totalAlottedTime}
+                  />
+                </>
+              )}
+              <SidePanelRecommendations eventType="Work" />
+            </>
+          )}
         </div>
         <div className="dashboard-main-panel-jg">
           <div className="dashboard-main-top-row-jg">
@@ -176,7 +193,9 @@ export default function Dashboard() {
                 </a>
               </div>
               <div className="unalotted-percentage-jg">
-                <p>Unalotted Time: {unalottedTimePercentage}% of your waking hours</p>
+                <p>
+                  Unalotted Time: {unalottedTimePercentage}%
+                </p>
               </div>
             </div>
             <button
@@ -208,25 +227,45 @@ export default function Dashboard() {
               </svg>
             </button>
           </div>
-          <Schedule
-            key={selectedDate.getTime()}
-            events={events}
-            selectedDate={selectedDate}
-            eventSubtypes={eventSubtypes}
-            eventsRefetch={eventsRefetch}
+          {eventsLoading || userLoading ? (
+            <LoadingSpinner
+              spinnerStyle={scheduleSpinnerStyle}
+              spinnerElWidthHeight="100px"
+            />
+          ) : (
+            <Schedule
+              key={selectedDate.getTime()}
+              events={events}
+              selectedDate={selectedDate}
+              eventSubtypes={eventSubtypes}
+              eventsRefetch={eventsRefetch}
+            />
+          )}
+        </div>
+        {eventsLoading || userLoading ? (
+          <LoadingSpinner
+            spinnerStyle={sidePanelSpinnerStyle}
+            spinnerElWidthHeight="100px"
           />
-        </div>
-        <div className="dashboard-side-panel-jg life-text-jg">
-          <div className="side-panel-top-jg">
-            <h3>Life</h3>
-          </div>
-          <div className="side-panel-middle-jg">
-            <h1>{lifePercentage}%</h1>
-          </div>
-          <div className="side-panel-bottom-jg">
-            <p>of your waking hours</p>
-          </div>
-        </div>
+        ) : (
+          <>
+            <div className="dashboard-side-panel-jg life-text-jg">
+              <SidePanelStats events={events} eventType="Life" />
+              {hasMatchingLifeEvents && (
+                <>
+                  <hr className="side-panel-hr-jg life-hr-jg" />
+                  <SidePanelEvents
+                    events={events}
+                    eventType="Life"
+                    eventCount={eventCount}
+                    totalAlottedTime={totalAlottedTime}
+                  />
+                </>
+              )}
+              <SidePanelRecommendations eventType="Life" />
+            </div>
+          </>
+        )}
       </div>
     </main>
   );

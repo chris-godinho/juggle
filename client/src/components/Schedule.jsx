@@ -42,6 +42,7 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
               {formatTime(currentDisplayTime)}
             </div>
             <div
+              id={event && event._id}
               className={
                 event && event.type === "work"
                   ? "schedule-block-title-jg work-text-jg"

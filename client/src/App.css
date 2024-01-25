@@ -20,11 +20,11 @@
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(42, 203, 152, 1);
-  --life-event-color-light: rgba(62, 223, 172, 1);
-  --life-event-color-dark: rgba(82, 243, 192, 1);
+  --life-event-color-light: rgba(82, 243, 192, 1);
+  --life-event-color-dark: rgba(2, 163, 112, 1);
   --work-event-color: rgba(255, 100, 0, 1);
-  --work-event-color-light: rgba(255, 120, 20, 1);
-  --work-event-color-dark: rgba(235, 80, 0, 1);
+  --work-event-color-light: rgba(255, 140, 40, 1);
+  --work-event-color-dark: rgba(215, 60, 0, 1);
 
   --main-text-color: rgba(238, 241, 239, 1);
   --secondary-text-color: rgba(238, 241, 239, 1);
@@ -648,7 +648,22 @@ input[type="checkbox"]:disabled {
 }
 
 /* Loading Spinner rules */
+.spinner-container-jg {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner-wrapper-jg {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .lds-ripple {
+  flex: 1;
   margin: auto;
   background: none;
   display: block;
@@ -1070,8 +1085,8 @@ input[type="checkbox"]:disabled {
   display: flex;
   flex-direction: column;
   align-items: center;
-  flex-grow: 1;
-  min-height: 95vh;
+  width: 16%;
+  height: 95vh;
 }
 
 .work-text-jg {
@@ -1085,31 +1100,96 @@ input[type="checkbox"]:disabled {
 .side-panel-top-jg,
 .side-panel-bottom-jg {
   display: flex;
-  flex: 1;
-  height: 40vh;
-  max-height: 40vh;
 }
 
 .side-panel-middle-jg {
   display: flex;
-  flex: 1;
-  height: 15vh;
-  max-height: 15vh;
+  height: 10vh;
+  max-height: 10vh;
 }
 
 .dashboard-side-panel-jg div h3 {
-  align-self: flex-end;
+  margin-bottom: 0;
 }
 
 .dashboard-side-panel-jg div h1 {
-  font-size: 4em;
+  font-size: 3em;
   align-self: center;
   margin-top: 0;
   margin-bottom: 0;
 }
 
 .dashboard-side-panel-jg div p {
-  align-self: flex-start;
+  margin-top: 0;
+}
+
+.side-panel-hr-jg {
+  width: 88%;
+  margin-bottom: 1em;
+  font-size: 0.85em;
+  border: 0;
+}
+
+.work-hr-jg {
+  border-top: 1px solid var(--work-event-color);
+}
+
+.life-hr-jg {
+  border-top: 1px solid var(--life-event-color);
+}
+
+.side-panel-event-list-jg,
+.side-panel-recommendation-list-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  overflow-x: hidden;
+  margin-bottom: 0.9em;
+}
+
+.side-panel-event-item-jg {
+  width: 100%;
+}
+
+.side-panel-event-item-jg a {
+  margin-left: 6%;
+  margin-right: 6%;
+  font-size: 0.85em;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  flex: 1;
+}
+
+.side-panel-event-item-jg a.work-text-jg:hover {
+  color: var(--work-event-color-light)
+}
+
+.side-panel-event-item-jg a.life-text-jg:hover {
+  color: var(--life-event-color-light)
+}
+
+.side-panel-event-item-jg a p {
+  margin-bottom: 0.3em;
+}
+
+.side-panel-event-title-jg {
+  margin-left: 0.2em;
+  margin-right: 0.2em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  text-align: left;
+}
+
+.side-panel-recommendation-text-jg {
+  margin-left: 6%;
+  margin-right: 6%;
+  font-size: 0.85em;
+  text-align: left;
 }
 
 .dashboard-main-panel-jg {
@@ -1273,6 +1353,7 @@ input[type="checkbox"]:disabled {
   margin-bottom: 1em;
   margin-left: 0.4em;
   margin-top: 1em;
+  height: 6em;
 }
 
 .event-title-jg,
@@ -1288,10 +1369,10 @@ input[type="checkbox"]:disabled {
   font-size: 2em;
   font-weight: bold;
   border: none;
-  padding: 0.1em 0.5em;
-  background-color: var(--main-background-color-accent) !important;
+  padding: 0;
   margin-top: 0.8em;
-  border-radius: 3em;
+  border: none;
+  border-bottom: 1px solid var(--input-text-color);
 }
 
 /* Credit: https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline */
