@@ -1,7 +1,8 @@
 /* App.css */
 
 :root,
-#color-scheme-jg.default-mode-jg {
+#color-scheme-jg.default-mode-jg,
+.color-scheme-sample-bar-jg.default-mode-jg {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
   --main-background-color-darker-accent: rgba(20, 27, 25, 1);
@@ -32,7 +33,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.light-mode-jg {
+#color-scheme-jg.light-mode-jg,
+.color-scheme-sample-bar-jg.light-mode-jg {
   --main-background-color: rgba(238, 241, 239, 1);
   --main-background-color-accent: rgba(198, 201, 199, 1);
   --main-background-color-darker-accent: rgba(218, 221, 219, 1);
@@ -63,7 +65,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.mono-mode-jg {
+#color-scheme-jg.mono-mode-jg,
+.color-scheme-sample-bar-jg.mono-mode-jg {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
   --main-background-color-darker-accent: rgba(20, 27, 25, 1);
@@ -94,7 +97,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.blue-mode-jg {
+#color-scheme-jg.blue-mode-jg,
+.color-scheme-sample-bar-jg.blue-mode-jg {
   --main-background-color: rgba(53, 73, 94, 1);
   --main-background-color-accent: rgba(76, 106, 148, 1);
   --main-background-color-darker-accent: rgba(29, 47, 74, 1);
@@ -125,7 +129,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.beige-mode-jg {
+#color-scheme-jg.beige-mode-jg,
+.color-scheme-sample-bar-jg.beige-mode-jg {
   --main-background-color: rgba(249, 224, 217, 1);
   --main-background-color-accent: rgba(53, 33, 44, 1);
   --main-background-color-darker-accent: rgba(145, 127, 123, 1);
@@ -156,7 +161,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.brown-mode-jg {
+#color-scheme-jg.brown-mode-jg,
+.color-scheme-sample-bar-jg.brown-mode-jg {
   --main-background-color: rgba(62, 12, 4, 1);
   --main-background-color-accent: rgba(82, 32, 24, 1);
   --main-background-color-darker-accent: rgba(122, 45, 33, 1);
@@ -187,7 +193,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.green-mode-jg {
+#color-scheme-jg.green-mode-jg,
+.color-scheme-sample-bar-jg.green-mode-jg {
   --main-background-color: rgba(14, 71, 73, 1);
   --main-background-color-accent: rgba(44, 101, 103, 1);
   --main-background-color-darker-accent: rgba(229, 88, 18, 1);
@@ -218,7 +225,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.purple-mode-jg {
+#color-scheme-jg.purple-mode-jg,
+.color-scheme-sample-bar-jg.purple-mode-jg {
   --main-background-color: rgba(0, 33, 139, 1);
   --main-background-color-accent: rgba(30, 83, 199, 1);
   --main-background-color-darker-accent: rgba(115, 37, 111, 1);
@@ -249,7 +257,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.yellow-mode-jg {
+#color-scheme-jg.yellow-mode-jg,
+.color-scheme-sample-bar-jg.yellow-mode-jg {
   --main-background-color: rgba(255, 202, 58, 1);
   --main-background-color-accent: rgba(25, 130, 196, 1);
   --main-background-color-darker-accent: rgba(255, 89, 94, 1);
@@ -280,7 +289,8 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-#color-scheme-jg.pastel-mode-jg {
+#color-scheme-jg.pastel-mode-jg,
+.color-scheme-sample-bar-jg.pastel-mode-jg {
   --main-background-color: rgba(174, 92, 19, 1);
   --main-background-color-accent: rgba(214, 208, 93, 1);
   --main-background-color-darker-accent: rgba(57, 67, 183, 1);
@@ -920,58 +930,6 @@ input[type="checkbox"]:disabled {
 .welcome-sleep-dropdown-container-jg {
   min-width: 50%;
   margin-left: 10vw;
-}
-
-.work-life-activities-list-jg {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-.work-life-activity-checkbox-jg {
-  margin-right: 1em;
-  margin-bottom: 1em;
-  width: 20%;
-}
-
-.color-scheme-table-jg {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 2em;
-  margin-bottom: 2em;
-}
-
-.color-scheme-card-jg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  width: 20%;
-}
-
-.color-scheme-sample-jg {
-  height: 10vh;
-  border-radius: 10%;
-  border: 1px solid var(--main-background-color-accent);
-  overflow: hidden;
-  box-shadow: 5px 5px 10px 3px var(--box-shadow-color);
-  transition: transform 0.2s ease-in-out;
-}
-
-.color-scheme-sample-jg:hover {
-  transform: scale(0.98);
-}
-
-.color-scheme-sample-image-jg {
-  height: 100%;
-  width: 100%;
-}
-
-.color-scheme-name-jg {
-  margin-top: 0.4em;
-  margin-bottom: 1em;
 }
 
 .welcome-progress-bar-jg {
@@ -1744,6 +1702,88 @@ input[type="checkbox"]:disabled {
 .sleep-select-jg {
   width: 30%;
   margin-left: 2em;
+}
+
+/* Work/Life Checkboxes rules */
+.work-life-activities-list-jg {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.work-life-activity-checkbox-jg {
+  margin-right: 1em;
+  margin-bottom: 1em;
+  width: 20%;
+}
+
+/* Color Scheme Table rules */
+.color-scheme-table-jg {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-top: 2em;
+  margin-bottom: 2em;
+}
+
+.color-scheme-card-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20%;
+}
+
+.color-scheme-sample-jg {
+  display: flex;
+  width: 70%;
+  height: 10vh;
+  border-radius: 10%;
+  border: 1px solid var(--main-background-color-accent);
+  overflow: hidden;
+  box-shadow: 5px 5px 10px 3px var(--box-shadow-color);
+  transition: transform 0.2s ease-in-out;
+}
+
+.color-scheme-sample-jg:hover {
+  transform: scale(0.98);
+}
+
+.color-scheme-sample-jg a {
+  display: flex;
+  height: 100%;
+  width: 100%;
+}
+
+.color-scheme-sample-bar-jg {
+  height: 100%;
+  width: 20%;
+}
+
+.main-background-sample-jg{
+  background-color: var(--main-background-color);
+}
+
+.main-background-darker-accent-jg {
+  background-color: var(--main-background-color-darker-accent);
+}
+
+.main-text-color-jg {
+  background-color: var(--main-text-color);
+}
+
+.life-event-color-jg {
+  background-color: var(--life-event-color);
+}
+
+.work-event-color-jg {
+  background-color: var(--work-event-color);
+}
+
+.color-scheme-name-jg {
+  margin-top: 0.4em;
+  margin-bottom: 1em;
 }
 
 /* Donate page rules */

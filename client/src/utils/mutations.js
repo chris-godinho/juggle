@@ -174,16 +174,13 @@ export const UPDATE_USER_SETTINGS = gql`
         completeAfterEnd
       }
       layoutSettings {
-        showLife
-        showWork
-        showEvents
-        showStats
-        showSettings
-        showLogout
+        dashboardLayout
+        viewStyle
       }
       localizationSettings {
-        language
-        timezone
+        timeZone
+        dateFormat
+        timeFormat
       }
     }
   }

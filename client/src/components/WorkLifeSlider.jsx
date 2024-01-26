@@ -6,12 +6,8 @@ export default function WorkLifeSlider() {
 
   const { formData, setFormData } = useDataContext();
 
-  console.log("[WorkLifeSlider.jsx] formData:", formData);
-
   const handleSliderChange = (event) => {
     const value = parseInt(event.target.value, 10);
-
-    // TODO: Update formData with new value (leave other values unchanged)
 
     setFormData({
       ...formData,
@@ -23,9 +19,6 @@ export default function WorkLifeSlider() {
         },
       },
     });
-
-    console.log("[WorkLifeSlider.jsx] handleSliderChange - formData:", formData);
-
   };
 
   return (

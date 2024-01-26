@@ -223,7 +223,7 @@ export default function EventDetails({
                 <input
                   type="checkbox"
                   name="completed"
-                  checked={formData.completed || ""}
+                  checked={formData.completed ?? false}
                   onChange={handleInputChange}
                 />
                 <label key="event-complete-jg" title="Click to Edit">

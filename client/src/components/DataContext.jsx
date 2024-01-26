@@ -9,6 +9,9 @@ export const useDataContext = () => {
     if (!context) {
       throw new Error('useDataContext must be used within a DataContext.Provider');
     }
+
+    console.log('[DataContext.jsx] useDataContext data:', context); // Add this line
+
     return context;
   };
 

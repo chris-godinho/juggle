@@ -148,18 +148,17 @@ const resolvers = {
       const updateFields = {};
 
       // Add non-empty and defined fields to the updateFields object
-      if (colorModeSetting !== "")
-        updateFields.colorModeSetting = colorModeSetting;
-      if (eventSubtypes !== "") updateFields.eventSubtypes = eventSubtypes;
-      if (statSettings !== "") updateFields.statSettings = statSettings;
-      if (sleepingHours !== "") updateFields.sleepingHours = sleepingHours;
-      if (lifePreferredActivities !== "")
+      if (colorModeSetting) updateFields.colorModeSetting = colorModeSetting;
+      if (eventSubtypes) updateFields.eventSubtypes = eventSubtypes;
+      if (statSettings) updateFields.statSettings = statSettings;
+      if (sleepingHours) updateFields.sleepingHours = sleepingHours;
+      if (lifePreferredActivities)
         updateFields.lifePreferredActivities = lifePreferredActivities;
-      if (workPreferredActivities !== "")
+      if (workPreferredActivities)
         updateFields.workPreferredActivities = workPreferredActivities;
-      if (eventSettings !== "") updateFields.eventSettings = eventSettings;
-      if (layoutSettings !== "") updateFields.layoutSettings = layoutSettings;
-      if (localizationSettings !== "")
+      if (eventSettings) updateFields.eventSettings = eventSettings;
+      if (layoutSettings) updateFields.layoutSettings = layoutSettings;
+      if (localizationSettings)
         updateFields.localizationSettings = localizationSettings;
 
       console.log(

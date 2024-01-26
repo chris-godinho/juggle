@@ -37,9 +37,6 @@ export default function SleepDropdownArea() {
         },
       },
     });
-
-    console.log("[SleepDropdownArea.jsx] handleInputChange - formData:", formData);
-
   }
 
   return (

@@ -1,57 +1,39 @@
 // Welcome.jsx
 
 import React, { useState, useEffect, useRef } from "react";
-import { useQuery } from "@apollo/client";
-
-import { useColorScheme } from "../components/ColorSchemeProvider.jsx";
+import { useQuery, useMutation } from "@apollo/client";
 
 import DataContext from "../components/DataContext.jsx";
 
 import { QUERY_USER } from "../utils/queries.js";
+import { UPDATE_USER_SETTINGS } from "../utils/mutations.js";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
 import ProfilePictureUpload from "../components/ProfilePictureUpload.jsx";
+import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
 import SleepDropdownArea from "../components/SleepDropdownArea.jsx";
+import LifeActivitiesCheckboxes from "../components/LifeActivitiesCheckboxes.jsx";
+import WorkActivitiesCheckboxes from "../components/WorkActivitiesCheckboxes.jsx";
+import ColorSchemeTable from "../components/ColorSchemeTable.jsx";
 
 import AuthService from "../utils/auth.js";
 
-import {
-  lifeGoalActivities,
-  workGoalActivities,
-} from "../utils/preferredActivities.js";
-import { colorSchemes } from "../utils/colorSchemes.js";
-
 const Welcome = () => {
-  console.log("[Welcome.jsx] Starting new render cycle.");
-
-  const { changeColorScheme } = useColorScheme();
-
   const progressBar = useRef(null);
   const welcomeScreens = Array.from({ length: 8 }, () => useRef(null));
 
-  const userProfile = AuthService.getProfile();
+  const [updateUserSettings, { error: updateError }] =
+    useMutation(UPDATE_USER_SETTINGS);
 
-  console.log("[Welcome.jsx] userProfile:", userProfile);
+  const userProfile = AuthService.getProfile();
 
   const [currentScreen, setCurrentScreen] = useState(1);
   const [formData, setFormData] = useState({});
-  
-  console.log("[Welcome.jsx] All variables set.");
 
   useEffect(() => {
-    console.log("[Welcome.jsx] useEffect triggered (empty dependency).");
-    console.log("[Welcome.jsx] progressBar:", progressBar.current);
-  }, []);
-
-  useEffect(() => {
-    console.log(
-      "[Welcome.jsx] useEffect triggered (currentScreen value change)."
-    );
     const newWidth = `${(currentScreen / 8) * 100}%`;
     progressBar.current.style.minWidth = newWidth;
-    console.log("[Welcome.jsx] Progress bar width changed?");
   }, [currentScreen]);
 
   const { data: userData, error: userError } = useQuery(QUERY_USER, {
@@ -65,43 +47,133 @@ const Welcome = () => {
 
   useEffect(() => {
     if (userData) {
-      setFormData(userData);
-      console.log("[Welcome.jsx] formData:", formData);
+      setFormData({
+        user: {
+          username: userData?.user.username || "",
+          colorModeSetting:
+            userData?.user.colorModeSetting || "default-mode-jg",
+          statSettings: {
+            showStats: userData?.user.statSettings.showStats || true,
+            balanceGoal: userData?.user.statSettings.balanceGoal || 50,
+            percentageBasis:
+              userData?.user.statSettings.percentageBasis || "waking",
+            ignoreUnalotted:
+              userData?.user.statSettings.ignoreUnalotted || false,
+          },
+          sleepingHours: {
+            sunday: {
+              start: userData?.user.sleepingHours.sunday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.sunday.end || "07:00 AM",
+            },
+            monday: {
+              start: userData?.user.sleepingHours.monday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.monday.end || "07:00 AM",
+            },
+            tuesday: {
+              start: userData?.user.sleepingHours.tuesday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.tuesday.end || "07:00 AM",
+            },
+            wednesday: {
+              start: userData?.user.sleepingHours.wednesday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.wednesday.end || "07:00 AM",
+            },
+            thursday: {
+              start: userData?.user.sleepingHours.thursday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.thursday.end || "07:00 AM",
+            },
+            friday: {
+              start: userData?.user.sleepingHours.friday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.friday.end || "07:00 AM",
+            },
+            saturday: {
+              start: userData?.user.sleepingHours.saturday.start || "11:00 PM",
+              end: userData?.user.sleepingHours.saturday.end || "07:00 AM",
+            },
+          },
+          lifePreferredActivities: {
+            exercise: userData?.user.lifePreferredActivities.exercise || true,
+            mindfulness: userData?.user.lifePreferredActivities.mindfulness || true,
+            sleep: userData?.user.lifePreferredActivities.sleep || true,
+            healthAwareness: userData?.user.lifePreferredActivities.healthAwareness || true,
+            reading: userData?.user.lifePreferredActivities.reading || true,
+            music: userData?.user.lifePreferredActivities.music || true,
+            games: userData?.user.lifePreferredActivities.games || true,
+            movies: userData?.user.lifePreferredActivities.movies || true,
+            cooking: userData?.user.lifePreferredActivities.cooking || true,
+            socializing: userData?.user.lifePreferredActivities.socializing || true,
+            sports: userData?.user.lifePreferredActivities.sports || true,
+            outdoorsExploration: userData?.user.lifePreferredActivities.outdoorsExploration || true,
+            travel: userData?.user.lifePreferredActivities.travel || true,
+            journaling: userData?.user.lifePreferredActivities.journaling || true,
+            personalGrowth: userData?.user.lifePreferredActivities.personalGrowth || true,
+            creativeExpression: userData?.user.lifePreferredActivities.creativeExpression || true,
+            financialPlanning: userData?.user.lifePreferredActivities.financialPlanning || true,
+            digitalDetox: userData?.user.lifePreferredActivities.digitalDetox || true,
+            purposeAndMeaning: userData?.user.lifePreferredActivities.purposeAndMeaning || true,
+            boundarySetting: userData?.user.lifePreferredActivities.boundarySetting || true,
+          },
+          workPreferredActivities: {
+            goalSetting: userData?.user.workPreferredActivities.goalSetting || true,
+            skillDevelopment: userData?.user.workPreferredActivities.skillDevelopment || true,
+            industryResearch: userData?.user.workPreferredActivities.industryResearch || true,
+            mentorship: userData?.user.workPreferredActivities.mentorship || true,
+            softSkills: userData?.user.workPreferredActivities.softSkills || true,
+            networking: userData?.user.workPreferredActivities.networking || true,
+            branding: userData?.user.workPreferredActivities.branding || true,
+            progressEvaluation: userData?.user.workPreferredActivities.progressEvaluation || true,
+            teamBuilding: userData?.user.workPreferredActivities.teamBuilding || true,
+            teamFeedback: userData?.user.workPreferredActivities.teamFeedback || true,
+            customerFeedback: userData?.user.workPreferredActivities.customerFeedback || true,
+            qualityAssurance: userData?.user.workPreferredActivities.qualityAssurance || true,
+            brainstorming: userData?.user.workPreferredActivities.brainstorming || true,
+            innovationMindset: userData?.user.workPreferredActivities.innovationMindset || true,
+            technologyIntegration: userData?.user.workPreferredActivities.technologyIntegration || true,
+            teamIntegration: userData?.user.workPreferredActivities.teamIntegration || true,
+            milestoneCelebration: userData?.user.workPreferredActivities.milestoneCelebration || true,
+            reverseMentorship: userData?.user.workPreferredActivities.reverseMentorship || true,
+            volunteering: userData?.user.workPreferredActivities.volunteering || true,
+            entrepreneurship: userData?.user.workPreferredActivities.entrepreneurship || true,
+          },
+        },
+      });
     }
   }, [userData]);
 
-  console.log("[Welcome.jsx] userData:", userData);
-
   const userFirstName = userData?.user.firstName;
 
+  const saveSettingsData = async () => {
+    console.log("[Welcome.jsx] saveSettingsData() triggered.");
+    console.log("[Welcome.jsx] formData:", formData);
+    try {
+      const { data } = await updateUserSettings({
+        variables: { ...formData.user },
+      });
+      console.log("[Welcome.jsx] data:", data);
+    } catch (updateError) {
+      console.error("[Welcome.jsx] GraphQL Error:", updateError);
+    }
+  };
+
   const nextScreen = () => {
-    console.log("[Welcome.jsx] nextScreen() triggered.");
     if (currentScreen === 8) {
-      console.log(
-        "[Welcome.jsx] currentScreen is 8. Redirecting to Dashboard..."
-      );
       window.location.href = "/";
     } else {
-      console.log("[Welcome.jsx] Moving to next screen...");
       welcomeScreens[currentScreen - 1].current.classList.add("hidden-jg");
       welcomeScreens[currentScreen].current.classList.remove("hidden-jg");
-      setCurrentScreen(
-        (prevScreen) => prevScreen + 1,
-        console.log("[Welcome.jsx] currentScreen:", currentScreen.state)
-      );
+      if (currentScreen === 7) {
+        console.log("[Welcome.jsx] currentScreen is 7. Saving data...");
+        console.log("[Welcome.jsx] formData:", formData);
+        saveSettingsData();
+      }
+      setCurrentScreen((prevScreen) => prevScreen + 1);
     }
   };
 
   const prevScreen = () => {
-    console.log("[Welcome.jsx] prevScreen() triggered.");
-    console.log("[Welcome.jsx] Moving to previous screen...");
     welcomeScreens[currentScreen - 1].current.classList.add("hidden-jg");
     welcomeScreens[currentScreen - 2].current.classList.remove("hidden-jg");
     if (currentScreen > 1) {
-      setCurrentScreen(
-        (prevScreen) => prevScreen - 1,
-        console.log("[Welcome.jsx] currentScreen:", currentScreen.state)
-      );
+      setCurrentScreen((prevScreen) => prevScreen - 1);
     }
   };
 
@@ -182,14 +254,14 @@ const Welcome = () => {
                 <p>
                   The average person sleeps 8 hours a day, works 8 hours a day,
                   and has 8 hours of personal time, so we've set that as the
-                  default. We'll be dealing with sleep time later.
+                  default. We'll be dealing with sleep time in a moment.
                 </p>
                 <p>
                   Move the slider to the left or right to adjust your desired
                   work/life balance goal.
                 </p>
                 <div className="welcome-work-life-container-jg">
-                  <WorkLifeSlider setFormData={setFormData} />
+                  <WorkLifeSlider />
                 </div>
               </div>
             </div>
@@ -231,21 +303,7 @@ const Welcome = () => {
                   work/life balance. Mark the checkboxes that correspond to
                   activities that you enjoy doing in your free time.
                 </p>
-                <div className="work-life-activities-list-jg">
-                  {lifeGoalActivities.map((activity, index) => (
-                    <label
-                      key={index}
-                      className="work-life-activity-checkbox-jg checkbox-jg"
-                      title={activity.description}
-                    >
-                      <input
-                        type="checkbox"
-                        name={`workActivity${index + 1}`}
-                      />
-                      {activity.title}
-                    </label>
-                  ))}
-                </div>
+                <LifeActivitiesCheckboxes />
               </div>
             </div>
           </div>
@@ -261,21 +319,7 @@ const Welcome = () => {
                   activities. What do you like to do to achieve your
                   professional goals?
                 </p>
-                <div className="work-life-activities-list-jg">
-                  {workGoalActivities.map((activity, index) => (
-                    <label
-                      key={index}
-                      className="work-life-activity-checkbox-jg checkbox-jg"
-                      title={activity.description}
-                    >
-                      <input
-                        type="checkbox"
-                        name={`workActivity${index + 1}`}
-                      />
-                      {activity.title}
-                    </label>
-                  ))}
-                </div>
+                <WorkActivitiesCheckboxes />
               </div>
             </div>
           </div>
@@ -290,25 +334,7 @@ const Welcome = () => {
                   Finally, let's choose a color scheme for your dashboard. You
                   can always change this later in your user settings.
                 </p>
-                <div className="color-scheme-table-jg">
-                  {colorSchemes.map((scheme, index) => (
-                    <div key={index} className="color-scheme-card-jg">
-                      <div className="color-scheme-sample-jg">
-                        <a
-                          href="#"
-                          onClick={() => changeColorScheme(scheme.key)}
-                        >
-                          <img
-                            src={`/colorSchemes/${scheme.image}`}
-                            alt={`Color Scheme Sample ${index + 1}`}
-                            className="color-scheme-sample-image-jg"
-                          />
-                        </a>
-                      </div>
-                      <p className="color-scheme-name-jg">{scheme.name}</p>
-                    </div>
-                  ))}
-                </div>
+                <ColorSchemeTable />
               </div>
             </div>
           </div>
@@ -319,6 +345,7 @@ const Welcome = () => {
             <div className="welcome-screen-content-container-jg">
               <div className="welcome-text-jg">
                 <h1>We're all set.</h1>
+                <p>Your new settings have been saved.</p>
                 <p>
                   Thank you for taking the time to personalize your Juggler
                   experience.
