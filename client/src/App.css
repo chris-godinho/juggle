@@ -400,6 +400,11 @@ option {
   overflow-y: hidden;
 }
 
+.dark-background-jg {
+  background-color: var(--main-background-color);
+  height: 100vh;
+}
+
 #color-scheme-jg {
   background-color: var(--main-background-color);
   font-family: var(--main-font-family);

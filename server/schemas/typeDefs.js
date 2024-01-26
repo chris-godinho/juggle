@@ -186,17 +186,14 @@ const typeDefs = `
   }
   
   input LayoutSettingMatrixInput {
-    showLife: Boolean
-    showWork: Boolean
-    showEvents: Boolean
-    showStats: Boolean
-    showSettings: Boolean
-    showLogout: Boolean
+    dashboardLayout: String
+    viewStyle: String
   }
   
   input LocalizationSettingMatrixInput {
-    language: String
-    timezone: Int
+    timeZone: Int
+    dateFormat: String
+    timeFormat: String
   }
   
   type Event {

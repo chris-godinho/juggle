@@ -1,12 +1,12 @@
 // Welcome.jsx
 
 import React, { useState, useEffect, useRef } from "react";
-import { useQuery, useMutation } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 
+import { useUserSettings } from "../components/UserSettingsProvider.jsx";
 import DataContext from "../components/DataContext.jsx";
 
 import { QUERY_USER } from "../utils/queries.js";
-import { UPDATE_USER_SETTINGS } from "../utils/mutations.js";
 
 import Header from "../components/Header";
 import Footer from "../components/Footer";
@@ -23,8 +23,7 @@ const Welcome = () => {
   const progressBar = useRef(null);
   const welcomeScreens = Array.from({ length: 8 }, () => useRef(null));
 
-  const [updateUserSettings, { error: updateError }] =
-    useMutation(UPDATE_USER_SETTINGS);
+  const { updateProviderUserSettings } = useUserSettings();
 
   const userProfile = AuthService.getProfile();
 
@@ -144,14 +143,9 @@ const Welcome = () => {
   const saveSettingsData = async () => {
     console.log("[Welcome.jsx] saveSettingsData() triggered.");
     console.log("[Welcome.jsx] formData:", formData);
-    try {
-      const { data } = await updateUserSettings({
-        variables: { ...formData.user },
-      });
-      console.log("[Welcome.jsx] data:", data);
-    } catch (updateError) {
-      console.error("[Welcome.jsx] GraphQL Error:", updateError);
-    }
+
+    updateProviderUserSettings(formData?.user);
+
   };
 
   const nextScreen = () => {

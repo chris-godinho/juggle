@@ -1,6 +1,7 @@
 // Dashboard.jsx
 
 import React, { useEffect, useState } from "react";
+import { useQuery } from "@apollo/client";
 
 import { useModal } from "../components/ModalProvider.jsx";
 
@@ -9,7 +10,6 @@ import LoadingSpinner from "../components/LoadingSpinner.jsx";
 import NewEvent from "../components/NewEvent.jsx";
 import UserMenu from "../components/UserMenu.jsx";
 
-import { useQuery } from "@apollo/client";
 import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
 import AuthService from "../utils/auth.js";

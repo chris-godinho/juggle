@@ -13,6 +13,7 @@ import {
   ColorSchemeProvider,
   useColorScheme,
 } from "./components/ColorSchemeProvider.jsx";
+import { UserSettingsProvider } from "./components/UserSettingsProvider.jsx";
 import { Outlet } from "react-router-dom";
 
 // Construct our main GraphQL API endpoint
@@ -43,7 +44,9 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ColorSchemeProvider>
-        <AppContent />
+        <UserSettingsProvider>
+          <AppContent />
+        </UserSettingsProvider>
       </ColorSchemeProvider>
     </ApolloProvider>
   );

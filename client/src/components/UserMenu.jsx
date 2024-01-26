@@ -2,7 +2,9 @@
 
 import React, { useState } from "react";
 
+import DataContext from "./DataContext.jsx";
 import { useModal } from "./ModalProvider";
+import { useUserSettings } from "./UserSettingsProvider.jsx";
 
 import UserMenuOptions from "./UserMenuOptions";
 import UserProfile from "./UserProfile";
@@ -15,10 +17,33 @@ export default function UserMenu({ username, userId }) {
     useState("UserMenuOptions");
   const [userDeleted, setUserDeleted] = useState(false);
 
+  const { updateProviderUserSettings } = useUserSettings();
+
+  const [formData, setFormData] = useState({});
+
   const { closeModal } = useModal();
 
+  const handleFormSubmit = async (event) => {
+    console.log("[UserMenu.jsx] handleFormSubmit()");
+    console.log("[UserMenu.jsx] formData: ", formData);
+
+    updateProviderUserSettings(formData?.user);
+
+    setFormData({});
+  };
+
   const backToMenu = (event) => {
+    if (userMenuModalContent === "Settings") {
+      handleFormSubmit();
+    }
     setUserMenuModalContent("UserMenuOptions");
+  };
+
+  const checkCloseModal = (event) => {
+    if (userMenuModalContent === "Settings") {
+      handleFormSubmit();
+    }
+    closeModal();
   };
 
   const renderContent = () => {
@@ -31,7 +56,13 @@ export default function UserMenu({ username, userId }) {
           />
         );
       case "UserProfile":
-        return <UserProfile username={username} backToMenu={backToMenu} setUserDeleted={setUserDeleted} />;
+        return (
+          <UserProfile
+            username={username}
+            backToMenu={backToMenu}
+            setUserDeleted={setUserDeleted}
+          />
+        );
       case "WorkLifeStats":
         return <WorkLifeStats />;
       case "Settings":
@@ -44,30 +75,42 @@ export default function UserMenu({ username, userId }) {
   };
 
   return (
-    <div className={userMenuModalContent === "Settings" ? "modal-jg settings-modal-container-jg" : "modal-jg user-menu-modal-container-jg"}>
-      <div className="modal-content-jg">
-        {!userDeleted && (
-          <>
-            <a
-              href="#"
-              className={
-                userMenuModalContent === "UserMenuOptions"
-                  ? "modal-back-button-jg hidden-jg"
-                  : "modal-back-button-jg"
-              }
-              onClick={backToMenu}
-            >
-              <span className="material-symbols-outlined">
-                arrow_back_ios_new
-              </span>
-            </a>
-            <a href="#" className="modal-close-button-jg" onClick={closeModal}>
-              <span className="material-symbols-outlined">close</span>
-            </a>
-          </>
-        )}
-        {renderContent()}
+    <DataContext.Provider value={{ formData, setFormData }}>
+      <div
+        className={
+          userMenuModalContent === "Settings"
+            ? "modal-jg settings-modal-container-jg"
+            : "modal-jg user-menu-modal-container-jg"
+        }
+      >
+        <div className="modal-content-jg">
+          {!userDeleted && (
+            <>
+              <a
+                href="#"
+                className={
+                  userMenuModalContent === "UserMenuOptions"
+                    ? "modal-back-button-jg hidden-jg"
+                    : "modal-back-button-jg"
+                }
+                onClick={backToMenu}
+              >
+                <span className="material-symbols-outlined">
+                  arrow_back_ios_new
+                </span>
+              </a>
+              <a
+                href="#"
+                className="modal-close-button-jg"
+                onClick={checkCloseModal}
+              >
+                <span className="material-symbols-outlined">close</span>
+              </a>
+            </>
+          )}
+          {renderContent()}
+        </div>
       </div>
-    </div>
+    </DataContext.Provider>
   );
 }
