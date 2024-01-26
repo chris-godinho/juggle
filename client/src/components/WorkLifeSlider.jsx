@@ -1,4 +1,4 @@
-import { useState } from "react";
+// WorkLifeSlider.jsx
 
 import { useDataContext } from "./DataContext"
 
