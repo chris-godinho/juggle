@@ -5,7 +5,7 @@ import { useDataContext } from "./DataContext";
 
 import { colorSchemes } from "../utils/colorSchemes.js";
 
-export default function ColorSchemeTable() {
+export default function ColorSchemeTable({ cardSize = "normal" }) {
   const { formData, setFormData } = useDataContext();
 
   const { changeColorScheme } = useColorScheme();
@@ -22,9 +22,9 @@ export default function ColorSchemeTable() {
   };
 
   return (
-    <div className="color-scheme-table-jg">
+    <div className={cardSize === "normal" ? "color-scheme-table-jg" : "settings-theme-card-container-jg"}>
       {colorSchemes.map((scheme, index) => (
-        <div key={index} className="color-scheme-card-jg">
+        <div key={index} className={cardSize === "normal" ? "color-scheme-card-jg" : "color-scheme-card-jg settings-theme-card-jg"}>
           <div className="color-scheme-sample-jg">
             <a href="#" onClick={() => handleColorSchemeChange(scheme.key)}>
               <div
@@ -44,7 +44,7 @@ export default function ColorSchemeTable() {
               ></div>
             </a>
           </div>
-          <p className="color-scheme-name-jg">{scheme.name}</p>
+          <p className={cardSize === "normal" ? "color-scheme-name-jg" : "settings-thumbnail-label-jg"}>{scheme.name}</p>
         </div>
       ))}
     </div>

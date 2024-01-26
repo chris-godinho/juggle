@@ -4,7 +4,7 @@ import { useDataContext } from "./DataContext";
 
 import { lifeGoalActivities } from "../utils/preferredActivities.js";
 
-export default function LifeActivitiesCheckboxes() {
+export default function LifeActivitiesCheckboxes({ boxSize = "normal" }) {
   const { formData, setFormData } = useDataContext();
 
   function toCamelCase(inputString) {
@@ -32,7 +32,7 @@ export default function LifeActivitiesCheckboxes() {
       {lifeGoalActivities.map((activity, index) => (
         <label
           key={index}
-          className="work-life-activity-checkbox-jg checkbox-jg"
+          className={`work-life-activity-checkbox-jg checkbox-jg ${boxSize === "small" ? "work-life-activities-small-jg" : ""}`}
           title={activity.description}
         >
           <input

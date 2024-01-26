@@ -367,6 +367,10 @@ select::placeholder {
   color: var(--input-placeholder-text-color);
 }
 
+option {
+  background-color: var(--main-background-color-accent);
+}
+
 ::-webkit-scrollbar {
   width: 8px;
 }
@@ -639,10 +643,6 @@ input[type="checkbox"]:disabled {
   margin-left: calc(5.5% - 0.5em);
   min-width: calc(34%);
   max-width: calc(34%);
-}
-
-.modal-select-jg option {
-  background-color: var(--main-background-color-accent);
 }
 
 .modal-button-tray-jg {
@@ -1509,10 +1509,18 @@ input[type="checkbox"]:disabled {
   padding: 0 1em;
 }
 
-.settings-input-jg,
 .settings-select-jg {
   min-width: 35%;
   margin-right: 2em;
+}
+
+.settings-input-jg {
+  min-width: 32.5%;
+  margin-right: 2em;
+}
+
+.settings-select-activities-jg {
+  margin: 0;
 }
 
 .settings-stats-container-jg {
@@ -1570,17 +1578,13 @@ input[type="checkbox"]:disabled {
   margin-bottom: 2em;
 }
 
+.settings-events-error-jg {
+  text-align: left;
+}
+
 .settings-layout-card-container-jg {
   display: flex;
   justify-content: space-between;
-  margin-top: 2.5em;
-  margin-bottom: 2.5em;
-}
-
-.settings-theme-card-container-jg {
-  display: flex;
-  justify-content: space-evenly;
-  flex-wrap: wrap;
   margin-top: 2.5em;
   margin-bottom: 2.5em;
 }
@@ -1611,8 +1615,20 @@ input[type="checkbox"]:disabled {
   width: 100%;
 }
 
+.settings-theme-card-container-jg {
+  display: flex;
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+
+.settings-theme-card-jg {
+  margin-bottom: 2em;
+}
+
 .settings-thumbnail-label-jg {
-  margin-top: 0.4em;
+  margin-top: 0.9em;
   margin-bottom: 1em;
   font-size: 0.8em;
 }
@@ -1707,10 +1723,18 @@ input[type="checkbox"]:disabled {
 /* Work/Life Checkboxes rules */
 .work-life-activities-list-jg {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   flex-wrap: wrap;
   margin-top: 2em;
   margin-bottom: 2em;
+}
+
+.work-life-activities-small-jg {
+  display: flex;
+  font-size: 0.8em;
+  text-align: left;
+  flex-grow: 1;
+  min-width: 40%;
 }
 
 .work-life-activity-checkbox-jg {
