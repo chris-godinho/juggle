@@ -85,25 +85,96 @@ const resolvers = {
         "birthDate =",
         birthDate
       );
-    
+
       // Create an object to store the fields with values
       const updateFields = {};
-    
+
       // Add non-empty and defined fields to the updateFields object
       if (email !== "") updateFields.email = email;
       if (password !== "") updateFields.password = password;
       if (birthDate !== "") updateFields.birthDate = birthDate;
-    
+
       console.log("[resolvers.js] updateUser: updateFields =", updateFields);
-    
+
       // Use the $set operator to update only the specified fields
       const user = await User.findOneAndUpdate(
         { username },
         { $set: updateFields },
         { new: true }
       );
-    
+
       console.log("[resolvers.js] updateUser: user =", user);
+      return { user };
+    },
+    updateUserSettings: async (
+      parent,
+      {
+        username,
+        colorModeSetting,
+        eventSubtypes,
+        statSettings,
+        sleepingHours,
+        lifePreferredActivities,
+        workPreferredActivities,
+        eventSettings,
+        layoutSettings,
+        localizationSettings,
+      }
+    ) => {
+      console.log(
+        "[resolvers.js] updateUserSettings: username =",
+        username,
+        "colorModeSetting =",
+        colorModeSetting,
+        "eventSubtypes =",
+        eventSubtypes,
+        "statSettings =",
+        statSettings,
+        "sleepingHours =",
+        sleepingHours,
+        "lifePreferredActivities =",
+        lifePreferredActivities,
+        "workPreferredActivities =",
+        workPreferredActivities,
+        "eventSettings =",
+        eventSettings,
+        "layoutSettings =",
+        layoutSettings,
+        "localizationSettings =",
+        localizationSettings
+      );
+
+      // Create an object to store the fields with values
+      const updateFields = {};
+
+      // Add non-empty and defined fields to the updateFields object
+      if (colorModeSetting !== "")
+        updateFields.colorModeSetting = colorModeSetting;
+      if (eventSubtypes !== "") updateFields.eventSubtypes = eventSubtypes;
+      if (statSettings !== "") updateFields.statSettings = statSettings;
+      if (sleepingHours !== "") updateFields.sleepingHours = sleepingHours;
+      if (lifePreferredActivities !== "")
+        updateFields.lifePreferredActivities = lifePreferredActivities;
+      if (workPreferredActivities !== "")
+        updateFields.workPreferredActivities = workPreferredActivities;
+      if (eventSettings !== "") updateFields.eventSettings = eventSettings;
+      if (layoutSettings !== "") updateFields.layoutSettings = layoutSettings;
+      if (localizationSettings !== "")
+        updateFields.localizationSettings = localizationSettings;
+
+      console.log(
+        "[resolvers.js] updateUserSettings: updateFields =",
+        updateFields
+      );
+
+      // Use the $set operator to update only the specified fields
+      const user = await User.findOneAndUpdate(
+        { username },
+        { $set: updateFields },
+        { new: true }
+      );
+
+      console.log("[resolvers.js] updateUserSettings: user =", user);
       return { user };
     },
     deleteUser: async (parent, { username }) => {

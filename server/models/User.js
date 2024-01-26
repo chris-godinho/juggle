@@ -145,7 +145,7 @@ const userSchema = new Schema({
       },
     },
   },
-  workPreferredActivities: {
+  lifePreferredActivities: {
     type: {
       exercise: Boolean,
       mindfulness: Boolean,
@@ -191,7 +191,7 @@ const userSchema = new Schema({
       boundarySetting: true,
     },
   },
-  lifePreferredActivities: {
+  workPreferredActivities: {
     type: {
       goalSetting: Boolean,
       skillDevelopment: Boolean,
@@ -247,7 +247,7 @@ const userSchema = new Schema({
   },
   layoutSettings: {
     type: {
-      dashBoardLayout: {
+      dashboardLayout: {
         type: String,
         enum: [
           "two-sidebars",
@@ -262,7 +262,7 @@ const userSchema = new Schema({
       },
     },
     default: {
-      dashBoardLayout: "two-sidebars",
+      dashboardLayout: "two-sidebars",
       viewStyle: "calendar",
     },
   },

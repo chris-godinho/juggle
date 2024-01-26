@@ -1,4 +1,4 @@
-import { gql } from '@apollo/client';
+import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`
   query user($username: String!) {
@@ -14,6 +14,98 @@ export const QUERY_USER = gql`
       eventSubtypes {
         subtype
         parentType
+      }
+      statSettings {
+        showStats
+        balanceGoal
+        percentageBasis
+        ignoreUnalotted
+      }
+      sleepingHours {
+        sunday {
+          start
+          end
+        }
+        monday {
+          start
+          end
+        }
+        tuesday {
+          start
+          end
+        }
+        wednesday {
+          start
+          end
+        }
+        thursday {
+          start
+          end
+        }
+        friday {
+          start
+          end
+        }
+        saturday {
+          start
+          end
+        }
+      }
+      lifePreferredActivities {
+        exercise
+        mindfulness
+        sleep
+        healthAwareness
+        reading
+        music
+        games
+        movies
+        cooking
+        socializing
+        sports
+        outdoorsExploration
+        travel
+        journaling
+        personalGrowth
+        creativeExpression
+        financialPlanning
+        digitalDetox
+        purposeAndMeaning
+        boundarySetting
+      }
+      workPreferredActivities {
+        goalSetting
+        skillDevelopment
+        industryResearch
+        mentorship
+        softSkills
+        networking
+        branding
+        progressEvaluation
+        teamBuilding
+        teamFeedback
+        customerFeedback
+        qualityAssurance
+        brainstorming
+        innovationMindset
+        technologyIntegration
+        teamIntegration
+        milestoneCelebration
+        reverseMentorship
+        volunteering
+        entrepreneurship
+      }
+      eventSettings {
+        completeAfterEnd
+      }
+      layoutSettings {
+        dashboardLayout
+        viewStyle
+      }
+      localizationSettings {
+        timeZone
+        dateFormat
+        timeFormat
       }
       events {
         _id
