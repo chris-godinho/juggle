@@ -36,8 +36,8 @@ const Welcome = () => {
   console.log("[Welcome.jsx] userProfile:", userProfile);
 
   const [currentScreen, setCurrentScreen] = useState(1);
-  const [contextUserData, setContextUserData] = useState({});
-
+  const [formData, setFormData] = useState({});
+  
   console.log("[Welcome.jsx] All variables set.");
 
   useEffect(() => {
@@ -65,27 +65,14 @@ const Welcome = () => {
 
   useEffect(() => {
     if (userData) {
-      setContextUserData(userData);
-      console.log("[Welcome.jsx] contextUserData:", contextUserData);
+      setFormData(userData);
+      console.log("[Welcome.jsx] formData:", formData);
     }
   }, [userData]);
 
   console.log("[Welcome.jsx] userData:", userData);
 
   const userFirstName = userData?.user.firstName;
-
-  const [formData, setFormData] = useState({
-    username: userProfile.data.username || "",
-    colorModeSetting: userData?.user.colorModeSetting || "default-mode-jg",
-    eventSubtypes: userData?.user.eventSubtypes || [],
-    statSettings: userData?.user.statSettings || {},
-    sleepingHours: userData?.user.sleepingHours || {},
-    lifePreferredActivities: userData?.user.lifePreferredActivities || {},
-    workPreferredActivities: userData?.user.workPreferredActivities || {},
-    eventSettings: userData?.user.eventSettings || {},
-    layoutSettings: userData?.user.layoutSettings || {},
-    localizationSettings: userData?.user.localizationSettings || {},
-  });
 
   const nextScreen = () => {
     console.log("[Welcome.jsx] nextScreen() triggered.");
@@ -119,7 +106,7 @@ const Welcome = () => {
   };
 
   return (
-    <DataContext.Provider value={{ contextUserData, setContextUserData }}>
+    <DataContext.Provider value={{ formData, setFormData }}>
       <main className="main-jg">
         <Header />
         <div className="welcome-jg">

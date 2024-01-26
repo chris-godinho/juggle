@@ -4,27 +4,27 @@ import { useDataContext } from "./DataContext"
 
 export default function WorkLifeSlider() {
 
-  const { contextUserData, setContextUserData } = useDataContext();
+  const { formData, setFormData } = useDataContext();
 
-  console.log("[WorkLifeSlider.jsx] contextUserData:", contextUserData);
+  console.log("[WorkLifeSlider.jsx] formData:", formData);
 
   const handleSliderChange = (event) => {
     const value = parseInt(event.target.value, 10);
 
     // TODO: Update formData with new value (leave other values unchanged)
 
-    setContextUserData({
-      ...contextUserData,
+    setFormData({
+      ...formData,
       user: {
-        ...contextUserData.user,
+        ...formData.user,
         statSettings: {
-          ...contextUserData?.user?.statSettings,
+          ...formData?.user?.statSettings,
           balanceGoal: value,
         },
       },
     });
 
-    console.log("[WorkLifeSlider.jsx] handleSliderChange - contextUserData:", contextUserData);
+    console.log("[WorkLifeSlider.jsx] handleSliderChange - formData:", formData);
 
   };
 
@@ -34,7 +34,7 @@ export default function WorkLifeSlider() {
         type="range"
         min="0"
         max="100"
-        value={contextUserData?.user?.statSettings?.balanceGoal || 50}
+        value={formData?.user?.statSettings?.balanceGoal || 50}
         className="slider-jg"
         onChange={handleSliderChange}
       />
@@ -42,12 +42,12 @@ export default function WorkLifeSlider() {
         <div>
           <span className="slider-jg-text work-text-jg">Work</span>
           <span className="slider-jg-value work-text-jg">
-            {contextUserData?.user?.statSettings?.balanceGoal || 50}%
+            {formData?.user?.statSettings?.balanceGoal || 50}%
           </span>
         </div>
         <div>
           <span className="slider-jg-value life-text-jg">
-            {100 - contextUserData?.user?.statSettings?.balanceGoal || 50}%
+            {100 - formData?.user?.statSettings?.balanceGoal || 50}%
           </span>
           <span className="slider-jg-text life-text-jg">Life</span>
         </div>

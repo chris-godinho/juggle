@@ -18,16 +18,13 @@ export default function Settings() {
 
   const [settingsScreen, setSettingsScreen] = useState("stats");
 
-  // TODO: Assign User query result to contextUserData
-  const [contextUserData, setContextUserData] = useState({});
-
-  // TODO; Initilize this with the user's data
+  // TODO; Initialize this with the user's data
   const [formData, setFormData] = useState({});
 
   const handleInputChange = (event) => {};
 
   return (
-    <DataContext.Provider value={{ contextUserData, setContextUserData }}>
+    <DataContext.Provider value={{ formData, setFormData }}>
       <div className="modal-inner-content-jg">
         <h1 className="settings-title-jg">Settings</h1>
         <div className="settings-container-jg">
