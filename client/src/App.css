@@ -846,6 +846,7 @@ input[type="checkbox"]:disabled {
   margin-left: 2em;
   background-color: var(--main-background-color-accent);
 }
+
 .login-signup-button-jg {
   margin-top: 1em;
   margin-bottom: 1.5em;
@@ -1907,4 +1908,401 @@ input[type="checkbox"]:disabled {
 
 .error-button-jg {
   margin-left: 2em;
+}
+
+/* Media Queries */
+@media screen and (max-width: 1100px) {
+  .welcome-text-jg h1 {
+    font-size: 1.5em;
+  }
+
+  .welcome-text-jg p {
+    font-size: 0.9em;
+  }
+
+  .welcome-work-life-labels-jg {
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    font-size: 1em;
+  }
+
+  .sleep-dropdown-day-jg {
+    margin-bottom: 0.5em;
+  }
+
+  .sleep-dropdown-day-title-jg,
+  .sleep-dropdown-day-to-jg {
+    font-size: 0.8em;
+  }
+
+  .work-life-activity-checkbox-jg {
+    font-size: 0.8em;
+  }
+
+  .color-scheme-sample-jg {
+    width: 50%;
+    height: 7vh;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  .box-jg {
+    min-width: 40vw;
+    padding: 2em;
+  }
+  
+  .header-jg {
+    padding: 0.1em 2.5em;
+  }
+
+  .header-button-jg {
+    margin-right: 2em;
+  }
+
+  .home-text-jg {
+    padding: 0 10vh;
+    margin-bottom: 0;
+  }
+
+  .signup-box-jg {
+    min-width: 70%;
+  }
+
+  .welcome-text-jg h1 {
+    font-size: 1.2em;
+  }
+
+  .welcome-text-jg p {
+    font-size: 0.8em;
+  }
+}
+
+@media screen and (max-width: 830px) {
+
+  input, select {
+    height: 1em;
+    font-size: 0.6em;
+  }
+
+  .box-jg {
+    min-width: 50vw;
+  }
+
+  .home-image-container-jg {
+    position: fixed;
+    height: auto;
+    top: 90%;
+    left: 20%;
+    transform: translate(-50%, -50%);
+    opacity: 0.08;
+    pointer-events: none;
+  }
+
+  .home-text-jg {
+    padding: 0 5vh;
+    margin-top: 0;
+  }
+
+  .home-clown-jg {
+    height: 200vh;
+  }
+
+  .signup-box-jg {
+    min-width: 70%;
+  }
+
+  .welcome-sleep-dropdown-container-jg {
+    margin-left: 3vw;
+    flex: 1;
+  }
+
+  .sleep-dropdown-day-jg {
+    margin-bottom: 1em;
+  }
+
+  .sleep-dropdown-day-title-jg,
+  .sleep-dropdown-day-to-jg {
+    margin-left: 0;
+    font-size: 0.6em;
+  }
+
+  .work-life-activity-checkbox-jg {
+    font-size: 0.7em;
+  }
+}
+
+@media screen and (max-width: 620px) {
+  html,
+  body {
+    overflow-y: auto;
+    overflow-x: hidden;
+  }
+
+  input, select {
+    height: 1em;
+    font-size: 0.8em;
+  }
+
+  .header-jg {
+    padding: 0 1.5em;
+  }
+
+  .header-button-jg {
+    margin-right: 1em;
+  }
+
+  .footer-jg {
+    padding: 0.5em;
+    text-align: left;
+  }
+
+  .footer-jg p {
+    margin-left: 1em;
+    font-size: 0.8em;
+    opacity: 0.5;
+  }
+
+  .home-image-container-jg {
+    opacity: 0.05;
+  }
+
+  .login-signup-form-fields-jg {
+    min-width: 60vw;
+    margin-left: -4em;
+  }
+
+  .login-signup-row-jg {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .signup-box-jg {
+    margin-top: 8vh;
+  }
+
+  .welcome-text-jg h1 {
+    font-size: 1.5em;
+  }
+
+  .welcome-text-jg {
+    margin-bottom: 2em;
+  }
+
+  .welcome-text-jg p {
+    font-size: 0.9em;
+  }
+
+  .welcome-text-container-jg {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    max-width: 100vw;
+  }
+
+  .upload-area-jg {
+    margin-left: 0;
+    margin-right: 0;
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: -2em;
+  }
+
+  .welcome-sleep-dropdown-container-jg {
+    margin-top: 2em;
+    margin-bottom: 2em;
+    margin-left: -2.5em;
+    width: 100%;
+  }
+
+  .sleep-dropdown-day-jg {
+    margin-bottom: 1em;
+  }
+
+  .sleep-dropdown-day-title-jg,
+  .sleep-dropdown-day-to-jg {
+    margin-left: 0;
+    font-size: 0.8em;
+  }
+
+  .work-life-activities-list-jg {
+    font-size: 1.2em;
+  }
+
+  .work-life-activity-checkbox-jg {
+    margin-right: 0em;
+    margin-bottom: 2em;
+    width: 40%;
+  }
+
+  .color-scheme-card-jg {
+    width: 40%;
+    margin-bottom: 1.5em;
+  }
+
+  .color-scheme-sample-jg {
+    height: 10vh;
+  }
+
+  .color-scheme-name-jg {
+    margin-top: 0.8em;
+  }
+
+  .navigation-arrow-container-jg {
+    margin-top: 1em;
+  }
+}
+
+@media screen and (max-width: 576px) {
+  .box-jg {
+    min-width: 60vw;
+  }
+
+  .header-jg {
+    padding: 0 1em;
+  }
+
+  .header-button-jg {
+    margin-right: 0.5em;
+  }
+
+  .home-text-jg {
+    padding: 0 2vh;
+    margin-top: 0;
+  }
+
+  .home-text-jg h1,
+  .home-text-jg p {
+    margin-bottom: 1.5em;
+  }
+
+  .home-text-jg h1 {
+    font-size: 1.5em;
+  }
+
+  .home-text-jg p {
+    font-size: 0.9em;
+  }
+
+  .home-image-container-jg {
+    opacity: 0;
+  }
+
+  .signup-box-jg {
+    min-width: 75%;
+  }
+}
+
+@media screen and (max-width: 440px) {
+  input, select {
+    font-size: 0.7em;
+  }
+
+  .home-text-jg {
+    margin-top: 5vh;
+    padding: 0 1vh;
+  }
+
+  .loggedin-text-jg {
+    margin-right: 1em;
+  }
+
+  .signup-box-jg {
+    min-width: 70%;
+  }
+
+  .upload-area-jg {
+    margin-top: 0em;
+  }
+
+  .welcome-work-life-slider-jg {
+    width: 90%;
+  }
+
+  .welcome-sleep-dropdown-container-jg {
+    margin-top: 0em;
+    margin-left: -1em;
+    width: 115%;
+  }
+
+  .sleep-dropdown-day-jg {
+    margin-bottom: 1.5em;
+  }
+
+  .sleep-dropdown-day-title-jg,
+  .sleep-dropdown-day-to-jg {
+    margin-left: 0;
+    font-size: 0.7em;
+  }
+
+  .sleep-select-jg {
+    width: 40%;
+    margin-left: 1em;
+  }
+
+  .sleep-dropdown-day-jg p {
+    margin-left: 1em;
+  }
+
+  .color-scheme-name-jg {
+    text-align: center;
+  }
+
+  .navigation-arrow-container-jg {
+    min-width: 70vw;
+  }
+}
+
+@media screen and (max-width: 395px) {
+  .header-brand-name-jg {
+    display: none;
+  }
+
+  .header-jg {
+    padding: 1em 1em 0.5em 1em;
+  }
+
+  .header-logo-jg {
+    margin-left: 0.5em;
+    margin-right: 30%;
+    height: 2em;
+    width: 2em;
+  }
+
+  .button-jg {
+    font-size: 0.85em;
+    padding: 0.5em 1em;
+  }
+
+  .header-button-jg {
+    margin-left: 0.5em;
+  }
+
+  .welcome-sleep-dropdown-container-jg {
+    margin-left: 0em;
+    width: 90%;
+  }
+
+  .sleep-select-jg {
+    width: 70vw;
+    margin-top: 2em;
+  }
+
+  .sleep-dropdown-day-title-jg,
+  .sleep-dropdown-day-to-jg {
+    margin-top: 2em;
+  }
+
+  .sleep-dropdown-day-jg {
+    justify-content: inherit;
+    flex-wrap: wrap;
+  }
+  
+  .color-scheme-sample-jg {
+    height: 10vh;
+    width: 90%;
+  }
+
+  .color-scheme-name-jg {
+    margin-top: 0.8em;
+  }
 }
