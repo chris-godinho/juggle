@@ -1,5 +1,6 @@
 export const lifeGoalActivities = [
   {
+    key: "exercise",
     title: "Exercise",
     description: "Engage in physical activities for a healthy body and mind.",
     suggestions: [
@@ -26,6 +27,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "mindfulness",
     title: "Mindfulness",
     description:
       "Enhance focus and reduce stress through relaxation and reflection.",
@@ -53,6 +55,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "sleep",
     title: "Sleep",
     description:
       "Prioritize sufficient and restful sleep for overall well-being.",
@@ -80,6 +83,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "healthAwareness",
     title: "Health Awareness",
     description:
       "Learn about your body and mind to make informed decisions about your health.",
@@ -107,6 +111,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "reading",
     title: "Reading",
     description: "Explore different worlds and gain knowledge through books.",
     suggestions: [
@@ -133,6 +138,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "music",
     title: "Music",
     description:
       "Explore different genres of music or learn to play a musical instrument.",
@@ -160,6 +166,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "games",
     title: "Games",
     description:
       "Play board or video games with friends or family for unwinding.",
@@ -187,6 +194,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "movies",
     title: "Movies",
     description:
       "Watch movies (old and new) with friends or family for entertainment.",
@@ -214,6 +222,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "cooking",
     title: "Cooking",
     description:
       "Prepare nutritious meals for a balanced (or not-so-balanced) diet.",
@@ -241,6 +250,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "socializing",
     title: "Socializing",
     description: "Build and strengthen relationships with friends and family.",
     suggestions: [
@@ -267,6 +277,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "sports",
     title: "Sports",
     description:
       "Engage in sports activities for improving your physical and mental health.",
@@ -294,6 +305,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "outdoorsExploration",
     title: "Outdoors Exploration",
     description: "Connect with nature for relaxation and fresh air.",
     suggestions: [
@@ -320,6 +332,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "travel",
     title: "Travel",
     description: "Explore new places and cultures for a broader perspective.",
     suggestions: [
@@ -346,6 +359,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "journaling",
     title: "Journaling",
     description: "Reflect on thoughts and experiences for personal growth.",
     suggestions: [
@@ -372,6 +386,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "personalGrowth",
     title: "Personal Growth",
     description: "Expand your knowledge and abilities by learning new skills.",
     suggestions: [
@@ -398,6 +413,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "creativeExpression",
     title: "Creative Expression",
     description:
       "Express your creativity through personal projects, art or music.",
@@ -425,6 +441,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "financialPlanning",
     title: "Financial Planning",
     description:
       "Manage your finances to achieve stability, providing a better sense of security.",
@@ -452,6 +469,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "digitalDetox",
     title: "Digital Detox",
     description:
       "Take a break from screens to reduce stress and improve sleep.",
@@ -479,6 +497,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "purposeAndMeaning",
     title: "Purpose and Meaning",
     description:
       "Have clear goals and a sense of direction to contribute to overall life satisfaction.",
@@ -506,6 +525,7 @@ export const lifeGoalActivities = [
     ],
   },
   {
+    key: "boundarySetting",
     title: "Boundary Setting",
     description: "Establish clear, specific boundaries and stick to them.",
     suggestions: [
@@ -535,6 +555,7 @@ export const lifeGoalActivities = [
 
 export const workGoalActivities = [
   {
+    key: "goalSetting",
     title: "Goal Setting",
     description:
       "Spend time reviewing and setting clear work objectives for the future.",
@@ -562,6 +583,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "skillDevelopment",
     title: "Skill Development",
     description:
       "Attend workshops or online courses to enhance specific skills relevant to your role.",
@@ -589,6 +611,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "industryResearch",
     title: "Industry Research",
     description:
       "Stay informed about industry trends, competitors, and emerging technologies.",
@@ -616,6 +639,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "mentorship",
     title: "Mentorship",
     description:
       "Seek guidance from a mentor to gain insights and perspectives on your career path.",
@@ -643,6 +667,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "softSkills",
     title: "Soft Skills",
     description:
       "Develop soft skills such as communication, leadership, and time management.",
@@ -670,6 +695,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "networking",
     title: "Networking",
     description:
       "Attend industry conferences, workshops, or virtual events to expand professional connections.",
@@ -697,6 +723,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "branding",
     title: "Branding",
     description:
       "Build your personal brand to establish credibility and trust with your audience.",
@@ -724,6 +751,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "progressEvaluation",
     title: "Progress Evaluation",
     description:
       "Set aside time to regularly evaluate your accomplishments and adjust goals as needed.",
@@ -751,6 +779,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "teamBuilding",
     title: "Team Building",
     description:
       "Engage in team-building exercises to foster a positive and collaborative work environment.",
@@ -778,6 +807,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "teamFeedback",
     title: "Team Feedback",
     description:
       "Request feedback from colleagues or supervisors to refine your work approach.",
@@ -805,6 +835,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "customerFeedback",
     title: "Customer Feedback",
     description: "Review customer feedback to improve products or services.",
     suggestions: [
@@ -831,6 +862,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "qualityAssurance",
     title: "Quality Assurance",
     description:
       "Implement quality control measures to ensure high standards in work output.",
@@ -858,6 +890,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "brainstorming",
     title: "Brainstorming",
     description:
       "Collaborate with colleagues to generate innovative ideas and solutions.",
@@ -885,6 +918,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "innovationMindset",
     title: "Innovation Mindset",
     description:
       "Actively seek new ideas, propose solutions, and contribute to a culture of continuous improvement.",
@@ -912,6 +946,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "technologyIntegration",
     title: "Technology Integration",
     description:
       "Explore and implement new technologies that can streamline work processes.",
@@ -939,6 +974,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "teamIntegration",
     title: "Team Integration",
     description:
       "Work with professionals from different departments/fields to gain diverse insights.",
@@ -966,6 +1002,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "milestoneCelebration",
     title: "Milestone Celebration",
     description:
       "Acknowledge and celebrate achievements and milestones to boost team morale.",
@@ -993,6 +1030,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "reverseMentorship",
     title: "Reverse Mentorship",
     description:
       "Pair up with a younger or less experienced colleague to exchange insights, fostering a mutual learning experience.",
@@ -1020,6 +1058,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "volunteering",
     title: "Volunteering",
     description:
       "Give back to the community and make a positive impact while padding you resume.",
@@ -1047,6 +1086,7 @@ export const workGoalActivities = [
     ],
   },
   {
+    key: "entrepreneurship",
     title: "Entrepreneurship",
     description:
       "Starting a side project or collaborate on a startup within your field (or outside of it).",

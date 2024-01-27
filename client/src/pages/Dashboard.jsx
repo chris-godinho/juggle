@@ -154,7 +154,7 @@ export default function Dashboard() {
                   />
                 </>
               )}
-              <SidePanelRecommendations eventType="Work" />
+              <SidePanelRecommendations events={events} eventType="Work" />
             </>
           )}
         </div>
@@ -262,7 +262,7 @@ export default function Dashboard() {
                   />
                 </>
               )}
-              <SidePanelRecommendations eventType="Life" />
+              <SidePanelRecommendations events={events} eventType="Life" />
             </div>
           </>
         )}

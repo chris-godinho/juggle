@@ -345,25 +345,34 @@ p {
 }
 
 input,
-select {
+select,
+textarea {
   background-color: var(--input-background-color);
   color: var(--input-text-color);
   font-family: var(--main-font-family);
   border: none;
   border-bottom: 1px solid var(--input-text-color);
+  border-left: 1px solid var(--input-text-color);
   padding: 0.5em;
+}
+
+textarea {
+  resize: none;
 }
 
 input:focus,
 select:focus,
+textarea:focus,
 input:active,
-select:active {
+select:active,
+textarea:active {
   outline: none;
   background-color: transparent;
 }
 
 input::placeholder,
-select::placeholder {
+select::placeholder,
+textarea::placeholder {
   color: var(--input-placeholder-text-color);
 }
 
@@ -1068,6 +1077,11 @@ input[type="checkbox"]:disabled {
   text-align: left;
 }
 
+.recommendations-call-action-jg {
+  align-self: flex-start;
+  margin-left: 6%;
+}
+
 .side-panel-recommendation-text-jg {
   margin-left: 6%;
   margin-right: 6%;
@@ -1352,8 +1366,6 @@ input[type="checkbox"]:disabled {
   position: relative;
   overflow: hidden;
   box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
-  margin-top: 1em;
-  margin-bottom: 1em;
   transition: scale 0.2s ease-in-out, border 0.2s ease-in-out;
 }
 
@@ -1790,7 +1802,7 @@ input[type="checkbox"]:disabled {
   width: 20%;
 }
 
-.main-background-sample-jg{
+.main-background-sample-jg {
   background-color: var(--main-background-color);
 }
 
@@ -1825,6 +1837,54 @@ input[type="checkbox"]:disabled {
 
 .donate-blurb-text-jg {
   margin-bottom: 2em;
+}
+
+/* About page rules */
+.about-us-heading-jg {
+  align-self: flex-start;
+  color: var(--work-event-color);
+}
+
+.about-us-image-jg {
+  max-width: 43%;
+  float: left;
+  border: 2px solid var(--life-event-color);
+  border-radius: 1em;
+  margin-right: 2em;
+  margin-top: 1em;
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+}
+
+.about-us-container-jg p {
+  text-align: left;
+  font-size: 0.99em;
+}
+
+/* Contact page rules */
+.contact-user-message-jg {
+  margin-top: 0;
+  margin-bottom: 1em;
+  align-self: flex-start;
+}
+
+.contact-form-container-jg {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.contact-form-container-jg input {
+  margin-bottom: 2em;
+}
+
+.contact-form-container-jg textarea {
+  margin-bottom: 2em;
+  flex-grow: 1;
+}
+
+.contact-form-container-jg button {
+  width: 15%;
+  align-self: center;
 }
 
 /* Error Page rules */

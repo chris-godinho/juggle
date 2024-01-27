@@ -46,7 +46,13 @@ export default function UserMenuOptions({
       <a href="#" className="user-menu-link-jg" onClick={() => setUserMenuModalContent("Donate")}>
         Support Us
       </a>
-      <a href="#" onClick={logout} className="user-menu-link-jg">
+      <a href="#" className="user-menu-link-jg" onClick={() => setUserMenuModalContent("AboutUs")}>
+        About Us
+      </a>
+      <a href="#" className="user-menu-link-jg" onClick={() => setUserMenuModalContent("ContactUs")}>
+        Contact
+      </a>
+      <a href="#" onClick={logout}>
         Logout
       </a>
     </div>

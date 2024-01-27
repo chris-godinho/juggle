@@ -11,6 +11,8 @@ import UserProfile from "./UserProfile";
 import WorkLifeStats from "./WorkLifeStats";
 import Settings from "./Settings";
 import Donate from "./Donate";
+import AboutUs from "./AboutUs.jsx";
+import ContactUs from "./ContactUs.jsx";
 
 export default function UserMenu({ username, userId }) {
   const [userMenuModalContent, setUserMenuModalContent] =
@@ -69,6 +71,10 @@ export default function UserMenu({ username, userId }) {
         return <Settings />;
       case "Donate":
         return <Donate />;
+      case "AboutUs":
+        return <AboutUs />;
+      case "ContactUs":
+        return <ContactUs />;
       default:
         return null;
     }
