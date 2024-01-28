@@ -230,7 +230,7 @@ const typeDefs = `
     users: [User]
     user(username: String!): User
     eventsByUser(user: ID!): [Event]
-    eventsByDate(user: ID!, eventStart: DateTime): [Event]
+    eventsByDate(user: ID!, eventStart: DateTime, eventEnd: DateTime): [Event]
     event(eventId: ID!): Event
   }
 

@@ -148,17 +148,85 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
           const eventEndTime = new Date(event.eventEnd);
           const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
           const size = Math.ceil(durationMinutes / 30);
-          const position = Math.ceil(startTimeMinutes / 30);
+          let position = Math.ceil(startTimeMinutes / 30);
+
+          // Check if the event starts on the previous day and ends on the selectedDate
+          const startsPreviousDay =
+            eventStartTime.getDate() < displayDate.getDate();
+          const endsOnSelectedDate =
+            eventEndTime.getDate() === displayDate.getDate();
+
+          // Check if the event starts on the selectedDate and ends on the next day
+          const startsOnSelectedDate =
+            eventStartTime.getDate() === displayDate.getDate();
+          const endsNextDay = eventEndTime.getDate() > displayDate.getDate();
+
+          // Calculate the adjusted size based on the time within the selected day
+          let adjustedSize = size;
+
+          const nextDay = new Date(displayDate);
+          nextDay.setDate(displayDate.getDate() + 1);
+
+          if (startsPreviousDay && endsOnSelectedDate) {
+            // Adjust the size based on the time on the selected day
+            const minutesOnSelectedDay =
+              (new Date(displayDate) - eventStartTime) / (1000 * 60);
+            adjustedSize = Math.min(
+              adjustedSize,
+              Math.ceil(minutesOnSelectedDay / 30)
+            );
+            position = 0;
+          } else if (startsOnSelectedDate && endsNextDay) {
+            console.log("[Schedule.jsx] eventEndTime:", eventEndTime);
+            console.log("[Schedule.jsx] nextDay:", nextDay);
+            // Adjust the size based on the time on the selected day
+            const minutesOnSelectedDay =
+              (nextDay - eventStartTime) / (1000 * 60);
+            console.log(
+              "[Schedule.jsx] minutesOnSelectedDay:",
+              minutesOnSelectedDay
+            );
+            adjustedSize = Math.min(
+              adjustedSize,
+              Math.ceil(minutesOnSelectedDay / 30)
+            );
+          }
+
+          console.log("[Schedule.jsx] event:", event);
+          console.log(
+            "[Schedule.jsx] startsPreviousDay && endsOnSelectedDate?:",
+            startsPreviousDay && endsOnSelectedDate
+          );
+          console.log(
+            "[Schedule.jsx] startsOnSelectedDate && endsNextDay?:",
+            startsOnSelectedDate && endsNextDay
+          );
+          console.log("[Schedule.jsx] adjustedSize:", adjustedSize);
+
+          let className = "schedule-event-box-jg";
+
+          if (event.type === "work") {
+            className += " schedule-event-box-work-jg";
+            if (startsPreviousDay && endsOnSelectedDate) {
+              className += " schedule-event-box-work-previous-day-jg";
+            } else if (startsOnSelectedDate && endsNextDay) {
+              className += " schedule-event-box-work-next-day-jg";
+            }
+          } else {
+            className += " schedule-event-box-life-jg";
+            if (startsPreviousDay && endsOnSelectedDate) {
+              className += " schedule-event-box-life-previous-day-jg";
+            } else if (startsOnSelectedDate && endsNextDay) {
+              className += " schedule-event-box-life-next-day-jg";
+            }
+          }
 
           return (
             <div
               key={event._id}
-              className={
-                event.type === "work"
-                  ? "schedule-event-box-jg schedule-event-box-work-jg"
-                  : "schedule-event-box-jg schedule-event-box-life-jg"
-              }
-              data-grid={{ w: 6, h: size, x: 0, y: position }}
+              id={event._id}
+              className={className}
+              data-grid={{ w: 6, h: adjustedSize, x: 0, y: position }}
             >
               <p
                 className="schedule-event-name-jg widget-prevent-drag-wf"

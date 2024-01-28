@@ -151,8 +151,8 @@ export const QUERY_EVENTS_BY_USER = gql`
 `;
 
 export const QUERY_EVENTS_BY_DATE = gql`
-  query getEventsByDate($user: ID!, $eventStart: DateTime) {
-    eventsByDate(user: $user, eventStart: $eventStart) {
+  query getEventsByDate($user: ID!, $eventStart: DateTime, $eventEnd: DateTime) {
+    eventsByDate(user: $user, eventStart: $eventStart, eventEnd: $eventEnd) {
       _id
       user
       title

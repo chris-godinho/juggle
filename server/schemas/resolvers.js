@@ -15,23 +15,28 @@ const resolvers = {
       const params = user ? { user } : {};
       return Event.find(params).sort({ eventStart: 1 });
     },
-    eventsByDate: async (parent, { user, eventStart }) => {
+    eventsByDate: async (parent, { user, eventStart, eventEnd }) => {
       console.log(
         "[resolvers.js] eventsByDate: user =",
         user,
         "eventStart =",
-        eventStart
+        eventStart,
+        "eventEnd =",
+        eventEnd
       );
 
       let params = { user };
 
       // If eventStart is provided, filter by the date component
       if (eventStart) {
-        const startDate = new Date(eventStart);
-        const endDate = new Date(startDate);
-        endDate.setDate(endDate.getDate() + 1); // Move to the next day
+        const startTime = new Date(eventStart);
+        const endTime = new Date(startTime);
+        endTime.setDate(endTime.getDate() + 1); // Move to the next day
 
-        params.eventStart = { $gte: startDate, $lt: endDate };
+        params.$or = [
+          { eventStart: { $lte: endTime, $gte: startTime } },
+          { eventEnd: { $lte: endTime, $gte: startTime } },
+        ];
       }
 
       const result = await Event.find(params).sort({ eventStart: 1 });

@@ -1311,6 +1311,30 @@ input[type="checkbox"]:disabled {
   background-color: var(--life-event-color);
 }
 
+.schedule-event-box-work-previous-day-jg {
+  background-color: var(--work-event-color);
+  border-radius: 0 0 1em 1em;
+  background: linear-gradient(to top, var(--work-event-color), transparent);
+}
+
+.schedule-event-box-life-previous-day-jg {
+  background-color: var(--life-event-color);
+  border-radius: 0 0 1em 1em;
+  background: linear-gradient(to top, var(--life-event-color), transparent);
+}
+
+.schedule-event-box-work-next-day-jg {
+  background-color: var(--work-event-color);
+  border-radius: 1em 1em 0 0;
+  background: linear-gradient(to bottom, var(--work-event-color), transparent);
+}
+
+.schedule-event-box-life-next-day-jg {
+  background-color: var(--life-event-color);
+  border-radius: 1em 1em 0 0;
+  background: linear-gradient(to bottom, var(--life-event-color), transparent);
+}
+
 .schedule-event-name-jg {
   margin-top: 0.2em;
   margin-left: 1em;
@@ -1339,7 +1363,10 @@ input[type="checkbox"]:disabled {
 }
 
 .react-grid-item.react-grid-placeholder {
-  background: none !important;
+  background: var(--main-background-color-accent) !important;
+  opacity: 0.8 !important;
+  border-radius: 1em !important;
+  border: 1px dashed var(--main-separator-color) !important;
 }
 
 /* Event details page rules */
