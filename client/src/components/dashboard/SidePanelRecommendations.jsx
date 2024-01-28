@@ -11,7 +11,6 @@ import {
 } from "../../utils/preferredActivities.js";
 
 export default function SidePanelRecommendations({ eventType }) {
-
   const { events } = useDataContext();
 
   const { userSettings } = useUserSettings();
@@ -38,17 +37,10 @@ export default function SidePanelRecommendations({ eventType }) {
     recommendationSource = lifeGoalActivities;
   }
 
-  console.log("[SidePanelRecommendations.jsx] activityPool:", activityPool);
-
   const preferredActivities = Array.from(
     Object.entries(activityPool)
       .filter(([key, value]) => value === true)
       .map(([key]) => key)
-  );
-
-  console.log(
-    "[SidePanelRecommendations.jsx] preferredActivities:",
-    preferredActivities
   );
 
   if (targetPercentage < userSettings.statSettings.balanceGoal) {
@@ -61,11 +53,6 @@ export default function SidePanelRecommendations({ eventType }) {
       (otherPercentage - targetPercentage) / 10
     );
   }
-
-  console.log(
-    "[SidePanelRecommendations.jsx] recommendationCount:",
-    recommendationCount
-  );
 
   for (let i = 0; i < recommendationCount; i++) {
     for (const selectedActivity of preferredActivities) {
@@ -96,15 +83,9 @@ export default function SidePanelRecommendations({ eventType }) {
 
     // If there are no recommendations left, stop the loop
     if (recommendationPool.length === 0) {
-      console.log("[SidePanelRecommendations.jsx] No recommendations left.");
       break;
     }
   }
-
-  console.log(
-    "[SidePanelRecommendations.jsx] recommendationList:",
-    recommendationList
-  );
 
   return (
     <div className="side-panel-recommendation-list-jg">

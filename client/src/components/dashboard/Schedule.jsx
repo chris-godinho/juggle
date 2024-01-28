@@ -1,15 +1,21 @@
 // Schedule.jsx
 
+import { useMutation } from "@apollo/client";
+
 import { useModal } from "../contextproviders/ModalProvider.jsx";
 import EventDetails from "../dashboard/EventDetails.jsx";
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
+
+import { UPDATE_EVENT } from "../../utils/mutations.js";
 
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
 const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
   const { openModal } = useModal();
+
+  const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const displayDate = new Date(selectedDate);
   displayDate.setHours(0, 0, 0, 0);
@@ -46,23 +52,84 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
     );
   };
 
-  const handleEventChange = (layout) => {
+  const handleEventChange = async (layout) => {
     // TODO: When an event overlaps with another, resize the other event accordingly
     // (if there less than five on that same time block)
+
+    console.log("[Schedule.jsx] layout:", layout);
+
+    // Iterate through each moved event
+    for (const movedEvent of layout) {
+      const eventId = movedEvent.i;
+
+      // Find the corresponding event in the events array
+      const eventToUpdate = events.find((event) => event._id === eventId);
+
+      console.log("[Schedule.jsx] eventToUpdate:", eventToUpdate);
+
+      if (eventToUpdate) {
+        // Calculate new start time and duration based on the moved layout
+        const newStartTimeMinutes = movedEvent.y * 30; // Assuming each row represents 30 minutes
+        const newEndTimeMinutes = newStartTimeMinutes + movedEvent.h * 30;
+
+        const updatedEvent = {
+          eventId: eventToUpdate._id,
+          title: eventToUpdate.title,
+          type: eventToUpdate.type,
+          subtype: eventToUpdate.subtype,
+          details: eventToUpdate.details,
+          eventStart: new Date(selectedDate),
+          eventEnd: new Date(selectedDate),
+          location: eventToUpdate.location,
+          links: eventToUpdate.links,
+          files: eventToUpdate.files,
+          priority: eventToUpdate.priority,
+          setReminder: eventToUpdate.setReminder,
+          reminderTime: eventToUpdate.reminderTime,
+          completed: eventToUpdate.completed,
+        };
+
+        updatedEvent.eventStart.setMinutes(newStartTimeMinutes);
+        updatedEvent.eventEnd.setMinutes(newEndTimeMinutes);
+
+        try {
+          await updateEvent({
+            variables: {
+              eventId: updatedEvent.eventId,
+              title: updatedEvent.title,
+              type: updatedEvent.type,
+              subtype: updatedEvent.subtype,
+              details: updatedEvent.details,
+              eventStart: updatedEvent.eventStart,
+              eventEnd: updatedEvent.eventEnd,
+              location: updatedEvent.location,
+              links: updatedEvent.links,
+              files: updatedEvent.files,
+              priority: updatedEvent.priority,
+              setReminder: updatedEvent.setReminder,
+              reminderTime: updatedEvent.reminderTime,
+              completed: updatedEvent.completed,
+            },
+          });
+
+          // Refetch events after successful update
+          eventsRefetch();
+        } catch (error) {
+          console.error("Error updating event:", error);
+        }
+      }
+    }
   };
 
   // TODO: Prevent grid height from exceeding 48 rows (30 minutes per row)
-
-  // TODO: Add dashed grid underneath react grid layout
-
-  /* <ScheduleGrid /> */
+  // See https://github.com/react-grid-layout/react-grid-layout/issues/1104 - CefBoud's comment from 2021-04-27
 
   return (
     <div className="schedule-container-jg grid-container-background-jg">
       <ResponsiveGridLayout
         className="layout"
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-        cols={{ lg: 5, md: 5, sm: 5, xs: 5, xxs: 5 }}
+        cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
         compactType={null}
         draggableCancel=".widget-prevent-drag-wf"
         autoSize={false}
@@ -73,24 +140,35 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
         onDragStop={handleEventChange}
         onResizeStop={handleEventChange}
       >
-        {events.map((event) => (
-          <div
-            key={event._id}
-            className={
-              event.type === "work"
-                ? "schedule-event-box-jg schedule-event-box-work-jg"
-                : "schedule-event-box-jg schedule-event-box-life-jg"
-            }
-            data-grid={{ w: 5, h: 1, x: 0, y: 0 }}
-          >
-            <p
-              className="schedule-event-name-jg widget-prevent-drag-wf"
-              onClick={() => handleEventClick(event)}
+        {events.map((event) => {
+          // Calculate the size and position based on start time and duration
+          const eventStartTime = new Date(event.eventStart);
+          const startTimeMinutes =
+            eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
+          const eventEndTime = new Date(event.eventEnd);
+          const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
+          const size = Math.ceil(durationMinutes / 30);
+          const position = Math.ceil(startTimeMinutes / 30);
+
+          return (
+            <div
+              key={event._id}
+              className={
+                event.type === "work"
+                  ? "schedule-event-box-jg schedule-event-box-work-jg"
+                  : "schedule-event-box-jg schedule-event-box-life-jg"
+              }
+              data-grid={{ w: 6, h: size, x: 0, y: position }}
             >
-              {formatTime(new Date(event.eventStart))} - {event.title}
-            </p>
-          </div>
-        ))}
+              <p
+                className="schedule-event-name-jg widget-prevent-drag-wf"
+                onClick={() => handleEventClick(event)}
+              >
+                {formatTime(new Date(event.eventStart))} - {event.title}
+              </p>
+            </div>
+          );
+        })}
       </ResponsiveGridLayout>
     </div>
   );

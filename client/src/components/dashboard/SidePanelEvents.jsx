@@ -13,8 +13,6 @@ export default function SidePanelEvents({
   return (
     <div className="side-panel-event-list-jg">
       {events.map((event, index) => {
-        console.log("[SidePanelEvents.jsx] event:", event);
-        console.log("[SidePanelEvents.jsx] event.type:", event.type);
         return (
           <div key={index} className="side-panel-event-item-jg">
             {eventType.toLowerCase() === event.type.toLowerCase() && (

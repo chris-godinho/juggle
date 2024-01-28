@@ -2,9 +2,6 @@
 
 const LoadingSpinner = ({ spinnerStyle, spinnerElWidthHeight }) => {
 
-  console.log("[LoadingSpinner.jsx] spinnerStyle:", spinnerStyle);
-  console.log("[LoadingSpinner.jsx] spinnerElWidthHeight:", spinnerElWidthHeight);
-
   return (
     <div className="spinner-container-jg" style={spinnerStyle}>
       <div className="spinner-wrapper-jg">
