@@ -2,9 +2,9 @@
 
 import React, { useState } from "react";
 
-import DataContext from "./DataContext.jsx";
-import { useModal } from "./ModalProvider";
-import { useUserSettings } from "./UserSettingsProvider.jsx";
+import DataContext from "../contextproviders/DataContext.jsx";
+import { useModal } from "../contextproviders/ModalProvider";
+import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import UserMenuOptions from "./UserMenuOptions";
 import UserProfile from "./UserProfile";

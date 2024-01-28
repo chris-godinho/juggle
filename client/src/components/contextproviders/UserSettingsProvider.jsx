@@ -1,12 +1,12 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
-import { QUERY_USER } from "../utils/queries.js";
-import { UPDATE_USER_SETTINGS } from "../utils/mutations.js";
+import { QUERY_USER } from "../../utils/queries.js";
+import { UPDATE_USER_SETTINGS } from "../../utils/mutations.js";
 
-import LoadingSpinner from "./LoadingSpinner.jsx";
+import LoadingSpinner from "../other/LoadingSpinner.jsx";
 
-import AuthService from "../utils/auth.js";
+import AuthService from "../../utils/auth.js";
 
 const UserSettingsContext = createContext();
 

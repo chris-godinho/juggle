@@ -5,7 +5,7 @@ import { ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
-import Header from "../components/Header";
+import Header from "../components/other/Header";
 
 const Signup = () => {
   const [formState, setFormState] = useState({

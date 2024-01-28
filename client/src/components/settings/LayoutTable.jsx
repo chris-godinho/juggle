@@ -1,7 +1,7 @@
 // LayoutTable.jsx
 
-import { useLayout } from "../components/LayoutProvider.jsx";
-import { useDataContext } from "./DataContext";
+import { useLayout } from "../contextproviders/LayoutProvider.jsx";
+import { useDataContext } from "../contextproviders/DataContext";
 
 export default function LayoutTable() {
   const { formData, setFormData } = useDataContext();

@@ -1,6 +1,6 @@
 // WorkLifeSlider.jsx
 
-import { useDataContext } from "./DataContext"
+import { useDataContext } from "../contextproviders/DataContext"
 
 export default function WorkLifeSlider() {
 

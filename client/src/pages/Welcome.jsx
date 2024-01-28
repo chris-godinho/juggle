@@ -3,18 +3,18 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
 
-import { useUserSettings } from "../components/UserSettingsProvider.jsx";
-import DataContext from "../components/DataContext.jsx";
+import { useUserSettings } from "../components/contextproviders/UserSettingsProvider.jsx";
+import DataContext from "../components/contextproviders/DataContext.jsx";
 
 import { QUERY_USER } from "../utils/queries.js";
 
-import Header from "../components/Header";
-import ProfilePictureUpload from "../components/ProfilePictureUpload.jsx";
-import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
-import SleepDropdownArea from "../components/SleepDropdownArea.jsx";
-import LifeActivitiesCheckboxes from "../components/LifeActivitiesCheckboxes.jsx";
-import WorkActivitiesCheckboxes from "../components/WorkActivitiesCheckboxes.jsx";
-import ColorSchemeTable from "../components/ColorSchemeTable.jsx";
+import Header from "../components/other/Header";
+import ProfilePictureUpload from "../components/other/ProfilePictureUpload.jsx";
+import WorkLifeSlider from "../components/settings/WorkLifeSlider.jsx";
+import SleepDropdownArea from "../components/settings/SleepDropdownArea.jsx";
+import LifeActivitiesCheckboxes from "../components/settings/LifeActivitiesCheckboxes.jsx";
+import WorkActivitiesCheckboxes from "../components/settings/WorkActivitiesCheckboxes.jsx";
+import ColorSchemeTable from "../components/settings/ColorSchemeTable.jsx";
 
 import AuthService from "../utils/auth.js";
 

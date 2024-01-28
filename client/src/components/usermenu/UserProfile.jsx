@@ -4,10 +4,10 @@ import { useQuery, useMutation } from "@apollo/client";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
-import { QUERY_USER } from "../utils/queries";
-import { UPDATE_USER, DELETE_USER } from "../utils/mutations";
+import { QUERY_USER } from "../../utils/queries";
+import { UPDATE_USER, DELETE_USER } from "../../utils/mutations";
 
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
 
 // TODO: Add upload area to profile picture
 

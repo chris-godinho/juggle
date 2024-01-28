@@ -1,15 +1,14 @@
 // SidePanelRecommendations.jsx
 
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
+import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
-import { useUserSettings } from "./UserSettingsProvider.jsx";
-
-import { calculateEventStats } from "../utils/eventUtils.js";
+import { calculateEventStats } from "../../utils/eventUtils.js";
 
 import {
   workGoalActivities,
   lifeGoalActivities,
-} from "../utils/preferredActivities.js";
+} from "../../utils/preferredActivities.js";
 
 export default function SidePanelRecommendations({ eventType }) {
 

@@ -1,7 +1,7 @@
 // ContactUs.jsx
 
 import { useState } from "react";
-import { validateEmail } from "../utils/helpers.js";
+import { validateEmail } from "../../utils/helpers.js";
 
 // Define HeroTofu form endpoint
 const FORM_ENDPOINT =

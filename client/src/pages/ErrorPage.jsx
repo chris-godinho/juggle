@@ -1,6 +1,6 @@
 import { useRouteError } from "react-router-dom";
 
-import BackButton from "../components/BackButton";
+import BackButton from "../components/other/BackButton";
 
 import Auth from "../utils/auth";
 

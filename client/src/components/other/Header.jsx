@@ -2,8 +2,8 @@
 
 import { Link } from "react-router-dom";
 
-import Auth from "../utils/auth";
-import AuthService from "../utils/auth.js";
+import Auth from "../../utils/auth";
+import AuthService from "../../utils/auth.js";
 
 const Header = () => {
   const logout = (event) => {

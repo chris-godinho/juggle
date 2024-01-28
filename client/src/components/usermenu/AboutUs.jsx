@@ -1,4 +1,4 @@
-// WorkLifeStats.jsx
+// AboutUs.jsx
 
 export default function AboutUs() {
   return (

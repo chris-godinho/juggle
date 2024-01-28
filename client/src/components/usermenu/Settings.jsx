@@ -2,19 +2,19 @@ import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
 // import DataContext from "./DataContext.jsx";
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { QUERY_USER } from "../utils/queries.js";
+import { QUERY_USER } from "../../utils/queries.js";
 // import { UPDATE_USER_SETTINGS } from "../utils/mutations.js";
 
-import WorkLifeSlider from "./WorkLifeSlider";
-import SleepDropdownArea from "./SleepDropdownArea";
-import LifeActivitiesCheckboxes from "../components/LifeActivitiesCheckboxes.jsx";
-import WorkActivitiesCheckboxes from "../components/WorkActivitiesCheckboxes.jsx";
-import LayoutTable from "./LayoutTable.jsx";
-import ColorSchemeTable from "../components/ColorSchemeTable.jsx";
+import WorkLifeSlider from "../settings/WorkLifeSlider";
+import SleepDropdownArea from "../settings/SleepDropdownArea";
+import LifeActivitiesCheckboxes from "../settings/LifeActivitiesCheckboxes.jsx";
+import WorkActivitiesCheckboxes from "../settings/WorkActivitiesCheckboxes.jsx";
+import LayoutTable from "../settings/LayoutTable.jsx";
+import ColorSchemeTable from "../settings/ColorSchemeTable.jsx";
 
-import AuthService from "../utils/auth.js";
+import AuthService from "../../utils/auth.js";
 
 export default function Settings() {
   // const [updateUserSettings, { error: updateError }] = useMutation(UPDATE_USER_SETTINGS);

@@ -1,15 +1,22 @@
 // DashboardHeader.jsx
 
-import { useDataContext } from "./DataContext"
+import { useDataContext } from "../contextproviders/DataContext"
+import { useModal } from "../contextproviders/ModalProvider.jsx";
 
-import { calculateEventStats } from "../utils/eventUtils.js";
+import { calculateEventStats } from "../../utils/eventUtils.js";
 
-import NewEvent from "../components/NewEvent.jsx";
-import UserMenu from "../components/UserMenu.jsx";
+import NewEvent from "./NewEvent.jsx";
+import UserMenu from "../usermenu/UserMenu.jsx";
 
 export default function DashboardHeader() {
 
-  const { events, selectedDate, setSelectedDate } = useDataContext();
+  const { events, selectedDate, setSelectedDate, username, userId, eventSubtypes, eventsRefetch } = useDataContext();
+
+  const { openModal } = useModal();
+
+  const handleNewEventModalClose = () => {
+    eventsRefetch();
+  };
   
   // Set up date variables for display
   

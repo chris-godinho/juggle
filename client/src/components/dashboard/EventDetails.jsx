@@ -6,9 +6,9 @@ import { useMutation } from "@apollo/client";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
-import { UPDATE_EVENT, REMOVE_EVENT } from "../utils/mutations";
+import { UPDATE_EVENT, REMOVE_EVENT } from "../../utils/mutations";
 
-import { useModal } from "./ModalProvider";
+import { useModal } from "../contextproviders/ModalProvider";
 
 export default function EventDetails({
   eventId,

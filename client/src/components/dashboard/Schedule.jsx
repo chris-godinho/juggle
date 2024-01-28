@@ -1,7 +1,7 @@
 // Schedule.jsx
 
-import { useModal } from "../components/ModalProvider.jsx";
-import EventDetails from "./EventDetails.jsx";
+import { useModal } from "../contextproviders/ModalProvider.jsx";
+import EventDetails from "../dashboard/EventDetails.jsx";
 import { Responsive, WidthProvider } from "react-grid-layout";
 const ResponsiveGridLayout = WidthProvider(Responsive);
 

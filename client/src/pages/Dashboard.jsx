@@ -3,18 +3,17 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
-import DataContext from "../components/DataContext.jsx";
-import { useModal } from "../components/ModalProvider.jsx";
+import DataContext from "../components/contextproviders/DataContext.jsx";
 
-import Schedule from "../components/Schedule";
-import LoadingSpinner from "../components/LoadingSpinner.jsx";
+import Schedule from "../components/dashboard/Schedule";
+import LoadingSpinner from "../components/other/LoadingSpinner.jsx";
 
 import { QUERY_USER, QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
 import AuthService from "../utils/auth.js";
 
-import DashboardHeader from "../components/DashboardHeader.jsx";
-import DashboardSidePanel from "../components/DashboardSidePanel.jsx";
+import DashboardHeader from "../components/dashboard/DashboardHeader.jsx";
+import DashboardSidePanel from "../components/dashboard/DashboardSidePanel.jsx";
 
 export default function Dashboard() {
   // Set up date variables for queries and new events
@@ -28,8 +27,6 @@ export default function Dashboard() {
   useEffect(() => {
     eventsRefetch();
   }, [selectedDate]);
-
-  const { openModal } = useModal();
 
   // Get user profile
   const userProfile = AuthService.getProfile();
@@ -75,10 +72,6 @@ export default function Dashboard() {
 
   const eventSubtypes = userData?.user.eventSubtypes;
 
-  const handleNewEventModalClose = () => {
-    eventsRefetch();
-  };
-
   return (
     <DataContext.Provider
       value={{
@@ -86,7 +79,11 @@ export default function Dashboard() {
         selectedDate,
         setSelectedDate,
         eventsLoading,
+        eventsRefetch,
         userLoading,
+        username,
+        userId,
+        eventSubtypes
       }}
     >
       <main className="main-jg">

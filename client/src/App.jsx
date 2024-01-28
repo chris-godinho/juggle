@@ -8,12 +8,12 @@ import {
   createHttpLink,
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
-import { ModalProvider } from "./components/ModalProvider.jsx";
+import { ModalProvider } from "./components/contextproviders/ModalProvider.jsx";
 import {
   ColorSchemeProvider,
   useColorScheme,
-} from "./components/ColorSchemeProvider.jsx";
-import { UserSettingsProvider } from "./components/UserSettingsProvider.jsx";
+} from "./components/contextproviders/ColorSchemeProvider.jsx";
+import { UserSettingsProvider } from "./components/contextproviders/UserSettingsProvider.jsx";
 import { Outlet } from "react-router-dom";
 
 // Construct our main GraphQL API endpoint

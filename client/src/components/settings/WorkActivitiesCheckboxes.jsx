@@ -1,10 +1,10 @@
-// LifeActivitiesCheckboxes.jsx
+// WorkActivitiesCheckboxes.jsx
 
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { lifeGoalActivities } from "../utils/preferredActivities.js";
+import { workGoalActivities } from "../../utils/preferredActivities.js";
 
-export default function LifeActivitiesCheckboxes({ boxSize = "normal" }) {
+export default function WorkActivitiesCheckboxes({ boxSize = "normal" }) {
   const { formData, setFormData } = useDataContext();
 
   function toCamelCase(inputString) {
@@ -13,14 +13,14 @@ export default function LifeActivitiesCheckboxes({ boxSize = "normal" }) {
   }
 
   const handleCheckboxChange = (event) => {
-    const currentState = formData?.user.lifePreferredActivities?.[event.target.name];
+    const currentState = formData?.user.workPreferredActivities?.[event.target.name];
 
     setFormData({
       ...formData,
       user: {
         ...formData.user,
-        lifePreferredActivities: {
-          ...formData?.user?.lifePreferredActivities,
+        workPreferredActivities: {
+          ...formData?.user?.workPreferredActivities,
           [event.target.name]: !currentState,
         },
       },
@@ -29,7 +29,7 @@ export default function LifeActivitiesCheckboxes({ boxSize = "normal" }) {
 
   return (
     <div className="work-life-activities-list-jg">
-      {lifeGoalActivities.map((activity, index) => (
+      {workGoalActivities.map((activity, index) => (
         <label
           key={index}
           className={`work-life-activity-checkbox-jg checkbox-jg ${boxSize === "small" ? "work-life-activities-small-jg" : ""}`}
@@ -39,7 +39,7 @@ export default function LifeActivitiesCheckboxes({ boxSize = "normal" }) {
             type="checkbox"
             name={toCamelCase(activity.title)}
             checked={
-              formData?.user?.lifePreferredActivities?.[
+              formData?.user?.workPreferredActivities?.[
                 toCamelCase(activity.title)
               ] ?? false
             }

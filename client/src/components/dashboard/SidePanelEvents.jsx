@@ -1,8 +1,8 @@
 // SidePanelEvents.jsx
 
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { calculateSingleEventPercentage } from "../utils/eventUtils.js";
+import { calculateSingleEventPercentage } from "../../utils/eventUtils.js";
 
 export default function SidePanelEvents({
   eventType,

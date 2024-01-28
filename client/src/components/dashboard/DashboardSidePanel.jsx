@@ -1,13 +1,13 @@
 // DashboardSidePanel.jsx
 
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { calculateEventStats } from "../utils/eventUtils.js";
+import { calculateEventStats } from "../../utils/eventUtils.js";
 
-import LoadingSpinner from "../components/LoadingSpinner.jsx";
-import SidePanelStats from "../components/SidePanelStats.jsx";
-import SidePanelEvents from "../components/SidePanelEvents.jsx";
-import SidePanelRecommendations from "../components/SidePanelRecommendations.jsx";
+import LoadingSpinner from "../other/LoadingSpinner.jsx";
+import SidePanelStats from "./SidePanelStats.jsx";
+import SidePanelEvents from "./SidePanelEvents.jsx";
+import SidePanelRecommendations from "./SidePanelRecommendations.jsx";
 
 export default function DashboardSidePanel({ eventType }) {
 

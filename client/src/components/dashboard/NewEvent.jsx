@@ -3,12 +3,12 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import { useModal } from "./ModalProvider";
+import { useModal } from "../contextproviders/ModalProvider";
 
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
-import { ADD_EVENT } from "../utils/mutations";
+import { ADD_EVENT } from "../../utils/mutations";
 
 const NewEvent = ({ eventSubtypes, handleNewEventModalClose, userId }) => {
   console.log("[NewEvent.jsx] Component is rendering");

@@ -1,8 +1,8 @@
 // SidePanelStats.jsx
 
-import { useDataContext } from "./DataContext";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { calculateEventStats } from "../utils/eventUtils.js";
+import { calculateEventStats } from "../../utils/eventUtils.js";
 
 export default function SidePanelStats({ eventType }) {
 

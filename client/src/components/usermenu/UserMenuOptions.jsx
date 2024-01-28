@@ -1,6 +1,6 @@
 // UserMenu.jsx
 
-import Auth from "../utils/auth";
+import Auth from "../../utils/auth";
 
 export default function UserMenuOptions({
   username,

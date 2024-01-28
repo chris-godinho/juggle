@@ -1,9 +1,9 @@
 // ColorSchemeTable.jsx
 
-import { useColorScheme } from "../components/ColorSchemeProvider.jsx";
-import { useDataContext } from "./DataContext";
+import { useColorScheme } from "../contextproviders/ColorSchemeProvider.jsx";
+import { useDataContext } from "../contextproviders/DataContext";
 
-import { colorSchemes } from "../utils/colorSchemes.js";
+import { colorSchemes } from "../../utils/colorSchemes.js";
 
 export default function ColorSchemeTable({ cardSize = "normal" }) {
   const { formData, setFormData } = useDataContext();
