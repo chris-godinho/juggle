@@ -6,7 +6,7 @@ export default function AboutUs() {
       <h1 className="about-us-heading-jg">Hey you.</h1>
       <div className="about-us-container-jg">
         <img
-          className="about-us-image-jg"
+          className="about-us-image-jg work-border-jg"
           src="/aboutus_cbg.jpg"
           alt="Chris Godinho"
         />

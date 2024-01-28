@@ -1,5 +1,4 @@
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 
 const Home = () => {
   return (
@@ -32,7 +31,6 @@ const Home = () => {
           <p>Welcome to Juggler – where productivity meets harmony.</p>
         </div>
       </div>
-      <Footer />
     </main>
   );
 };

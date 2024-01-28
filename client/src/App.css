@@ -321,16 +321,86 @@
   --main-font-family: "Exo 2", sans-serif;
 }
 
-/* General rules */
+/* Main container rules */
 html,
 body {
   margin: 0;
-  padding: 0;
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+#root {
+  background-color: var(--main-background-color);
+  overflow-x: hidden;
+  width: 100%;
+  height: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+#color-scheme-jg {
+  background-color: var(--main-background-color);
+  font-family: var(--main-font-family);
+  color: var(--main-text-color);
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 100%;
+}
+
+.dark-background-jg {
+  /* Dark Background for theme transitions */
+  background-color: var(--main-background-color);
+  height: 100vh;
+}
+
+.main-jg {
+  box-sizing: border-box;
+  height: 100%;
+  min-height: 100%;
+}
+
+.home-jg,
+.welcome-jg,
+.login-signup-jg {
+  height: 100%;
+  min-height: 100%;
+  box-sizing: border-box;
   overflow-y: hidden;
 }
 
+.home-jg {
+  padding-top: 18vh;
+}
+
+.welcome-jg {
+  padding-top: 10vh;
+}
+
+/* Scrollbar rules */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main-separator-color);
+  border-radius: 6px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: var(--main-separator-color-light);
+}
+
+::-webkit-scrollbar-track {
+  background-color: var(--main-background-color);
+}
+
+::-webkit-scrollbar-track:hover {
+  background-color: rgba(50, 50, 50, 0.5);
+}
+
+/* General Anchor Link rules */
 a {
   color: var(--main-text-color);
   text-decoration: none;
@@ -340,10 +410,76 @@ a {
   color: var(--work-event-color);
 }
 
+.text-link-jg:hover {
+  color: var(--work-event-color-light);
+}
+
+/* General Text rules */
 p {
   line-height: 1.5em;
 }
 
+.work-text-jg {
+  color: var(--work-event-color);
+}
+
+.life-text-jg {
+  color: var(--life-event-color);
+}
+
+/* General Border rules */
+.work-border-jg {
+  border: 3px solid var(--work-event-color);
+}
+
+.work-border-link-jg:hover {
+  border: 3px solid var(--work-event-color-light);
+}
+
+.work-border-link-jg:focus,
+.work-border-link-jg:active {
+  border: 3px solid var(--work-event-color-dark);
+}
+
+.life-border-jg {
+  border: 3px solid var(--life-event-color);
+}
+
+.life-border-link-jg:hover {
+  border: 3px solid var(--life-event-color-light);
+}
+
+.life-border-link-jg:focus,
+.life-border-link-jg:active {
+  border: 3px solid var(--life-event-color-dark);
+}
+
+/* Horizontal Separator rules */
+.work-hr-jg {
+  border: 0;
+  border-top: 1px solid var(--work-event-color);
+}
+
+.life-hr-jg {
+  border: 0;
+  border-top: 1px solid var(--life-event-color);
+}
+
+/* Material Icons rules */
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+/* Brand Logo rules */
+.juggler-logo-jg :nth-child(1) {
+  fill: var(--work-event-color);
+}
+
+.juggler-logo-jg :nth-child(2) {
+  fill: var(--life-event-color);
+}
+
+/* General Input Field rules */
 input,
 select,
 textarea {
@@ -354,6 +490,7 @@ textarea {
   border-bottom: 1px solid var(--input-text-color);
   border-left: 1px solid var(--input-text-color);
   padding: 0.5em;
+  border-radius: 0 0 0 0.5em;
 }
 
 textarea {
@@ -380,116 +517,14 @@ option {
   background-color: var(--main-background-color-accent);
 }
 
-::-webkit-scrollbar {
-  width: 8px;
-}
-
-::-webkit-scrollbar-thumb {
-  background-color: var(--main-separator-color);
-  border-radius: 6px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background-color: var(--main-separator-color-light);
-}
-
-::-webkit-scrollbar-track {
-  background-color: transparent;
-}
-
-::-webkit-scrollbar-track:hover {
-  background-color: rgba(50, 50, 50, 0.5);
-}
-
-.material-symbols-outlined {
-  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
-}
-
-#root {
-  overflow-y: hidden;
-}
-
-.dark-background-jg {
-  background-color: var(--main-background-color);
-  height: 100vh;
-}
-
-#color-scheme-jg {
-  background-color: var(--main-background-color);
+/* Datepicker/Timepicker rules */
+.flatpickr-calendar,
+.flatpickr-month,
+.flatpickr-monthDropdown-months,
+.flatpickr-monthDropdown-month,
+.flatpickr-weekday {
   font-family: var(--main-font-family);
-  color: var(--main-text-color);
-}
-
-.juggler-logo-jg :nth-child(1) {
-  fill: var(--work-event-color);
-}
-
-.juggler-logo-jg :nth-child(2) {
-  fill: var(--life-event-color);
-}
-
-.main-jg {
-  min-height: 100vh;
-  overflow-y: hidden;
-}
-
-.box-jg {
-  background-color: var(--main-background-color-accent);
-  color: var(--secondary-text-color);
-  margin: 0vh 25vw;
-  min-width: 30vw;
-  border-radius: 1em;
-  padding: 2em;
-  box-shadow: 5px 5px 7px 1px var(--box-shadow-color);
-}
-
-.box-jg input {
-  border-color: var(--secondary-text-color);
-  color: var(--secondary-text-color);
-}
-
-.crop-area-jg button,
-.button-jg {
-  padding: 0.6em 1.1em;
-  color: var(--button-text-color);
-  font-size: 1em;
-  font-weight: bold;
-  background-color: var(--life-event-color);
-  font-family: var(--main-font-family);
-  border: none;
-  border-radius: 0.7em;
-  cursor: pointer;
-  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
-  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
-}
-
-.crop-area-jg button:hover,
-.button-jg:hover {
-  background-color: var(--life-event-color-light);
-  transform: scale(0.98);
-}
-
-.crop-area-jg button:focus,
-.crop-area-jg button:active,
-.button-jg:focus,
-.button-jg:active {
-  background-color: var(--life-event-color-dark);
-}
-
-.hidden-jg {
-  display: none;
-}
-
-.disabled-jg {
-  cursor: default;
-  pointer-events: none;
-  color: var(--main-separator-color-light);
-}
-
-.camouflaged-jg {
-  cursor: default;
-  pointer-events: none;
-  color: var(--main-background-color);
+  background-color: var(--main-background-color-accent) !important;
 }
 
 /* Checkbox rules (Credit: Stephanie Eckles - https://moderncss.dev/pure-css-custom-checkbox-style/) */
@@ -500,13 +535,9 @@ option {
 }
 
 input[type="checkbox"] {
-  /* Add if not using autoprefixer */
   -webkit-appearance: none;
-  /* Remove most all native input styles */
   appearance: none;
-  /* For iOS < 15 */
   background-color: var(--main-background-color);
-  /* Not removed via appearance */
   margin: 0;
 
   font: inherit;
@@ -532,7 +563,6 @@ input[type="checkbox"]::before {
   transform-origin: bottom left;
   transition: 120ms transform ease-in-out;
   box-shadow: inset 1em 1em var(--life-event-color);
-  /* Windows High Contrast Mode */
   background-color: CanvasText;
 }
 
@@ -548,6 +578,53 @@ input[type="checkbox"]:focus {
 input[type="checkbox"]:disabled {
   color: var(--input-placeholder-text-color);
   cursor: not-allowed;
+}
+
+/* General Button rules */
+.button-jg,
+.crop-area-jg button {
+  padding: 0.6em 1.1em;
+  color: var(--button-text-color);
+  font-size: 1em;
+  font-weight: bold;
+  background-color: var(--life-event-color);
+  font-family: var(--main-font-family);
+  border: none;
+  border-radius: 0.7em;
+  cursor: pointer;
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+  transition: transform 0.2s ease-in-out, background-color 0.2s ease-in-out;
+  user-select: none;
+}
+
+.button-jg:hover,
+.crop-area-jg button:hover {
+  background-color: var(--life-event-color-light);
+  transform: scale(0.98);
+}
+
+.button-jg:focus,
+.button-jg:active,
+.crop-area-jg button:focus,
+.crop-area-jg button:active {
+  background-color: var(--life-event-color-dark);
+}
+
+/* Rules for Hidden, Disabled and Camouflaged elements */
+.hidden-jg {
+  display: none;
+}
+
+.disabled-jg {
+  cursor: default;
+  pointer-events: none;
+  color: var(--main-separator-color-light);
+}
+
+.camouflaged-jg {
+  cursor: default;
+  pointer-events: none;
+  color: var(--main-background-color);
 }
 
 /* Modal Window rules */
@@ -699,17 +776,6 @@ input[type="checkbox"]:disabled {
     infinite;
 }
 
-@keyframes lds-ripple {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  100% {
-    transform: scale(1.5);
-    opacity: 0;
-  }
-}
-
 .lds-ripple circle:nth-child(1) {
   fill: var(--life-event-color);
 }
@@ -722,14 +788,15 @@ input[type="checkbox"]:disabled {
   fill: var(--life-event-color);
 }
 
-/* Datepicker/Timepicker rules */
-.flatpickr-calendar,
-.flatpickr-month,
-.flatpickr-monthDropdown-months,
-.flatpickr-monthDropdown-month,
-.flatpickr-weekday {
-  font-family: var(--main-font-family);
-  background-color: var(--main-background-color-accent) !important;
+@keyframes lds-ripple {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
 }
 
 /* Header rules */
@@ -739,6 +806,8 @@ input[type="checkbox"]:disabled {
   padding: 0.1em 4em;
   background-color: var(--main-background-color-darker-accent);
   box-shadow: 0px 5px 5px -1px var(--box-shadow-color);
+  position: fixed;
+  width: 91.8vw;
 }
 
 .header-logo-jg {
@@ -772,11 +841,12 @@ input[type="checkbox"]:disabled {
 
 /* Home page rules */
 .home-jg {
-  min-height: 85vh;
+  /* Height rules are above in Main container rules */
   display: flex;
   align-items: center;
   justify-content: space-around;
-  padding: 1em 3.5em;
+  padding-right: 3.5em;
+  padding-left: 3.5em;
 }
 
 .home-image-container-jg {
@@ -809,11 +879,26 @@ input[type="checkbox"]:disabled {
 }
 
 /* Login/Signup page rules */
-.login-signup-box-container-jg {
+.login-signup-jg {
+  /* Height rules are above in Main container rules */
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 85vh;
+}
+
+.box-jg {
+  background-color: var(--main-background-color-accent);
+  color: var(--secondary-text-color);
+  margin: 0vh 25vw;
+  min-width: 30vw;
+  border-radius: 1em;
+  padding: 2em;
+  box-shadow: 5px 5px 7px 1px var(--box-shadow-color);
+}
+
+.box-jg input {
+  border-color: var(--secondary-text-color);
+  color: var(--secondary-text-color);
 }
 
 .login-signup-box-jg {
@@ -854,7 +939,7 @@ input[type="checkbox"]:disabled {
 
 /* Welcome page rules */
 .welcome-jg {
-  min-height: 85vh;
+  /* Height rules are above in Main container rules */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -974,31 +1059,30 @@ input[type="checkbox"]:disabled {
   text-align: center;
 }
 
+.dashboard-main-panel-jg {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 7;
+  min-height: 95vh;
+  margin-left: 16%;
+  margin-right: 16%;
+  border-left: 1px solid var(--main-separator-color);
+  border-right: 1px solid var(--main-separator-color);
+}
+
+.schedule-grid-container-jg {
+  margin-top: 13.2vh;
+}
+
+/* Dashboard Side Panel rules */
 .dashboard-side-panel-jg {
   display: flex;
   flex-direction: column;
   align-items: center;
   width: 16%;
   height: 95vh;
-}
-
-.work-text-jg {
-  color: var(--work-event-color);
-}
-
-.life-text-jg {
-  color: var(--life-event-color);
-}
-
-.side-panel-top-jg,
-.side-panel-bottom-jg {
-  display: flex;
-}
-
-.side-panel-middle-jg {
-  display: flex;
-  height: 10vh;
-  max-height: 10vh;
+  box-sizing: border-box;
+  position: fixed;
 }
 
 .dashboard-side-panel-jg div h3 {
@@ -1016,19 +1100,29 @@ input[type="checkbox"]:disabled {
   margin-top: 0;
 }
 
+.work-sidebar-jg {
+  left: 0;
+}
+
+.life-sidebar-jg {
+  right: 0;
+}
+
+.side-panel-top-jg,
+.side-panel-bottom-jg {
+  display: flex;
+}
+
+.side-panel-middle-jg {
+  display: flex;
+  height: 10vh;
+  max-height: 10vh;
+}
+
 .side-panel-hr-jg {
   width: 88%;
   margin-bottom: 1em;
   font-size: 0.85em;
-  border: 0;
-}
-
-.work-hr-jg {
-  border-top: 1px solid var(--work-event-color);
-}
-
-.life-hr-jg {
-  border-top: 1px solid var(--life-event-color);
 }
 
 .side-panel-event-list-jg,
@@ -1090,19 +1184,19 @@ input[type="checkbox"]:disabled {
   text-align: left;
 }
 
-.dashboard-main-panel-jg {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 7;
-  min-height: 95vh;
-  border-left: 1px dashed var(--main-separator-color);
-  border-right: 1px dashed var(--main-separator-color);
-}
-
-.dashboard-main-top-row-jg {
+/* Dashboard Header rules */
+.dashboard-header-jg {
+  background-color: var(--main-background-color);
+  border-bottom: 1px solid var(--main-separator-color);
+  width: calc(68% - 10px);
   display: flex;
   justify-content: space-between;
-  margin: 2em 3em 0 3em;
+  align-items: center;
+  height: 18vh;
+  box-sizing: border-box;
+  position: fixed;
+  padding: 0 2em;
+  z-index: 5;
 }
 
 .date-percentage-container-jg {
@@ -1110,6 +1204,7 @@ input[type="checkbox"]:disabled {
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-top: 2em;
   width: 50%;
 }
 
@@ -1126,7 +1221,7 @@ input[type="checkbox"]:disabled {
   align-items: center;
   padding: 0em 1.5em;
   margin: 0em 1em;
-  width: 50vh;
+  width: 100%;
 }
 
 .selected-date-box-jg h3 {
@@ -1158,32 +1253,6 @@ input[type="checkbox"]:disabled {
   transform: scale(0.93);
 }
 
-.work-border-jg {
-  border: 3px solid var(--work-event-color);
-}
-
-.work-border-jg:hover {
-  border: 5px solid var(--work-event-color-light);
-}
-
-.work-border-jg:focus,
-.work-border-jg:active {
-  border: 3px solid var(--work-event-color-dark);
-}
-
-.life-border-jg {
-  border: 3px solid var(--life-event-color);
-}
-
-.life-border-jg:hover {
-  border: 5px solid var(--life-event-color-light);
-}
-
-.life-border-jg:focus,
-.life-border-jg:active {
-  border: 3px solid var(--life-event-color-dark);
-}
-
 .dashboard-profile-picture-jg,
 .add-event-picture-jg {
   display: block;
@@ -1208,31 +1277,69 @@ input[type="checkbox"]:disabled {
 /* Schedule page rules */
 .schedule-container-jg {
   margin-top: 2em;
-  height: 80vh;
-  overflow-y: auto;
+  overflow-x: hidden;
 }
 
-.schedule-block-jg {
-  display: flex;
-  min-height: 1.5em;
-  max-height: 1.5em;
-  padding: 0.5em 0.7em;
-  border-top: 1px dashed var(--main-separator-color);
-  border-bottom: 1px dashed var(--main-separator-color);
+.grid-container-background-jg {
+  width: 100%;
+  min-height: 1921px;
+  max-height: 1921px;
+  background: 
+    repeating-linear-gradient(var(--main-separator-color) 0 1px, transparent 1px 40px) 0 0 / 100% 40px,
+    url('/schedule_hours.png') left center / contain no-repeat;  
 }
 
-.schedule-block-time-jg {
-  min-width: 5em;
-  font-size: 0.7em;
-  color: var(--input-placeholder-text-color);
+.schedule-time-grid-jg {
+  position: absolute;
+  height: 100%;
+  width: 100%;
 }
 
-.schedule-block-title-jg {
-  margin-left: 2em;
+.schedule-event-box-jg {
+  color: var(--main-background-color);
+  border: 1px solid var(--main-background-color-accent);
+  border-radius: 1em;
+  text-align: left;
+  cursor: grab;
 }
 
-.schedule-event-line-jg {
-  color: inherit;
+.schedule-event-box-work-jg {
+  background-color: var(--work-event-color);
+}
+
+.schedule-event-box-life-jg {
+  background-color: var(--life-event-color);
+}
+
+.schedule-event-name-jg {
+  margin-top: 0.2em;
+  margin-left: 1em;
+  cursor: pointer;
+  width: auto;
+  display: inline-block;
+}
+
+.react-grid-item > .react-resizable-handle.react-resizable-handle-n,
+.react-grid-item > .react-resizable-handle.react-resizable-handle-s {
+  transform: none !important;
+  left: 0 !important;
+  margin-left: 0 !important;
+  width: 100%;
+}
+
+.react-grid-item > .react-resizable-handle::after {
+  border-right: none !important;
+  border-bottom: none !important;
+  border-color: transparent !important;
+}
+
+.react-grid-item > .react-resizable-handle {
+  background-image: none !important;
+  height: 5px !important;
+}
+
+.react-grid-item.react-grid-placeholder {
+  background: none !important;
 }
 
 /* Event details page rules */
@@ -1362,7 +1469,6 @@ input[type="checkbox"]:disabled {
 .user-profile-picture-jg {
   height: 10em;
   width: 10em;
-  border: 3px solid var(--work-event-color);
   border-radius: 50%;
   position: relative;
   overflow: hidden;
@@ -1372,7 +1478,6 @@ input[type="checkbox"]:disabled {
 
 .user-profile-picture-jg:hover {
   scale: 0.98;
-  border: 3px solid var(--work-event-color-light);
 }
 
 .user-menu-username-jg a {
@@ -1406,7 +1511,6 @@ input[type="checkbox"]:disabled {
   margin-right: 2em;
   height: 36vh;
   width: 36vh;
-  border: 3px solid var(--work-event-color);
   border-radius: 50%;
   cursor: pointer;
   overflow: hidden;
@@ -1849,7 +1953,6 @@ input[type="checkbox"]:disabled {
 .about-us-image-jg {
   max-width: 43%;
   float: left;
-  border: 2px solid var(--life-event-color);
   border-radius: 1em;
   margin-right: 2em;
   margin-top: 1em;

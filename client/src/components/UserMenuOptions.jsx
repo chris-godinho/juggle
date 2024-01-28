@@ -15,7 +15,7 @@ export default function UserMenuOptions({
 
   return (
     <div className="modal-inner-content-jg">
-      <div className="user-profile-picture-jg">
+      <div className="user-profile-picture-jg work-border-jg work-border-link-jg">
         <a href="#" className="user-menu-link-jg">
           <img
             className="dashboard-profile-picture-jg"

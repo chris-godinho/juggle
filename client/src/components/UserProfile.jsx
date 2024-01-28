@@ -110,7 +110,7 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
     <div className="modal-inner-content-jg">
       <div className="user-profile-container-jg">
         <img
-          className="profile-picture-upload-area-jg"
+          className="profile-picture-upload-area-jg work-border-jg"
           src="/test-prof-pic.jpg"
           alt="profile picture"
           onClick={() => setUserMenuModalContent("UserProfile")}

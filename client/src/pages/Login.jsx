@@ -43,7 +43,7 @@ const Login = (props) => {
   return (
     <main className="main-jg">
       <Header />
-      <div className="login-signup-box-container-jg">
+      <div className="login-signup-jg">
         <div className="box-jg login-signup-box-jg">
           <h4>Login</h4>
           <div className="login-signup-form-jg">

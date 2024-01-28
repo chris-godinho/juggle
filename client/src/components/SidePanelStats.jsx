@@ -1,14 +1,15 @@
+// SidePanelStats.jsx
+
+import { useDataContext } from "./DataContext";
+
 import { calculateEventStats } from "../utils/eventUtils.js";
 
-export default function SidePanelStats({ events, eventType }) {
+export default function SidePanelStats({ eventType }) {
 
-  console.log("[SidePanelStats.jsx] events:", events);
+  const { events } = useDataContext();
 
   const { workPercentage, lifePercentage } = calculateEventStats(events);
 
-  console.log("[SidePanelStats.jsx] workPercentage:", workPercentage);
-  console.log("[SidePanelStats.jsx] lifePercentage:", lifePercentage);
-  
   return (
     <>
       <div className="side-panel-top-jg">

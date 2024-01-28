@@ -9,7 +9,6 @@ import DataContext from "../components/DataContext.jsx";
 import { QUERY_USER } from "../utils/queries.js";
 
 import Header from "../components/Header";
-import Footer from "../components/Footer";
 import ProfilePictureUpload from "../components/ProfilePictureUpload.jsx";
 import WorkLifeSlider from "../components/WorkLifeSlider.jsx";
 import SleepDropdownArea from "../components/SleepDropdownArea.jsx";
@@ -381,7 +380,6 @@ const Welcome = () => {
             </a>
           </div>
         </div>
-        <Footer />
       </main>
     </DataContext.Provider>
   );

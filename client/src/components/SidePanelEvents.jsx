@@ -1,14 +1,17 @@
+// SidePanelEvents.jsx
+
+import { useDataContext } from "./DataContext";
+
 import { calculateSingleEventPercentage } from "../utils/eventUtils.js";
 
 export default function SidePanelEvents({
-  events,
   eventType,
-  eventCount,
   totalAlottedTime,
 }) {
+  const { events } = useDataContext();
+
   return (
     <div className="side-panel-event-list-jg">
-
       {events.map((event, index) => {
         console.log("[SidePanelEvents.jsx] event:", event);
         console.log("[SidePanelEvents.jsx] event.type:", event.type);

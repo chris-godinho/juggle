@@ -1,5 +1,7 @@
 // SidePanelRecommendations.jsx
 
+import { useDataContext } from "./DataContext";
+
 import { useUserSettings } from "./UserSettingsProvider.jsx";
 
 import { calculateEventStats } from "../utils/eventUtils.js";
@@ -9,7 +11,10 @@ import {
   lifeGoalActivities,
 } from "../utils/preferredActivities.js";
 
-export default function SidePanelRecommendations({ events, eventType }) {
+export default function SidePanelRecommendations({ eventType }) {
+
+  const { events } = useDataContext();
+
   const { userSettings } = useUserSettings();
 
   const { workPercentage, lifePercentage } = calculateEventStats(events);

@@ -45,7 +45,7 @@ const Signup = () => {
   return (
     <main className="main-jg">
       <Header />
-      <div className="login-signup-box-container-jg">
+      <div className="login-signup-jg">
         <div className="box-jg login-signup-box-jg signup-box-jg">
           <h4>Sign Up</h4>
           <div className="login-signup-form-jg">
