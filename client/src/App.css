@@ -1312,7 +1312,8 @@ input[type="checkbox"]:disabled {
   text-align: left;
   font-weight: 550;
   cursor: grab;
-  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color),
+    inset 0px 0px 0px 1px var(--main-background-color-accent);
 }
 
 .schedule-event-box-work-jg {

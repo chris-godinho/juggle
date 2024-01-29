@@ -12,7 +12,13 @@ import { UPDATE_EVENT } from "../../utils/mutations.js";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
-const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch, hiddenAnchor }) => {
+const Schedule = ({
+  events,
+  selectedDate,
+  eventSubtypes,
+  eventsRefetch,
+  hiddenAnchor,
+}) => {
   const { openModal } = useModal();
 
   const [updateEvent] = useMutation(UPDATE_EVENT);
@@ -23,6 +29,8 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch, hiddenAn
 
   const displayDate = new Date(selectedDate);
   displayDate.setHours(0, 0, 0, 0);
+  const tomorrowDate = new Date(displayDate);
+  tomorrowDate.setDate(displayDate.getDate() + 1);
 
   const assignClassNames = (
     event,
@@ -38,7 +46,12 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch, hiddenAn
       if (startsPreviousDay && endsOnSelectedDate) {
         className += " schedule-event-box-work-previous-day-jg";
       } else if (startsOnSelectedDate && endsNextDay) {
-        className += " schedule-event-box-work-next-day-jg";
+        console.log("[Schedule.jsx] startsOnSelectedDate && endsNextDay");
+        console.log("[Schedule.jsx] tomorrowDate:", tomorrowDate.toISOString());
+        console.log("[Schedule.jsx] event.eventEnd:", event.eventEnd);
+        if (event.eventEnd !== tomorrowDate.toISOString()) {
+          className += " schedule-event-box-work-next-day-jg";
+        }
       } else if (startsPreviousDay && endsNextDay) {
         className += " schedule-event-box-work-prev-next-day-jg";
       }
