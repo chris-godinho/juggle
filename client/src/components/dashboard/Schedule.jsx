@@ -17,8 +17,235 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
 
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
+  let generatedLayout = [];
+  let responsiveLayout = {};
+  let eventBoxProps = [];
+
   const displayDate = new Date(selectedDate);
   displayDate.setHours(0, 0, 0, 0);
+
+  const assignClassNames = (
+    event,
+    startsPreviousDay,
+    endsOnSelectedDate,
+    startsOnSelectedDate,
+    endsNextDay
+  ) => {
+    let className = "schedule-event-box-jg";
+
+    if (event.type === "work") {
+      className += " schedule-event-box-work-jg";
+      if (startsPreviousDay && endsOnSelectedDate) {
+        className += " schedule-event-box-work-previous-day-jg";
+      } else if (startsOnSelectedDate && endsNextDay) {
+        className += " schedule-event-box-work-next-day-jg";
+      } else if (startsPreviousDay && endsNextDay) {
+        className += " schedule-event-box-work-prev-next-day-jg";
+      }
+    } else {
+      className += " schedule-event-box-life-jg";
+      if (startsPreviousDay && endsOnSelectedDate) {
+        className += " schedule-event-box-life-previous-day-jg";
+      } else if (startsOnSelectedDate && endsNextDay) {
+        className += " schedule-event-box-life-next-day-jg";
+      } else if (startsPreviousDay && endsNextDay) {
+        className += " schedule-event-box-life-prev-next-day-jg";
+      }
+    }
+
+    return className;
+  };
+
+  const adjustOverlappingEvents = (layout) => {
+    console.log("[Schedule.jsx] adjustOverlappingEvents");
+    console.log("[Schedule.jsx] layout:", JSON.stringify(layout));
+
+    // Save current layout to a new array
+    const adjustedLayout = [...layout];
+    let isUpdated = false;
+
+    // Function to update the layout of an event if necessary
+    const updateEventLayout = (eventToUpdate, newW, newX) => {
+      console.log("[Schedule.jsx] updateEventLayout");
+      console.log("[Schedule.jsx] eventToUpdate:", eventToUpdate);
+      console.log("[Schedule.jsx] newW:", newW);
+      console.log("[Schedule.jsx] newX:", newX);
+
+      const eventIndex = adjustedLayout.findIndex(
+        (event) => event.i === eventToUpdate.i
+      );
+
+      adjustedLayout[eventIndex].w = newW;
+      adjustedLayout[eventIndex].x = newX;
+
+      isUpdated = true;
+
+      console.log(
+        "[Schedule.jsx] adjustedLayout:",
+        JSON.stringify(adjustedLayout)
+      );
+    };
+
+    // Iterate through each event in the layout
+    for (let i = 0; i < adjustedLayout.length; i++) {
+      const currentEvent = adjustedLayout[i];
+      const currentOverlappingEvents = [];
+
+      console.log("[Schedule.jsx] currentEvent:", currentEvent);
+
+      // Compare the current event with each other event in the layout
+      for (let j = i + 1; j < adjustedLayout.length; j++) {
+        const otherEvent = adjustedLayout[j];
+
+        console.log("[Schedule.jsx] otherEvent:", otherEvent);
+
+        // Check if there is a vertical overlap between the current event and the other event
+        const verticalOverlap =
+          currentEvent.y < otherEvent.y + otherEvent.h &&
+          currentEvent.y + currentEvent.h > otherEvent.y &&
+          currentEvent.i !== otherEvent.i;
+
+        // If there is a vertical overlap, add the other event to the list of overlapping events
+        if (verticalOverlap) {
+          console.log("[Schedule.jsx] Vertical overlap found!");
+          currentOverlappingEvents.push(otherEvent);
+        }
+      }
+
+      // Adjust the layout of the current event based on the number of overlapping events
+      if (currentOverlappingEvents.length === 1) {
+        console.log("[Schedule.jsx] currentOverlappingEvents.length === 1");
+        updateEventLayout(currentEvent, 3, 3);
+        updateEventLayout(currentOverlappingEvents[0], 3, 0);
+      } else if (currentOverlappingEvents.length === 2) {
+        console.log("[Schedule.jsx] currentOverlappingEvents.length === 2");
+        updateEventLayout(currentEvent, 2, 4);
+        updateEventLayout(currentOverlappingEvents[0], 2, 0);
+        updateEventLayout(currentOverlappingEvents[1], 2, 2);
+      } else if (currentOverlappingEvents.length === 3) {
+        console.log("[Schedule.jsx] currentOverlappingEvents.length === 3");
+        updateEventLayout(currentEvent, 1, 5);
+        updateEventLayout(currentOverlappingEvents[0], 2, 0);
+        updateEventLayout(currentOverlappingEvents[1], 2, 2);
+        updateEventLayout(currentOverlappingEvents[2], 1, 4);
+      } else if (currentOverlappingEvents.length === 4) {
+        console.log("[Schedule.jsx] currentOverlappingEvents.length === 4");
+        updateEventLayout(currentEvent, 1, 5);
+        updateEventLayout(currentOverlappingEvents[0], 2, 0);
+        updateEventLayout(currentOverlappingEvents[1], 1, 2);
+        updateEventLayout(currentOverlappingEvents[2], 1, 3);
+        updateEventLayout(currentOverlappingEvents[3], 1, 4);
+      } else if (currentOverlappingEvents.length === 5) {
+        console.log("[Schedule.jsx] currentOverlappingEvents.length === 5");
+        updateEventLayout(currentEvent, 1, 5);
+        updateEventLayout(currentOverlappingEvents[0], 1, 0);
+        updateEventLayout(currentOverlappingEvents[1], 1, 1);
+        updateEventLayout(currentOverlappingEvents[2], 1, 2);
+        updateEventLayout(currentOverlappingEvents[3], 1, 3);
+        updateEventLayout(currentOverlappingEvents[4], 1, 4);
+      }
+
+      if (isUpdated) {
+        // If the layout was updated, break out of the loop and start over
+        console.log("[Schedule.jsx] Layout updated, restarting loop...");
+        break;
+      }
+    }
+
+    return adjustedLayout;
+  };
+
+  const buildLayout = (events) => {
+    const initialLayout = [];
+    events.map((event) => {
+      // Calculate the size and position based on start time and duration
+      const eventStartTime = new Date(event.eventStart);
+      const startTimeMinutes =
+        eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
+      const eventEndTime = new Date(event.eventEnd);
+      const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
+      const size = Math.ceil(durationMinutes / 30);
+      let position = Math.ceil(startTimeMinutes / 30);
+
+      // Check if the event starts on the previous day and ends on the selectedDate
+      const startsPreviousDay =
+        eventStartTime.getDate() < displayDate.getDate();
+      const endsOnSelectedDate =
+        eventEndTime.getDate() === displayDate.getDate();
+
+      // Check if the event starts on the selectedDate and ends on the next day
+      const startsOnSelectedDate =
+        eventStartTime.getDate() === displayDate.getDate();
+      const endsNextDay = eventEndTime.getDate() > displayDate.getDate();
+
+      // Calculate the adjusted size based on the time within the selected day
+      let adjustedSize = size;
+
+      const nextDay = new Date(displayDate);
+      nextDay.setDate(displayDate.getDate() + 1);
+
+      if (startsPreviousDay && endsOnSelectedDate) {
+        console.log("[Schedule.jsx] startsPreviousDay && endsOnSelectedDate");
+        console.log("[Schedule.jsx] displayDate:", displayDate);
+        console.log("[Schedule.jsx] eventStartTime:", eventStartTime);
+        // Adjust the size based on the time on the selected day
+        const minutesOnSelectedDay =
+          (eventEndTime - new Date(displayDate)) / (1000 * 60);
+        console.log(
+          "[Schedule.jsx] minutesOnSelectedDay:",
+          minutesOnSelectedDay
+        );
+        adjustedSize = Math.min(
+          adjustedSize,
+          Math.ceil(minutesOnSelectedDay / 30)
+        );
+        console.log("[Schedule.jsx] adjustedSize:", adjustedSize);
+        position = 0;
+      } else if (startsOnSelectedDate && endsNextDay) {
+        console.log("[Schedule.jsx] startsOnSelectedDate && endsNextDay");
+        const minutesOnSelectedDay = (nextDay - eventStartTime) / (1000 * 60);
+        adjustedSize = Math.min(
+          adjustedSize,
+          Math.ceil(minutesOnSelectedDay / 30)
+        );
+      } else if (startsPreviousDay && endsNextDay) {
+        console.log("[Schedule.jsx] startsPreviousDay && endsNextDay");
+        adjustedSize = 48;
+        position = 0;
+      }
+
+      const className = assignClassNames(
+        event,
+        startsPreviousDay,
+        endsOnSelectedDate,
+        startsOnSelectedDate,
+        endsNextDay
+      );
+
+      initialLayout.push({
+        i: event._id,
+        w: 6,
+        h: adjustedSize,
+        x: 0,
+        y: position,
+      });
+
+      eventBoxProps.push({ event, className: className });
+    });
+    console.log("[Schedule.jsx] initialLayout:", JSON.stringify(initialLayout));
+    generatedLayout = adjustOverlappingEvents(initialLayout);
+    console.log(
+      "[Schedule.jsx] generatedLayout:",
+      JSON.stringify(generatedLayout)
+    );
+    responsiveLayout = {
+      lg: generatedLayout,
+      md: generatedLayout,
+      sm: generatedLayout,
+      xs: generatedLayout,
+      xxs: generatedLayout,
+    };
+  };
 
   const formatTime = (dateObject) => {
     const result = dateObject.toLocaleString("en-US", {
@@ -53,9 +280,6 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
   };
 
   const handleEventChange = async (layout) => {
-    // TODO: When an event overlaps with another, resize the other event accordingly
-    // (if there less than five on that same time block)
-
     console.log("[Schedule.jsx] layout:", layout);
 
     // Iterate through each moved event
@@ -121,13 +345,49 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
     }
   };
 
-  // TODO: Prevent grid height from exceeding 48 rows (30 minutes per row)
-  // See https://github.com/react-grid-layout/react-grid-layout/issues/1104 - CefBoud's comment from 2021-04-27
+  const handleDragStop = (layout) => {
+    console.log("[Schedule.jsx] handleDragStop");
+
+    // Adjust overlapping events before handling the change
+    const adjustedLayout = adjustOverlappingEvents(layout);
+
+    handleEventChange(adjustedLayout);
+
+    generatedLayout = adjustedLayout;
+    responsiveLayout = {
+      lg: generatedLayout,
+      md: generatedLayout,
+      sm: generatedLayout,
+      xs: generatedLayout,
+      xxs: generatedLayout,
+    };
+  };
+
+  const handleResizeStop = (layout) => {
+    console.log("[Schedule.jsx] handleResizeStop");
+
+    // Adjust overlapping events before handling the change
+    const adjustedLayout = adjustOverlappingEvents(layout);
+
+    handleEventChange(adjustedLayout);
+
+    generatedLayout = adjustedLayout;
+    responsiveLayout = {
+      lg: generatedLayout,
+      md: generatedLayout,
+      sm: generatedLayout,
+      xs: generatedLayout,
+      xxs: generatedLayout,
+    };
+  };
+
+  buildLayout(events);
 
   return (
     <div className="schedule-container-jg grid-container-background-jg">
       <ResponsiveGridLayout
         className="layout"
+        layouts={responsiveLayout}
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
         compactType={null}
@@ -137,96 +397,29 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
         containerPadding={[5, 5]}
         margin={[5, 10]}
         resizeHandles={["n", "s"]}
-        onDragStop={handleEventChange}
-        onResizeStop={handleEventChange}
+        allowOverlap={true}
+        onDragStop={handleDragStop}
+        onResizeStop={handleResizeStop}
       >
         {events.map((event) => {
-          // Calculate the size and position based on start time and duration
-          const eventStartTime = new Date(event.eventStart);
-          const startTimeMinutes =
-            eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
-          const eventEndTime = new Date(event.eventEnd);
-          const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
-          const size = Math.ceil(durationMinutes / 30);
-          let position = Math.ceil(startTimeMinutes / 30);
-
-          // Check if the event starts on the previous day and ends on the selectedDate
-          const startsPreviousDay =
-            eventStartTime.getDate() < displayDate.getDate();
-          const endsOnSelectedDate =
-            eventEndTime.getDate() === displayDate.getDate();
-
-          // Check if the event starts on the selectedDate and ends on the next day
-          const startsOnSelectedDate =
-            eventStartTime.getDate() === displayDate.getDate();
-          const endsNextDay = eventEndTime.getDate() > displayDate.getDate();
-
-          // Calculate the adjusted size based on the time within the selected day
-          let adjustedSize = size;
-
-          const nextDay = new Date(displayDate);
-          nextDay.setDate(displayDate.getDate() + 1);
-
-          if (startsPreviousDay && endsOnSelectedDate) {
-            // Adjust the size based on the time on the selected day
-            const minutesOnSelectedDay =
-              (new Date(displayDate) - eventStartTime) / (1000 * 60);
-            adjustedSize = Math.min(
-              adjustedSize,
-              Math.ceil(minutesOnSelectedDay / 30)
-            );
-            position = 0;
-          } else if (startsOnSelectedDate && endsNextDay) {
-            console.log("[Schedule.jsx] eventEndTime:", eventEndTime);
-            console.log("[Schedule.jsx] nextDay:", nextDay);
-            // Adjust the size based on the time on the selected day
-            const minutesOnSelectedDay =
-              (nextDay - eventStartTime) / (1000 * 60);
-            console.log(
-              "[Schedule.jsx] minutesOnSelectedDay:",
-              minutesOnSelectedDay
-            );
-            adjustedSize = Math.min(
-              adjustedSize,
-              Math.ceil(minutesOnSelectedDay / 30)
-            );
-          }
-
           console.log("[Schedule.jsx] event:", event);
-          console.log(
-            "[Schedule.jsx] startsPreviousDay && endsOnSelectedDate?:",
-            startsPreviousDay && endsOnSelectedDate
-          );
-          console.log(
-            "[Schedule.jsx] startsOnSelectedDate && endsNextDay?:",
-            startsOnSelectedDate && endsNextDay
-          );
-          console.log("[Schedule.jsx] adjustedSize:", adjustedSize);
 
-          let className = "schedule-event-box-jg";
+          const matchingProp = eventBoxProps.find(
+            (eventBoxProp) => eventBoxProp.event._id === event._id
+          );
 
-          if (event.type === "work") {
-            className += " schedule-event-box-work-jg";
-            if (startsPreviousDay && endsOnSelectedDate) {
-              className += " schedule-event-box-work-previous-day-jg";
-            } else if (startsOnSelectedDate && endsNextDay) {
-              className += " schedule-event-box-work-next-day-jg";
-            }
-          } else {
-            className += " schedule-event-box-life-jg";
-            if (startsPreviousDay && endsOnSelectedDate) {
-              className += " schedule-event-box-life-previous-day-jg";
-            } else if (startsOnSelectedDate && endsNextDay) {
-              className += " schedule-event-box-life-next-day-jg";
-            }
-          }
+          console.log("[Schedule.jsx] matchingProp:", matchingProp);
+
+          const className = matchingProp ? matchingProp.className : "";
 
           return (
             <div
               key={event._id}
               id={event._id}
+              title={`${formatTime(new Date(event.eventStart))} - ${
+                event.title
+              }`}
               className={className}
-              data-grid={{ w: 6, h: adjustedSize, x: 0, y: position }}
             >
               <p
                 className="schedule-event-name-jg widget-prevent-drag-wf"

@@ -34,8 +34,18 @@ const resolvers = {
         endTime.setDate(endTime.getDate() + 1); // Move to the next day
 
         params.$or = [
-          { eventStart: { $lte: endTime, $gte: startTime } },
-          { eventEnd: { $lte: endTime, $gte: startTime } },
+          { 
+            $or: [
+              { eventStart: { $lte: endTime, $gte: startTime } },
+              { eventEnd: { $lte: endTime, $gte: startTime } },
+            ]
+          },
+          { 
+            $and: [
+              { eventStart: { $lte: startTime } },
+              { eventEnd: { $gte: endTime } },
+            ]
+          },
         ];
       }
 
