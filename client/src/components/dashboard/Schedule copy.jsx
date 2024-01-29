@@ -18,6 +18,7 @@ const Schedule = ({
   selectedDate,
   eventSubtypes,
   eventsRefetch,
+  hiddenAnchor,
 }) => {
   console.log("[Schedule.jsx] rendering...");
 
@@ -173,6 +174,7 @@ const Schedule = ({
   const buildLayout = (events) => {
     console.log("[Schedule.jsx] in buildLayout()");
     const initialLayout = [];
+    if (!isLayoutReset) {
     events.map((event) => {
       // Calculate the size and position based on start time and duration
       const eventStartTime = new Date(event.eventStart);
@@ -234,6 +236,8 @@ const Schedule = ({
         endsNextDay
       );
 
+      console.log("[Schedule.jsx] className:", className);
+
       // Add the event to the initial layout
       initialLayout.push({
         i: event._id,
@@ -248,10 +252,13 @@ const Schedule = ({
         ...prevEventBoxProps,
         { event, className },
       ]);
+      console.log("[Schedule.jsx] eventBoxProps:", eventBoxProps);
     });
-    console.log("[Schedule.jsx] eventBoxProps:", eventBoxProps);
+
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout));
+    lastValidLayout.current = adjustOverlappingEvents(initialLayout);
+    }
   };
 
   // Function to format the time for display
@@ -267,25 +274,22 @@ const Schedule = ({
   // Function to check if the layout needs to be reset (when the grid height has been exceeded)
   const resetInvalidLayout = (layout) => {
     console.log("[Schedule.jsx] in resetInvalidLayout()");
-      
+    console.log("[Schedule.jsx] layout:", JSON.stringify(layout));
+    
     const maxGridHeight = 48;
-      
+    
     const isInvalidLayout = layout.some((event) => event.y + event.h > maxGridHeight);
-      
+    
     if (isInvalidLayout) {
       console.log("[Schedule.jsx] Invalid layout detected!");
-      setIsLayoutReset((prevIsLayoutReset) => {
-        if (!prevIsLayoutReset) {
-          // Reset the layout to the last valid layout
-          setCurrentLayout(lastValidLayout.current);
-        }
-        return true;
-      });
+      // Reset the layout to the last valid layout
+      setCurrentLayout(lastValidLayout.current);
       return true;
     }
-    
+  
     return false;
   };
+  
 
   // Function to save the current layout before dragging or resizing
   const saveCurrentLayouts = (layout) => {
@@ -361,7 +365,9 @@ const Schedule = ({
               completed: eventToUpdate.completed,
             },
           });
-        
+
+          // Refetch events after successful update
+          eventsRefetch();
         } catch (error) {
           console.error("Error updating event:", error);
         }
@@ -372,39 +378,33 @@ const Schedule = ({
   // Function to handle dragging an event
   const handleDragResizeStop = (layout) => {
     console.log("[Schedule.jsx] in handleDragResizeStop()");
-  
-    // Check if the layout needs to be reset
-    resetInvalidLayout(layout);
-  
-    // Use the updated state in the callback
-    setIsLayoutReset((prevIsLayoutReset) => {
-      if (!prevIsLayoutReset) {
-        console.log("[Schedule.jsx] isLayoutReset is false");
-        
-        // Adjust overlapping events before handling the change
-        const adjustedLayout = adjustOverlappingEvents(layout);
-  
-        // Update the database with the new layout
-        handleEventChange(adjustedLayout);
-  
-        // Update the layout variables
-        setCurrentLayout(adjustedLayout);
-        saveCurrentLayouts(adjustedLayout);
-      }
 
-      // Return the same value to keep it unchanged
-      return prevIsLayoutReset;
-    });
+    // Check if the layout needs to be reset
+    setIsLayoutReset(resetInvalidLayout(layout));
+
+    console.log("[Schedule.jsx] isLayoutReset:", isLayoutReset);
+
+    if (!isLayoutReset) {
+      // Adjust overlapping events before handling the change
+      const adjustedLayout = adjustOverlappingEvents(layout);
+
+      // Update the database with the new layout
+      handleEventChange(adjustedLayout);
+
+      // Update the layout variables
+      setCurrentLayout(adjustedLayout);
+      saveCurrentLayouts(adjustedLayout);
+    }
   };
 
   // Build the initial layout
   useEffect(() => {
-    console.log("[Schedule.jsx] useEffect() - buildLayout()");
     buildLayout(events);
   }, [events, isLayoutReset]);
 
   return (
     <div className="schedule-container-jg grid-container-background-jg">
+      <div id="schedule-hidden-anchor-jg" ref={hiddenAnchor}></div>
       <ResponsiveGridLayout
         className="layout"
         layouts={{
@@ -417,10 +417,10 @@ const Schedule = ({
         breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
         cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
         compactType={null}
+        isResizable={false}
         draggableCancel=".widget-prevent-drag-wf"
         autoSize={false}
         rowHeight={30}
-        maxRows={48}
         containerPadding={[5, 5]}
         margin={[5, 10]}
         resizeHandles={["n", "s"]}

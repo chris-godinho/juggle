@@ -21,8 +21,6 @@ export const useUserSettings = () => {
 };
 
 export const UserSettingsProvider = ({ children }) => {
-  console.log("[UserSettingsProvider.jsx] Initializing...");
-
   const [userSettings, setUserSettings] = useState({});
 
   const [updateUserSettings] = useMutation(UPDATE_USER_SETTINGS);
@@ -31,10 +29,7 @@ export const UserSettingsProvider = ({ children }) => {
   try {
     const userProfile = AuthService.getProfile();
     username = userProfile?.data?.username;
-    console.log("[UserSettingsProvider.jsx] userProfile:", userProfile);
-    console.log("[UserSettingsProvider.jsx] username:", username);
   } catch (error) {
-    console.log("[UserSettingsProvider.jsx] No user logged in. Loading default settings...");
     // Handle the error gracefully, set username to null, or take appropriate action
     username = null;
   }
@@ -45,16 +40,12 @@ export const UserSettingsProvider = ({ children }) => {
   });
 
   useEffect(() => {
-    console.log("[UserSettingsProvider.jsx] useEffect hook triggered");
     if (!loading && !error && data) {
-      console.log("[UserSettingsProvider.jsx] data:", data);
       setUserSettings(data.user);
     }
   }, [loading, error, data]);
 
   const updateProviderUserSettings = async (newSettings) => {
-    console.log("[UserSettingsProvider.jsx] newSettings:", newSettings);
-
     setUserSettings((prevSettings) => ({
       ...prevSettings,
       ...newSettings,
@@ -64,13 +55,9 @@ export const UserSettingsProvider = ({ children }) => {
       const { data } = await updateUserSettings({
         variables: { ...newSettings },
       });
-    
-      console.log("[UserSettingsProvider.jsx] data:", data);
     } catch (err) {
       console.error(err);
     }
-
-    console.log("[UserSettingsProvider.jsx] userSettings:", userSettings);
   };
 
   if (loading) {
@@ -85,10 +72,10 @@ export const UserSettingsProvider = ({ children }) => {
     );
   }
 
-  console.log("[UserSettingsProvider.jsx] userSettings:", userSettings);
-
   return (
-    <UserSettingsContext.Provider value={{ userSettings, updateProviderUserSettings }}>
+    <UserSettingsContext.Provider
+      value={{ userSettings, updateProviderUserSettings }}
+    >
       {children}
     </UserSettingsContext.Provider>
   );
