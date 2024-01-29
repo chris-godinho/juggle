@@ -1115,6 +1115,12 @@ input[type="checkbox"]:disabled {
   display: flex;
 }
 
+.side-panel-stats-title-jg {
+  font-size: 1.3em;
+  margin-bottom: 0;
+  padding-top: 1em;
+}
+
 .side-panel-middle-jg {
   display: flex;
   height: 10vh;
@@ -1226,8 +1232,10 @@ input[type="checkbox"]:disabled {
   width: 100%;
 }
 
-.selected-date-box-jg h3 {
+.selected-date-box-input-jg {
   margin: 0;
+  border: 0;
+  font-size: 1.3em;
 }
 
 .unalotted-percentage-jg p {
@@ -1295,12 +1303,6 @@ input[type="checkbox"]:disabled {
   position: absolute;
   height: 100%;
   width: 100%;
-}
-
-#schedule-hidden-anchor-jg {
-  position: absolute;
-  top: 0;
-  visibility: hidden;
 }
 
 .schedule-event-box-jg {

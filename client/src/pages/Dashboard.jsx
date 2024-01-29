@@ -83,7 +83,7 @@ export default function Dashboard() {
         userLoading,
         username,
         userId,
-        eventSubtypes
+        eventSubtypes,
       }}
     >
       <main className="main-jg">

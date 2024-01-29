@@ -12,7 +12,7 @@ import { UPDATE_EVENT } from "../../utils/mutations.js";
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
-const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
+const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch, hiddenAnchor }) => {
   const { openModal } = useModal();
 
   const [updateEvent] = useMutation(UPDATE_EVENT);
@@ -385,6 +385,7 @@ const Schedule = ({ events, selectedDate, eventSubtypes, eventsRefetch }) => {
 
   return (
     <div className="schedule-container-jg grid-container-background-jg">
+      <div id="schedule-hidden-anchor-jg" ref={hiddenAnchor}></div>
       <ResponsiveGridLayout
         className="layout"
         layouts={responsiveLayout}

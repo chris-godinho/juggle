@@ -3,6 +3,9 @@
 import { useDataContext } from "../contextproviders/DataContext"
 import { useModal } from "../contextproviders/ModalProvider.jsx";
 
+import Flatpickr from "react-flatpickr";
+import "flatpickr/dist/themes/dark.css";
+
 import { calculateEventStats } from "../../utils/eventUtils.js";
 
 import NewEvent from "./NewEvent.jsx";
@@ -79,11 +82,15 @@ export default function DashboardHeader() {
             </span>
           </a>
           <div className="selected-date-box-jg">
-            <h3>{`${
-              weekDays[selectedDate.getDay()]
-            }, ${selectedDate.getDate()} ${
-              months[selectedDate.getMonth()]
-            } ${selectedDate.getFullYear()}`}</h3>
+            <Flatpickr
+              className="selected-date-box-input-jg"
+              value={selectedDate}
+              options={{
+                dateFormat: "l, F j, Y",
+                defaultDate: selectedDate,
+                onChange: (date) => setSelectedDate(date[0]),
+              }}
+            />
           </div>
           <a href="#" onClick={selectNextDay}>
             <span className="material-symbols-outlined">arrow_forward_ios</span>

@@ -13,7 +13,7 @@ export default function SidePanelStats({ eventType }) {
   return (
     <>
       <div className="side-panel-top-jg">
-        <h3>{eventType}</h3>
+        <p className="side-panel-stats-title-jg">{eventType}</p>
       </div>
       <div className="side-panel-middle-jg">
         <h1>{eventType === "Work" ? workPercentage : lifePercentage}%</h1>
