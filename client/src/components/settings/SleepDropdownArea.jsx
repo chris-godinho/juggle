@@ -55,6 +55,7 @@ export default function SleepDropdownArea() {
               dateFormat: "h:i K",
               closeOnSelect: true,
               clickOpens: true,
+              minuteIncrement: 30,
             }}
             onChange={(selectedDates, dateString, instance) => {
               console.log(
@@ -83,6 +84,7 @@ export default function SleepDropdownArea() {
               dateFormat: "h:i K",
               closeOnSelect: true,
               clickOpens: true,
+              minuteIncrement: 30,
             }}
             onChange={(selectedDates, dateString, instance) => {
               console.log(

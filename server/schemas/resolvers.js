@@ -37,7 +37,7 @@ const resolvers = {
           { 
             $or: [
               { eventStart: { $lte: endTime, $gte: startTime } },
-              { eventEnd: { $lte: endTime, $gte: startTime } },
+              { eventEnd: { $lte: endTime, $gt: startTime } },
             ]
           },
           { 

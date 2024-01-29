@@ -30,7 +30,6 @@ export const UserSettingsProvider = ({ children }) => {
     const userProfile = AuthService.getProfile();
     username = userProfile?.data?.username;
   } catch (error) {
-    // Handle the error gracefully, set username to null, or take appropriate action
     username = null;
   }
 
@@ -46,6 +45,7 @@ export const UserSettingsProvider = ({ children }) => {
   }, [loading, error, data]);
 
   const updateProviderUserSettings = async (newSettings) => {
+    console.log("[UserSettingsProvider.jsx] updateProviderUserSettings()");
     setUserSettings((prevSettings) => ({
       ...prevSettings,
       ...newSettings,

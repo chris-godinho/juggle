@@ -17,7 +17,6 @@ import ColorSchemeTable from "../settings/ColorSchemeTable.jsx";
 import AuthService from "../../utils/auth.js";
 
 export default function Settings() {
-  // const [updateUserSettings, { error: updateError }] = useMutation(UPDATE_USER_SETTINGS);
 
   const userProfile = AuthService.getProfile();
 

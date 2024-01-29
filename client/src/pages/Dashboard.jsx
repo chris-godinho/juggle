@@ -84,6 +84,7 @@ export default function Dashboard() {
         username,
         userId,
         eventSubtypes,
+        scheduleSpinnerStyle
       }}
     >
       <main className="main-jg">
@@ -104,6 +105,7 @@ export default function Dashboard() {
                   selectedDate={selectedDate}
                   eventSubtypes={eventSubtypes}
                   eventsRefetch={eventsRefetch}
+                  scheduleSpinnerStyle={scheduleSpinnerStyle}
                 />
               )}
             </div>

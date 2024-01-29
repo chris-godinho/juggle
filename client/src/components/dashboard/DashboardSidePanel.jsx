@@ -19,7 +19,7 @@ export default function DashboardSidePanel({ eventType }) {
 
   const { events, eventsLoading, userLoading } = useDataContext();
 
-  const { eventCount, totalAlottedTime } = calculateEventStats(events);
+  const { eventCount, totalAlottedTime, workPercentage, lifePercentage } = calculateEventStats(events);
 
   const hasMatchingWorkEvents = events.some(
     (event) => "work" === event.type.toLowerCase()
@@ -45,7 +45,7 @@ export default function DashboardSidePanel({ eventType }) {
         />
       ) : (
         <>
-          <SidePanelStats eventType={eventType} />
+          <SidePanelStats eventType={eventType} workPercentage={workPercentage} lifePercentage={lifePercentage} />
           {hasMatchingEvents && (
             <>
               <hr className={`side-panel-hr-jg ${eventType === "Work" ? "work-hr-jg" : "life-hr-jg"}`} />
@@ -55,7 +55,7 @@ export default function DashboardSidePanel({ eventType }) {
               />
             </>
           )}
-          <SidePanelRecommendations eventType={eventType} />
+          <SidePanelRecommendations eventType={eventType} workPercentage={workPercentage} lifePercentage={lifePercentage} />
         </>
       )}
     </aside>

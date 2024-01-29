@@ -2,13 +2,9 @@
 
 import { useDataContext } from "../contextproviders/DataContext";
 
-import { calculateEventStats } from "../../utils/eventUtils.js";
-
-export default function SidePanelStats({ eventType }) {
+export default function SidePanelStats({ eventType, workPercentage, lifePercentage }) {
 
   const { events } = useDataContext();
-
-  const { workPercentage, lifePercentage } = calculateEventStats(events);
 
   return (
     <>

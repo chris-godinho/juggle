@@ -526,6 +526,31 @@ option {
 .flatpickr-weekday {
   font-family: var(--main-font-family);
   background-color: var(--main-background-color-accent) !important;
+  color: var(--main-text-color) !important;
+}
+
+.flatpickr-prev-month > svg,
+.flatpickr-next-month > svg {
+  fill: var(--main-text-color) !important;
+}
+
+.flatpickr-prev-month > svg:hover,
+.flatpickr-next-month > svg:hover {
+  fill: var(--life-event-color-dark) !important;
+}
+
+.flatpickr-day:hover {
+  background-color: var(--life-event-color) !important;
+  color: var(--main-background-color) !important;
+}
+
+.today {
+  border-color: var(--main-text-color) !important;
+}
+
+.selected {
+  background-color: var(--life-event-color-light) !important;
+  color: var(--main-background-color) !important;
 }
 
 /* Checkbox rules (Credit: Stephanie Eckles - https://moderncss.dev/pure-css-custom-checkbox-style/) */
@@ -689,64 +714,6 @@ input[type="checkbox"]:disabled {
 .modal-close-button-jg:hover,
 .modal-back-button-jg:hover {
   color: var(--main-text-color);
-}
-
-.modal-input-jg {
-  margin-bottom: 1em;
-  width: 90%;
-}
-
-.modal-datepicker-select-tray-jg {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin-left: 2.4em;
-  min-width: calc(90% + 0.5em + 6px);
-  max-width: calc(90% + 0.5em + 6px);
-}
-
-.modal-datepicker-select-label-jg {
-  font-size: 0.8em;
-  color: var(--input-placeholder-text-color);
-  margin-right: 0.5em;
-  margin-left: 0.5em;
-  text-align: left;
-  flex: 1;
-}
-
-.modal-datepicker-jg {
-  margin-bottom: 1em;
-  min-width: 85%;
-  max-width: 85%;
-}
-
-.modal-select-jg {
-  margin-bottom: 1em;
-  min-width: calc(85% + 0.5em + 6px);
-  max-width: calc(85% + 0.5em + 6px);
-}
-
-.modal-halfsize-left-jg {
-  margin-right: 5.5%;
-}
-
-.modal-halfsize-jg {
-  margin-bottom: 1em;
-  margin-left: calc(5.5% - 0.5em);
-  min-width: calc(34%);
-  max-width: calc(34%);
-}
-
-.modal-button-tray-jg {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  width: 100%;
-}
-
-.modal-button-jg {
-  margin-top: 1em;
-  margin-left: 1em;
 }
 
 /* Loading Spinner rules */
@@ -1236,6 +1203,8 @@ input[type="checkbox"]:disabled {
   margin: 0;
   border: 0;
   font-size: 1.3em;
+  width: 100%;
+  text-align: center;
 }
 
 .unalotted-percentage-jg p {
@@ -1277,11 +1246,6 @@ input[type="checkbox"]:disabled {
 
 .add-event-picture-jg {
   fill: var(--main-text-color);
-}
-
-/* New Event page rules */
-.new-event-modal-container-jg {
-  min-width: 60%;
 }
 
 /* Schedule page rules */
@@ -1407,6 +1371,15 @@ input[type="checkbox"]:disabled {
   padding: 3em 4em;
 }
 
+.new-event-details-title-line-jg {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  height: 6em;
+}
+
 .event-details-title-line-jg {
   display: flex;
   flex-direction: row;
@@ -1417,6 +1390,21 @@ input[type="checkbox"]:disabled {
   height: 6em;
 }
 
+.new-event-title-input-jg {
+  text-align: left;
+  margin-left: 0.2em;
+  margin-top: 0.8em;
+  margin-bottom: 0.9em;
+  position: relative;
+  border-radius: 0;
+  font-size: 2em;
+  font-weight: bold;
+  padding: 0;
+  border: none;
+  border-bottom: 1px solid var(--input-text-color);
+  transition: color 0.2s ease-in-out;
+}
+
 .event-title-jg,
 .event-title-input-jg {
   text-align: left;
@@ -1424,6 +1412,7 @@ input[type="checkbox"]:disabled {
   margin-bottom: 0.9em;
   transition: color 0.2s ease-in-out;
   position: relative;
+  border-radius: 0;
 }
 
 .event-title-input-jg {
@@ -1462,6 +1451,11 @@ input[type="checkbox"]:disabled {
 .priority-icon-jg {
   font-size: 2.1em;
   cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.priority-icon-jg:hover {
+  transform: scale(0.93);
 }
 
 #priority-icon-high-jg {
@@ -1496,13 +1490,24 @@ input[type="checkbox"]:disabled {
   margin-left: 1.5em;
 }
 
-.event-details-button-tray-jg {
+.new-event-details-button-tray-jg {
+  display: flex;
+  justify-content: space-around;
   margin-top: 3em;
+  margin-left: 35%;
+  margin-right: 35%;
+}
+
+.event-details-button-tray-jg {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 3em;
+  margin-left: 30%;
+  margin-right: 30%;
 }
 
 .event-delete-button-jg {
   background-color: var(--work-event-color);
-  margin-left: 2em;
   transition: color 0.2s ease-in-out scale 0.2s ease-in-out;
 }
 
