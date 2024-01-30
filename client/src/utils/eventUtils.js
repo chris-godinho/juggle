@@ -1,6 +1,40 @@
 // eventUtils.js
 
-export const calculateEventStats = (events) => {
+export const calculateSleepingHours = (userSettings) => {
+  console.log("[eventUtils.js] userSettings: ", userSettings);
+  const sleepingHoursMatrix = userSettings?.sleepingHours && {};
+  let sleepingHours = 0;
+
+  // Iterate through the days of the week
+  Object.keys(sleepingHoursMatrix).forEach((day) => {
+    const { start, end } = sleepingHoursMatrix[day];
+
+    // Convert start and end times to Date objects
+    const startTime = new Date(`January 1, 2022 ${start}`);
+    const endTime = new Date(`January 1, 2022 ${end}`);
+
+    // Check if end time is earlier than start time (next day)
+    if (endTime < startTime) {
+      // Adjust the end time to be on the next day
+      endTime.setDate(endTime.getDate() + 1);
+    }
+
+    // Calculate the time difference in milliseconds
+    const timeDifference = endTime - startTime;
+
+    // Convert milliseconds to hours
+    const hoursDifference = timeDifference / (1000 * 60 * 60 * 60);
+
+    // Add the hours to the total
+    sleepingHours += hoursDifference;
+  });
+
+  console.log("[eventUtils.js] sleepingHours: ", sleepingHours);
+
+  return sleepingHours;
+};
+
+export const calculateEventStats = (events, userSettings) => {
   // TODO: Consider when events overlap in time
 
   // Initialize counters
@@ -32,6 +66,7 @@ export const calculateEventStats = (events) => {
   workTotalTime /= 1000 * 60;
   lifeTotalTime /= 1000 * 60;
 
+  // const sleepingHours = calculateSleepingHours(userSettings);
   const sleepingHours = 8 * 60;
   const totalAlottedTimeWithSleepingHours = 24 * 60;
   const totalAlottedTime = totalAlottedTimeWithSleepingHours - sleepingHours;
@@ -67,13 +102,6 @@ export const calculateEventStats = (events) => {
   const unalottedTimePercentageWithSleepingHours =
     100 - workPercentageWithSleepingHours - lifePercentageWithSleepingHours;
 
-  // TODO: Refine the stats to adapt to several options in Settings (unused variables: sleepingHours, totalAlottedTime, unalottedTimePercentage)
-
-  console.log(
-    "[eventUtils.js] totalAlottedTimeWithSleepingHours: ",
-    totalAlottedTimeWithSleepingHours
-  );
-
   return {
     eventCount,
     totalAlottedTime,
@@ -103,14 +131,6 @@ export const calculateSingleEventPercentage = (
   ignoreUnalotted
 ) => {
   let eventPercentage;
-
-  console.log("[eventUtils.js] event: ", event);
-  console.log("[eventUtils.js] totalAlottedTime: ", totalAlottedTime);
-  console.log(
-    "[eventUtils.js] totalAlottedTimeWithSleepingHours: ",
-    totalAlottedTimeWithSleepingHours
-  );
-  console.log("[eventUtils.js] percentageBasis: ", percentageBasis);
 
   const eventDuration =
     (new Date(event.eventEnd) - new Date(event.eventStart)) / (1000 * 60);
@@ -293,8 +313,6 @@ export const findRecommendations = (
       break;
     }
   }
-
-  console.log("[eventUtils.js] recommendationList: ", recommendationList);
 
   return recommendationList;
 };

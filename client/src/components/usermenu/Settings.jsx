@@ -375,8 +375,7 @@ export default function Settings() {
           ) : settingsScreen === "sleepingHours" ? (
             /* Sleeping Hours Settings */ <>
               <p className="settings-top-label-jg sleeping-hours-label-jg">
-                Set your regular sleeping hours here. All statistics will ignore
-                those hours whan calculated.
+                Set your regular sleeping hours here.{formData?.user?.statSettings?.percentageBasis === "waking" ? " All statistics will ignore those hours when calculated." : ""}
               </p>
               <SleepDropdownArea />
             </>
