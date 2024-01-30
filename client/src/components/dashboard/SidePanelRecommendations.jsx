@@ -5,6 +5,8 @@ import { useState, useEffect } from "react";
 import { useDataContext } from "../contextproviders/DataContext";
 import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
+import { findRecommendations } from "../../utils/eventUtils.js";
+
 import {
   workGoalActivities,
   lifeGoalActivities,
@@ -36,106 +38,31 @@ export default function SidePanelRecommendations({
     }
   }, [userSettings, isLoadingSettings]);
 
-  let recommendationCount = 0;
-  let targetPercentage;
-  let otherPercentage;
-  let activityPool = [];
-  let recommendationSource = [];
-  let recommendationList = [];
-  let recommendationPool = [];
-  let targetBalanceGoal;
+  const settingsBalanceGoal = userSettings?.statSettings?.balanceGoal;
+  const workPreferredActivities = userSettings?.workPreferredActivities;
+  const lifePreferredActivities = userSettings?.lifePreferredActivities;
 
-  if (eventType === "Work") {
-    targetBalanceGoal = userSettings?.statSettings?.balanceGoal;
-    if (ignoreUnalotted) {
-      targetPercentage = workPercentageIgnoreUnalotted;
-      otherPercentage = lifePercentageIgnoreUnalotted;
-    } else if (percentageBasis === "waking") {
-      targetPercentage = workPercentage;
-      otherPercentage = lifePercentage;
-    } else {
-      targetPercentage = workPercentageWithSleepingHours;
-      otherPercentage = lifePercentageWithSleepingHours;
-    }
-    activityPool = userSettings.workPreferredActivities;
-    recommendationSource = workGoalActivities;
-  } else {
-    targetBalanceGoal = 100 - userSettings?.statSettings?.balanceGoal;
-    if (ignoreUnalotted) {
-      targetPercentage = lifePercentageIgnoreUnalotted;
-      otherPercentage = workPercentageIgnoreUnalotted;
-    } else if (percentageBasis === "waking") {
-      targetPercentage = lifePercentage;
-      otherPercentage = workPercentage;
-    } else {
-      targetPercentage = lifePercentageWithSleepingHours;
-      otherPercentage = workPercentageWithSleepingHours;
-    }
-    activityPool = userSettings.lifePreferredActivities;
-    recommendationSource = lifeGoalActivities;
-  }
-
-  const preferredActivities = Array.from(
-    Object.entries(activityPool)
-      .filter(([key, value]) => value === true)
-      .map(([key]) => key)
+  const recommendationList = findRecommendations(
+    eventType,
+    ignoreUnalotted,
+    percentageBasis,
+    settingsBalanceGoal,
+    workPercentage,
+    lifePercentage,
+    workPercentageWithSleepingHours,
+    lifePercentageWithSleepingHours,
+    workPercentageIgnoreUnalotted,
+    lifePercentageIgnoreUnalotted,
+    workPreferredActivities,
+    lifePreferredActivities,
+    workGoalActivities,
+    lifeGoalActivities
   );
 
-  let dividingFactor;
-
-  if (ignoreUnalotted) {
-    dividingFactor = 50;
-  } else if (percentageBasis === "waking") {
-    dividingFactor = 15;
-  } else {
-    dividingFactor = 22.5;
-  }
-
-  if (targetPercentage < otherPercentage) {
-    recommendationCount += 2;
-    recommendationCount += Math.floor(
-      (otherPercentage - targetPercentage) / dividingFactor
-    );
-  }
-
-  if (targetPercentage < targetBalanceGoal) {
-    recommendationCount += 1;
-  } else {
-    recommendationCount = 0;
-  }
-
-  for (let i = 0; i < recommendationCount; i++) {
-    for (const selectedActivity of preferredActivities) {
-      const matchingObject = recommendationSource.find(
-        (activity) => activity.key === selectedActivity
-      );
-
-      if (matchingObject) {
-        const suggestions = matchingObject.suggestions;
-
-        // Add all elements from the "suggestions" field to recommendationPool
-        recommendationPool.push(...suggestions);
-      }
-    }
-
-    // Randomly select an element from recommendationPool
-    const selectedRecommendation =
-      recommendationPool[Math.floor(Math.random() * recommendationPool.length)];
-
-    // Add it to recommendationList
-    recommendationList.push(selectedRecommendation);
-
-    // Remove the selected element from recommendationPool
-    const indexToRemove = recommendationPool.indexOf(selectedRecommendation);
-    if (indexToRemove !== -1) {
-      recommendationPool.splice(indexToRemove, 1);
-    }
-
-    // If there are no recommendations left, stop the loop
-    if (recommendationPool.length === 0) {
-      break;
-    }
-  }
+  console.log(
+    "[SidePanelRecommendations.jsx] recommendationList: ",
+    recommendationList
+  );
 
   return (
     <div className="side-panel-recommendation-list-jg">

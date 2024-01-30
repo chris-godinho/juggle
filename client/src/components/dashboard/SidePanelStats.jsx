@@ -5,6 +5,8 @@ import React, { useState, useEffect } from "react";
 import { useDataContext } from "../contextproviders/DataContext";
 import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
+import { findDisplayPercentage, findDisplayText } from "../../utils/eventUtils.js";
+
 export default function SidePanelStats({
   eventType,
   workPercentage,
@@ -31,36 +33,19 @@ export default function SidePanelStats({
     }
   }, [userSettings, isLoadingSettings]);
 
-  let displayPercentage;
-  if (eventType === "Work") {
-    if (ignoreUnalotted) {
-      displayPercentage = workPercentageIgnoreUnalotted;
-    } else {
-      if (percentageBasis === "waking") {
-        displayPercentage = workPercentage;
-      } else {
-        displayPercentage = workPercentageWithSleepingHours;
-      }
-    }
-  } else {
-    if (ignoreUnalotted) {
-      displayPercentage = lifePercentageIgnoreUnalotted;
-    } else {
-      if (percentageBasis === "waking") {
-        displayPercentage = lifePercentage;
-      } else {
-        displayPercentage = lifePercentageWithSleepingHours;
-      }
-    }
-  }
+  const displayPercentage = findDisplayPercentage(
+    eventType,
+    ignoreUnalotted,
+    percentageBasis,
+    workPercentage,
+    workPercentageIgnoreUnalotted,
+    workPercentageWithSleepingHours,
+    lifePercentage,
+    lifePercentageIgnoreUnalotted,
+    lifePercentageWithSleepingHours
+  );
 
-  let displayText;
-  if (ignoreUnalotted) {
-    displayText = "of your allocated time";
-  } else {
-    displayText =
-      percentageBasis === "waking" ? "of your waking hours" : "of your day";
-  }
+  const displayText = findDisplayText(ignoreUnalotted, percentageBasis);
 
   return (
     <>
