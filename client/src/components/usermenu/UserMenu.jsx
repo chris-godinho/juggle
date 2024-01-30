@@ -14,12 +14,12 @@ import Donate from "./Donate";
 import AboutUs from "./AboutUs.jsx";
 import ContactUs from "./ContactUs.jsx";
 
-export default function UserMenu({ username, userId }) {
+export default function UserMenu({ username, userId, modalContent }) {
   const [userMenuModalContent, setUserMenuModalContent] =
-    useState("UserMenuOptions");
+    useState(modalContent);
   const [userDeleted, setUserDeleted] = useState(false);
 
-  const { updateProviderUserSettings } = useUserSettings();
+  const { updateProviderUserSettings, userSettings } = useUserSettings();
 
   const [formData, setFormData] = useState({});
 
@@ -81,7 +81,7 @@ export default function UserMenu({ username, userId }) {
   };
 
   return (
-    <DataContext.Provider value={{ formData, setFormData }}>
+    <DataContext.Provider value={{ formData, setFormData, userSettings }}>
       <div
         className={
           userMenuModalContent === "Settings"

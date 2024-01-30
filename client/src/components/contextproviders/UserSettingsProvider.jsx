@@ -22,6 +22,7 @@ export const useUserSettings = () => {
 
 export const UserSettingsProvider = ({ children }) => {
   const [userSettings, setUserSettings] = useState({});
+  const [isLoadingSettings, setIsLoadingSettings] = useState(true);
 
   const [updateUserSettings] = useMutation(UPDATE_USER_SETTINGS);
 
@@ -41,6 +42,7 @@ export const UserSettingsProvider = ({ children }) => {
   useEffect(() => {
     if (!loading && !error && data) {
       setUserSettings(data.user);
+      setIsLoadingSettings(false);
     }
   }, [loading, error, data]);
 

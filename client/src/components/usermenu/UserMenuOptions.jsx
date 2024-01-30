@@ -28,7 +28,6 @@ export default function UserMenuOptions({
       <h1 className="user-menu-username-jg">
         <a
           href="#"
-          className="user-menu-link-jg"
           onClick={() => setUserMenuModalContent("UserProfile")}
         >
           {username}

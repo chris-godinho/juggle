@@ -1,7 +1,10 @@
 // DashboardHeader.jsx
 
-import { useDataContext } from "../contextproviders/DataContext"
+import React, { useState, useEffect } from "react";
+
+import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
+import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
@@ -12,43 +15,41 @@ import NewEvent from "./NewEvent.jsx";
 import UserMenu from "../usermenu/UserMenu.jsx";
 
 export default function DashboardHeader() {
-
-  const { events, selectedDate, setSelectedDate, username, userId, eventSubtypes, eventsRefetch } = useDataContext();
+  const {
+    events,
+    selectedDate,
+    setSelectedDate,
+    username,
+    userId,
+    eventSubtypes,
+    eventsRefetch,
+  } = useDataContext();
 
   const { openModal } = useModal();
+
+  const { userSettings, isLoadingSettings } = useUserSettings();
+
+  const [showStats, setShowStats] = useState(true);
+  const [percentageBasis, setPercentageBasis] = useState("waking");
+  const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
+
+  useEffect(() => {
+    if (!isLoadingSettings) {
+      // Data fetching is complete, update the state
+      setShowStats(userSettings.statSettings?.showStats ?? true);
+      setPercentageBasis(
+        userSettings.statSettings?.percentageBasis ?? "waking"
+      );
+      setIgnoreUnalotted(userSettings.statSettings?.ignoreUnalotted ?? false);
+    }
+  }, [userSettings, isLoadingSettings]);
 
   const handleNewEventModalClose = () => {
     eventsRefetch();
   };
-  
-  // Set up date variables for display
-  
-  const weekDays = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-  
-  const months = [
-    "January",
-    "February",
-    "March",
-    "April",
-    "May",
-    "June",
-    "July",
-    "August",
-    "September",
-    "October",
-    "November",
-    "December",
-  ];
 
-  const { unalottedTimePercentage } = calculateEventStats(events);
+  const { unalottedTimePercentage, unalottedTimePercentageWithSleepingHours } =
+    calculateEventStats(events);
 
   const selectPreviousDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
@@ -64,7 +65,13 @@ export default function DashboardHeader() {
         <button
           className="round-button-jg work-border-jg work-border-link-jg"
           onClick={() =>
-            openModal(<UserMenu username={username} userId={userId} />)
+            openModal(
+              <UserMenu
+                username={username}
+                userId={userId}
+                modalContent="UserMenuOptions"
+              />
+            )
           }
         >
           <img
@@ -96,9 +103,17 @@ export default function DashboardHeader() {
             <span className="material-symbols-outlined">arrow_forward_ios</span>
           </a>
         </div>
-        <div className="unalotted-percentage-jg">
-          <p>Unalotted Time: {unalottedTimePercentage}%</p>
-        </div>
+        {showStats && !ignoreUnalotted && (
+          <div className="unalotted-percentage-jg">
+            <p>
+              Unalotted Time:{" "}
+              {percentageBasis === "waking"
+                ? unalottedTimePercentage
+                : unalottedTimePercentageWithSleepingHours}
+              %
+            </p>
+          </div>
+        )}
       </div>
       <div className="dashboard-header-button-container-jg">
         <button

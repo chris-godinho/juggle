@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
-// import DataContext from "./DataContext.jsx";
 import { useDataContext } from "../contextproviders/DataContext";
 
 import { QUERY_USER } from "../../utils/queries.js";
-// import { UPDATE_USER_SETTINGS } from "../utils/mutations.js";
 
 import WorkLifeSlider from "../settings/WorkLifeSlider";
 import SleepDropdownArea from "../settings/SleepDropdownArea";
@@ -24,8 +22,8 @@ export default function Settings() {
   const [activePreferredActivities, setActivePreferredActivities] =
     useState("work");
 
-  // const [formData, setFormData] = useState({});
-  const { formData, setFormData } = useDataContext();
+  const { formData, setFormData, userSettings } = useDataContext();
+  console.log("[Settings.jsx] userSettings: ", userSettings);
   const [eventAddSubtypeFormData, setAddEventSubtypeFormData] = useState({
     subtype: "",
     parentType: "work",
@@ -40,7 +38,7 @@ export default function Settings() {
   });
 
   if (userError) {
-    console.error("[Welcome.jsx] GraphQL Error:", userError);
+    console.error("[Settings.jsx] GraphQL Error:", userError);
     return <div>Error fetching data.</div>;
   }
 
@@ -51,143 +49,7 @@ export default function Settings() {
       );
 
       setFormData({
-        user: {
-          username: userData?.user.username || "",
-          colorModeSetting:
-            userData?.user.colorModeSetting || "default-mode-jg",
-          eventSubtypes: eventSubtypes || [],
-          statSettings: {
-            showStats: userData?.user.statSettings.showStats || true,
-            balanceGoal: userData?.user.statSettings.balanceGoal || 50,
-            percentageBasis:
-              userData?.user.statSettings.percentageBasis || "waking",
-            ignoreUnalotted:
-              userData?.user.statSettings.ignoreUnalotted || false,
-          },
-          sleepingHours: {
-            sunday: {
-              start: userData?.user.sleepingHours.sunday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.sunday.end || "07:00 AM",
-            },
-            monday: {
-              start: userData?.user.sleepingHours.monday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.monday.end || "07:00 AM",
-            },
-            tuesday: {
-              start: userData?.user.sleepingHours.tuesday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.tuesday.end || "07:00 AM",
-            },
-            wednesday: {
-              start: userData?.user.sleepingHours.wednesday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.wednesday.end || "07:00 AM",
-            },
-            thursday: {
-              start: userData?.user.sleepingHours.thursday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.thursday.end || "07:00 AM",
-            },
-            friday: {
-              start: userData?.user.sleepingHours.friday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.friday.end || "07:00 AM",
-            },
-            saturday: {
-              start: userData?.user.sleepingHours.saturday.start || "11:00 PM",
-              end: userData?.user.sleepingHours.saturday.end || "07:00 AM",
-            },
-          },
-          lifePreferredActivities: {
-            exercise: userData?.user.lifePreferredActivities.exercise || true,
-            mindfulness:
-              userData?.user.lifePreferredActivities.mindfulness || true,
-            sleep: userData?.user.lifePreferredActivities.sleep || true,
-            healthAwareness:
-              userData?.user.lifePreferredActivities.healthAwareness || true,
-            reading: userData?.user.lifePreferredActivities.reading || true,
-            music: userData?.user.lifePreferredActivities.music || true,
-            games: userData?.user.lifePreferredActivities.games || true,
-            movies: userData?.user.lifePreferredActivities.movies || true,
-            cooking: userData?.user.lifePreferredActivities.cooking || true,
-            socializing:
-              userData?.user.lifePreferredActivities.socializing || true,
-            sports: userData?.user.lifePreferredActivities.sports || true,
-            outdoorsExploration:
-              userData?.user.lifePreferredActivities.outdoorsExploration ||
-              true,
-            travel: userData?.user.lifePreferredActivities.travel || true,
-            journaling:
-              userData?.user.lifePreferredActivities.journaling || true,
-            personalGrowth:
-              userData?.user.lifePreferredActivities.personalGrowth || true,
-            creativeExpression:
-              userData?.user.lifePreferredActivities.creativeExpression || true,
-            financialPlanning:
-              userData?.user.lifePreferredActivities.financialPlanning || true,
-            digitalDetox:
-              userData?.user.lifePreferredActivities.digitalDetox || true,
-            purposeAndMeaning:
-              userData?.user.lifePreferredActivities.purposeAndMeaning || true,
-            boundarySetting:
-              userData?.user.lifePreferredActivities.boundarySetting || true,
-          },
-          workPreferredActivities: {
-            goalSetting:
-              userData?.user.workPreferredActivities.goalSetting || true,
-            skillDevelopment:
-              userData?.user.workPreferredActivities.skillDevelopment || true,
-            industryResearch:
-              userData?.user.workPreferredActivities.industryResearch || true,
-            mentorship:
-              userData?.user.workPreferredActivities.mentorship || true,
-            softSkills:
-              userData?.user.workPreferredActivities.softSkills || true,
-            networking:
-              userData?.user.workPreferredActivities.networking || true,
-            branding: userData?.user.workPreferredActivities.branding || true,
-            progressEvaluation:
-              userData?.user.workPreferredActivities.progressEvaluation || true,
-            teamBuilding:
-              userData?.user.workPreferredActivities.teamBuilding || true,
-            teamFeedback:
-              userData?.user.workPreferredActivities.teamFeedback || true,
-            customerFeedback:
-              userData?.user.workPreferredActivities.customerFeedback || true,
-            qualityAssurance:
-              userData?.user.workPreferredActivities.qualityAssurance || true,
-            brainstorming:
-              userData?.user.workPreferredActivities.brainstorming || true,
-            innovationMindset:
-              userData?.user.workPreferredActivities.innovationMindset || true,
-            technologyIntegration:
-              userData?.user.workPreferredActivities.technologyIntegration ||
-              true,
-            teamIntegration:
-              userData?.user.workPreferredActivities.teamIntegration || true,
-            milestoneCelebration:
-              userData?.user.workPreferredActivities.milestoneCelebration ||
-              true,
-            reverseMentorship:
-              userData?.user.workPreferredActivities.reverseMentorship || true,
-            volunteering:
-              userData?.user.workPreferredActivities.volunteering || true,
-            entrepreneurship:
-              userData?.user.workPreferredActivities.entrepreneurship || true,
-          },
-          eventSettings: {
-            completeAfterEnd:
-              userData?.user.eventSettings.completeAfterEnd || false,
-          },
-          layoutSettings: {
-            dashboardLayout:
-              userData?.user.layoutSettings.dashboardLayout || "two-sidebars",
-            viewStyle: userData?.user.layoutSettings.viewStyle || "calendar",
-          },
-          localizationSettings: {
-            timeZone: parseInt(userData?.user.localizationSettings.timeZone, 10) || 0,
-            dateFormat:
-              userData?.user.localizationSettings.dateFormat || "mm-dd-yyyy",
-            timeFormat:
-              userData?.user.localizationSettings.timeFormat || "12-hour",
-          },
-        },
+        user: userSettings,
       });
     }
   }, [userData]);
@@ -470,6 +332,22 @@ export default function Settings() {
                       <WorkLifeSlider setFormData={setFormData} />
                     </div>
                   </div>
+                  <label
+                    key="ignore-unalloted-time-jg"
+                    className="settings-stats-checkbox-jg settings-stats-checkbox-low-jg checkbox-jg"
+                    title="Check this box to ignore unallotted time when calculating your stats (Work and Life time will always add to 100%)."
+                  >
+                    <input
+                      type="checkbox"
+                      name="checkbox-statSettings-ignoreUnalotted"
+                      checked={
+                        formData?.user?.statSettings?.ignoreUnalotted || false
+                      }
+                      onChange={handleInputChange}
+                    />
+                    Ignore unalotted time
+                  </label>
+                  {!formData?.user?.statSettings?.ignoreUnalotted && (
                   <div
                     className="settings-select-line-jg"
                     title="The total number of hours upon which your stats are calculated."
@@ -490,21 +368,7 @@ export default function Settings() {
                       <option value="fullDay">Entire day</option>
                     </select>
                   </div>
-                  <label
-                    key="ignore-unalloted-time-jg"
-                    className="settings-stats-checkbox-jg checkbox-jg"
-                    title="Check this box to ignore unallotted time when calculating your stats (Work and Life time will always add to 100%)."
-                  >
-                    <input
-                      type="checkbox"
-                      name="checkbox-statSettings-ignoreUnalotted"
-                      checked={
-                        formData?.user?.statSettings?.ignoreUnalotted || false
-                      }
-                      onChange={handleInputChange}
-                    />
-                    Ignore unalotted time
-                  </label>
+                  )}
                 </>
               )}
             </div>

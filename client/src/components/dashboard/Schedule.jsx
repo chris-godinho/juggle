@@ -191,7 +191,7 @@ const Schedule = () => {
           autoSize={false}
           rowHeight={30}
           maxRows={48}
-          containerPadding={[5, 5]}
+          containerPadding={[10, 5]}
           margin={[5, 10]}
           resizeHandles={["n", "s"]}
           allowOverlap={true}

@@ -7,7 +7,7 @@
   --main-background-color-accent: rgba(48, 55, 53, 1);
   --main-background-color-darker-accent: rgba(20, 27, 25, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --main-separator-color: rgba(148, 151, 149, 0.3);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
   --input-background-color: rgba(28, 35, 33, 1);
@@ -519,6 +519,10 @@ option {
 }
 
 /* Datepicker/Timepicker rules */
+.flatpickr-calendar {
+  border-radius: 5% !important;
+}
+
 .flatpickr-calendar,
 .flatpickr-month,
 .flatpickr-monthDropdown-months,
@@ -527,6 +531,11 @@ option {
   font-family: var(--main-font-family);
   background-color: var(--main-background-color-accent) !important;
   color: var(--main-text-color) !important;
+  font-size: 0.9em !important;
+}
+
+.numInputWrapper {
+  margin-left: 0.5em !important;
 }
 
 .flatpickr-prev-month > svg,
@@ -700,7 +709,7 @@ input[type="checkbox"]:disabled {
   top: -0.5em;
   left: -1.4em;
   color: var(--main-separator-color-light);
-  transition: color 0.2s ease-in-out;
+  transition: color 0.1s ease-in-out;
 }
 
 .modal-close-button-jg {
@@ -708,7 +717,7 @@ input[type="checkbox"]:disabled {
   top: -0.5em;
   right: -1.4em;
   color: var(--main-separator-color-light);
-  transition: color 0.2s ease-in-out;
+  transition: color 0.1s ease-in-out;
 }
 
 .modal-close-button-jg:hover,
@@ -1069,6 +1078,40 @@ input[type="checkbox"]:disabled {
   margin-top: 0;
 }
 
+.side-panel-brand-jg {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 16.9vh;
+  width: 100%;
+  font-size: 1.3em;
+  color: var(--main-text-color);
+}
+
+.side-panel-logo-jg {
+  height: 2em;
+  width: 2em;
+  margin-right: 0.5em;
+}
+
+.side-panel-username-jg {
+  font-size: 1.1em;
+  align-self: flex-start;
+  margin-top: 1em;
+  margin-left: 12%;
+  margin-bottom: 2em;
+}
+
+.side-panel-link-jg {
+  align-self: flex-start;
+  margin-bottom: 1em;
+  margin-left: 12%;
+}
+
+.side-panel-link-jg:hover {
+  color: var(--work-event-color-light);
+}
+
 .work-sidebar-jg {
   left: 0;
 }
@@ -1100,6 +1143,11 @@ input[type="checkbox"]:disabled {
   font-size: 0.85em;
 }
 
+.no-stats-hr-jg {
+  border: 0;
+  border-top: 1px solid var(--main-separator-color);
+}
+
 .side-panel-event-list-jg,
 .side-panel-recommendation-list-jg {
   display: flex;
@@ -1110,8 +1158,20 @@ input[type="checkbox"]:disabled {
   margin-bottom: 0.9em;
 }
 
+.side-panel-event-header-jg {
+  margin-top: 1em;
+  margin-bottom: 1.5em;
+  margin-right: 6%;
+  margin-left: 6%;
+  align-self: flex-start;
+}
+
 .side-panel-event-item-jg {
   width: 100%;
+}
+
+.side-panel-event-item-extra-space-jg {
+  margin-bottom: 0.5em;
 }
 
 .side-panel-event-item-jg a {
@@ -1147,6 +1207,14 @@ input[type="checkbox"]:disabled {
   text-align: left;
 }
 
+.side-panel-event-message-jg {
+  margin-left: 6%;
+  margin-right: 6%;
+  margin-bottom: 0;
+  font-size: 0.85em;
+  text-align: left;
+}
+
 .recommendations-call-action-jg {
   align-self: flex-start;
   margin-left: 6%;
@@ -1163,23 +1231,23 @@ input[type="checkbox"]:disabled {
 .dashboard-header-jg {
   background-color: var(--main-background-color);
   border-bottom: 1px solid var(--main-separator-color);
-  width: calc(68% - 10px);
+  width: calc(68% - 7px);
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 18vh;
   box-sizing: border-box;
   position: fixed;
-  padding: 0 2em;
+  padding: 0 2.7em;
   z-index: 5;
 }
 
 .date-percentage-container-jg {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-top: 2em;
   width: 50%;
 }
 
@@ -1188,6 +1256,15 @@ input[type="checkbox"]:disabled {
   justify-content: center;
   align-items: center;
   width: 100%;
+}
+
+.selected-date-container-jg a {
+  color: var(--main-separator-color);
+  transition: color 0.1s ease-in-out;
+}
+
+.selected-date-container-jg a:hover {
+  color: var(--main-text-color);
 }
 
 .selected-date-box-jg {
@@ -1205,9 +1282,26 @@ input[type="checkbox"]:disabled {
   font-size: 1.3em;
   width: 100%;
   text-align: center;
+  border-radius: 0.5em;
+  transition: background-color 0.1s ease-in-out;
+}
+
+.selected-date-box-input-jg:hover,
+.selected-date-box-input-jg:focus,
+.selected-date-box-input-jg:active {
+  background-color: var(--main-background-color-accent);
+}
+
+.selected-date-box-input-jg:focus,
+.selected-date-box-input-jg:active {
+  border-radius: 0.5em 0.5em 0.5em 0em;
 }
 
 .unalotted-percentage-jg p {
+  position: absolute;
+  top: 95%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   color: var(--input-placeholder-text-color);
   font-size: 0.9em;
 }
@@ -1258,9 +1352,12 @@ input[type="checkbox"]:disabled {
   width: 100%;
   min-height: 1921px;
   max-height: 1921px;
-  background: 
-    repeating-linear-gradient(var(--main-separator-color) 0 1px, transparent 1px 40px) 0 0 / 100% 40px,
-    url('/schedule_hours.png') left center / contain no-repeat;  
+  background: repeating-linear-gradient(
+        var(--main-separator-color) 0 1px,
+        transparent 1px 40px
+      )
+      0 0 / 100% 40px,
+    url("/schedule_hours.png") left center / contain no-repeat;
 }
 
 .schedule-time-grid-jg {
@@ -1317,14 +1414,26 @@ input[type="checkbox"]:disabled {
 .schedule-event-box-work-prev-next-day-jg {
   background-color: var(--main-background-color-accent);
   border-radius: 0;
-  background: linear-gradient(to top, transparent, var(--work-event-color), var(--work-event-color), transparent);
+  background: linear-gradient(
+    to top,
+    transparent,
+    var(--work-event-color),
+    var(--work-event-color),
+    transparent
+  );
   color: var(--main-text-color);
 }
 
 .schedule-event-box-life-prev-next-day-jg {
   background-color: var(--main-background-color-accent);
   border-radius: 0;
-  background: linear-gradient(to top, transparent, var(--life-event-color), var(--life-event-color), transparent);
+  background: linear-gradient(
+    to top,
+    transparent,
+    var(--life-event-color),
+    var(--life-event-color),
+    transparent
+  );
   color: var(--main-text-color);
 }
 
@@ -1553,6 +1662,10 @@ input[type="checkbox"]:disabled {
   margin-bottom: 1em;
 }
 
+.user-menu-link-jg:hover {
+  filter: brightness(3);
+}
+
 /* User Profile page rules */
 .user-profile-container-jg {
   display: flex;
@@ -1714,6 +1827,10 @@ input[type="checkbox"]:disabled {
   margin-bottom: 2.5em;
   width: 100%;
   text-align: left;
+}
+
+.settings-stats-checkbox-low-jg {
+  margin-top: 3em;
 }
 
 .settings-label-jg {
@@ -2052,6 +2169,34 @@ input[type="checkbox"]:disabled {
   align-self: center;
 }
 
+/* Digital Clock rules */
+.digital-clock-jg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 16.9vh;
+  font-size: 2em;
+  color: var(--main-text-color);
+}
+
+.colon-jg {
+  display: inline-block;
+  margin-bottom: 0.2em;
+  animation: flash 4s infinite;
+}
+
+@keyframes flash {
+  0%, 50% {
+    opacity: 1;
+  }
+  25%, 75% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
 /* Error Page rules */
 #error-page-jg {
   display: flex;
@@ -2114,7 +2259,7 @@ input[type="checkbox"]:disabled {
     min-width: 40vw;
     padding: 2em;
   }
-  
+
   .header-jg {
     padding: 0.1em 2.5em;
   }
@@ -2142,8 +2287,8 @@ input[type="checkbox"]:disabled {
 }
 
 @media screen and (max-width: 830px) {
-
-  input, select {
+  input,
+  select {
     height: 1em;
     font-size: 0.6em;
   }
@@ -2202,7 +2347,8 @@ input[type="checkbox"]:disabled {
     overflow-x: hidden;
   }
 
-  input, select {
+  input,
+  select {
     height: 1em;
     font-size: 0.8em;
   }
@@ -2357,7 +2503,8 @@ input[type="checkbox"]:disabled {
 }
 
 @media screen and (max-width: 440px) {
-  input, select {
+  input,
+  select {
     font-size: 0.7em;
   }
 
@@ -2460,7 +2607,7 @@ input[type="checkbox"]:disabled {
     justify-content: inherit;
     flex-wrap: wrap;
   }
-  
+
   .color-scheme-sample-jg {
     height: 10vh;
     width: 90%;
