@@ -2123,6 +2123,44 @@ input[type="checkbox"]:disabled {
   margin-left: 2em;
 }
 
+.fireworks-jg {
+  fill: transparent;
+}
+
+path[class="firework-color-1-jg"],
+path[class="firework-color-7-jg"] {
+  fill: var(--work-event-color-dark) !important;
+}
+
+path[class="firework-color-2-jg"],
+path[class="firework-color-8-jg"] {
+  fill: var(--work-event-color) !important;
+}
+
+path[class="firework-color-3-jg"],
+path[class="firework-color-9-jg"] {
+  fill: var(--work-event-color-light) !important;
+}
+
+path[class="firework-color-4-jg"],
+path[class="firework-color-10-jg"] {
+  fill: var(--life-event-color-dark) !important;
+}
+
+path[class="firework-color-5-jg"],
+path[class="firework-color-11-jg"] {
+  fill: var(--life-event-color) !important;
+}
+
+path[class="firework-color-6-jg"],
+path[class="firework-color-12-jg"] {
+  fill: var(--life-event-color-light) !important;
+}
+
+path[class="firework-stroke-color-1-jg"] {
+  fill: var(--main-text-color) !important;
+}
+
 /* Work/Life Checkboxes rules */
 .work-life-activities-list-jg {
   display: flex;

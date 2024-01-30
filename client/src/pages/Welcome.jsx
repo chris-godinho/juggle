@@ -15,6 +15,7 @@ import SleepDropdownArea from "../components/settings/SleepDropdownArea.jsx";
 import LifeActivitiesCheckboxes from "../components/settings/LifeActivitiesCheckboxes.jsx";
 import WorkActivitiesCheckboxes from "../components/settings/WorkActivitiesCheckboxes.jsx";
 import ColorSchemeTable from "../components/settings/ColorSchemeTable.jsx";
+import Fireworks from "../components/other/Fireworks.jsx";
 
 import AuthService from "../utils/auth.js";
 
@@ -336,6 +337,7 @@ const Welcome = () => {
             className="welcome-screen-jg screen-8-jg hidden-jg"
           >
             <div className="welcome-screen-content-container-jg">
+              <Fireworks />
               <div className="welcome-text-jg">
                 <h1>We're all set.</h1>
                 <p>Your new settings have been saved.</p>
