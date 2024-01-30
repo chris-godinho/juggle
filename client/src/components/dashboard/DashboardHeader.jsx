@@ -103,6 +103,14 @@ export default function DashboardHeader() {
           />
         </button>
       </div>
+      {dashboardLayout === "no-sidebars" && showStats && (
+        <>
+          <div className="dashboard-header-percentage-jg work-text-jg">
+            <h2>50%</h2>
+            <p>Work</p>
+          </div>
+        </>
+      )}
       <div className="date-percentage-container-jg">
         <div className="selected-date-container-jg">
           <a href="#" onClick={selectPreviousDay}>
@@ -137,6 +145,14 @@ export default function DashboardHeader() {
           </div>
         )}
       </div>
+      {dashboardLayout === "no-sidebars" && showStats && (
+        <>
+          <div className="dashboard-header-percentage-jg life-text-jg">
+            <h2>50%</h2>
+            <p>Life</p>
+          </div>
+        </>
+      )}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg life-border-jg life-border-link-jg"

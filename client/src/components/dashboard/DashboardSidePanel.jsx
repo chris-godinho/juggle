@@ -95,18 +95,28 @@ export default function DashboardSidePanel({ eventType }) {
     >
       <div
         className={`dashboard-side-panel-top-jg ${
-          dashboardLayout === "one-sidebar-left" ||
-          dashboardLayout === "one-sidebar-right"
+          (dashboardLayout === "one-sidebar-left" ||
+            dashboardLayout === "one-sidebar-right") &&
+          showStats
             ? "dashboard-side-panel-single-top-jg work-text-jg"
             : ""
         }`}
       >
-        {!showStats && eventType === "Work" && <SidePanelBrand />}
-        {!showStats && eventType === "Life" && (
-          <>
-            <DigitalClock />
-          </>
+        {((!showStats && eventType === "Work") ||
+          (!showStats && dashboardLayout === "one-sidebar-left") ||
+          (!showStats && dashboardLayout === "one-sidebar-right")) && (
+          <SidePanelBrand />
         )}
+        {!showStats &&
+          eventType === "Life" &&
+          !(
+            dashboardLayout === "one-sidebar-left" ||
+            dashboardLayout === "one-sidebar-right"
+          ) && (
+            <>
+              <DigitalClock />
+            </>
+          )}
         {!showStats && <hr className={`side-panel-hr-jg no-stats-hr-jg`} />}
         {!showStats && eventType === "Work" && <SidePanelMenu />}
         {eventsLoading || userLoading ? (
@@ -136,9 +146,10 @@ export default function DashboardSidePanel({ eventType }) {
                 lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
             )}
-            {(showStats || (!showStats && eventType === "Life")) &&
+            {(showStats &&
               !(dashboardLayout === "one-sidebar-left") &&
-              !(dashboardLayout === "one-sidebar-right") && (
+              !(dashboardLayout === "one-sidebar-right")) ||
+              (!showStats && eventType === "Life" && (
                 <SidePanelEvents
                   eventType={
                     dashboardLayout === "one-sidebar-left" ||
@@ -156,7 +167,7 @@ export default function DashboardSidePanel({ eventType }) {
                   }
                   showStats={showStats}
                 />
-              )}
+              ))}
 
             {showStats && (
               <SidePanelRecommendations
@@ -182,18 +193,18 @@ export default function DashboardSidePanel({ eventType }) {
         )}
       </div>
       {(dashboardLayout === "one-sidebar-left" ||
-        dashboardLayout === "one-sidebar-right") && (
-        <>
-          <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
-          <div
-            className={`dashboard-side-panel-bottom-jg life-text-jg ${
-              dashboardLayout === "one-sidebar-left" ||
-              dashboardLayout === "one-sidebar-right"
-                ? "dashboard-side-panel-single-bottom-jg"
-                : ""
-            }`}
-          >
-            {showStats && (
+        dashboardLayout === "one-sidebar-right") &&
+        showStats && (
+          <>
+            <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
+            <div
+              className={`dashboard-side-panel-bottom-jg life-text-jg ${
+                dashboardLayout === "one-sidebar-left" ||
+                dashboardLayout === "one-sidebar-right"
+                  ? "dashboard-side-panel-single-bottom-jg"
+                  : ""
+              }`}
+            >
               <SidePanelStats
                 eventType={
                   dashboardLayout === "one-sidebar-left" ||
@@ -212,9 +223,6 @@ export default function DashboardSidePanel({ eventType }) {
                 workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
                 lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
-            )}
-
-            {showStats && (
               <SidePanelRecommendations
                 eventType={
                   dashboardLayout === "one-sidebar-left" ||
@@ -233,10 +241,9 @@ export default function DashboardSidePanel({ eventType }) {
                 workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
                 lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
-            )}
-          </div>
-        </>
-      )}
+            </div>
+          </>
+        )}
     </aside>
   );
 }

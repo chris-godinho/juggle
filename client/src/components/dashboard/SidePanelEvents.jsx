@@ -43,7 +43,7 @@ export default function SidePanelEvents({
           }`}
         />
       ) : (
-        <p className="side-panel-event-header-jg life-text-jg">Today's events:</p>
+        <p className={`side-panel-event-header-jg life-text-jg ${!showStats ? "side-panel-event-header-extra-space-jg" : ""}`}>Today's events:</p>
       )}
       <div className="side-panel-event-list-jg">
         {hasMatchingEvents ? (
@@ -102,7 +102,7 @@ export default function SidePanelEvents({
                   ) : (
                     <>
                       {
-                        <a href={"#" + event._id} className="life-text-jg">
+                        <a href={"#" + event._id} className="no-stats-event-text-jg">
                           <p className="side-panel-event-time-jg">
                             {(() => {
                               const eventDateObject = new Date(

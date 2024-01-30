@@ -1225,12 +1225,25 @@ input[type="checkbox"]:disabled {
   align-self: flex-start;
 }
 
+.side-panel-event-header-extra-space-jg {
+  margin-top: 1em !important;
+}
+
 .side-panel-event-item-jg {
   width: 100%;
 }
 
 .side-panel-event-item-extra-space-jg {
   margin-bottom: 0.5em;
+}
+
+.no-stats-event-text-jg {
+  color: var(--main-text-color);
+  transition: color 0.1s ease-in-out;
+}
+
+.no-stats-event-text-jg:hover {
+  color: var(--life-event-color);
 }
 
 .side-panel-event-item-jg a {
@@ -1316,6 +1329,20 @@ input[type="checkbox"]:disabled {
 
 .dashboard-header-one-sidebar-right-jg {
   padding-left: 2.7em;
+}
+
+.dashboard-header-percentage-jg {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dashboard-header-percentage-jg p {
+  position: absolute;
+  top: 73%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .date-percentage-container-jg {
