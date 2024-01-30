@@ -6,7 +6,6 @@ const path = require('path');
 const { authMiddleware } = require('./utils/auth');
 const upload = require('./utils/multerConfig');
 
-const path = require("path");
 const dotenv = require("dotenv").config({
   path: path.resolve(__dirname, "../.env"),
 });
