@@ -25,11 +25,6 @@ export default function SidePanelRecommendations({
 
   const { userSettings, isLoadingSettings } = useUserSettings();
 
-  console.log(
-    "[SidePanelRecommendations.jsx] isLoadingSettings: ",
-    isLoadingSettings
-  );
-
   const localStorageLayout = localStorage.getItem("layout");
 
   const [percentageBasis, setPercentageBasis] = useState("waking");
@@ -42,16 +37,7 @@ export default function SidePanelRecommendations({
   );
 
   useEffect(() => {
-    console.log(
-      "[SidePanelRecommendations.jsx] isLoadingSettings: ",
-      isLoadingSettings
-    );
     if (!isLoadingSettings) {
-      console.log("[SidePanelRecommendations.jsx] In useEffect Hook.");
-      console.log(
-        "[SidePanelRecommendations.jsx] userSettings: ",
-        userSettings
-      );
       // Data fetching is complete, update the state
       setPercentageBasis(
         userSettings.statSettings?.percentageBasis ?? "waking"
@@ -84,11 +70,6 @@ export default function SidePanelRecommendations({
     lifePreferredActivities,
     workGoalActivities,
     lifeGoalActivities
-  );
-
-  console.log(
-    "[SidePanelRecommendations.jsx] recommendationList: ",
-    recommendationList
   );
 
   return (

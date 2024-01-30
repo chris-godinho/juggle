@@ -22,8 +22,6 @@ export default function SidePanelEvents({
   const [percentageBasis, setPercentageBasis] = useState("waking");
   const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
 
-  console.log("[SidePanelEvents.jsx] eventType:", eventType);
-
   useEffect(() => {
     if (!isLoadingSettings) {
       // Data fetching is complete, update the state

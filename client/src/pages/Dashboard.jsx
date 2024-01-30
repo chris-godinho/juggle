@@ -25,8 +25,6 @@ export default function Dashboard() {
   midnightLocalDate.setHours(0, 0, 0, 0);
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
 
-  console.log("[Dashboard.jsx] selectedDate:", selectedDate);
-
   const localStorageLayout = localStorage.getItem("layout");
 
   const [dashboardLayout, setDashboardLayout] = useState(
@@ -52,8 +50,6 @@ export default function Dashboard() {
   const userProfile = AuthService.getProfile();
   const userId = userProfile.data._id;
   const username = userProfile.data.username;
-
-  console.log("[Dashboard.jsx] userProfile:", userProfile);
 
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
@@ -86,24 +82,20 @@ export default function Dashboard() {
 
   const events = eventsData?.eventsByDate || [];
 
-  console.log("[Schedule.jsx] events:", events);
-
-  console.log("[Dashboard.jsx] userData:", userData);
-
   const eventSubtypes = userData?.user.eventSubtypes;
 
   return (
     <DataContext.Provider
       value={{
-        events,
-        selectedDate,
-        setSelectedDate,
-        eventsLoading,
-        eventsRefetch,
-        userLoading,
         username,
         userId,
+        events,
         eventSubtypes,
+        selectedDate,
+        setSelectedDate,
+        userLoading,
+        eventsLoading,
+        eventsRefetch,
         scheduleSpinnerStyle,
       }}
     >

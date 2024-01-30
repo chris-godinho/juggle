@@ -25,13 +25,6 @@ export default function DashboardSidePanel({ eventType }) {
     localStorageLayout || "two-sidebars"
   );
 
-  console.log("[DashboardSidePanel.jsx] userSettings: ", userSettings);
-  console.log(
-    "[DashboardSidePanel.jsx] userSettings.statSettings: ",
-    userSettings.statSettings
-  );
-  console.log("[DashboardSidePanel.jsx] showStats: ", showStats);
-
   const sidePanelSpinnerStyle = {
     spinnerWidth: "16%",
     spinnerHeight: "95vh",
@@ -79,11 +72,6 @@ export default function DashboardSidePanel({ eventType }) {
   } else {
     hasMatchingEvents = hasMatchingLifeEvents;
   }
-
-  console.log(
-    "[DashboardSidePanel.jsx] totalAlottedTimeWithSleepingHours: ",
-    totalAlottedTimeWithSleepingHours
-  );
 
   return (
     <aside
