@@ -13,6 +13,7 @@ import {
   ColorSchemeProvider,
   useColorScheme,
 } from "./components/contextproviders/ColorSchemeProvider.jsx";
+import { LayoutProvider } from "./components/contextproviders/LayoutProvider.jsx";
 import { UserSettingsProvider } from "./components/contextproviders/UserSettingsProvider.jsx";
 import { Outlet } from "react-router-dom";
 
@@ -45,7 +46,9 @@ function App() {
     <ApolloProvider client={client}>
       <ColorSchemeProvider>
         <UserSettingsProvider>
-          <AppContent />
+          <LayoutProvider>
+            <AppContent />
+          </LayoutProvider>
         </UserSettingsProvider>
       </ColorSchemeProvider>
     </ApolloProvider>

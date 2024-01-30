@@ -29,6 +29,11 @@ export default function DashboardHeader() {
 
   const { userSettings, isLoadingSettings } = useUserSettings();
 
+  const localStorageLayout = localStorage.getItem("layout");
+
+  const [dashboardLayout, setDashboardLayout] = useState(
+    localStorageLayout || "two-sidebars"
+  );
   const [showStats, setShowStats] = useState(true);
   const [percentageBasis, setPercentageBasis] = useState("waking");
   const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
@@ -41,6 +46,11 @@ export default function DashboardHeader() {
         userSettings.statSettings?.percentageBasis ?? "waking"
       );
       setIgnoreUnalotted(userSettings.statSettings?.ignoreUnalotted ?? false);
+      setDashboardLayout(
+        userSettings?.layoutSettings?.dashboardLayout ??
+          localStorageLayout ??
+          "two-sidebars"
+      );
     }
   }, [userSettings, isLoadingSettings]);
 
@@ -60,7 +70,19 @@ export default function DashboardHeader() {
   };
 
   return (
-    <header className="dashboard-header-jg">
+    <header
+      className={`dashboard-header-jg ${
+        dashboardLayout === "no-sidebars" ||
+        dashboardLayout === "one-sidebar-left"
+          ? "dashboard-header-one-sidebar-left-jg"
+          : ""
+      } ${
+        dashboardLayout === "no-sidebars" ||
+        dashboardLayout === "one-sidebar-right"
+          ? "dashboard-header-one-sidebar-right-jg"
+          : ""
+      }`}
+    >
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg work-border-jg work-border-link-jg"

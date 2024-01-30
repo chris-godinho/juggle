@@ -1040,12 +1040,20 @@ input[type="checkbox"]:disabled {
 .dashboard-main-panel-jg {
   display: flex;
   flex-direction: column;
-  flex-grow: 7;
+  flex: 1;
   min-height: 95vh;
   margin-left: 16%;
-  margin-right: 16%;
+  margin-right: 15.5%;
   border-left: 1px solid var(--main-separator-color);
   border-right: 1px solid var(--main-separator-color);
+}
+
+.dashboard-main-one-sidebar-left-jg {
+  margin-right: 0;
+}
+
+.dashboard-main-one-sidebar-right-jg {
+  margin-left: 0;
 }
 
 .schedule-grid-container-jg {
@@ -1054,6 +1062,7 @@ input[type="checkbox"]:disabled {
 
 /* Dashboard Side Panel rules */
 .dashboard-side-panel-jg {
+  background-color: var(--main-background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -1061,6 +1070,29 @@ input[type="checkbox"]:disabled {
   height: 95vh;
   box-sizing: border-box;
   position: fixed;
+  z-index: 10;
+}
+
+.dashboard-side-panel-top-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dashboard-side-panel-bottom-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.dashboard-side-panel-single-top-jg {
+  height: 50%;
+}
+
+.dashboard-side-panel-single-bottom-jg {
+  height: 50%;
 }
 
 .dashboard-side-panel-jg div h3 {
@@ -1114,15 +1146,23 @@ input[type="checkbox"]:disabled {
 
 .work-sidebar-jg {
   left: 0;
+  border-right: 1px solid var(--main-separator-color);
 }
 
 .life-sidebar-jg {
   right: 0;
+  border-left: 1px solid var(--main-separator-color);
 }
 
 .side-panel-top-jg,
 .side-panel-bottom-jg {
   display: flex;
+}
+
+.side-panel-stats-top-one-sidebar-jg {
+  text-align: left;
+  align-self: flex-start;
+  margin-left: 6%;
 }
 
 .side-panel-stats-title-jg {
@@ -1131,10 +1171,29 @@ input[type="checkbox"]:disabled {
   padding-top: 1em;
 }
 
+.side-panel-stats-title-one-sidebar-jg {
+  font-size: 1em;
+}
+
 .side-panel-middle-jg {
   display: flex;
   height: 10vh;
   max-height: 10vh;
+}
+
+.side-panel-stats-middle-one-sidebar-jg {
+  align-self: flex-start;
+  margin-left: 6%;
+  margin-top: 0.5vh;
+  margin-bottom: 0.5vh;
+  font-size: 0.5em;
+  height: auto;
+}
+
+.side-panel-stats-bottom-one-sidebar-jg {
+  align-self: flex-start;
+  margin-left: 6%;
+  font-size: 0.8em;
 }
 
 .side-panel-hr-jg {
@@ -1220,6 +1279,10 @@ input[type="checkbox"]:disabled {
   margin-left: 6%;
 }
 
+.recommendations-call-action-one-sidebar-jg {
+  font-size: 0.9em;
+}
+
 .side-panel-recommendation-text-jg {
   margin-left: 6%;
   margin-right: 6%;
@@ -1227,19 +1290,32 @@ input[type="checkbox"]:disabled {
   text-align: left;
 }
 
+.recommendation-text-one-sidebar-jg {
+  font-size: 0.8em;
+}
+
 /* Dashboard Header rules */
 .dashboard-header-jg {
   background-color: var(--main-background-color);
   border-bottom: 1px solid var(--main-separator-color);
-  width: calc(68% - 7px);
+  width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
   height: 18vh;
   box-sizing: border-box;
   position: fixed;
-  padding: 0 2.7em;
+  padding-left: calc(16% + 2.7em);
+  padding-right: calc(16% + 2.7em);
   z-index: 5;
+}
+
+.dashboard-header-one-sidebar-left-jg {
+  padding-right: 2.7em;
+}
+
+.dashboard-header-one-sidebar-right-jg {
+  padding-left: 2.7em;
 }
 
 .date-percentage-container-jg {

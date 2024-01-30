@@ -6,10 +6,10 @@ import { useDataContext } from "../contextproviders/DataContext";
 export default function LayoutTable() {
   const { formData, setFormData } = useDataContext();
 
-  // const { changeLayout } = useLayout();
+  const { changeLayout } = useLayout();
 
   const handleLayoutChange = (key) => {
-    // changeLayout(key);
+    changeLayout(key);
     setFormData({
       ...formData,
       user: {

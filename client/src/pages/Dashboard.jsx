@@ -4,6 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
 
 import DataContext from "../components/contextproviders/DataContext.jsx";
+import { useUserSettings } from "../components/contextproviders/UserSettingsProvider.jsx";
 
 import Schedule from "../components/dashboard/Schedule";
 import LoadingSpinner from "../components/other/LoadingSpinner.jsx";
@@ -16,6 +17,8 @@ import DashboardHeader from "../components/dashboard/DashboardHeader.jsx";
 import DashboardSidePanel from "../components/dashboard/DashboardSidePanel.jsx";
 
 export default function Dashboard() {
+  const { userSettings, isLoadingSettings } = useUserSettings();
+
   // Set up date variables for queries and new events
   const localDate = new Date();
   const midnightLocalDate = new Date(localDate);
@@ -23,6 +26,23 @@ export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
 
   console.log("[Dashboard.jsx] selectedDate:", selectedDate);
+
+  const localStorageLayout = localStorage.getItem("layout");
+
+  const [dashboardLayout, setDashboardLayout] = useState(
+    localStorageLayout || "two-sidebars"
+  );
+
+  useEffect(() => {
+    if (!isLoadingSettings) {
+      // Data fetching is complete, update the state
+      setDashboardLayout(
+        userSettings?.layoutSettings?.dashboardLayout ??
+          localStorageLayout ??
+          "two-sidebars"
+      );
+    }
+  }, [userSettings, isLoadingSettings]);
 
   useEffect(() => {
     eventsRefetch();
@@ -84,14 +104,28 @@ export default function Dashboard() {
         username,
         userId,
         eventSubtypes,
-        scheduleSpinnerStyle
+        scheduleSpinnerStyle,
       }}
     >
+      <DashboardHeader />
       <main className="main-jg">
         <div className="dashboard-grid-jg">
-          <DashboardSidePanel eventType="Work" />
-          <div className="dashboard-main-panel-jg">
-            <DashboardHeader />
+          {(dashboardLayout === "two-sidebars" ||
+            dashboardLayout === "one-sidebar-left") && (
+            <DashboardSidePanel eventType="Work" />
+          )}
+
+          <div
+            className={`dashboard-main-panel-jg ${
+              (dashboardLayout === "one-sidebar-left" ||
+                dashboardLayout === "no-sidebars") &&
+              "dashboard-main-one-sidebar-left-jg"
+            } ${
+              (dashboardLayout === "one-sidebar-right" ||
+                dashboardLayout === "no-sidebars") &&
+              "dashboard-main-one-sidebar-right-jg"
+            }`}
+          >
             <div className="schedule-grid-container-jg">
               {eventsLoading || userLoading ? (
                 <LoadingSpinner
@@ -110,7 +144,10 @@ export default function Dashboard() {
               )}
             </div>
           </div>
-          <DashboardSidePanel eventType="Life" />
+          {(dashboardLayout === "two-sidebars" ||
+            dashboardLayout === "one-sidebar-right") && (
+            <DashboardSidePanel eventType="Life" />
+          )}
         </div>
       </main>
     </DataContext.Provider>

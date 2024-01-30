@@ -203,6 +203,7 @@ export const findRecommendations = (
   ignoreUnalotted,
   percentageBasis,
   settingsBalanceGoal,
+  dashboardLayout,
   workPercentage,
   lifePercentage,
   workPercentageWithSleepingHours,
@@ -214,6 +215,39 @@ export const findRecommendations = (
   workGoalActivities,
   lifeGoalActivities
 ) => {
+  console.log("[eventUtils.js] eventType: ", eventType);
+  console.log("[eventUtils.js] ignoreUnalotted: ", ignoreUnalotted);
+  console.log("[eventUtils.js] percentageBasis: ", percentageBasis);
+  console.log("[eventUtils.js] settingsBalanceGoal: ", settingsBalanceGoal);
+  console.log("[eventUtils.js] workPercentage: ", workPercentage);
+  console.log("[eventUtils.js] lifePercentage: ", lifePercentage);
+  console.log(
+    "[eventUtils.js] workPercentageWithSleepingHours: ",
+    workPercentageWithSleepingHours
+  );
+  console.log(
+    "[eventUtils.js] lifePercentageWithSleepingHours: ",
+    lifePercentageWithSleepingHours
+  );
+  console.log(
+    "[eventUtils.js] workPercentageIgnoreUnalotted: ",
+    workPercentageIgnoreUnalotted
+  );
+  console.log(
+    "[eventUtils.js] lifePercentageIgnoreUnalotted: ",
+    lifePercentageIgnoreUnalotted
+  );
+  console.log(
+    "[eventUtils.js] workPreferredActivities: ",
+    workPreferredActivities
+  );
+  console.log(
+    "[eventUtils.js] lifePreferredActivities: ",
+    lifePreferredActivities
+  );
+  console.log("[eventUtils.js] workGoalActivities: ", workGoalActivities);
+  console.log("[eventUtils.js] lifeGoalActivities: ", lifeGoalActivities);
+
   let targetPercentage;
   let otherPercentage;
   let activityPool = [];
@@ -254,6 +288,8 @@ export const findRecommendations = (
     recommendationSource = lifeGoalActivities;
   }
 
+  console.log("[eventUtils.js] activityPool: ", activityPool);
+
   const preferredActivities = Array.from(
     Object.entries(activityPool)
       .filter(([key, value]) => value === true)
@@ -279,6 +315,14 @@ export const findRecommendations = (
     recommendationCount += 1;
   } else {
     recommendationCount = 0;
+  }
+
+  if (
+    (dashboardLayout === "one-sidebar-left" ||
+      dashboardLayout === "one-sidebar-right") &&
+    recommendationCount > 2
+  ) {
+    recommendationCount = 2;
   }
 
   for (let i = 0; i < recommendationCount; i++) {
