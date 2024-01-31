@@ -1,5 +1,7 @@
 // SidePanelRecommendations.jsx
 
+import { useEffect } from "react";
+
 import { useDataContext } from "../contextproviders/DataContext";
 
 import { findRecommendations } from "../../utils/eventUtils.js";
@@ -11,37 +13,34 @@ import {
 
 export default function SidePanelRecommendations({ eventType }) {
   const {
-    percentageBasis,
-    ignoreUnalotted,
-    dashboardLayout,
-    workPercentage,
-    lifePercentage,
-    workPercentageWithSleepingHours,
-    lifePercentageWithSleepingHours,
-    workPercentageIgnoreUnalotted,
-    lifePercentageIgnoreUnalotted,
-    workPreferredActivities,
-    lifePreferredActivities,
-    balanceGoal,
+    isLoadingSettings,
+    eventsLoading,
+    fetchedSettings,
+    fetchedEventData,
   } = useDataContext();
 
-  const recommendationList = findRecommendations(
-    eventType,
-    ignoreUnalotted,
-    percentageBasis,
-    balanceGoal,
-    dashboardLayout,
-    workPercentage,
-    lifePercentage,
-    workPercentageWithSleepingHours,
-    lifePercentageWithSleepingHours,
-    workPercentageIgnoreUnalotted,
-    lifePercentageIgnoreUnalotted,
-    workPreferredActivities,
-    lifePreferredActivities,
-    workGoalActivities,
-    lifeGoalActivities
-  );
+let recommendationList = [];
+
+useEffect(() => {
+  if (!isLoadingSettings && !eventsLoading) {
+    recommendationList = findRecommendations(
+      eventType,
+      fetchedEventData?.ignoreUnalotted,
+      fetchedSettings?.statSettings?.percentageBasis,
+      fetchedSettings?.statSettings?.balanceGoal,
+      fetchedSettings?.layoutSettings?.dashboardLayout,
+      fetchedEventData?.workPercentage,
+      fetchedEventData?.lifePercentage,
+      fetchedEventData?.workPercentageWithSleepingHours,
+      fetchedEventData?.lifePercentageWithSleepingHours,
+      fetchedEventData?.workPercentageIgnoreUnalotted,
+      fetchedEventData?.lifePercentageIgnoreUnalotted,
+      workGoalActivities,
+      lifeGoalActivities
+    );
+  }
+}, [isLoadingSettings, eventsLoading]);
+
 
   return (
     <>
@@ -58,8 +57,8 @@ export default function SidePanelRecommendations({ eventType }) {
         {recommendationList.length > 0 && (
           <p
             className={`recommendations-call-action-jg ${
-              dashboardLayout === "one-sidebar-left" ||
-              dashboardLayout === "one-sidebar-right"
+              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
+              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
                 ? "recommendations-call-action-one-sidebar-jg"
                 : ""
             }`}
@@ -71,8 +70,8 @@ export default function SidePanelRecommendations({ eventType }) {
           <p
             key={index}
             className={`side-panel-recommendation-text-jg ${
-              dashboardLayout === "one-sidebar-left" ||
-              dashboardLayout === "one-sidebar-right"
+              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
+              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
                 ? "recommendation-text-one-sidebar-jg"
                 : ""
             }`}

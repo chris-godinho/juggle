@@ -215,6 +215,27 @@ export const findRecommendations = (
   workGoalActivities,
   lifeGoalActivities
 ) => {
+  console.log("eventType: ", eventType);
+  console.log("ignoreUnalotted: ", ignoreUnalotted);
+  console.log("percentageBasis: ", percentageBasis);
+  console.log("settingsBalanceGoal: ", settingsBalanceGoal);
+  console.log("dashboardLayout: ", dashboardLayout);
+  console.log("workPercentage: ", workPercentage);
+  console.log("lifePercentage: ", lifePercentage);
+  console.log(
+    "workPercentageWithSleepingHours: ",
+    workPercentageWithSleepingHours
+  );
+  console.log(
+    "lifePercentageWithSleepingHours: ",
+    lifePercentageWithSleepingHours
+  );
+  console.log("workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
+  console.log("lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
+  console.log("workPreferredActivities: ", workPreferredActivities);
+  console.log("lifePreferredActivities: ", lifePreferredActivities);
+  console.log("workGoalActivities: ", workGoalActivities);
+  console.log("lifeGoalActivities: ", lifeGoalActivities);
 
   let targetPercentage;
   let otherPercentage;

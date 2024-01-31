@@ -17,13 +17,7 @@ export default function DashboardSidePanel({ eventType }) {
     spinnerElWidthHeight: "100px",
   };
 
-  const {
-    events,
-    eventsLoading,
-    userLoading,
-    showStats,
-    dashboardLayout,
-  } = useDataContext();
+  const { eventsLoading, events, fetchedSettings } = useDataContext();
 
   const hasMatchingWorkEvents = events.some(
     (event) => "work" === event.type.toLowerCase()
@@ -50,67 +44,91 @@ export default function DashboardSidePanel({ eventType }) {
     >
       <div
         className={`dashboard-side-panel-top-jg ${
-          (dashboardLayout === "one-sidebar-left" ||
-            dashboardLayout === "one-sidebar-right") &&
-          showStats
+          (fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-left" ||
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-right") &&
+          fetchedSettings?.layoutSettings?.showStats
             ? "dashboard-side-panel-single-top-jg work-text-jg"
             : ""
         }`}
       >
-        {((!showStats && eventType === "Work") ||
-          (!showStats && dashboardLayout === "one-sidebar-left") ||
-          (!showStats && dashboardLayout === "one-sidebar-right")) && (
-          <SidePanelBrand />
-        )}
-        {!showStats &&
+        {((!fetchedSettings?.layoutSettings?.showStats &&
+          eventType === "Work") ||
+          (!fetchedSettings?.layoutSettings?.showStats &&
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-left") ||
+          (!fetchedSettings?.layoutSettings?.showStats &&
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-right")) && <SidePanelBrand />}
+        {!fetchedSettings?.statSettings?.showStats &&
           eventType === "Life" &&
           !(
-            dashboardLayout === "one-sidebar-left" ||
-            dashboardLayout === "one-sidebar-right"
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-left" ||
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-right"
           ) && (
             <>
               <DigitalClock />
             </>
           )}
-        {!showStats && <hr className={`side-panel-hr-jg no-stats-hr-jg`} />}
-        {!showStats && eventType === "Work" && <SidePanelMenu />}
-        {eventsLoading || userLoading ? (
+        {!fetchedSettings?.statSettings?.showStats && (
+          <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
+        )}
+        {!fetchedSettings?.statSettings?.showStats && eventType === "Work" && (
+          <SidePanelMenu />
+        )}
+        {eventsLoading ? (
           <LoadingSpinner
             spinnerStyle={sidePanelSpinnerStyle}
             spinnerElWidthHeight="100px"
           />
         ) : (
           <>
-            {showStats && (
+            {fetchedSettings?.statSettings?.showStats && (
               <SidePanelStats
                 eventType={
-                  dashboardLayout === "one-sidebar-left" ||
-                  dashboardLayout === "one-sidebar-right"
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-left" ||
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-right"
                     ? "Work"
                     : eventType
                 }
               />
             )}
-            {(showStats &&
-              !(dashboardLayout === "one-sidebar-left") &&
-              !(dashboardLayout === "one-sidebar-right")) ||
-              (!showStats && eventType === "Life" && (
-                <SidePanelEvents
-                  eventType={
-                    dashboardLayout === "one-sidebar-left" ||
-                    dashboardLayout === "one-sidebar-right"
-                      ? "Work"
-                      : eventType
-                  }
-                  hasMatchingEvents={hasMatchingEvents}
-                />
-              ))}
+            {(fetchedSettings?.statSettings?.showStats &&
+              !(
+                fetchedSettings?.layoutSettings?.dashboardLayout ===
+                "one-sidebar-left"
+              ) &&
+              !(
+                fetchedSettings?.layoutSettings?.dashboardLayout ===
+                "one-sidebar-right"
+              )) ||
+              (!fetchedSettings?.statSettings?.showStats &&
+                eventType === "Life" && (
+                  <SidePanelEvents
+                    eventType={
+                      fetchedSettings?.layoutSettings?.dashboardLayout ===
+                        "one-sidebar-left" ||
+                      fetchedSettings?.layoutSettings?.dashboardLayout ===
+                        "one-sidebar-right"
+                        ? "Work"
+                        : eventType
+                    }
+                    hasMatchingEvents={hasMatchingEvents}
+                  />
+                ))}
 
-            {showStats && (
+            {fetchedSettings?.statSettings?.showStats && (
               <SidePanelRecommendations
                 eventType={
-                  dashboardLayout === "one-sidebar-left" ||
-                  dashboardLayout === "one-sidebar-right"
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-left" ||
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-right"
                     ? "Work"
                     : eventType
                 }
@@ -119,31 +137,39 @@ export default function DashboardSidePanel({ eventType }) {
           </>
         )}
       </div>
-      {(dashboardLayout === "one-sidebar-left" ||
-        dashboardLayout === "one-sidebar-right") &&
-        showStats && (
+      {(fetchedSettings?.layoutSettings?.dashboardLayout ===
+        "one-sidebar-left" ||
+        fetchedSettings?.layoutSettings?.dashboardLayout ===
+          "one-sidebar-right") &&
+        fetchedSettings?.statSettings?.showStats && (
           <>
             <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
             <div
               className={`dashboard-side-panel-bottom-jg life-text-jg ${
-                dashboardLayout === "one-sidebar-left" ||
-                dashboardLayout === "one-sidebar-right"
+                fetchedSettings?.layoutSettings?.dashboardLayout ===
+                  "one-sidebar-left" ||
+                fetchedSettings?.layoutSettings?.dashboardLayout ===
+                  "one-sidebar-right"
                   ? "dashboard-side-panel-single-bottom-jg"
                   : ""
               }`}
             >
               <SidePanelStats
                 eventType={
-                  dashboardLayout === "one-sidebar-left" ||
-                  dashboardLayout === "one-sidebar-right"
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-left" ||
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-right"
                     ? "Life"
                     : eventType
                 }
               />
               <SidePanelRecommendations
                 eventType={
-                  dashboardLayout === "one-sidebar-left" ||
-                  dashboardLayout === "one-sidebar-right"
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-left" ||
+                  fetchedSettings?.layoutSettings?.dashboardLayout ===
+                    "one-sidebar-right"
                     ? "Life"
                     : eventType
                 }

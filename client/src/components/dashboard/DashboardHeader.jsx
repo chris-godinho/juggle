@@ -11,18 +11,11 @@ import UserMenu from "../usermenu/UserMenu.jsx";
 
 export default function DashboardHeader() {
   const {
-    username,
-    userId,
     selectedDate,
     setSelectedDate,
-    eventSubtypes,
     eventsRefetch,
-    showStats,
-    percentageBasis,
-    ignoreUnalotted,
-    dashboardLayout,
-    unalottedTimePercentage,
-    unalottedTimePercentageWithSleepingHours,
+    fetchedSettings,
+    fetchedEventData,
   } = useDataContext();
 
   const { openModal } = useModal();
@@ -42,13 +35,13 @@ export default function DashboardHeader() {
   return (
     <header
       className={`dashboard-header-jg ${
-        dashboardLayout === "no-sidebars" ||
-        dashboardLayout === "one-sidebar-left"
+        fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" ||
+        fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left"
           ? "dashboard-header-one-sidebar-left-jg"
           : ""
       } ${
-        dashboardLayout === "no-sidebars" ||
-        dashboardLayout === "one-sidebar-right"
+        fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" ||
+        fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
           ? "dashboard-header-one-sidebar-right-jg"
           : ""
       }`}
@@ -59,8 +52,8 @@ export default function DashboardHeader() {
           onClick={() =>
             openModal(
               <UserMenu
-                username={username}
-                userId={userId}
+                username={fetchedSettings?.username}
+                userId={fetchedSettings?.userId}
                 modalContent="UserMenuOptions"
               />
             )
@@ -73,7 +66,7 @@ export default function DashboardHeader() {
           />
         </button>
       </div>
-      {dashboardLayout === "no-sidebars" && showStats && (
+      {fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" && fetchedSettings?.statSettings?.showStats && (
         <>
           <div className="dashboard-header-percentage-jg work-text-jg">
             <h2>50%</h2>
@@ -103,19 +96,19 @@ export default function DashboardHeader() {
             <span className="material-symbols-outlined">arrow_forward_ios</span>
           </a>
         </div>
-        {showStats && !ignoreUnalotted && (
+        {fetchedSettings?.statSettings?.showStats && !fetchedSettings?.statSettings?.ignoreUnalotted && (
           <div className="unalotted-percentage-jg">
             <p>
               Unalotted Time:{" "}
-              {percentageBasis === "waking"
-                ? unalottedTimePercentage
-                : unalottedTimePercentageWithSleepingHours}
+              {fetchedSettings?.statSettings.percentageBasis === "waking"
+                ? fetchedEventData?.unalottedTimePercentage
+                : fetchedEventData?.unalottedTimePercentageWithSleepingHours}
               %
             </p>
           </div>
         )}
       </div>
-      {dashboardLayout === "no-sidebars" && showStats && (
+      {fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" && fetchedSettings?.statSettings?.showStats && (
         <>
           <div className="dashboard-header-percentage-jg life-text-jg">
             <h2>50%</h2>
@@ -131,7 +124,7 @@ export default function DashboardHeader() {
               <NewEvent
                 eventSubtypes={eventSubtypes}
                 handleNewEventModalClose={handleNewEventModalClose}
-                userId={userId}
+                userId={fetchedSettings?.userId}
               />
             )
           }

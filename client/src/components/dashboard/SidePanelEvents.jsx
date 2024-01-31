@@ -5,19 +5,11 @@ import { useDataContext } from "../contextproviders/DataContext";
 import { calculateSingleEventPercentage } from "../../utils/eventUtils.js";
 
 export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
-  const {
-    events,
-    percentageBasis,
-    ignoreUnalotted,
-    totalAlottedTime,
-    totalAlottedTimeWithSleepingHours,
-    totalAlottedTimeIgnoreUnalotted,
-    showStats,
-  } = useDataContext();
+  const { events, fetchedSettings, fetchedEventData } = useDataContext();
 
   return (
     <>
-      {showStats ? (
+      {fetchedSettings?.statSettings?.showStats ? (
         <hr
           className={`side-panel-hr-jg ${
             eventType === "Work" ? "work-hr-jg" : "life-hr-jg"
@@ -26,7 +18,9 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
       ) : (
         <p
           className={`side-panel-event-header-jg life-text-jg ${
-            !showStats ? "side-panel-event-header-extra-space-jg" : ""
+            !fetchedSettings?.statSettings?.showStats
+              ? "side-panel-event-header-extra-space-jg"
+              : ""
           }`}
         >
           Today's events:
@@ -40,10 +34,12 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
                 <div
                   key={index}
                   className={`side-panel-event-item-jg ${
-                    showStats ? "" : "side-panel-event-item-extra-space-jg"
+                    fetchedSettings?.statSettings?.showStats
+                      ? ""
+                      : "side-panel-event-item-extra-space-jg"
                   }`}
                 >
-                  {showStats ? (
+                  {fetchedSettings?.statSettings?.showStats ? (
                     <>
                       {eventType.toLowerCase() === event.type.toLowerCase() && (
                         <a
@@ -78,11 +74,12 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
                                 const eventPercentage =
                                   calculateSingleEventPercentage(
                                     event,
-                                    totalAlottedTime,
-                                    totalAlottedTimeWithSleepingHours,
-                                    totalAlottedTimeIgnoreUnalotted,
-                                    percentageBasis,
-                                    ignoreUnalotted
+                                    fetchedEventData?.totalAlottedTime,
+                                    fetchedEventData?.totalAlottedTimeWithSleepingHours,
+                                    fetchedEventData?.totalAlottedTimeIgnoreUnalotted,
+                                    fetchedSettings?.statSettings
+                                      .percentageBasis,
+                                    fetchedSettings?.statSettings?.ignoreUnalotted
                                   ).toFixed(0);
                                 return "(" + eventPercentage + "%)";
                               })()}
@@ -116,13 +113,18 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
                           <p className="side-panel-event-title-jg">
                             {event.title}
                           </p>
-                          {showStats && (
+                          {fetchedSettings?.statSettings?.showStats && (
                             <p className="side-panel-event-percentage-jg">
                               {(() => {
                                 const eventPercentage =
                                   calculateSingleEventPercentage(
                                     event,
-                                    totalAlottedTime
+                                    fetchedEventData?.totalAlottedTime,
+                                    fetchedEventData?.totalAlottedTimeWithSleepingHours,
+                                    fetchedEventData?.totalAlottedTimeIgnoreUnalotted,
+                                    fetchedSettings?.statSettings
+                                      .percentageBasis,
+                                    fetchedSettings?.statSettings?.ignoreUnalotted
                                   ).toFixed(0);
                                 return "(" + eventPercentage + "%)";
                               })()}
@@ -139,7 +141,7 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
         ) : (
           <div className="side-panel-event-item-jg">
             <p className="side-panel-event-message-jg">
-              No {`${showStats ? eventType.toLowerCase() : ""} `}events for
+              No {`${fetchedSettings?.statSettings?.showStats ? eventType.toLowerCase() : ""} `}events for
               today.
             </p>
           </div>

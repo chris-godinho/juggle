@@ -8,57 +8,43 @@ import {
 } from "../../utils/eventUtils.js";
 
 export default function SidePanelStats({ eventType }) {
-  const {
-    eventsLoading,
-    percentageBasis,
-    ignoreUnalotted,
-    dashboardLayout,
-    workPercentage,
-    lifePercentage,
-    workPercentageWithSleepingHours,
-    lifePercentageWithSleepingHours,
-    workPercentageIgnoreUnalotted,
-    lifePercentageIgnoreUnalotted,
-  } = useDataContext();
-
-  console.log("[SidePanelStats.jsx] percentageBasis: ", percentageBasis);
-  console.log("[SidePanelStats.jsx] ignoreUnalotted: ", ignoreUnalotted);
-  console.log("[SidePanelStats.jsx] dashboardLayout: ", dashboardLayout);
-  console.log("[SidePanelStats.jsx] workPercentage: ", workPercentage);
-  console.log("[SidePanelStats.jsx] lifePercentage: ", lifePercentage);
-  console.log("[SidePanelStats.jsx] workPercentageWithSleepingHours: ", workPercentageWithSleepingHours);
-  console.log("[SidePanelStats.jsx] lifePercentageWithSleepingHours: ", lifePercentageWithSleepingHours);
-  console.log("[SidePanelStats.jsx] workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
-  console.log("[SidePanelStats.jsx] lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
+  const { fetchedSettings, fetchedEventData } = useDataContext();
 
   const displayPercentage = findDisplayPercentage(
     eventType,
-    ignoreUnalotted,
-    percentageBasis,
-    workPercentage,
-    workPercentageIgnoreUnalotted,
-    workPercentageWithSleepingHours,
-    lifePercentage,
-    lifePercentageIgnoreUnalotted,
-    lifePercentageWithSleepingHours
+    fetchedSettings?.statSettings?.ignoreUnalotted,
+    fetchedSettings?.statSettings?.percentageBasis,
+    fetchedEventData?.workPercentage,
+    fetchedEventData?.workPercentageIgnoreUnalotted,
+    fetchedEventData?.workPercentageWithSleepingHours,
+    fetchedEventData?.lifePercentage,
+    fetchedEventData?.lifePercentageIgnoreUnalotted,
+    fetchedEventData?.lifePercentageWithSleepingHours
   );
 
-  const displayText = findDisplayText(ignoreUnalotted, percentageBasis);
+  const displayText = findDisplayText(
+    fetchedSettings?.statSettings?.ignoreUnalotted,
+    fetchedSettings?.statSettings?.percentageBasis
+  );
 
   return (
     <>
       <div
         className={`side-panel-top-jg ${
-          dashboardLayout === "one-sidebar-left" ||
-          dashboardLayout === "one-sidebar-right"
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-left" ||
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-right"
             ? "side-panel-stats-top-one-sidebar-jg"
             : ""
         }`}
       >
         <p
           className={`side-panel-stats-title-jg ${
-            dashboardLayout === "one-sidebar-left" ||
-            dashboardLayout === "one-sidebar-right"
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-left" ||
+            fetchedSettings?.layoutSettings?.dashboardLayout ===
+              "one-sidebar-right"
               ? "side-panel-stats-title-one-sidebar-jg"
               : ""
           }`}
@@ -68,8 +54,10 @@ export default function SidePanelStats({ eventType }) {
       </div>
       <div
         className={`side-panel-middle-jg ${
-          dashboardLayout === "one-sidebar-left" ||
-          dashboardLayout === "one-sidebar-right"
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-left" ||
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-right"
             ? "side-panel-stats-middle-one-sidebar-jg"
             : ""
         }`}
@@ -78,8 +66,10 @@ export default function SidePanelStats({ eventType }) {
       </div>
       <div
         className={`side-panel-bottom-jg ${
-          dashboardLayout === "one-sidebar-left" ||
-          dashboardLayout === "one-sidebar-right"
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-left" ||
+          fetchedSettings?.layoutSettings?.dashboardLayout ===
+            "one-sidebar-right"
             ? "side-panel-stats-bottom-one-sidebar-jg"
             : ""
         }`}
