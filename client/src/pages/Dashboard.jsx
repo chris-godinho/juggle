@@ -66,6 +66,8 @@ export default function Dashboard() {
     lifePercentageIgnoreUnalotted: 0,
   });
 
+  const [isOneBarLayout, setIsOneBarLayout] = useState(false);
+
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
     spinnerHeight: "80vh",
@@ -105,6 +107,10 @@ export default function Dashboard() {
           dashboardLayout: userSettings?.layoutSettings?.dashboardLayout || "",
         },
       });
+      setIsOneBarLayout(
+        userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
+          userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
+      );
       console.log("fetchedSettings:", fetchedSettings);
     }
   }, [userSettings, isLoadingSettings]);
@@ -135,6 +141,7 @@ export default function Dashboard() {
         isLoadingSettings,
         selectedDate,
         setSelectedDate,
+        isOneBarLayout,
         scheduleSpinnerStyle,
         eventsLoading,
         eventsRefetch,

@@ -68,7 +68,7 @@ export default function SidePanelEvents({ hasMatchingEvents, eventType }) {
                           <p className="side-panel-event-title-jg">
                             {event.title}
                           </p>
-                          {showStats && (
+                          {fetchedSettings?.statSettings?.showStats && (
                             <p className="side-panel-event-percentage-jg">
                               {(() => {
                                 const eventPercentage =

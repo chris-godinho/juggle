@@ -17,30 +17,30 @@ export default function SidePanelRecommendations({ eventType }) {
     eventsLoading,
     fetchedSettings,
     fetchedEventData,
+    isOneBarLayout,
   } = useDataContext();
 
-let recommendationList = [];
+  let recommendationList = [];
 
-useEffect(() => {
-  if (!isLoadingSettings && !eventsLoading) {
-    recommendationList = findRecommendations(
-      eventType,
-      fetchedEventData?.ignoreUnalotted,
-      fetchedSettings?.statSettings?.percentageBasis,
-      fetchedSettings?.statSettings?.balanceGoal,
-      fetchedSettings?.layoutSettings?.dashboardLayout,
-      fetchedEventData?.workPercentage,
-      fetchedEventData?.lifePercentage,
-      fetchedEventData?.workPercentageWithSleepingHours,
-      fetchedEventData?.lifePercentageWithSleepingHours,
-      fetchedEventData?.workPercentageIgnoreUnalotted,
-      fetchedEventData?.lifePercentageIgnoreUnalotted,
-      workGoalActivities,
-      lifeGoalActivities
-    );
-  }
-}, [isLoadingSettings, eventsLoading]);
-
+  useEffect(() => {
+    if (!isLoadingSettings && !eventsLoading) {
+      recommendationList = findRecommendations(
+        eventType,
+        fetchedEventData?.ignoreUnalotted,
+        fetchedSettings?.statSettings?.percentageBasis,
+        fetchedSettings?.statSettings?.balanceGoal,
+        fetchedSettings?.layoutSettings?.dashboardLayout,
+        fetchedEventData?.workPercentage,
+        fetchedEventData?.lifePercentage,
+        fetchedEventData?.workPercentageWithSleepingHours,
+        fetchedEventData?.lifePercentageWithSleepingHours,
+        fetchedEventData?.workPercentageIgnoreUnalotted,
+        fetchedEventData?.lifePercentageIgnoreUnalotted,
+        workGoalActivities,
+        lifeGoalActivities
+      );
+    }
+  }, [isLoadingSettings, eventsLoading]);
 
   return (
     <>
@@ -57,8 +57,7 @@ useEffect(() => {
         {recommendationList.length > 0 && (
           <p
             className={`recommendations-call-action-jg ${
-              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
-              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
+              isOneBarLayout
                 ? "recommendations-call-action-one-sidebar-jg"
                 : ""
             }`}
@@ -70,8 +69,7 @@ useEffect(() => {
           <p
             key={index}
             className={`side-panel-recommendation-text-jg ${
-              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
-              fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
+              isOneBarLayout
                 ? "recommendation-text-one-sidebar-jg"
                 : ""
             }`}

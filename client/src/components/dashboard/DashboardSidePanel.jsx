@@ -17,7 +17,8 @@ export default function DashboardSidePanel({ eventType }) {
     spinnerElWidthHeight: "100px",
   };
 
-  const { eventsLoading, events, fetchedSettings } = useDataContext();
+  const { eventsLoading, events, fetchedSettings, isOneBarLayout } =
+    useDataContext();
 
   const hasMatchingWorkEvents = events.some(
     (event) => "work" === event.type.toLowerCase()
@@ -44,11 +45,7 @@ export default function DashboardSidePanel({ eventType }) {
     >
       <div
         className={`dashboard-side-panel-top-jg ${
-          (fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-left" ||
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-right") &&
-          fetchedSettings?.layoutSettings?.showStats
+          isOneBarLayout && fetchedSettings?.layoutSettings?.showStats
             ? "dashboard-side-panel-single-top-jg work-text-jg"
             : ""
         }`}
@@ -63,12 +60,7 @@ export default function DashboardSidePanel({ eventType }) {
               "one-sidebar-right")) && <SidePanelBrand />}
         {!fetchedSettings?.statSettings?.showStats &&
           eventType === "Life" &&
-          !(
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-left" ||
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-right"
-          ) && (
+          !isOneBarLayout && (
             <>
               <DigitalClock />
             </>
@@ -87,34 +79,14 @@ export default function DashboardSidePanel({ eventType }) {
         ) : (
           <>
             {fetchedSettings?.statSettings?.showStats && (
-              <SidePanelStats
-                eventType={
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-left" ||
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-right"
-                    ? "Work"
-                    : eventType
-                }
-              />
+              <SidePanelStats eventType={isOneBarLayout ? "Work" : eventType} />
             )}
-            {(fetchedSettings?.statSettings?.showStats &&
-              !(
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                "one-sidebar-left"
-              ) &&
-              !(
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                "one-sidebar-right"
-              )) ||
+            {(fetchedSettings?.statSettings?.showStats && !isOneBarLayout) ||
               (!fetchedSettings?.statSettings?.showStats &&
                 eventType === "Life" && (
                   <SidePanelEvents
                     eventType={
-                      fetchedSettings?.layoutSettings?.dashboardLayout ===
-                        "one-sidebar-left" ||
-                      fetchedSettings?.layoutSettings?.dashboardLayout ===
-                        "one-sidebar-right"
+                      isOneBarLayout
                         ? "Work"
                         : eventType
                     }
@@ -125,10 +97,7 @@ export default function DashboardSidePanel({ eventType }) {
             {fetchedSettings?.statSettings?.showStats && (
               <SidePanelRecommendations
                 eventType={
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-left" ||
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-right"
+                  isOneBarLayout
                     ? "Work"
                     : eventType
                 }
@@ -137,39 +106,27 @@ export default function DashboardSidePanel({ eventType }) {
           </>
         )}
       </div>
-      {(fetchedSettings?.layoutSettings?.dashboardLayout ===
-        "one-sidebar-left" ||
-        fetchedSettings?.layoutSettings?.dashboardLayout ===
-          "one-sidebar-right") &&
+      {isOneBarLayout &&
         fetchedSettings?.statSettings?.showStats && (
           <>
             <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
             <div
               className={`dashboard-side-panel-bottom-jg life-text-jg ${
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                  "one-sidebar-left" ||
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                  "one-sidebar-right"
+                isOneBarLayout
                   ? "dashboard-side-panel-single-bottom-jg"
                   : ""
               }`}
             >
               <SidePanelStats
                 eventType={
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-left" ||
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-right"
+                  isOneBarLayout
                     ? "Life"
                     : eventType
                 }
               />
               <SidePanelRecommendations
                 eventType={
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-left" ||
-                  fetchedSettings?.layoutSettings?.dashboardLayout ===
-                    "one-sidebar-right"
+                  isOneBarLayout
                     ? "Life"
                     : eventType
                 }

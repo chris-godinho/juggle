@@ -8,7 +8,7 @@ import {
 } from "../../utils/eventUtils.js";
 
 export default function SidePanelStats({ eventType }) {
-  const { fetchedSettings, fetchedEventData } = useDataContext();
+  const { fetchedSettings, fetchedEventData, isOneBarLayout } = useDataContext();
 
   const displayPercentage = findDisplayPercentage(
     eventType,
@@ -31,20 +31,14 @@ export default function SidePanelStats({ eventType }) {
     <>
       <div
         className={`side-panel-top-jg ${
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-left" ||
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-right"
+          isOneBarLayout
             ? "side-panel-stats-top-one-sidebar-jg"
             : ""
         }`}
       >
         <p
           className={`side-panel-stats-title-jg ${
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-left" ||
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-right"
+            isOneBarLayout
               ? "side-panel-stats-title-one-sidebar-jg"
               : ""
           }`}
@@ -54,10 +48,7 @@ export default function SidePanelStats({ eventType }) {
       </div>
       <div
         className={`side-panel-middle-jg ${
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-left" ||
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-right"
+          isOneBarLayout
             ? "side-panel-stats-middle-one-sidebar-jg"
             : ""
         }`}
@@ -66,10 +57,7 @@ export default function SidePanelStats({ eventType }) {
       </div>
       <div
         className={`side-panel-bottom-jg ${
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-left" ||
-          fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "one-sidebar-right"
+          isOneBarLayout
             ? "side-panel-stats-bottom-one-sidebar-jg"
             : ""
         }`}
