@@ -34,7 +34,7 @@ export const calculateSleepingHours = (userSettings) => {
   return sleepingHours;
 };
 
-export const calculateEventStats = (events, userSettings) => {
+export const calculateEventStats = (events) => {
   // TODO: Consider when events overlap in time
 
   // Initialize counters
@@ -215,38 +215,6 @@ export const findRecommendations = (
   workGoalActivities,
   lifeGoalActivities
 ) => {
-  console.log("[eventUtils.js] eventType: ", eventType);
-  console.log("[eventUtils.js] ignoreUnalotted: ", ignoreUnalotted);
-  console.log("[eventUtils.js] percentageBasis: ", percentageBasis);
-  console.log("[eventUtils.js] settingsBalanceGoal: ", settingsBalanceGoal);
-  console.log("[eventUtils.js] workPercentage: ", workPercentage);
-  console.log("[eventUtils.js] lifePercentage: ", lifePercentage);
-  console.log(
-    "[eventUtils.js] workPercentageWithSleepingHours: ",
-    workPercentageWithSleepingHours
-  );
-  console.log(
-    "[eventUtils.js] lifePercentageWithSleepingHours: ",
-    lifePercentageWithSleepingHours
-  );
-  console.log(
-    "[eventUtils.js] workPercentageIgnoreUnalotted: ",
-    workPercentageIgnoreUnalotted
-  );
-  console.log(
-    "[eventUtils.js] lifePercentageIgnoreUnalotted: ",
-    lifePercentageIgnoreUnalotted
-  );
-  console.log(
-    "[eventUtils.js] workPreferredActivities: ",
-    workPreferredActivities
-  );
-  console.log(
-    "[eventUtils.js] lifePreferredActivities: ",
-    lifePreferredActivities
-  );
-  console.log("[eventUtils.js] workGoalActivities: ", workGoalActivities);
-  console.log("[eventUtils.js] lifeGoalActivities: ", lifeGoalActivities);
 
   let targetPercentage;
   let otherPercentage;
@@ -287,8 +255,6 @@ export const findRecommendations = (
     activityPool = lifePreferredActivities;
     recommendationSource = lifeGoalActivities;
   }
-
-  console.log("[eventUtils.js] activityPool: ", activityPool);
 
   const preferredActivities = Array.from(
     Object.entries(activityPool)

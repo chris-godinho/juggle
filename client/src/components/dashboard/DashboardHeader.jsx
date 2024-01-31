@@ -1,65 +1,35 @@
 // DashboardHeader.jsx
 
-import React, { useState, useEffect } from "react";
-
 import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
-import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
-
-import { calculateEventStats } from "../../utils/eventUtils.js";
 
 import NewEvent from "./NewEvent.jsx";
 import UserMenu from "../usermenu/UserMenu.jsx";
 
 export default function DashboardHeader() {
   const {
-    events,
-    selectedDate,
-    setSelectedDate,
     username,
     userId,
+    selectedDate,
+    setSelectedDate,
     eventSubtypes,
     eventsRefetch,
+    showStats,
+    percentageBasis,
+    ignoreUnalotted,
+    dashboardLayout,
+    unalottedTimePercentage,
+    unalottedTimePercentageWithSleepingHours,
   } = useDataContext();
 
   const { openModal } = useModal();
 
-  const { userSettings, isLoadingSettings } = useUserSettings();
-
-  const localStorageLayout = localStorage.getItem("layout");
-
-  const [dashboardLayout, setDashboardLayout] = useState(
-    localStorageLayout || "two-sidebars"
-  );
-  const [showStats, setShowStats] = useState(true);
-  const [percentageBasis, setPercentageBasis] = useState("waking");
-  const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
-
-  useEffect(() => {
-    if (!isLoadingSettings) {
-      // Data fetching is complete, update the state
-      setShowStats(userSettings.statSettings?.showStats ?? true);
-      setPercentageBasis(
-        userSettings.statSettings?.percentageBasis ?? "waking"
-      );
-      setIgnoreUnalotted(userSettings.statSettings?.ignoreUnalotted ?? false);
-      setDashboardLayout(
-        userSettings?.layoutSettings?.dashboardLayout ??
-          localStorageLayout ??
-          "two-sidebars"
-      );
-    }
-  }, [userSettings, isLoadingSettings]);
-
   const handleNewEventModalClose = () => {
     eventsRefetch();
   };
-
-  const { unalottedTimePercentage, unalottedTimePercentageWithSleepingHours } =
-    calculateEventStats(events);
 
   const selectPreviousDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));

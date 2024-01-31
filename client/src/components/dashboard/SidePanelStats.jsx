@@ -1,50 +1,35 @@
 // SidePanelStats.jsx
 
-import React, { useState, useEffect } from "react";
-
 import { useDataContext } from "../contextproviders/DataContext";
-import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import {
   findDisplayPercentage,
   findDisplayText,
 } from "../../utils/eventUtils.js";
 
-export default function SidePanelStats({
-  eventType,
-  workPercentage,
-  lifePercentage,
-  workPercentageWithSleepingHours,
-  lifePercentageWithSleepingHours,
-  workPercentageIgnoreUnalotted,
-  lifePercentageIgnoreUnalotted,
-}) {
-  const { events } = useDataContext();
+export default function SidePanelStats({ eventType }) {
+  const {
+    eventsLoading,
+    percentageBasis,
+    ignoreUnalotted,
+    dashboardLayout,
+    workPercentage,
+    lifePercentage,
+    workPercentageWithSleepingHours,
+    lifePercentageWithSleepingHours,
+    workPercentageIgnoreUnalotted,
+    lifePercentageIgnoreUnalotted,
+  } = useDataContext();
 
-  const { userSettings, isLoadingSettings } = useUserSettings();
-
-  const localStorageLayout = localStorage.getItem("layout");
-
-  const [percentageBasis, setPercentageBasis] = useState("waking");
-  const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
-  const [dashboardLayout, setDashboardLayout] = useState(
-    localStorageLayout || "two-sidebars"
-  );
-
-  useEffect(() => {
-    if (!isLoadingSettings) {
-      // Data fetching is complete, update the state
-      setPercentageBasis(
-        userSettings.statSettings?.percentageBasis ?? "waking"
-      );
-      setIgnoreUnalotted(userSettings.statSettings?.ignoreUnalotted ?? false);
-      setDashboardLayout(
-        userSettings?.layoutSettings?.dashboardLayout ??
-          localStorageLayout ??
-          "two-sidebars"
-      );
-    }
-  }, [userSettings, isLoadingSettings]);
+  console.log("[SidePanelStats.jsx] percentageBasis: ", percentageBasis);
+  console.log("[SidePanelStats.jsx] ignoreUnalotted: ", ignoreUnalotted);
+  console.log("[SidePanelStats.jsx] dashboardLayout: ", dashboardLayout);
+  console.log("[SidePanelStats.jsx] workPercentage: ", workPercentage);
+  console.log("[SidePanelStats.jsx] lifePercentage: ", lifePercentage);
+  console.log("[SidePanelStats.jsx] workPercentageWithSleepingHours: ", workPercentageWithSleepingHours);
+  console.log("[SidePanelStats.jsx] lifePercentageWithSleepingHours: ", lifePercentageWithSleepingHours);
+  console.log("[SidePanelStats.jsx] workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
+  console.log("[SidePanelStats.jsx] lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
 
   const displayPercentage = findDisplayPercentage(
     eventType,
@@ -91,12 +76,14 @@ export default function SidePanelStats({
       >
         <h1>{displayPercentage}%</h1>
       </div>
-      <div className={`side-panel-bottom-jg ${
+      <div
+        className={`side-panel-bottom-jg ${
           dashboardLayout === "one-sidebar-left" ||
           dashboardLayout === "one-sidebar-right"
             ? "side-panel-stats-bottom-one-sidebar-jg"
             : ""
-        }`}>
+        }`}
+      >
         <p>{displayText}</p>
       </div>
     </>

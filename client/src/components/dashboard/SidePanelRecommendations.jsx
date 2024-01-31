@@ -1,9 +1,6 @@
 // SidePanelRecommendations.jsx
 
-import { useState, useEffect } from "react";
-
 import { useDataContext } from "../contextproviders/DataContext";
-import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import { findRecommendations } from "../../utils/eventUtils.js";
 
@@ -12,53 +9,27 @@ import {
   lifeGoalActivities,
 } from "../../utils/preferredActivities.js";
 
-export default function SidePanelRecommendations({
-  eventType,
-  workPercentage,
-  lifePercentage,
-  workPercentageWithSleepingHours,
-  lifePercentageWithSleepingHours,
-  workPercentageIgnoreUnalotted,
-  lifePercentageIgnoreUnalotted,
-}) {
-  const { events } = useDataContext();
-
-  const { userSettings, isLoadingSettings } = useUserSettings();
-
-  const localStorageLayout = localStorage.getItem("layout");
-
-  const [percentageBasis, setPercentageBasis] = useState("waking");
-  const [ignoreUnalotted, setIgnoreUnalotted] = useState(false);
-  const [workPreferredActivities, setWorkPreferredActivities] = useState([]);
-  const [lifePreferredActivities, setLifePreferredActivities] = useState([]);
-  const [settingsBalanceGoal, setSettingsBalanceGoal] = useState(0);
-  const [dashboardLayout, setDashboardLayout] = useState(
-    localStorageLayout || "two-sidebars"
-  );
-
-  useEffect(() => {
-    if (!isLoadingSettings) {
-      // Data fetching is complete, update the state
-      setPercentageBasis(
-        userSettings.statSettings?.percentageBasis ?? "waking"
-      );
-      setIgnoreUnalotted(userSettings.statSettings?.ignoreUnalotted ?? false);
-      setWorkPreferredActivities(userSettings.workPreferredActivities ?? []);
-      setLifePreferredActivities(userSettings.lifePreferredActivities ?? []);
-      setSettingsBalanceGoal(userSettings.statSettings?.balanceGoal ?? 0);
-      setDashboardLayout(
-        userSettings?.layoutSettings?.dashboardLayout ??
-          localStorageLayout ??
-          "two-sidebars"
-      );
-    }
-  }, [userSettings, isLoadingSettings]);
+export default function SidePanelRecommendations({ eventType }) {
+  const {
+    percentageBasis,
+    ignoreUnalotted,
+    dashboardLayout,
+    workPercentage,
+    lifePercentage,
+    workPercentageWithSleepingHours,
+    lifePercentageWithSleepingHours,
+    workPercentageIgnoreUnalotted,
+    lifePercentageIgnoreUnalotted,
+    workPreferredActivities,
+    lifePreferredActivities,
+    balanceGoal,
+  } = useDataContext();
 
   const recommendationList = findRecommendations(
     eventType,
     ignoreUnalotted,
     percentageBasis,
-    settingsBalanceGoal,
+    balanceGoal,
     dashboardLayout,
     workPercentage,
     lifePercentage,

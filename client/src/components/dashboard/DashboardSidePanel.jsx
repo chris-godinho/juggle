@@ -1,11 +1,6 @@
 // DashboardSidePanel.jsx
 
-import React, { useState, useEffect } from "react";
-
 import { useDataContext } from "../contextproviders/DataContext";
-import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
-
-import { calculateEventStats } from "../../utils/eventUtils.js";
 
 import LoadingSpinner from "../other/LoadingSpinner.jsx";
 import SidePanelBrand from "./SidePanelBrand.jsx";
@@ -16,47 +11,19 @@ import SidePanelRecommendations from "./SidePanelRecommendations.jsx";
 import DigitalClock from "./DigitalClock.jsx";
 
 export default function DashboardSidePanel({ eventType }) {
-  const { userSettings, isLoadingSettings } = useUserSettings();
-
-  const localStorageLayout = localStorage.getItem("layout");
-
-  const [showStats, setShowStats] = useState(true);
-  const [dashboardLayout, setDashboardLayout] = useState(
-    localStorageLayout || "two-sidebars"
-  );
-
   const sidePanelSpinnerStyle = {
     spinnerWidth: "16%",
     spinnerHeight: "95vh",
     spinnerElWidthHeight: "100px",
   };
 
-  const { events, eventsLoading, userLoading } = useDataContext();
-
   const {
-    eventCount,
-    totalAlottedTime,
-    totalAlottedTimeWithSleepingHours,
-    totalAlottedTimeIgnoreUnalotted,
-    workPercentage,
-    lifePercentage,
-    workPercentageWithSleepingHours,
-    lifePercentageWithSleepingHours,
-    workPercentageIgnoreUnalotted,
-    lifePercentageIgnoreUnalotted,
-  } = calculateEventStats(events);
-
-  useEffect(() => {
-    if (!isLoadingSettings) {
-      // Data fetching is complete, update the state
-      setShowStats(userSettings.statSettings?.showStats ?? true);
-      setDashboardLayout(
-        userSettings?.layoutSettings?.dashboardLayout ??
-          localStorageLayout ??
-          "two-sidebars"
-      );
-    }
-  }, [userSettings, isLoadingSettings]);
+    events,
+    eventsLoading,
+    userLoading,
+    showStats,
+    dashboardLayout,
+  } = useDataContext();
 
   const hasMatchingWorkEvents = events.some(
     (event) => "work" === event.type.toLowerCase()
@@ -122,16 +89,6 @@ export default function DashboardSidePanel({ eventType }) {
                     ? "Work"
                     : eventType
                 }
-                workPercentage={workPercentage}
-                lifePercentage={lifePercentage}
-                workPercentageWithSleepingHours={
-                  workPercentageWithSleepingHours
-                }
-                lifePercentageWithSleepingHours={
-                  lifePercentageWithSleepingHours
-                }
-                workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
-                lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
             )}
             {(showStats &&
@@ -146,14 +103,6 @@ export default function DashboardSidePanel({ eventType }) {
                       : eventType
                   }
                   hasMatchingEvents={hasMatchingEvents}
-                  totalAlottedTime={totalAlottedTime}
-                  totalAlottedTimeWithSleepingHours={
-                    totalAlottedTimeWithSleepingHours
-                  }
-                  totalAlottedTimeIgnoreUnalotted={
-                    totalAlottedTimeIgnoreUnalotted
-                  }
-                  showStats={showStats}
                 />
               ))}
 
@@ -165,16 +114,6 @@ export default function DashboardSidePanel({ eventType }) {
                     ? "Work"
                     : eventType
                 }
-                workPercentage={workPercentage}
-                lifePercentage={lifePercentage}
-                workPercentageWithSleepingHours={
-                  workPercentageWithSleepingHours
-                }
-                lifePercentageWithSleepingHours={
-                  lifePercentageWithSleepingHours
-                }
-                workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
-                lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
             )}
           </>
@@ -200,16 +139,6 @@ export default function DashboardSidePanel({ eventType }) {
                     ? "Life"
                     : eventType
                 }
-                workPercentage={workPercentage}
-                lifePercentage={lifePercentage}
-                workPercentageWithSleepingHours={
-                  workPercentageWithSleepingHours
-                }
-                lifePercentageWithSleepingHours={
-                  lifePercentageWithSleepingHours
-                }
-                workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
-                lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
               <SidePanelRecommendations
                 eventType={
@@ -218,16 +147,6 @@ export default function DashboardSidePanel({ eventType }) {
                     ? "Life"
                     : eventType
                 }
-                workPercentage={workPercentage}
-                lifePercentage={lifePercentage}
-                workPercentageWithSleepingHours={
-                  workPercentageWithSleepingHours
-                }
-                lifePercentageWithSleepingHours={
-                  lifePercentageWithSleepingHours
-                }
-                workPercentageIgnoreUnalotted={workPercentageIgnoreUnalotted}
-                lifePercentageIgnoreUnalotted={lifePercentageIgnoreUnalotted}
               />
             </div>
           </>
