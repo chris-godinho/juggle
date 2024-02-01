@@ -44,7 +44,6 @@ const Schedule = () => {
 
   // Function to build the initial layout
   const buildLayout = (events) => {
-    console.log("[Schedule.jsx] in buildLayout()");
     const initialLayout = [];
     events.map((event) => {
       const { adjustedBoxHeight, adjustedBoxPosition, className } = buildEventBox(event, displayDate);
@@ -70,7 +69,6 @@ const Schedule = () => {
 
   // Function to handle clicking on an event (opens the event details modal)
   const handleEventClick = (event) => {
-    console.log("[Schedule.jsx] in handleEventClick()");
     openModal(
       <EventDetails
         eventId={event._id}
@@ -144,7 +142,6 @@ const Schedule = () => {
 
   // Function to handle dragging an event
   const handleDragResizeStop = (layout) => {
-    console.log("[Schedule.jsx] in handleDragResizeStop()");
 
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout);
@@ -199,14 +196,10 @@ const Schedule = () => {
           onResizeStop={handleDragResizeStop}
         >
           {events.map((event) => {
-            console.log("[Schedule.jsx] event:", event);
-            console.log("[Schedule.jsx] eventBoxProps:", eventBoxProps);
 
             const matchingProp = eventBoxProps.find(
               (eventBoxProp) => eventBoxProp.event._id === event._id
             );
-
-            console.log("[Schedule.jsx] matchingProp:", matchingProp);
 
             const className = matchingProp ? matchingProp.className : "";
 

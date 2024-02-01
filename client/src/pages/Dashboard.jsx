@@ -108,6 +108,7 @@ export default function Dashboard() {
           userSettings?.statSettings?.ignoreUnalotted !== undefined
             ? userSettings?.statSettings?.ignoreUnalotted
             : false,
+        sleepingHours: userSettings?.sleepingHours || {},
         eventSubtypes: userSettings?.eventSubtypes || {},
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
@@ -131,7 +132,7 @@ export default function Dashboard() {
     if (!eventsLoading) {
       try {
         // Fetch data or perform any necessary asynchronous operation
-        const result = calculateEventStats(events);
+        const result = calculateEventStats(events, fetchedSettings, selectedDate);
         console.log("[Dashboard.jsx] result:", result);
         // Set state variables with the same names
         setFetchedEventData(result);
@@ -141,7 +142,7 @@ export default function Dashboard() {
         console.error("[Dashboard.jsx] Error fetching data:", error);
       }
     }
-  }, [events, eventsLoading]);
+  }, [events, eventsLoading, fetchedSettings, selectedDate]);
 
   useEffect(() => {
     eventsRefetch();

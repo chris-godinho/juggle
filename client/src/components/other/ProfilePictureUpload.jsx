@@ -3,7 +3,12 @@ import { useDropzone } from "react-dropzone";
 import Cropper from "react-cropper";
 import "cropperjs/dist/cropper.css";
 
+import AuthService from "../../utils/auth.js";
+
 const ProfilePictureUpload = () => {
+  const userProfile = AuthService.getProfile();
+  const username = userProfile?.data?.username || "";
+
   const [uploadedImage, setUploadedImage] = useState(null);
   const [cropper, setCropper] = useState(null);
   const [imagePreview, setImagePreview] = useState(null);
@@ -19,40 +24,44 @@ const ProfilePictureUpload = () => {
     reader.readAsDataURL(file);
   }, []);
 
-  const handleCrop = () => {
-    const croppedData = cropper.getCroppedCanvas().toDataURL();
-    console.log("[ProfilePictureUpload.jsx] croppedData:", croppedData);
-
-    // Use the fetch API to send the data to the server
-
-    // Create FormData
-    const formData = new FormData();
-    formData.append(
-      "profileImage",
-      dataURItoBlob(croppedData),
-      "profileImage.png"
-    );
-
-    // TODO: Will the port be a problem when deploying to Heroku?
-
-    fetch("http://localhost:3001/upload", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ data: croppedData }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Error uploading file");
-        }
-        // Handle success, e.g., redirect to another page
-        window.location.href = "/success";
-      })
-      .catch((error) => {
-        console.error(error);
-        // Handle error, e.g., show an error message to the user
+  const handleCrop = async () => {
+    if (!cropper) {
+      return;
+    }
+  
+    try {
+      // Get the cropped data as a Blob
+      const croppedBlob = await new Promise((resolve) => {
+        cropper.getCroppedCanvas().toBlob((blob) => {
+          resolve(blob);
+        });
       });
+  
+      // Create an S3 instance
+      const s3 = new AWS.S3();
+  
+      // Set the bucket name and key (path) for the object
+      const bucketName = "juggler-app-bucket";
+      // TODO: Do I need to adapt to the file extension?
+      const key = `${username}/profilePicture.png`;
+  
+      // Upload the Blob to S3
+      await s3
+        .upload({
+          Bucket: bucketName,
+          Key: key,
+          Body: croppedBlob,
+          ContentType: "image/png",
+          ACL: "public-read", // Adjust ACL as needed
+        })
+        .promise();
+  
+      // Handle success, e.g., redirect to another page
+      window.location.href = "/success";
+    } catch (error) {
+      console.error(error);
+      // Handle error, e.g., show an error message to the user
+    }
   };
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({

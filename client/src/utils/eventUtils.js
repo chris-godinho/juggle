@@ -1,41 +1,72 @@
 // eventUtils.js
 
-export const calculateSleepingHours = (userSettings) => {
-  console.log("[eventUtils.js] userSettings: ", userSettings);
-  const sleepingHoursMatrix = userSettings?.sleepingHours && {};
-  let sleepingHours = 0;
+import { removeTypename } from "./helpers";
 
-  // Iterate through the days of the week
-  Object.keys(sleepingHoursMatrix).forEach((day) => {
-    const { start, end } = sleepingHoursMatrix[day];
+export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
+  const weekdayList = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+
+  console.log("[eventUtils.js] fetchedSettings: ", fetchedSettings);
+  console.log(
+    "[eventUtils.js] fetchedSettings?.sleepingHours: ",
+    fetchedSettings?.sleepingHours
+  );
+  const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
+  console.log("[eventUtils.js] sleepingHoursMatrix: ", sleepingHoursMatrix);
+  const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
+  console.log(
+    "[eventUtils.js] filteredSleepingHoursMatrix: ",
+    filteredSleepingHoursMatrix
+  );
+  let sleepingHoursInMinutes = 0;
+  const targetDay = weekdayList[selectedDate.getDay()];
+
+  if (filteredSleepingHoursMatrix[targetDay]) {
+    const { start, end } = filteredSleepingHoursMatrix[targetDay];
+    console.log("[eventUtils.js] start: ", start);
+    console.log("[eventUtils.js] end: ", end);
 
     // Convert start and end times to Date objects
     const startTime = new Date(`January 1, 2022 ${start}`);
     const endTime = new Date(`January 1, 2022 ${end}`);
+    console.log("[eventUtils.js] startTime: ", startTime);
+    console.log("[eventUtils.js] endTime: ", endTime);
 
     // Check if end time is earlier than start time (next day)
     if (endTime < startTime) {
+      console.log(
+        "[eventUtils.js] endTime < startTime, adjusting end time to next day..."
+      );
       // Adjust the end time to be on the next day
       endTime.setDate(endTime.getDate() + 1);
+      console.log("[eventUtils.js] new endTime: ", endTime);
     }
 
     // Calculate the time difference in milliseconds
     const timeDifference = endTime - startTime;
+    console.log("[eventUtils.js] timeDifference: ", timeDifference);
 
-    // Convert milliseconds to hours
-    const hoursDifference = timeDifference / (1000 * 60 * 60 * 60);
+    // Convert milliseconds to minutes
+    sleepingHoursInMinutes = timeDifference / (1000 * 60);
+  }
 
-    // Add the hours to the total
-    sleepingHours += hoursDifference;
-  });
+  console.log(
+    "[eventUtils.js] sleepingHoursInMinutes: ",
+    sleepingHoursInMinutes
+  );
 
-  console.log("[eventUtils.js] sleepingHours: ", sleepingHours);
-
-  return sleepingHours;
+  return sleepingHoursInMinutes;
 };
 
-export const calculateEventStats = (events) => {
-  // TODO: Consider when events overlap in time
+export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
+  console.log("[eventUtils.js] selectedDate: ", selectedDate);
 
   // Initialize counters
   let workCount = 0;
@@ -66,10 +97,14 @@ export const calculateEventStats = (events) => {
   workTotalTime /= 1000 * 60;
   lifeTotalTime /= 1000 * 60;
 
-  // const sleepingHours = calculateSleepingHours(userSettings);
-  const sleepingHours = 8 * 60;
+  const sleepingHoursInMinutes = calculateSleepingHours(
+    fetchedSettings,
+    selectedDate
+  );
+  // const sleepingHours = 8 * 60;
   const totalAlottedTimeWithSleepingHours = 24 * 60;
-  const totalAlottedTime = totalAlottedTimeWithSleepingHours - sleepingHours;
+  const totalAlottedTime =
+    totalAlottedTimeWithSleepingHours - sleepingHoursInMinutes;
   const totalAlottedTimeIgnoreUnalotted = workTotalTime + lifeTotalTime;
 
   let workPercentage = 0;
@@ -213,30 +248,8 @@ export const findRecommendations = (
   workPercentageWithSleepingHours,
   lifePercentageWithSleepingHours,
   workPercentageIgnoreUnalotted,
-  lifePercentageIgnoreUnalotted,
+  lifePercentageIgnoreUnalotted
 ) => {
-  console.log("[eventUtils.js] eventType: ", eventType);
-  console.log("[eventUtils.js] ignoreUnalotted: ", ignoreUnalotted);
-  console.log("[eventUtils.js] percentageBasis: ", percentageBasis);
-  console.log("[eventUtils.js] balanceGoal: ", balanceGoal);
-  console.log("[eventUtils.js] isOneBarLayout: ", isOneBarLayout);
-  console.log("[eventUtils.js] workPercentage: ", workPercentage);
-  console.log("[eventUtils.js] lifePercentage: ", lifePercentage);
-  console.log(
-    "[eventUtils.js] workPercentageWithSleepingHours: ",
-    workPercentageWithSleepingHours
-  );
-  console.log(
-    "[eventUtils.js] lifePercentageWithSleepingHours: ",
-    lifePercentageWithSleepingHours
-  );
-  console.log("[eventUtils.js] workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
-  console.log("[eventUtils.js] lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
-  console.log("[eventUtils.js] workPreferredActivities: ", workPreferredActivities);
-  console.log("[eventUtils.js] lifePreferredActivities: ", lifePreferredActivities);
-  console.log("[eventUtils.js] workGoalActivities: ", workGoalActivities);
-  console.log("[eventUtils.js] lifeGoalActivities: ", lifeGoalActivities);
-
   let targetPercentage;
   let otherPercentage;
   let activityPool = {};
@@ -302,10 +315,7 @@ export const findRecommendations = (
     recommendationCount = 0;
   }
 
-  if (
-    isOneBarLayout &&
-    recommendationCount > 2
-  ) {
+  if (isOneBarLayout && recommendationCount > 2) {
     recommendationCount = 2;
   }
 

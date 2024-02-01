@@ -7,7 +7,7 @@
   --main-background-color-accent: rgba(48, 55, 53, 1);
   --main-background-color-darker-accent: rgba(20, 27, 25, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.3);
+  --main-separator-color: rgba(148, 151, 149, 0.2);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
   --input-background-color: rgba(28, 35, 33, 1);
@@ -2122,6 +2122,7 @@ input[type="checkbox"]:disabled {
 
 .fireworks-jg {
   fill: transparent;
+  height: 55vh;
 }
 
 path[class="firework-color-1-jg"],

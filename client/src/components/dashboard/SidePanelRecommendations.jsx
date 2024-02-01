@@ -32,9 +32,6 @@ export default function SidePanelRecommendations({ eventType }) {
       workGoalActivities &&
       lifeGoalActivities
     ) {
-      console.log(
-        "[SidePanelRecommendations.jsx] calling findRecommendations..."
-      );
       const resultList = findRecommendations(
         eventType,
         isOneBarLayout,

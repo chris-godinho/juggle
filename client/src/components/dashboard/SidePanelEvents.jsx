@@ -26,11 +26,6 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
       ) {
         const formattedEvent = {};
         formattedEvent.eventId = event._id;
-        console.log("[SidePanelEvents.jsx] event._id:", event._id);
-        console.log(
-          "[SidePanelEvents.jsx] formattedEvent.eventId:",
-          formattedEvent.eventId
-        );
         formattedEvent.startTime = formatEventStartTime(event.eventStart);
         formattedEvent.title = event.title;
         if (fetchedSettings?.showStats) {

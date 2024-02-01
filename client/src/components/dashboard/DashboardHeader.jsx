@@ -1,5 +1,7 @@
 // DashboardHeader.jsx
 
+import { useState, useEffect } from "react";
+
 import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
 
@@ -24,6 +26,9 @@ export default function DashboardHeader() {
 
   const { openModal } = useModal();
 
+  const [unalottedTimePercentage, setUnalottedTimePercentage] = useState(0);
+  const [unalottedTimePercentageWithSleepingHours, setUnalottedTimePercentageWithSleepingHours] = useState(0);
+
   const eventTypes = ["Work", "Life"];
 
   const displayPercentages = eventTypes.map((eventType) =>
@@ -39,6 +44,22 @@ export default function DashboardHeader() {
       fetchedEventData?.lifePercentageWithSleepingHours
     )
   );
+
+  useEffect(() => {
+    if (fetchedEventData?.unalottedTimePercentage < 0) {
+      setUnalottedTimePercentage(0);
+    } else {
+      setUnalottedTimePercentage(fetchedEventData?.unalottedTimePercentage);
+    }
+    if (fetchedEventData?.unalottedTimePercentageWithSleepingHours < 0) {
+      setUnalottedTimePercentageWithSleepingHours(0);
+    } else {
+      setUnalottedTimePercentageWithSleepingHours(
+        fetchedEventData?.unalottedTimePercentageWithSleepingHours
+      );
+    }
+  }, [fetchedEventData]);
+
 
   const handleNewEventModalClose = () => {
     eventsRefetch();
@@ -114,8 +135,8 @@ export default function DashboardHeader() {
               <p>
                 Unalotted Time:{" "}
                 {fetchedSettings?.percentageBasis === "waking"
-                  ? fetchedEventData?.unalottedTimePercentage
-                  : fetchedEventData?.unalottedTimePercentageWithSleepingHours}
+                  ? unalottedTimePercentage
+                  : unalottedTimePercentageWithSleepingHours}
                 %
               </p>
             </div>

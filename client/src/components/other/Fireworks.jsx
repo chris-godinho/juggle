@@ -7,9 +7,9 @@ export default function Fireworks() {
         className="fireworks-jg"
         enableBackground="new 0 0 531.863 444.852"
         height="444.852"
-        i:pageBounds="0 792 612 0"
-        i:rulerOrigin="0 0"
-        i:viewOrigin="39 618"
+        i:pagebounds="0 792 612 0"
+        i:rulerorigin="0 0"
+        i:vieworigin="39 618"
         overflow="visible"
         space="preserve"
         viewBox="0 0 531.863 444.852"
@@ -19,7 +19,7 @@ export default function Fireworks() {
         xmlns:graph="http://ns.adobe.com/Graphs/1.0/"
         xmlns:i="http://ns.adobe.com/AdobeIllustrator/10.0/"
         xmlns:x="http://ns.adobe.com/Extensibility/1.0/"
-        xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlnsXlink="http://www.w3.org/1999/xlink"
       >
         <metadata>
           <rdf:RDF
@@ -67,9 +67,9 @@ export default function Fireworks() {
         </metadata>
 
         <g
-          i:dimmedPercent="50"
+          i:dimmedpercent="50"
           i:layer="yes"
-          i:rgbTrio="#4F008000FFFF"
+          i:rgbtrio="#4F008000FFFF"
           id="Layer_1"
         >
           <g>

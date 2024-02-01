@@ -8,7 +8,6 @@ const assignClassNames = (
   startsOnSelectedDate,
   endsNextDay
 ) => {
-  console.log("[Schedule.jsx] in assignClassNames()");
   let className = "schedule-event-box-jg";
 
   if (event.type === "work") {

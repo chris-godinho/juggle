@@ -12,8 +12,8 @@ export default function SidePanelStats({ eventType }) {
 
   const displayPercentage = findDisplayPercentage(
     eventType,
-    fetchedSettings?.statSettings?.ignoreUnalotted,
-    fetchedSettings?.statSettings?.percentageBasis,
+    fetchedSettings?.ignoreUnalotted,
+    fetchedSettings?.percentageBasis,
     fetchedEventData?.workPercentage,
     fetchedEventData?.workPercentageIgnoreUnalotted,
     fetchedEventData?.workPercentageWithSleepingHours,
@@ -23,8 +23,8 @@ export default function SidePanelStats({ eventType }) {
   );
 
   const displayText = findDisplayText(
-    fetchedSettings?.statSettings?.ignoreUnalotted,
-    fetchedSettings?.statSettings?.percentageBasis
+    fetchedSettings?.ignoreUnalotted,
+    fetchedSettings?.percentageBasis
   );
 
   return (

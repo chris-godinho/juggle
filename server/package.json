@@ -14,6 +14,7 @@
   "dependencies": {
     "@apollo/server": "^4.7.1",
     "apollo-server-express": "^3.6.2",
+    "aws-sdk": "^2.1548.0",
     "bcrypt": "^5.0.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.1",
