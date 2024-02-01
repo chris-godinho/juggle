@@ -6,6 +6,7 @@ import { UPDATE_USER_SETTINGS } from "../../utils/mutations.js";
 
 import LoadingSpinner from "../other/LoadingSpinner.jsx";
 
+import { removeTypename } from "../../utils/helpers.js";
 import AuthService from "../../utils/auth.js";
 
 const UserSettingsContext = createContext();
@@ -41,21 +42,29 @@ export const UserSettingsProvider = ({ children }) => {
 
   useEffect(() => {
     if (!loading && !error && data) {
+      console.log("[UserSettingsProvider.jsx] User Settings query finished. data:", data);
       setUserSettings(data.user);
       setIsLoadingSettings(false);
+      console.log("[UserSettingsProvider.jsx] isLoadingSettings set to false");
     }
   }, [loading, error, data]);
 
   const updateProviderUserSettings = async (newSettings) => {
     console.log("[UserSettingsProvider.jsx] updateProviderUserSettings()");
+  
+    // Remove __typename from newSettings
+    const cleanSettings = removeTypename(newSettings);
+  
     setUserSettings((prevSettings) => ({
       ...prevSettings,
       ...newSettings,
     }));
+  
+    console.log("[UserSettingsProvider.jsx] cleanSettings:", cleanSettings);
 
     try {
       const { data } = await updateUserSettings({
-        variables: { ...newSettings },
+        variables: { ...cleanSettings },
       });
     } catch (err) {
       console.error(err);

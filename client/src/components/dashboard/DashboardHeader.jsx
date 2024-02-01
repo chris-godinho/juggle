@@ -9,16 +9,36 @@ import "flatpickr/dist/themes/dark.css";
 import NewEvent from "./NewEvent.jsx";
 import UserMenu from "../usermenu/UserMenu.jsx";
 
+import { findDisplayPercentage } from "../../utils/eventUtils.js";
+
 export default function DashboardHeader() {
   const {
     selectedDate,
     setSelectedDate,
+    hasRightSidebar,
+    hasLeftSidebar,
     eventsRefetch,
     fetchedSettings,
     fetchedEventData,
   } = useDataContext();
 
   const { openModal } = useModal();
+
+  const eventTypes = ["Work", "Life"];
+
+  const displayPercentages = eventTypes.map((eventType) =>
+    findDisplayPercentage(
+      eventType,
+      fetchedSettings?.ignoreUnalotted,
+      fetchedSettings?.percentageBasis,
+      fetchedEventData?.workPercentage,
+      fetchedEventData?.workPercentageIgnoreUnalotted,
+      fetchedEventData?.workPercentageWithSleepingHours,
+      fetchedEventData?.lifePercentage,
+      fetchedEventData?.lifePercentageIgnoreUnalotted,
+      fetchedEventData?.lifePercentageWithSleepingHours
+    )
+  );
 
   const handleNewEventModalClose = () => {
     eventsRefetch();
@@ -35,16 +55,8 @@ export default function DashboardHeader() {
   return (
     <header
       className={`dashboard-header-jg ${
-        fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" ||
-        fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left"
-          ? "dashboard-header-one-sidebar-left-jg"
-          : ""
-      } ${
-        fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" ||
-        fetchedSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
-          ? "dashboard-header-one-sidebar-right-jg"
-          : ""
-      }`}
+        !hasRightSidebar ? "dashboard-header-one-sidebar-left-jg" : ""
+      } ${!hasLeftSidebar ? "dashboard-header-one-sidebar-right-jg" : ""}`}
     >
       <div className="dashboard-header-button-container-jg">
         <button
@@ -66,10 +78,10 @@ export default function DashboardHeader() {
           />
         </button>
       </div>
-      {fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" && fetchedSettings?.statSettings?.showStats && (
+      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
         <>
           <div className="dashboard-header-percentage-jg work-text-jg">
-            <h2>50%</h2>
+            <h2>{displayPercentages[0]}%</h2>
             <p>Work</p>
           </div>
         </>
@@ -96,33 +108,35 @@ export default function DashboardHeader() {
             <span className="material-symbols-outlined">arrow_forward_ios</span>
           </a>
         </div>
-        {fetchedSettings?.statSettings?.showStats && !fetchedSettings?.statSettings?.ignoreUnalotted && (
-          <div className="unalotted-percentage-jg">
-            <p>
-              Unalotted Time:{" "}
-              {fetchedSettings?.statSettings.percentageBasis === "waking"
-                ? fetchedEventData?.unalottedTimePercentage
-                : fetchedEventData?.unalottedTimePercentageWithSleepingHours}
-              %
-            </p>
-          </div>
-        )}
+        {fetchedSettings?.showStats &&
+          !fetchedSettings?.ignoreUnalotted && (
+            <div className="unalotted-percentage-jg">
+              <p>
+                Unalotted Time:{" "}
+                {fetchedSettings?.percentageBasis === "waking"
+                  ? fetchedEventData?.unalottedTimePercentage
+                  : fetchedEventData?.unalottedTimePercentageWithSleepingHours}
+                %
+              </p>
+            </div>
+          )}
       </div>
-      {fetchedSettings?.layoutSettings?.dashboardLayout === "no-sidebars" && fetchedSettings?.statSettings?.showStats && (
-        <>
-          <div className="dashboard-header-percentage-jg life-text-jg">
-            <h2>50%</h2>
-            <p>Life</p>
-          </div>
-        </>
-      )}
+      {!hasLeftSidebar && !hasRightSidebar &&
+        fetchedSettings?.showStats && (
+          <>
+            <div className="dashboard-header-percentage-jg life-text-jg">
+              <h2>{displayPercentages[1]}%</h2>
+              <p>Life</p>
+            </div>
+          </>
+        )}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg life-border-jg life-border-link-jg"
           onClick={() =>
             openModal(
               <NewEvent
-                eventSubtypes={eventSubtypes}
+                eventSubtypes={fetchedSettings?.eventSubtypes}
                 handleNewEventModalClose={handleNewEventModalClose}
                 userId={fetchedSettings?.userId}
               />

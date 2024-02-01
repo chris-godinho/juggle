@@ -200,46 +200,46 @@ export const findDisplayText = (ignoreUnalotted, percentageBasis) => {
 
 export const findRecommendations = (
   eventType,
+  isOneBarLayout,
+  workGoalActivities,
+  lifeGoalActivities,
   ignoreUnalotted,
   percentageBasis,
-  settingsBalanceGoal,
-  dashboardLayout,
+  balanceGoal,
+  workPreferredActivities,
+  lifePreferredActivities,
   workPercentage,
   lifePercentage,
   workPercentageWithSleepingHours,
   lifePercentageWithSleepingHours,
   workPercentageIgnoreUnalotted,
   lifePercentageIgnoreUnalotted,
-  workPreferredActivities,
-  lifePreferredActivities,
-  workGoalActivities,
-  lifeGoalActivities
 ) => {
-  console.log("eventType: ", eventType);
-  console.log("ignoreUnalotted: ", ignoreUnalotted);
-  console.log("percentageBasis: ", percentageBasis);
-  console.log("settingsBalanceGoal: ", settingsBalanceGoal);
-  console.log("dashboardLayout: ", dashboardLayout);
-  console.log("workPercentage: ", workPercentage);
-  console.log("lifePercentage: ", lifePercentage);
+  console.log("[eventUtils.js] eventType: ", eventType);
+  console.log("[eventUtils.js] ignoreUnalotted: ", ignoreUnalotted);
+  console.log("[eventUtils.js] percentageBasis: ", percentageBasis);
+  console.log("[eventUtils.js] balanceGoal: ", balanceGoal);
+  console.log("[eventUtils.js] isOneBarLayout: ", isOneBarLayout);
+  console.log("[eventUtils.js] workPercentage: ", workPercentage);
+  console.log("[eventUtils.js] lifePercentage: ", lifePercentage);
   console.log(
-    "workPercentageWithSleepingHours: ",
+    "[eventUtils.js] workPercentageWithSleepingHours: ",
     workPercentageWithSleepingHours
   );
   console.log(
-    "lifePercentageWithSleepingHours: ",
+    "[eventUtils.js] lifePercentageWithSleepingHours: ",
     lifePercentageWithSleepingHours
   );
-  console.log("workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
-  console.log("lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
-  console.log("workPreferredActivities: ", workPreferredActivities);
-  console.log("lifePreferredActivities: ", lifePreferredActivities);
-  console.log("workGoalActivities: ", workGoalActivities);
-  console.log("lifeGoalActivities: ", lifeGoalActivities);
+  console.log("[eventUtils.js] workPercentageIgnoreUnalotted: ", workPercentageIgnoreUnalotted);
+  console.log("[eventUtils.js] lifePercentageIgnoreUnalotted: ", lifePercentageIgnoreUnalotted);
+  console.log("[eventUtils.js] workPreferredActivities: ", workPreferredActivities);
+  console.log("[eventUtils.js] lifePreferredActivities: ", lifePreferredActivities);
+  console.log("[eventUtils.js] workGoalActivities: ", workGoalActivities);
+  console.log("[eventUtils.js] lifeGoalActivities: ", lifeGoalActivities);
 
   let targetPercentage;
   let otherPercentage;
-  let activityPool = [];
+  let activityPool = {};
   let recommendationSource = [];
   let recommendationPool = [];
   let targetBalanceGoal;
@@ -248,7 +248,7 @@ export const findRecommendations = (
   let dividingFactor;
 
   if (eventType === "Work") {
-    targetBalanceGoal = settingsBalanceGoal;
+    targetBalanceGoal = balanceGoal;
     if (ignoreUnalotted) {
       targetPercentage = workPercentageIgnoreUnalotted;
       otherPercentage = lifePercentageIgnoreUnalotted;
@@ -262,7 +262,7 @@ export const findRecommendations = (
     activityPool = workPreferredActivities;
     recommendationSource = workGoalActivities;
   } else {
-    targetBalanceGoal = 100 - settingsBalanceGoal;
+    targetBalanceGoal = 100 - balanceGoal;
     if (ignoreUnalotted) {
       targetPercentage = lifePercentageIgnoreUnalotted;
       otherPercentage = workPercentageIgnoreUnalotted;
@@ -277,10 +277,8 @@ export const findRecommendations = (
     recommendationSource = lifeGoalActivities;
   }
 
-  const preferredActivities = Array.from(
-    Object.entries(activityPool)
-      .filter(([key, value]) => value === true)
-      .map(([key]) => key)
+  const preferredActivities = Object.keys(activityPool).filter(
+    (key) => activityPool[key] === true
   );
 
   if (ignoreUnalotted) {
@@ -305,8 +303,7 @@ export const findRecommendations = (
   }
 
   if (
-    (dashboardLayout === "one-sidebar-left" ||
-      dashboardLayout === "one-sidebar-right") &&
+    isOneBarLayout &&
     recommendationCount > 2
   ) {
     recommendationCount = 2;

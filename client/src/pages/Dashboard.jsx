@@ -33,18 +33,14 @@ export default function Dashboard() {
   const [fetchedSettings, setFetchedSettings] = useState({
     username: userProfile?.data?.username || "",
     userId: userProfile?.data?._id || "",
-    statSettings: {
-      showStats: true,
-      balanceGoal: 50,
-      percentageBasis: "waking",
-      ignoreUnalotted: false,
-    },
+    showStats: true,
+    balanceGoal: 50,
+    percentageBasis: "waking",
+    ignoreUnalotted: false,
     eventSubtypes: {},
     workPreferredActivities: {},
     lifePreferredActivities: {},
-    layoutSettings: {
-      dashboardLayout: localStorageLayout || "two-sidebars",
-    },
+    dashboardLayout: localStorageLayout || "two-sidebars",
   });
 
   const [fetchedEventData, setFetchedEventData] = useState({
@@ -66,6 +62,8 @@ export default function Dashboard() {
     lifePercentageIgnoreUnalotted: 0,
   });
 
+  const [hasLeftSidebar, setHasLeftSidebar] = useState(true);
+  const [hasRightSidebar, setHasRightSidebar] = useState(true);
   const [isOneBarLayout, setIsOneBarLayout] = useState(false);
 
   const scheduleSpinnerStyle = {
@@ -78,7 +76,6 @@ export default function Dashboard() {
   const {
     loading: eventsLoading,
     data: eventsData,
-    error: eventsError,
     refetch: eventsRefetch,
   } = useQuery(QUERY_EVENTS_BY_DATE, {
     variables: { user: fetchedSettings.userId, eventStart: selectedDate },
@@ -86,47 +83,62 @@ export default function Dashboard() {
 
   const events = eventsData?.eventsByDate || [];
 
+  // TODO: Remove this after testing
+  useEffect(() => {
+    console.log("[Dashboard.jsx] fetchedSettings:", fetchedSettings);
+  }, [fetchedSettings]);
+
   useEffect(() => {
     if (!isLoadingSettings) {
-      // Data fetching is complete, update the state
-      console.log("userSettings:", userSettings);
+      console.log(
+        "[Dashboard.jsx] Data fetching is complete, updating state variables..."
+      );
+      console.log("[Dashboard.jsx] userSettings:", userSettings);
       setFetchedSettings({
         username: userSettings?.username || "",
         userId: userSettings?._id || "",
-        statSettings: {
-          showStats: userSettings?.statSettings?.showStats || true,
-          balanceGoal: userSettings?.statSettings?.balanceGoal || 50,
-          percentageBasis:
-            userSettings?.statSettings?.percentageBasis || "waking",
-          ignoreUnalotted: userSettings?.statSettings?.ignoreUnalotted || false,
-        },
+        showStats:
+          userSettings?.statSettings?.showStats !== undefined
+            ? userSettings?.statSettings?.showStats
+            : true,
+        balanceGoal: userSettings?.statSettings?.balanceGoal || 50,
+        percentageBasis:
+          userSettings?.statSettings?.percentageBasis || "waking",
+        ignoreUnalotted:
+          userSettings?.statSettings?.ignoreUnalotted !== undefined
+            ? userSettings?.statSettings?.ignoreUnalotted
+            : false,
         eventSubtypes: userSettings?.eventSubtypes || {},
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
-        layoutSettings: {
-          dashboardLayout: userSettings?.layoutSettings?.dashboardLayout || "",
-        },
       });
-      setIsOneBarLayout(
+      const leftSidebar =
+        userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||
+        userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left";
+      const rightSidebar =
+        userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||
+        userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right";
+      const oneBarLayout =
         userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-left" ||
-          userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right"
-      );
-      console.log("fetchedSettings:", fetchedSettings);
+        userSettings?.layoutSettings?.dashboardLayout === "one-sidebar-right";
+      setHasLeftSidebar(leftSidebar);
+      setHasRightSidebar(rightSidebar);
+      setIsOneBarLayout(oneBarLayout);
     }
-  }, [userSettings, isLoadingSettings]);
+  }, [isLoadingSettings, userSettings]);
 
   useEffect(() => {
     if (!eventsLoading) {
       try {
         // Fetch data or perform any necessary asynchronous operation
         const result = calculateEventStats(events);
-        console.log("result:", result);
+        console.log("[Dashboard.jsx] result:", result);
         // Set state variables with the same names
         setFetchedEventData(result);
-        console.log("fetchedEventData:", fetchedEventData);
+        console.log("[Dashboard.jsx] fetchedEventData:", fetchedEventData);
       } catch (error) {
         // Handle errors
-        console.error("Error fetching data:", error);
+        console.error("[Dashboard.jsx] Error fetching data:", error);
       }
     }
   }, [events, eventsLoading]);
@@ -142,6 +154,8 @@ export default function Dashboard() {
         selectedDate,
         setSelectedDate,
         isOneBarLayout,
+        hasLeftSidebar,
+        hasRightSidebar,
         scheduleSpinnerStyle,
         eventsLoading,
         eventsRefetch,
@@ -153,25 +167,12 @@ export default function Dashboard() {
       <DashboardHeader />
       <main className="main-jg">
         <div className="dashboard-grid-jg">
-          {(fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "two-sidebars" ||
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-left") && <DashboardSidePanel eventType="Work" />}
+          {hasLeftSidebar && <DashboardSidePanel sidebarToRender="left" />}
 
           <div
             className={`dashboard-main-panel-jg ${
-              (fetchedSettings?.layoutSettings?.dashboardLayout ===
-                "one-sidebar-left" ||
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                  "no-sidebars") &&
-              "dashboard-main-one-sidebar-left-jg"
-            } ${
-              (fetchedSettings?.layoutSettings?.dashboardLayout ===
-                "one-sidebar-right" ||
-                fetchedSettings?.layoutSettings?.dashboardLayout ===
-                  "no-sidebars") &&
-              "dashboard-main-one-sidebar-right-jg"
-            }`}
+              !hasRightSidebar ? "dashboard-main-one-sidebar-left-jg" : ""
+            } ${!hasLeftSidebar ? "dashboard-main-one-sidebar-right-jg" : ""}`}
           >
             <div className="schedule-grid-container-jg">
               {eventsLoading ? (
@@ -180,21 +181,11 @@ export default function Dashboard() {
                   spinnerElWidthHeight="100px"
                 />
               ) : (
-                <Schedule
-                  key={selectedDate.getTime()}
-                  events={events}
-                  selectedDate={selectedDate}
-                  eventSubtypes={fetchedSettings?.eventSubtypes}
-                  eventsRefetch={eventsRefetch}
-                  scheduleSpinnerStyle={scheduleSpinnerStyle}
-                />
+                <Schedule key={selectedDate.getTime()} />
               )}
             </div>
           </div>
-          {(fetchedSettings?.layoutSettings?.dashboardLayout ===
-            "two-sidebars" ||
-            fetchedSettings?.layoutSettings?.dashboardLayout ===
-              "one-sidebar-right") && <DashboardSidePanel eventType="Life" />}
+          {hasRightSidebar && <DashboardSidePanel sidebarToRender="right" />}
         </div>
       </main>
     </DataContext.Provider>

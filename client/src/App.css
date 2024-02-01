@@ -1085,13 +1085,10 @@ input[type="checkbox"]:disabled {
   flex-direction: column;
   align-items: center;
   width: 100%;
-}
-
-.dashboard-side-panel-single-top-jg {
   height: 50%;
 }
 
-.dashboard-side-panel-single-bottom-jg {
+.dashboard-side-panel-single-top-jg {
   height: 50%;
 }
 

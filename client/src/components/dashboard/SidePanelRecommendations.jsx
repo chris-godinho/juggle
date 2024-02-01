@@ -1,6 +1,6 @@
 // SidePanelRecommendations.jsx
 
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 
 import { useDataContext } from "../contextproviders/DataContext";
 
@@ -20,27 +20,53 @@ export default function SidePanelRecommendations({ eventType }) {
     isOneBarLayout,
   } = useDataContext();
 
-  let recommendationList = [];
+  const [recommendationList, setRecommendationList] = useState([]);
 
   useEffect(() => {
-    if (!isLoadingSettings && !eventsLoading) {
-      recommendationList = findRecommendations(
+    if (
+      !isLoadingSettings &&
+      !eventsLoading &&
+      eventType &&
+      fetchedSettings &&
+      fetchedEventData &&
+      workGoalActivities &&
+      lifeGoalActivities
+    ) {
+      console.log(
+        "[SidePanelRecommendations.jsx] calling findRecommendations..."
+      );
+      const resultList = findRecommendations(
         eventType,
-        fetchedEventData?.ignoreUnalotted,
-        fetchedSettings?.statSettings?.percentageBasis,
-        fetchedSettings?.statSettings?.balanceGoal,
-        fetchedSettings?.layoutSettings?.dashboardLayout,
+        isOneBarLayout,
+        workGoalActivities,
+        lifeGoalActivities,
+        fetchedSettings?.ignoreUnalotted,
+        fetchedSettings?.percentageBasis,
+        fetchedSettings?.balanceGoal,
+        fetchedSettings?.workPreferredActivities,
+        fetchedSettings?.lifePreferredActivities,
         fetchedEventData?.workPercentage,
         fetchedEventData?.lifePercentage,
         fetchedEventData?.workPercentageWithSleepingHours,
         fetchedEventData?.lifePercentageWithSleepingHours,
         fetchedEventData?.workPercentageIgnoreUnalotted,
-        fetchedEventData?.lifePercentageIgnoreUnalotted,
-        workGoalActivities,
-        lifeGoalActivities
+        fetchedEventData?.lifePercentageIgnoreUnalotted
+      );
+      setRecommendationList(resultList);
+      console.log(
+        "[SidePanelRecommendations.jsx] recommendationList:",
+        recommendationList
       );
     }
-  }, [isLoadingSettings, eventsLoading]);
+  }, [
+    isLoadingSettings,
+    eventsLoading,
+    eventType,
+    fetchedSettings,
+    fetchedEventData,
+    workGoalActivities,
+    lifeGoalActivities,
+  ]);
 
   return (
     <>
@@ -57,9 +83,7 @@ export default function SidePanelRecommendations({ eventType }) {
         {recommendationList.length > 0 && (
           <p
             className={`recommendations-call-action-jg ${
-              isOneBarLayout
-                ? "recommendations-call-action-one-sidebar-jg"
-                : ""
+              isOneBarLayout ? "recommendations-call-action-one-sidebar-jg" : ""
             }`}
           >
             You might want to...
@@ -69,9 +93,7 @@ export default function SidePanelRecommendations({ eventType }) {
           <p
             key={index}
             className={`side-panel-recommendation-text-jg ${
-              isOneBarLayout
-                ? "recommendation-text-one-sidebar-jg"
-                : ""
+              isOneBarLayout ? "recommendation-text-one-sidebar-jg" : ""
             }`}
           >
             {recommendation}

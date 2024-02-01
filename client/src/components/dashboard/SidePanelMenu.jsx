@@ -11,7 +11,7 @@ import Auth from "../../utils/auth";
 export default function SidePanelMenu() {
   const { openModal } = useModal();
 
-  const { username, userId, eventSubtypes, eventsRefetch } = useDataContext();
+  const { fetchedSettings, eventsRefetch } = useDataContext();
 
   const logout = (event) => {
     // Log user out and return them to welcome page
@@ -24,16 +24,16 @@ export default function SidePanelMenu() {
     if (menuOption === "NewEvent") {
       openModal(
         <NewEvent
-          eventSubtypes={eventSubtypes}
+          eventSubtypes={fetchedSettings?.eventSubtypes}
           handleNewEventModalClose={handleNewEventModalClose}
-          userId={userId}
+          userId={fetchedSettings?.userId}
         />
       );
     } else {
       openModal(
         <UserMenu
-          username={username}
-          userId={userId}
+          username={fetchedSettings?.username}
+          userId={fetchedSettings?.userId}
           modalContent={menuOption}
         />
       );
@@ -51,7 +51,7 @@ export default function SidePanelMenu() {
         className="side-panel-username-jg text-link-jg"
         onClick={() => openMenuModal("UserProfile")}
       >
-        {username}
+        {fetchedSettings?.username}
       </a>
       <a
         href="#"
