@@ -1,4 +1,4 @@
-// Amazon Web Services S3 (Simple Storage Service) utility functions
+// awsS3.js
 const AWS = require("aws-sdk");
 const path = require("path");
 const dotenv = require("dotenv").config({

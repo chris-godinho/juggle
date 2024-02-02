@@ -1,133 +1,140 @@
-import React, { useCallback, useState } from "react";
-import { useDropzone } from "react-dropzone";
-import Cropper from "react-cropper";
-import "cropperjs/dist/cropper.css";
+import React, { useState, useEffect } from "react";
+import { useQuery } from "@apollo/client";
+
+import { Uppy } from "@uppy/core";
+import ImageEditor from "@uppy/image-editor";
+import { Dashboard, DragDrop, ProgressBar } from "@uppy/react";
+import Transloadit from "@uppy/transloadit";
 
 import AuthService from "../../utils/auth.js";
 
+import "@uppy/core/dist/style.min.css";
+import "@uppy/dashboard/dist/style.min.css";
+import "@uppy/image-editor/dist/style.min.css";
+
 const ProfilePictureUpload = () => {
   const userProfile = AuthService.getProfile();
-  const username = userProfile?.data?.username || "";
+  const fetchedUsername = userProfile?.data?.username || "";
 
-  const [uploadedImage, setUploadedImage] = useState(null);
-  const [cropper, setCropper] = useState(null);
-  const [imagePreview, setImagePreview] = useState(null);
+  const [isUploaded, setIsUploaded] = useState(false);
+  const [username, setUsername] = useState("");
 
-  const onDrop = useCallback((acceptedFiles) => {
-    const file = acceptedFiles[0];
-    setUploadedImage(file);
+  useEffect(() => {
+    setUsername(fetchedUsername);
+  }, [fetchedUsername]);
 
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImagePreview(reader.result);
-    };
-    reader.readAsDataURL(file);
-  }, []);
-
-  const handleCrop = async () => {
-    if (!cropper) {
-      return;
-    }
-  
-    try {
-      // Get the cropped data as a Blob
-      const croppedBlob = await new Promise((resolve) => {
-        cropper.getCroppedCanvas().toBlob((blob) => {
-          resolve(blob);
-        });
-      });
-  
-      // Create an S3 instance
-      const s3 = new AWS.S3();
-  
-      // Set the bucket name and key (path) for the object
-      const bucketName = "juggler-app-bucket";
-      // TODO: Do I need to adapt to the file extension?
-      const key = `${username}/profilePicture.png`;
-  
-      // Upload the Blob to S3
-      await s3
-        .upload({
-          Bucket: bucketName,
-          Key: key,
-          Body: croppedBlob,
-          ContentType: "image/png",
-          ACL: "public-read", // Adjust ACL as needed
-        })
-        .promise();
-  
-      // Handle success, e.g., redirect to another page
-      window.location.href = "/success";
-    } catch (error) {
-      console.error(error);
-      // Handle error, e.g., show an error message to the user
-    }
+  const resetUpload = () => {
+    setIsUploaded(false);
   };
 
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({
-    onDrop,
-    accept: "image/*",
-    multiple: false,
-    name: "profileImage", // TODO: Is this necessary?
-  });
-
-  // Function to convert data URL to Blob
-  function dataURItoBlob(dataURI) {
-    const byteString = atob(dataURI.split(",")[1]);
-    const ab = new ArrayBuffer(byteString.length);
-    const ia = new Uint8Array(ab);
-    for (let i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
+  // TODO: Allow picture to be deleted?
+  // const [deleteFile] = useMutation(DELETE_FILE);
+  // Do all the setup if yes
+  /*
+  const handleDeleteFile = async (fileName) => {
+    try {
+      // Send a request to the server to delete the file
+      const response = await deleteFile({
+        variables: {
+          username: username || userProfile?.data?.username,
+          fileName,
+        },
+      });
+    } catch (error) {
+      console.error("[FileManagementWidget.jsx]: Error deleting file:", error);
     }
-    return new Blob([ab], { type: "image/png" });
-  }
+  };
+  */
+
+  // TODO: Downloads/access will need a presigned URL (might need server side for that)
 
   // TODO: Add the option to have the profile picture as the background to the upload area
+
+  const [uppy] = useState(
+    new Uppy({
+      restrictions: {
+        maxFileSize: 5000000,
+        maxTotalFileSize: 5000000,
+        maxNumberOfFiles: 1,
+        minNumberOfFiles: 1,
+        allowedFileTypes: ["image/*"],
+      },
+      meta: { username: username },
+    })
+      // TODO: Create Transloadit Assembly to convert picture to .jpg
+      .use(Transloadit, {
+        id: "Transloadit",
+        assemblyOptions: {
+          params: {
+            auth: {
+              key: "55b7b7bf8b474873a15cae1a2badf647", // Public key, no need to hide
+            },
+            template_id: "8850d7c7939140a090a902a946bdf3d6", // Public template, no need to hide
+            fields: {
+              username: username,
+            },
+          },
+        },
+      })
+      .use(ImageEditor, {
+        actions: {
+          revert: false,
+          rotate: false,
+          granularRotate: false,
+          flip: false,
+          zoomIn: true,
+          zoomOut: true,
+          cropSquare: false,
+          cropWidescreen: false,
+          cropWidescreenVertical: false,
+        },
+        cropperOptions: {
+          dragMode: "move",
+          aspectRatio: 1,
+          guides: false,
+          center: false,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          viewMode: 1,
+          responsive: true,
+          movable: true,
+          scalable: true,
+          background: false,
+          style: { width: "100%", height: "100%" },
+          autoCropArea: 1,
+          checkCrossOrigin: false,
+        },
+      })
+      // TODO: Add procedure for picture cropping after upload
+      // https://uppy.io/docs/image-editor/
+      .on("upload-success", (file, response) => {
+        // TODO: What needs to be added here?
+        console.log("response.status", response.status);
+        console.log("response.body", response.body);
+        setIsUploaded(true);
+      })
+  );
+
   return (
     <div>
-      {!uploadedImage && (
-        <div
-          {...getRootProps()}
-          className={`upload-area-jg ${isDragActive ? "drag-active" : ""}}`}
-        >
-          <input {...getInputProps()} />
-          <>
-            <span className="material-symbols-outlined">upload_file</span>
-            {isDragActive ? (
-              <p>Drop your image here...</p>
-            ) : (
-              <p>Click or drag file here</p>
-            )}
-          </>
+      {!isUploaded && uppy && (
+        <div className="upload-area-jg">
+          <Dashboard
+            id="uppy-dashboard-jg"
+            uppy={uppy}
+            plugins={["ImageEditor"]}
+            height="39vh"
+            width="39vh"
+            autoOpenFileEditor={true}
+            theme="dark"
+          />
         </div>
       )}
-      {uploadedImage && (
-        <>
-          <div className="crop-area-jg">
-            <Cropper
-              src={imagePreview}
-              dragMode="move"
-              aspectRatio={1}
-              guides={false}
-              center={false}
-              cropBoxMovable={false}
-              cropBoxResizable={false}
-              viewMode={1}
-              background={false}
-              style={{ width: "100%", height: "100%" }}
-              responsive={true}
-              autoCropArea={1}
-              checkCrossOrigin={false}
-              onInitialized={(instance) => {
-                setCropper(instance);
-              }}
-            />
-            <section>
-              <p>Zoom or move picture to fit the circle.</p>
-            </section>
-            <button onClick={handleCrop}>Crop Image</button>
-          </div>
-        </>
+      {isUploaded && (
+        <div className="upload-confirmed-container-jg">
+          <div className="upload-confirmed-jg"></div>
+          <button className="button-jg upload-button-jg" onClick={resetUpload} >Upload Again</button>
+        </div>
       )}
     </div>
   );
