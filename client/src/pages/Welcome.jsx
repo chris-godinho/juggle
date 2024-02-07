@@ -91,47 +91,80 @@ const Welcome = () => {
           },
           lifePreferredActivities: {
             exercise: userData?.user.lifePreferredActivities.exercise || true,
-            mindfulness: userData?.user.lifePreferredActivities.mindfulness || true,
+            mindfulness:
+              userData?.user.lifePreferredActivities.mindfulness || true,
             sleep: userData?.user.lifePreferredActivities.sleep || true,
-            healthAwareness: userData?.user.lifePreferredActivities.healthAwareness || true,
+            healthAwareness:
+              userData?.user.lifePreferredActivities.healthAwareness || true,
             reading: userData?.user.lifePreferredActivities.reading || true,
             music: userData?.user.lifePreferredActivities.music || true,
             games: userData?.user.lifePreferredActivities.games || true,
             movies: userData?.user.lifePreferredActivities.movies || true,
             cooking: userData?.user.lifePreferredActivities.cooking || true,
-            socializing: userData?.user.lifePreferredActivities.socializing || true,
+            socializing:
+              userData?.user.lifePreferredActivities.socializing || true,
             sports: userData?.user.lifePreferredActivities.sports || true,
-            outdoorsExploration: userData?.user.lifePreferredActivities.outdoorsExploration || true,
+            outdoorsExploration:
+              userData?.user.lifePreferredActivities.outdoorsExploration ||
+              true,
             travel: userData?.user.lifePreferredActivities.travel || true,
-            journaling: userData?.user.lifePreferredActivities.journaling || true,
-            personalGrowth: userData?.user.lifePreferredActivities.personalGrowth || true,
-            creativeExpression: userData?.user.lifePreferredActivities.creativeExpression || true,
-            financialPlanning: userData?.user.lifePreferredActivities.financialPlanning || true,
-            digitalDetox: userData?.user.lifePreferredActivities.digitalDetox || true,
-            purposeAndMeaning: userData?.user.lifePreferredActivities.purposeAndMeaning || true,
-            boundarySetting: userData?.user.lifePreferredActivities.boundarySetting || true,
+            journaling:
+              userData?.user.lifePreferredActivities.journaling || true,
+            personalGrowth:
+              userData?.user.lifePreferredActivities.personalGrowth || true,
+            creativeExpression:
+              userData?.user.lifePreferredActivities.creativeExpression || true,
+            financialPlanning:
+              userData?.user.lifePreferredActivities.financialPlanning || true,
+            digitalDetox:
+              userData?.user.lifePreferredActivities.digitalDetox || true,
+            purposeAndMeaning:
+              userData?.user.lifePreferredActivities.purposeAndMeaning || true,
+            boundarySetting:
+              userData?.user.lifePreferredActivities.boundarySetting || true,
           },
           workPreferredActivities: {
-            goalSetting: userData?.user.workPreferredActivities.goalSetting || true,
-            skillDevelopment: userData?.user.workPreferredActivities.skillDevelopment || true,
-            industryResearch: userData?.user.workPreferredActivities.industryResearch || true,
-            mentorship: userData?.user.workPreferredActivities.mentorship || true,
-            softSkills: userData?.user.workPreferredActivities.softSkills || true,
-            networking: userData?.user.workPreferredActivities.networking || true,
+            goalSetting:
+              userData?.user.workPreferredActivities.goalSetting || true,
+            skillDevelopment:
+              userData?.user.workPreferredActivities.skillDevelopment || true,
+            industryResearch:
+              userData?.user.workPreferredActivities.industryResearch || true,
+            mentorship:
+              userData?.user.workPreferredActivities.mentorship || true,
+            softSkills:
+              userData?.user.workPreferredActivities.softSkills || true,
+            networking:
+              userData?.user.workPreferredActivities.networking || true,
             branding: userData?.user.workPreferredActivities.branding || true,
-            progressEvaluation: userData?.user.workPreferredActivities.progressEvaluation || true,
-            teamBuilding: userData?.user.workPreferredActivities.teamBuilding || true,
-            teamFeedback: userData?.user.workPreferredActivities.teamFeedback || true,
-            customerFeedback: userData?.user.workPreferredActivities.customerFeedback || true,
-            qualityAssurance: userData?.user.workPreferredActivities.qualityAssurance || true,
-            brainstorming: userData?.user.workPreferredActivities.brainstorming || true,
-            innovationMindset: userData?.user.workPreferredActivities.innovationMindset || true,
-            technologyIntegration: userData?.user.workPreferredActivities.technologyIntegration || true,
-            teamIntegration: userData?.user.workPreferredActivities.teamIntegration || true,
-            milestoneCelebration: userData?.user.workPreferredActivities.milestoneCelebration || true,
-            reverseMentorship: userData?.user.workPreferredActivities.reverseMentorship || true,
-            volunteering: userData?.user.workPreferredActivities.volunteering || true,
-            entrepreneurship: userData?.user.workPreferredActivities.entrepreneurship || true,
+            progressEvaluation:
+              userData?.user.workPreferredActivities.progressEvaluation || true,
+            teamBuilding:
+              userData?.user.workPreferredActivities.teamBuilding || true,
+            teamFeedback:
+              userData?.user.workPreferredActivities.teamFeedback || true,
+            customerFeedback:
+              userData?.user.workPreferredActivities.customerFeedback || true,
+            qualityAssurance:
+              userData?.user.workPreferredActivities.qualityAssurance || true,
+            brainstorming:
+              userData?.user.workPreferredActivities.brainstorming || true,
+            innovationMindset:
+              userData?.user.workPreferredActivities.innovationMindset || true,
+            technologyIntegration:
+              userData?.user.workPreferredActivities.technologyIntegration ||
+              true,
+            teamIntegration:
+              userData?.user.workPreferredActivities.teamIntegration || true,
+            milestoneCelebration:
+              userData?.user.workPreferredActivities.milestoneCelebration ||
+              true,
+            reverseMentorship:
+              userData?.user.workPreferredActivities.reverseMentorship || true,
+            volunteering:
+              userData?.user.workPreferredActivities.volunteering || true,
+            entrepreneurship:
+              userData?.user.workPreferredActivities.entrepreneurship || true,
           },
         },
       });
@@ -145,7 +178,6 @@ const Welcome = () => {
     console.log("[Welcome.jsx] formData:", formData);
 
     updateProviderUserSettings(formData?.user);
-
   };
 
   const nextScreen = () => {
@@ -230,7 +262,9 @@ const Welcome = () => {
                     image.
                   </p>
                 </div>
-                <ProfilePictureUpload />
+                <div className="welcome-upload-area-jg">
+                  <ProfilePictureUpload />
+                </div>
               </div>
             </div>
           </div>

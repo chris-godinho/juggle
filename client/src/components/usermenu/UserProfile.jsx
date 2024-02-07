@@ -7,6 +7,8 @@ import "flatpickr/dist/themes/dark.css";
 import { QUERY_USER } from "../../utils/queries";
 import { UPDATE_USER, DELETE_USER } from "../../utils/mutations";
 
+import ProfilePictureUpload from "../other/ProfilePictureUpload.jsx";
+
 import Auth from "../../utils/auth";
 
 // TODO: Add upload area to profile picture
@@ -109,12 +111,7 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
   return (
     <div className="modal-inner-content-jg">
       <div className="user-profile-container-jg">
-        <img
-          className="profile-picture-upload-area-jg work-border-jg"
-          src="/test-prof-pic.jpg"
-          alt="profile picture"
-          onClick={() => setUserMenuModalContent("UserProfile")}
-        />
+        <ProfilePictureUpload />
         <div className="user-profile-info-jg">
           <h1 className="work-text-jg">{username}</h1>
           {profileScreen === "UserProfile" ? (

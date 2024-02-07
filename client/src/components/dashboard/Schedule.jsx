@@ -39,9 +39,6 @@ const Schedule = () => {
   const tomorrowDate = new Date(displayDate);
   tomorrowDate.setDate(displayDate.getDate() + 1);
 
-  // Function to adjust the layout of overlapping events
-
-
   // Function to build the initial layout
   const buildLayout = (events) => {
     const initialLayout = [];

@@ -1,30 +1,76 @@
-import React, { useState, useEffect } from "react";
-import { useQuery } from "@apollo/client";
+import React, { useState, useEffect, useRef } from "react";
+
+import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import { Uppy } from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, ProgressBar } from "@uppy/react";
 import Transloadit from "@uppy/transloadit";
 
-import AuthService from "../../utils/auth.js";
-
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import "@uppy/image-editor/dist/style.min.css";
 
+import Auth from "../../utils/auth.js";
+
 const ProfilePictureUpload = () => {
-  const userProfile = AuthService.getProfile();
-  const fetchedUsername = userProfile?.data?.username || "";
+
+  const { userSettings, isLoadingSettings, setProfilePictureUpdated } = useUserSettings();
+
+  const userProfile = Auth.getProfile();
+  const fetchedUsername = userProfile?.data?.username;
 
   const [isUploaded, setIsUploaded] = useState(false);
-  const [username, setUsername] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [uploadReset, setUploadReset] = useState(false);
+
+  const styleElementRef = useRef(null);
+
 
   useEffect(() => {
-    setUsername(fetchedUsername);
-  }, [fetchedUsername]);
+    if (!isLoadingSettings) {
+      setImageUrl(userSettings?.profilePictureUrl || "");
+    }
+  }, [isLoadingSettings, userSettings]);
+
+  useEffect(() => {
+    console.log("[ProfilePictureUpload.jsx] useEffect");
+    console.log("[ProfilePictureUpload.jsx] fetchedUsername:", fetchedUsername);
+    if (!uploadReset) {
+
+      setProfilePictureUpdated(true);
+
+      if (imageUrl && imageUrl !== "") {
+        console.log("[ProfilePictureUpload.jsx] imageUrl", imageUrl);
+        console.log("[ProfilePictureUpload.jsx] setting isUploaded to true...");
+        setIsUploaded(true);
+        if (styleElementRef.current) {
+          styleElementRef.current.innerHTML = `
+          .upload-area-jg::before {
+            background-image: url(${imageUrl});
+          }
+        `;
+        } else {
+          // Create the style element
+          const styleElement = document.createElement("style");
+          styleElement.type = "text/css";
+          styleElement.innerHTML = `
+          .uploaded-picture-jg::before {
+            background-image: url(${imageUrl});
+          }
+        `;
+          // Append the style element to the head
+          document.head.appendChild(styleElement);
+          styleElementRef.current = styleElement;
+        }
+      }
+    }
+  }, [fetchedUsername, isUploaded, imageUrl, uploadReset]);
 
   const resetUpload = () => {
-    setIsUploaded(false);
+    console.log("[ProfilePictureUpload.jsx] resetUpload");
+    console.log("[ProfilePictureUpload.jsx] Setting uploadReset to true...");
+    setUploadReset(true);
   };
 
   // TODO: Allow picture to be deleted?
@@ -46,10 +92,6 @@ const ProfilePictureUpload = () => {
   };
   */
 
-  // TODO: Downloads/access will need a presigned URL (might need server side for that)
-
-  // TODO: Add the option to have the profile picture as the background to the upload area
-
   const [uppy] = useState(
     new Uppy({
       restrictions: {
@@ -59,9 +101,8 @@ const ProfilePictureUpload = () => {
         minNumberOfFiles: 1,
         allowedFileTypes: ["image/*"],
       },
-      meta: { username: username },
+      meta: { username: fetchedUsername },
     })
-      // TODO: Create Transloadit Assembly to convert picture to .jpg
       .use(Transloadit, {
         id: "Transloadit",
         assemblyOptions: {
@@ -71,7 +112,7 @@ const ProfilePictureUpload = () => {
             },
             template_id: "8850d7c7939140a090a902a946bdf3d6", // Public template, no need to hide
             fields: {
-              username: username,
+              username: fetchedUsername,
             },
           },
         },
@@ -105,20 +146,20 @@ const ProfilePictureUpload = () => {
           checkCrossOrigin: false,
         },
       })
-      // TODO: Add procedure for picture cropping after upload
-      // https://uppy.io/docs/image-editor/
       .on("upload-success", (file, response) => {
-        // TODO: What needs to be added here?
-        console.log("response.status", response.status);
-        console.log("response.body", response.body);
         setIsUploaded(true);
+        setUploadReset(false);
       })
   );
 
   return (
     <div>
-      {!isUploaded && uppy && (
-        <div className="upload-area-jg">
+      {uppy && (
+        <div
+          className={
+            isUploaded && !uploadReset ? "uploaded-picture-jg upload-area-jg" : "upload-area-jg"
+          }
+        >
           <Dashboard
             id="uppy-dashboard-jg"
             uppy={uppy}
@@ -127,13 +168,8 @@ const ProfilePictureUpload = () => {
             width="39vh"
             autoOpenFileEditor={true}
             theme="dark"
+            onClick={resetUpload}
           />
-        </div>
-      )}
-      {isUploaded && (
-        <div className="upload-confirmed-container-jg">
-          <div className="upload-confirmed-jg"></div>
-          <button className="button-jg upload-button-jg" onClick={resetUpload} >Upload Again</button>
         </div>
       )}
     </div>

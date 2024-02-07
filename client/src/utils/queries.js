@@ -193,3 +193,9 @@ export const QUERY_SINGLE_EVENT = gql`
     }
   }
 `;
+
+export const GET_PRESIGNED_URL = gql`
+  query GetPresignedUrl($username: String!, $fileName: String!) {
+    generatePresignedUrl(username: $username, fileName: $fileName)
+  }
+`;

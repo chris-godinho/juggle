@@ -41,6 +41,7 @@ export default function Dashboard() {
     workPreferredActivities: {},
     lifePreferredActivities: {},
     dashboardLayout: localStorageLayout || "two-sidebars",
+    profilePictureUrl: "/default-profile-picture.png",
   });
 
   const [fetchedEventData, setFetchedEventData] = useState({
@@ -112,6 +113,7 @@ export default function Dashboard() {
         eventSubtypes: userSettings?.eventSubtypes || {},
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
+        profilePictureUrl: userSettings?.profilePictureUrl || "/default-profile-picture.png",
       });
       const leftSidebar =
         userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||

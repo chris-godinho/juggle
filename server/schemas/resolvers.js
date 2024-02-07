@@ -1,6 +1,11 @@
 const { User, Event } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { DateTimeResolver } = require("graphql-scalars");
+const {
+  fetchFileList,
+  generatePresignedUrl,
+  deleteFile,
+} = require("../utils/awsS3.js");
 
 const resolvers = {
   DateTime: DateTimeResolver,
@@ -55,6 +60,15 @@ const resolvers = {
     },
     event: async (parent, { eventId }) => {
       return Event.findOne({ _id: eventId });
+    },
+    generatePresignedUrl: async (_, { username, fileName }) => {
+      try {
+        const url = await generatePresignedUrl(username, fileName);
+        return url;
+      } catch (error) {
+        console.error("Error generating pre-signed URL:", error);
+        throw new Error("Error generating pre-signed URL");
+      }
     },
   },
 
@@ -352,6 +366,9 @@ const resolvers = {
     },
     removeEvent: async (parent, { eventId }) => {
       return Event.findOneAndDelete({ _id: eventId });
+    },
+    deleteFile: async (__, { username, fileName }) => {
+      return deleteFile(username, fileName);
     },
   },
 };

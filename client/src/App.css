@@ -1,5 +1,9 @@
 /* App.css */
 
+:root {
+  --user-profile-picture: "";
+}
+
 :root,
 #color-scheme-jg.default-mode-jg,
 .color-scheme-sample-bar-jg.default-mode-jg {
@@ -954,6 +958,10 @@ input[type="checkbox"]:disabled {
   margin-bottom: 1em;
 }
 
+.welcome-upload-area-jg {
+  margin-left: 10vw;
+}
+
 .upload-area-jg {
   color: var(--main-separator-color);
   display: flex;
@@ -962,13 +970,42 @@ input[type="checkbox"]:disabled {
   justify-content: center;
   text-align: center;
   flex-wrap: wrap;
-  margin-left: 10vw;
   height: 36vh;
   width: 36vh;
   border: 2px dashed var(--main-separator-color);
   border-radius: 1em;
   cursor: pointer;
   overflow: hidden;
+}
+
+.uploaded-picture-jg {
+  position: relative;
+  border-radius: 50%;
+  transition: border-radius 0.2s ease-in-out;
+}
+
+.uploaded-picture-jg::before {
+  content: "";
+  position: absolute;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  height: 100%;
+  z-index: 5000;
+  transition: opacity 0.2s ease-in-out;
+}
+
+.uploaded-picture-jg:hover::before {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.uploaded-picture-jg:hover {
+  border-radius: 1em;
 }
 
 .uppy-Dashboard-inner {
@@ -1180,6 +1217,30 @@ input[type="checkbox"]:disabled {
   transform: scale(0.95) !important;
 }
 
+#uppy_uppy-aboutus\/cbg\/jpg-2v-1e-image\/jpeg-272299-1706315731851
+  > div.uppy-Dashboard-Item-fileInfoAndButtons
+  > div.uppy-Dashboard-Item-fileInfo
+  > div.uppy-Dashboard-Item-fileName
+  > div,
+#uppy_uppy-aboutus\/cbg\/jpg-2v-1e-image\/jpeg-272299-1706315731851
+  > div.uppy-Dashboard-Item-fileInfoAndButtons
+  > div.uppy-Dashboard-Item-fileInfo
+  > div.uppy-Dashboard-Item-status
+  > div,
+#uppy_uppy-aboutus\/cbg\/jpg-2v-1e-image\/jpeg-272299-1706315731851
+  > div.uppy-Dashboard-Item-fileInfoAndButtons
+  > div.uppy-Dashboard-Item-actionWrapper
+  > button.uppy-u-reset.uppy-c-btn.uppy-Dashboard-Item-action.uppy-Dashboard-Item-action--edit
+  > svg,
+#uppy_uppy-aboutus\/cbg\/jpg-2v-1e-image\/jpeg-272299-1706315731851
+  > div.uppy-Dashboard-Item-fileInfoAndButtons
+  > div.uppy-Dashboard-Item-actionWrapper
+  > button.uppy-u-reset.uppy-Dashboard-Item-action.uppy-Dashboard-Item-action--remove
+  > svg
+  > path {
+  display: none !important;
+}
+
 #uppy-dashboard-jg
   > div
   > div
@@ -1348,34 +1409,6 @@ input[type="checkbox"]:disabled {
   transform: scale(0.95) !important;
 }
 
-.upload-confirmed-container-jg {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  
-}
-
-.upload-confirmed-jg {
-  color: var(--main-text-color);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  margin-left: 10vw;
-  height: 36vh;
-  width: 36vh;
-  border: 2px dashed var(--main-separator-color);
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.upload-button-jg {
-  margin-left: 37%;
-  margin-top: 2em;
-}
-
 [data-uppy-theme="dark"] .uppy-DashboardContent-back,
 [data-uppy-theme="dark"] .uppy-DashboardContent-save {
   color: transparent !important;
@@ -1391,8 +1424,6 @@ input[type="checkbox"]:disabled {
   > div.uppy-Dashboard-FileCard-preview {
   background-color: var(--main-background-color-accent) !important;
 }
-
-
 
 .welcome-work-life-container-jg {
   margin-top: 2em;
@@ -2137,11 +2168,12 @@ input[type="checkbox"]:disabled {
   position: relative;
   overflow: hidden;
   box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
-  transition: scale 0.2s ease-in-out, border 0.2s ease-in-out;
+  transition: scale 0.2s ease-in-out, border 0.2s ease-in-out, filter 0.2s ease-in-out;
 }
 
 .user-profile-picture-jg:hover {
   scale: 0.98;
+  filter: brightness(1.1);
 }
 
 .user-menu-username-jg a {
@@ -2641,6 +2673,71 @@ path[class="firework-stroke-color-1-jg"] {
 .color-scheme-name-jg {
   margin-top: 0.4em;
   margin-bottom: 1em;
+}
+
+/* Stats page rules */
+.stats-top-row-jg {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.5em;
+}
+
+.stats-username-jg {
+  flex: 1;
+  text-align: left;
+}
+
+.stats-select-jg {
+  flex: 1;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  margin-left: 20%;
+}
+
+.stats-bar-block-jg {
+  margin-top: 0em;
+  width: 100%;
+}
+
+.stats-subtitle-jg {
+  margin-top: 0;
+  margin-bottom: 1em;
+}
+
+.stats-bar-jg {
+  width: 100%;
+  height: 1em;
+  border-radius: 0.3em;
+  background-color: var(--life-event-color);
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color);
+}
+
+.stats-bar-filled-jg {
+  height: 100%;
+  width: 50%;
+  border-radius: 0.3em 0 0 0.3em;
+  background-color: var(--work-event-color);
+}
+
+.stats-bar-labels-jg {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stats-averages-box-jg {
+  width: 100%;
+}
+
+.stats-averages-row-jg {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1.5em;
+}
+
+.stats-averages-row-jg p {
+  margin-top: 0.5em;
+  margin-bottom: 0;
 }
 
 /* Donate page rules */

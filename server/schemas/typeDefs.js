@@ -232,6 +232,7 @@ const typeDefs = `
     eventsByUser(user: ID!): [Event]
     eventsByDate(user: ID!, eventStart: DateTime, eventEnd: DateTime): [Event]
     event(eventId: ID!): Event
+    generatePresignedUrl(username: String!, fileName: String!): String
   }
 
   type Mutation {
@@ -243,6 +244,7 @@ const typeDefs = `
     addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime): Event
     updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime, completed: Boolean): Event
     removeEvent(eventId: ID!): Event
+    deleteFile(username: String!, fileName: String!): Boolean
   }
 `;
 

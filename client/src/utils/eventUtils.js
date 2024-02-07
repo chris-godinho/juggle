@@ -354,3 +354,75 @@ export const findRecommendations = (
 
   return recommendationList;
 };
+
+const findEventPools = (events) => {
+  // Get the current date
+const currentDate = new Date();
+
+// Get the first day of the current month
+const firstDayOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
+
+// Get the first day of the previous month
+const firstDayOfPreviousMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() - 1, 1);
+
+// Get the current day of the week (0 = Sunday, 1 = Monday, ..., 6 = Saturday)
+const currentDayOfWeek = currentDate.getDay();
+
+// Calculate the difference between the current day and the last Sunday
+const daysSinceSunday = currentDayOfWeek === 0 ? 0 : currentDayOfWeek;
+
+// Get the first day of the current week (Sunday)
+const firstDayOfCurrentWeek = new Date(currentDate);
+firstDayOfCurrentWeek.setDate(currentDate.getDate() - daysSinceSunday);
+
+// Get the first day of the previous week
+const firstDayOfPreviousWeek = new Date(firstDayOfCurrentWeek);
+firstDayOfPreviousWeek.setDate(firstDayOfCurrentWeek.getDate() - 7);
+
+// Filter events based on start dates
+const eventsInCurrentMonth = events.filter(event => new Date(event.eventStart) >= firstDayOfMonth && new Date(event.eventStart) < currentDate);
+
+const eventsInPreviousMonth = events.filter(event => new Date(event.eventStart) >= firstDayOfPreviousMonth && new Date(event.eventStart) < firstDayOfMonth);
+
+const eventsInCurrentWeek = events.filter(event => new Date(event.eventStart) >= firstDayOfCurrentWeek && new Date(event.eventStart) < currentDate);
+
+const eventsInPreviousWeek = events.filter(event => new Date(event.eventStart) >= firstDayOfPreviousWeek && new Date(event.eventStart) < firstDayOfCurrentWeek);
+
+console.log("[eventUtils.js] eventsInCurrentMonth: ", eventsInCurrentMonth);
+console.log("[eventUtils.js] eventsInPreviousMonth: ", eventsInPreviousMonth);
+console.log("[eventUtils.js] eventsInCurrentWeek: ", eventsInCurrentWeek);
+console.log("[eventUtils.js] eventsInPreviousWeek: ", eventsInPreviousWeek);
+
+return {
+  eventsInCurrentMonth,
+  eventsInPreviousMonth,
+  eventsInCurrentWeek,
+  eventsInPreviousWeek
+};
+};
+
+const calculateEventPoolsStats = (events) => {
+
+  // TODO: Find total number of events for the user, then the total number of work and life events
+
+  // TODO: Find total time of events for the user, then the total time spent on work and life events
+
+  // TODO: Calculate the percentage of work and life events
+
+  // TODO: Calculate the percentage of time spent on work and life events
+
+  // TODO: Find the total number of days with events
+
+  // TODO: Find the average number of events per day (also for work and life events)
+
+  // TODO: Find the average time spent on events per day (also for work and life events)
+
+};
+
+export const calculateMacroStats = (events) => {
+  console.log("[eventUtils.js] events: ", events);
+
+  const eventPools = findEventPools(events);
+
+  return true;
+};

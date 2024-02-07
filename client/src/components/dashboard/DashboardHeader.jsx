@@ -94,7 +94,7 @@ export default function DashboardHeader() {
         >
           <img
             className="dashboard-profile-picture-jg"
-            src="/test-prof-pic.jpg"
+            src={fetchedSettings?.profilePictureUrl || "/default-profile-picture.png"}
             alt="profile picture"
           />
         </button>
