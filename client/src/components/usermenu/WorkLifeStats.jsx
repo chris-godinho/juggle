@@ -9,6 +9,8 @@ import { calculateMacroStats } from "../../utils/eventUtils.js";
 export default function WorkLifeStats() {
   const eventBar = useRef(null);
   const timeBar = useRef(null);
+  const averageEventBar = useRef(null);
+  const averageTimeBar = useRef(null);
 
   const { userSettings, isLoadingSettings } = useUserSettings();
 
@@ -42,6 +44,18 @@ export default function WorkLifeStats() {
         100
       }%`;
       timeBar.current.style.width = newTimeWidth;
+      const newAverageEventWidth = `${
+        (displayMacroStats?.averageWorkEventsPerDay /
+          displayMacroStats?.averageEventsPerDay) *
+        100
+      }%`;
+      averageEventBar.current.style.width = newAverageEventWidth;
+      const newAverageTimeWidth = `${
+        (displayMacroStats?.averageWorkTimePerDay /
+          displayMacroStats?.averageTimePerDay) *
+        100
+      }%`;
+      averageTimeBar.current.style.width = newAverageTimeWidth;
     }
   }, [selectedStat, displayMacroStats]);
 
@@ -137,35 +151,35 @@ export default function WorkLifeStats() {
               </p>
             </div>
           </div>
-          <div className="stats-averages-box-jg">
-            <h4 className="stats-subtitle-jg">Average events per day:</h4>
-            <div className="stats-averages-row-jg">
+          <div className="stats-bar-block-jg">
+            <h4 className="stats-subtitle-jg">
+            Average events per day: {displayMacroStats?.averageEventsPerDay}
+            </h4>
+            <div className="stats-bar-jg">
+              <div ref={averageEventBar} className="stats-bar-filled-jg"></div>
+            </div>
+            <div className="stats-bar-labels-jg">
               <p className="work-text-jg" title="Average Work events per day">
-                {displayMacroStats?.averageWorkEventsPerDay}
-              </p>
-              <p title="Average total events per day">
-                {displayMacroStats?.averageEventsPerDay}
+              {displayMacroStats?.averageWorkEventsPerDay}
               </p>
               <p className="life-text-jg" title="Average Life events per day">
-                {displayMacroStats?.averageLifeEventsPerDay}
+              {displayMacroStats?.averageLifeEventsPerDay}
               </p>
             </div>
-            <h4 className="stats-subtitle-jg">Average event time per day:</h4>
-            <div className="stats-averages-row-jg">
-              <p
-                className="work-text-jg"
-                title="Average Work event time per day"
-              >
-                {displayMacroStats?.formattedAverageWorkTimePerDay}
+          </div>
+          <div className="stats-bar-block-jg">
+            <h4 className="stats-subtitle-jg">
+            Average event time per day: {displayMacroStats?.formattedAverageTimePerDay}
+            </h4>
+            <div className="stats-bar-jg">
+              <div ref={averageTimeBar} className="stats-bar-filled-jg"></div>
+            </div>
+            <div className="stats-bar-labels-jg">
+              <p className="work-text-jg" title="Average Work event time per day">
+              {displayMacroStats?.formattedAverageWorkTimePerDay}
               </p>
-              <p title="Average total event time per day">
-                {displayMacroStats?.formattedAverageTimePerDay}
-              </p>
-              <p
-                className="life-text-jg"
-                title="Average Life event time per day"
-              >
-                {displayMacroStats?.formattedAverageLifeTimePerDay}
+              <p className="life-text-jg" title="Average Life event time per day">
+              {displayMacroStats?.formattedAverageLifeTimePerDay}
               </p>
             </div>
           </div>
