@@ -358,6 +358,65 @@ export default function EventDetailsForm({ formType }) {
           onChange={handleInputChange}
         />
       </div>
+      <div className="event-details-line-jg">
+        <p className="event-details-label-jg">Reminder Date</p>
+        <Flatpickr
+          name="reminderDate"
+          value={formData.reminderDate || ""}
+          options={{
+            dateFormat: "m/d/Y",
+            allowInput: true,
+            closeOnSelect: true,
+            clickOpens: true,
+          }}
+          className="event-input-jg event-datepicker-jg"
+          onChange={(selectedDates, dateString, instance) => {
+            console.log(
+              "[Dashboard.jsx] reminderDate onChange:",
+              selectedDates,
+              dateString,
+              instance
+            );
+            handleInputChange({
+              target: {
+                name: "reminderDate",
+                value: dateString,
+              },
+            });
+          }}
+        />
+        <p className="event-details-label-jg event-middle-label-jg">
+          Reminder Time
+        </p>
+        <Flatpickr
+          name="reminderTime"
+          value={formData.reminderTime || ""}
+          className="event-input-jg event-datepicker-jg"
+          options={{
+            noCalendar: true,
+            enableTime: true,
+            allowInput: true,
+            dateFormat: "h:i K",
+            closeOnSelect: true,
+            clickOpens: true,
+            minuteIncrement: 30,
+          }}
+          onChange={(selectedDates, dateString, instance) => {
+            console.log(
+              "[Dashboard.jsx] reminderTime onChange:",
+              selectedDates,
+              dateString,
+              instance
+            );
+            handleInputChange({
+              target: {
+                name: "reminderTime",
+                value: dateString,
+              },
+            });
+          }}
+        />
+      </div>
     </form>
   );
 }

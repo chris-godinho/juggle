@@ -49,22 +49,44 @@ const NotificationManager = () => {
   const scheduleEventNotifications = (events) => {
     events.forEach((event) => {
       if (event.reminderTime !== undefined) {
+        console.log(
+          `[NotificationManager.jsx] Scheduling notification for event: ${event.title}`
+        );
+
         const now = new Date();
 
         const eventStart = new Date(event.eventStart);
-        const timeUntilEvent = new Date(eventStart) - now;
+        const timeUntilEvent = eventStart - now;
+
+        const eventHours = eventStart.getHours();
+        const eventMinutes = eventStart.getMinutes();
+        let formattedMinutes = (eventMinutes < 10) ? '0' + eventMinutes : '' + eventMinutes;
+        const amPm = eventHours >= 12 ? "PM" : "AM";
+        const formattedEventTime = `${eventHours % 12}:${formattedMinutes} ${amPm}`;
+
+        const formattedEventStart = `on ${
+          eventStart.getMonth() + 1
+        }/${eventStart.getDate()}/${eventStart.getFullYear()} at ${formattedEventTime}`;
+
+        console.log(`[NotificationManager.jsx] Event start: ${eventStart}`);
+        console.log(
+          `[NotificationManager.jsx] Time until event: ${timeUntilEvent}`
+        );
 
         const eventReminderTime = new Date(event.reminderTime);
         const timeUntilReminder = eventReminderTime - now;
 
-        if (timeUntilEvent > 0) {
+        // TODO: Add timeUntilReminder > 0 to the condition below when debugged
+        if (timeUntilEvent > 0 && timeUntilReminder > 0) {
           setTimeout(() => {
             // Call a function to display the notification
             openNotification(
-              `Reminder: ${event.title} is starting at ${event.eventStart}.`,
+              <p>
+                Reminder: {event.title} is starting {formattedEventStart}.
+              </p>,
               event.type.toLowerCase()
             );
-            console.log(`Notification for event: ${event.title}`);
+            console.log(`[NotificationManager.jsx] Notification for event: ${event.title}`);
             // After displaying the notification, refetch events to update the UI
             notificationRefetch();
           }, timeUntilReminder);

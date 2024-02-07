@@ -738,6 +738,7 @@ input[type="checkbox"]:disabled {
   padding: 1em;
   width: 20vw;
   height: auto;
+  border: 1px solid var(--main-background-color);
   border-radius: 0.5em;
   display: flex;
   justify-content: center;
@@ -2180,7 +2181,7 @@ input[type="checkbox"]:disabled {
   margin-right: 0.5em;
   margin-left: 0.5em;
   text-align: left;
-  min-width: 6em;
+  min-width: 7.5em;
 }
 
 .event-input-jg {
@@ -2202,7 +2203,7 @@ input[type="checkbox"]:disabled {
 .event-details-button-tray-jg {
   display: flex;
   justify-content: space-around;
-  margin-top: 3em;
+  margin-top: 2em;
   margin-left: 30%;
   margin-right: 30%;
 }

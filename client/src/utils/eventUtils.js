@@ -445,7 +445,7 @@ const calculateTotalEventTime = (events) => {
   return totalEventTime;
 };
 
-const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
+export const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
   console.log(
     "[eventUtils.js] formatMinutesAsHoursAndMinutes() - totalMinutes: ",
     totalMinutes

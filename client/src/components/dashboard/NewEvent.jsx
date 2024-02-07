@@ -26,6 +26,8 @@ const NewEvent = ({ eventSubtypes, userId }) => {
     links: "",
     files: "",
     priority: "Normal",
+    reminderDate: "",
+    reminderTime: "",
   });
 
   // Set up GraphQL mutation for adding events
@@ -44,11 +46,17 @@ const NewEvent = ({ eventSubtypes, userId }) => {
     const eventEndTime = formData.endTime || "00:00";
     const eventEnd = new Date(`${eventEndDate} ${eventEndTime}`);
 
+    // Combine reminderDate and reminderTime into eventReminderTime
+    const eventReminderDate = formData.reminderDate;
+    const eventReminderTime = formData.reminderTime || "00:00";
+    const reminderTime = new Date(`${eventReminderDate} ${eventReminderTime}`);
+
     // Create the final form data
     const finalFormData = {
       ...formData,
       eventStart,
       eventEnd,
+      reminderTime,
     };
 
     // Add event to database

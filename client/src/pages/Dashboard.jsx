@@ -5,6 +5,7 @@ import { useQuery } from "@apollo/client";
 
 import DataContext from "../components/contextproviders/DataContext.jsx";
 import { useUserSettings } from "../components/contextproviders/UserSettingsProvider.jsx";
+import { useNotification } from "../components/contextproviders/NotificationProvider.jsx";
 
 import Schedule from "../components/dashboard/Schedule";
 import LoadingSpinner from "../components/other/LoadingSpinner.jsx";
@@ -19,6 +20,7 @@ import AuthService from "../utils/auth.js";
 
 export default function Dashboard() {
   const { userSettings, isLoadingSettings } = useUserSettings();
+  const { isNotificationOpen } = useNotification();
 
   const localStorageLayout = localStorage.getItem("layout");
 
@@ -89,6 +91,11 @@ export default function Dashboard() {
   useEffect(() => {
     console.log("[Dashboard.jsx] fetchedSettings:", fetchedSettings);
   }, [fetchedSettings]);
+
+  // TODO: Remove this after testing
+  useEffect(() => {
+    console.log("[Dashboard.jsx] useEffect triggered, isNotificationOpen has been changed.");
+  }, [isNotificationOpen]);
 
   useEffect(() => {
     if (!isLoadingSettings) {

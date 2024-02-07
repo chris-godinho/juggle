@@ -37,6 +37,7 @@ export default function EventDetails({
 
   const eventStartDate = new Date(eventStart);
   const eventEndDate = new Date(eventEnd);
+  const reminderDate = new Date(eventReminderTime);
   const formattedStartDate = `${
     eventStartDate.getMonth() + 1
   }/${eventStartDate.getDate()}/${eventStartDate.getFullYear()}`;
@@ -45,6 +46,10 @@ export default function EventDetails({
     eventEndDate.getMonth() + 1
   }/${eventEndDate.getDate()}/${eventEndDate.getFullYear()}`;
   const formattedEndTime = `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
+  const formattedReminderDate = `${
+    reminderDate.getMonth() + 1
+  }/${reminderDate.getDate()}/${reminderDate.getFullYear()}`;
+  const formattedReminderTime = `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
 
   const [eventScreen, setEventScreen] = useState("EventDetails");
 
@@ -69,6 +74,8 @@ export default function EventDetails({
     files: eventFiles || "",
     priority: eventPriority || "",
     completed: eventCompleted || "",
+    reminderDate: formattedReminderDate || "",
+    reminderTime: formattedReminderTime || "",
   });
 
   const handleFormSubmit = async (event) => {
@@ -80,11 +87,15 @@ export default function EventDetails({
     const formattedEventEnd = new Date(
       `${formData.endDate} ${formData.endTime}`
     );
+    const formattedReminder = new Date(
+      `${formData.reminderDate} ${formData.reminderTime}`
+    );
 
     const formattedFormData = {
       ...formData,
       eventStart: formattedEventStart,
       eventEnd: formattedEventEnd,
+      reminderTime: formattedReminder,
     };
 
     console.log("[EventDetails.jsx] formattedFormData:", formattedFormData);
