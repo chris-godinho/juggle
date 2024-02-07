@@ -27,7 +27,10 @@ export default function DashboardHeader() {
   const { openModal } = useModal();
 
   const [unalottedTimePercentage, setUnalottedTimePercentage] = useState(0);
-  const [unalottedTimePercentageWithSleepingHours, setUnalottedTimePercentageWithSleepingHours] = useState(0);
+  const [
+    unalottedTimePercentageWithSleepingHours,
+    setUnalottedTimePercentageWithSleepingHours,
+  ] = useState(0);
 
   const eventTypes = ["Work", "Life"];
 
@@ -59,7 +62,6 @@ export default function DashboardHeader() {
       );
     }
   }, [fetchedEventData]);
-
 
   const handleNewEventModalClose = () => {
     eventsRefetch();
@@ -94,7 +96,10 @@ export default function DashboardHeader() {
         >
           <img
             className="dashboard-profile-picture-jg"
-            src={fetchedSettings?.profilePictureUrl || "/default-profile-picture.png"}
+            src={
+              fetchedSettings?.profilePictureUrl ||
+              "/default-profile-picture.png"
+            }
             alt="profile picture"
           />
         </button>
@@ -129,28 +134,26 @@ export default function DashboardHeader() {
             <span className="material-symbols-outlined">arrow_forward_ios</span>
           </a>
         </div>
-        {fetchedSettings?.showStats &&
-          !fetchedSettings?.ignoreUnalotted && (
-            <div className="unalotted-percentage-jg">
-              <p>
-                Unalotted Time:{" "}
-                {fetchedSettings?.percentageBasis === "waking"
-                  ? unalottedTimePercentage
-                  : unalottedTimePercentageWithSleepingHours}
-                %
-              </p>
-            </div>
-          )}
-      </div>
-      {!hasLeftSidebar && !hasRightSidebar &&
-        fetchedSettings?.showStats && (
-          <>
-            <div className="dashboard-header-percentage-jg life-text-jg">
-              <h2>{displayPercentages[1]}%</h2>
-              <p>Life</p>
-            </div>
-          </>
+        {fetchedSettings?.showStats && !fetchedSettings?.ignoreUnalotted && (
+          <div className="unalotted-percentage-jg">
+            <p>
+              Unalotted Time:{" "}
+              {fetchedSettings?.percentageBasis === "waking"
+                ? unalottedTimePercentage
+                : unalottedTimePercentageWithSleepingHours}
+              %
+            </p>
+          </div>
         )}
+      </div>
+      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
+        <>
+          <div className="dashboard-header-percentage-jg life-text-jg">
+            <h2>{displayPercentages[1]}%</h2>
+            <p>Life</p>
+          </div>
+        </>
+      )}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg life-border-jg life-border-link-jg"

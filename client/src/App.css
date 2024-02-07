@@ -729,6 +729,73 @@ input[type="checkbox"]:disabled {
   color: var(--main-text-color);
 }
 
+/* Notification modal rules */
+.notification-jg {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  margin: 1em;
+  padding: 1em;
+  width: 20vw;
+  height: auto;
+  border-radius: 0.5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: var(--main-background-color-accent);
+  box-shadow: 5px 5px 7px 1px var(--box-shadow-color);
+  z-index: 1100;
+}
+
+.work-notification-jg {
+  background-color: var(--work-event-color);
+  color: var(--main-background-color);
+}
+
+.life-notification-jg {
+  background-color: var(--life-event-color);
+  color: var(--main-background-color);
+}
+
+.notification-close-button-jg {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: var(--main-separator-color-light);
+  transition: color 0.1s ease-in-out;
+}
+
+.notification-close-button-icon-jg {
+  font-size: 1.2em;
+}
+
+.notification-close-button-jg:hover {
+  color: var(--main-text-color);
+}
+
+.work-notification-close-button-jg,
+.life-notification-close-button-jg {
+  color: var(--main-background-color);
+}
+
+.work-notification-close-button-jg:hover {
+  color: var(--work-event-color-light);
+  filter: brightness(1.2);
+}
+
+.life-notification-close-button-jg:hover {
+  color: var(--life-event-color-light);
+  filter: brightness(1.2);
+}
+
+.notification-content-jg {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+
 /* Loading Spinner rules */
 .spinner-container-jg {
   flex: 1;

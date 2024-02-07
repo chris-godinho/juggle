@@ -446,23 +446,28 @@ const calculateTotalEventTime = (events) => {
 };
 
 const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
-
-  console.log("[eventUtils.js] formatMinutesAsHoursAndMinutes() - totalMinutes: ", totalMinutes);
+  console.log(
+    "[eventUtils.js] formatMinutesAsHoursAndMinutes() - totalMinutes: ",
+    totalMinutes
+  );
 
   const roundedTotalMinutes = Math.round(totalMinutes);
 
   const hours = Math.floor(roundedTotalMinutes / 60);
   const minutes = roundedTotalMinutes % 60;
 
-  const formattedHours = hours > 0 ? `${hours}h` : '';
-  const formattedMinutes = minutes > 0 ? `${minutes.toString().padStart(2, '0')}min` : '';
+  const formattedHours = hours > 0 ? `${hours}h` : "";
+  const formattedMinutes =
+    minutes > 0 ? `${minutes.toString().padStart(2, "0")}min` : "";
 
   return `${formattedHours}${formattedMinutes}`;
 };
 
 const calculateEventPoolsStats = (events) => {
-
-  console.log("[eventUtils.js] calculateEventPoolsStats() - Event pool: ", events);
+  console.log(
+    "[eventUtils.js] calculateEventPoolsStats() - Event pool: ",
+    events
+  );
 
   const totalEventCount = events.length;
 
@@ -486,7 +491,8 @@ const calculateEventPoolsStats = (events) => {
   const lifeEventTime = calculateTotalEventTime(lifeEvents);
   console.log("[eventUtils.js] lifeEventTime: ", lifeEventTime);
 
-  const formattedTotalEventTime = formatMinutesAsHoursAndMinutes(totalEventTime);
+  const formattedTotalEventTime =
+    formatMinutesAsHoursAndMinutes(totalEventTime);
   const formattedWorkEventTime = formatMinutesAsHoursAndMinutes(workEventTime);
   const formattedLifeEventTime = formatMinutesAsHoursAndMinutes(lifeEventTime);
 
@@ -498,17 +504,31 @@ const calculateEventPoolsStats = (events) => {
     (lifeEventTime / totalEventTime) * 100
   );
 
-  const uniqueDates = [...new Set(events.map(event => event.eventStart.split('T')[0]))];
+  const uniqueDates = [
+    ...new Set(events.map((event) => event.eventStart.split("T")[0])),
+  ];
   const totalDaysWithEvents = uniqueDates.length;
 
-  const averageEventsPerDay = (totalEventCount / totalDaysWithEvents).toFixed(1);
-  const averageWorkEventsPerDay = (workEventCount / totalDaysWithEvents).toFixed(1);
-  const averageLifeEventsPerDay = (lifeEventCount / totalDaysWithEvents).toFixed(1);
+  const averageEventsPerDay = (totalEventCount / totalDaysWithEvents).toFixed(
+    1
+  );
+  const averageWorkEventsPerDay = (
+    workEventCount / totalDaysWithEvents
+  ).toFixed(1);
+  const averageLifeEventsPerDay = (
+    lifeEventCount / totalDaysWithEvents
+  ).toFixed(1);
 
   // Assuming calculateTotalEventTime returns time in minutes
-  const formattedAverageTimePerDay = formatMinutesAsHoursAndMinutes(totalEventTime / totalDaysWithEvents);
-  const formattedAverageWorkTimePerDay = formatMinutesAsHoursAndMinutes(workEventTime / totalDaysWithEvents);
-  const formattedAverageLifeTimePerDay = formatMinutesAsHoursAndMinutes(lifeEventTime / totalDaysWithEvents);
+  const formattedAverageTimePerDay = formatMinutesAsHoursAndMinutes(
+    totalEventTime / totalDaysWithEvents
+  );
+  const formattedAverageWorkTimePerDay = formatMinutesAsHoursAndMinutes(
+    workEventTime / totalDaysWithEvents
+  );
+  const formattedAverageLifeTimePerDay = formatMinutesAsHoursAndMinutes(
+    lifeEventTime / totalDaysWithEvents
+  );
 
   return {
     totalEventCount,
@@ -529,7 +549,7 @@ const calculateEventPoolsStats = (events) => {
     averageLifeEventsPerDay,
     formattedAverageTimePerDay,
     formattedAverageWorkTimePerDay,
-    formattedAverageLifeTimePerDay
+    formattedAverageLifeTimePerDay,
   };
 };
 
@@ -543,11 +563,17 @@ export const calculateMacroStats = (events) => {
   const currentMonthMacroStats = calculateEventPoolsStats(
     eventPools.eventsInCurrentMonth
   );
-  console.log("[eventUtils.js] currentMonthMacroStats: ", currentMonthMacroStats);
+  console.log(
+    "[eventUtils.js] currentMonthMacroStats: ",
+    currentMonthMacroStats
+  );
   const previousMonthMacroStats = calculateEventPoolsStats(
     eventPools.eventsInPreviousMonth
   );
-  console.log("[eventUtils.js] previousMonthMacroStats: ", previousMonthMacroStats);
+  console.log(
+    "[eventUtils.js] previousMonthMacroStats: ",
+    previousMonthMacroStats
+  );
   const currentWeekMacroStats = calculateEventPoolsStats(
     eventPools.eventsInCurrentWeek
   );
@@ -555,13 +581,16 @@ export const calculateMacroStats = (events) => {
   const previousWeekMacroStats = calculateEventPoolsStats(
     eventPools.eventsInPreviousWeek
   );
-  console.log("[eventUtils.js] previousWeekMacroStats: ", previousWeekMacroStats);
+  console.log(
+    "[eventUtils.js] previousWeekMacroStats: ",
+    previousWeekMacroStats
+  );
 
   return {
     allTimeMacroStats,
     currentMonthMacroStats,
     previousMonthMacroStats,
     currentWeekMacroStats,
-    previousWeekMacroStats
-  }
+    previousWeekMacroStats,
+  };
 };

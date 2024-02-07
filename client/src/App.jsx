@@ -9,6 +9,7 @@ import {
 } from "@apollo/client";
 import { setContext } from "@apollo/client/link/context";
 import { ModalProvider } from "./components/contextproviders/ModalProvider.jsx";
+import { NotificationProvider } from "./components/contextproviders/NotificationProvider.jsx";
 import {
   ColorSchemeProvider,
   useColorScheme,
@@ -60,9 +61,11 @@ const AppContent = () => {
 
   return (
     <div id="color-scheme-jg" className={colorScheme}>
-      <ModalProvider>
-        <Outlet />
-      </ModalProvider>
+      <NotificationProvider>
+        <ModalProvider>
+          <Outlet />
+        </ModalProvider>
+      </NotificationProvider>
     </div>
   );
 };

@@ -81,6 +81,7 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
                       ? "side-panel-event-item-extra-space-jg"
                       : ""
                   }`}
+                  title={`${formattedEvent.title} (${formattedEvent.startTime})`}
                 >
                   <a
                     href={"#" + formattedEvent.eventId}

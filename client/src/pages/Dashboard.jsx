@@ -10,6 +10,7 @@ import Schedule from "../components/dashboard/Schedule";
 import LoadingSpinner from "../components/other/LoadingSpinner.jsx";
 import DashboardHeader from "../components/dashboard/DashboardHeader.jsx";
 import DashboardSidePanel from "../components/dashboard/DashboardSidePanel.jsx";
+import NotificationManager from "../components/dashboard/NotificationManager.jsx";
 
 import { QUERY_EVENTS_BY_DATE } from "../utils/queries.js";
 
@@ -191,6 +192,7 @@ export default function Dashboard() {
           {hasRightSidebar && <DashboardSidePanel sidebarToRender="right" />}
         </div>
       </main>
+      <NotificationManager />
     </DataContext.Provider>
   );
 }
