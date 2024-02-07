@@ -2676,6 +2676,16 @@ path[class="firework-stroke-color-1-jg"] {
 }
 
 /* Stats page rules */
+.stats-inner-content-jg p {
+  font-weight: bold;
+}
+
+.stats-no-events-message-container-jg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .stats-top-row-jg {
   width: 100%;
   display: flex;
@@ -2718,6 +2728,7 @@ path[class="firework-stroke-color-1-jg"] {
   width: 50%;
   border-radius: 0.3em 0 0 0.3em;
   background-color: var(--work-event-color);
+  transition: width 0.2s ease-in-out;
 }
 
 .stats-bar-labels-jg {
