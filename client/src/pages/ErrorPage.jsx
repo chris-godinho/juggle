@@ -4,6 +4,8 @@ import BackButton from "../components/other/BackButton";
 
 import Auth from "../utils/auth";
 
+import "../App.css";
+
 export default function ErrorPage() {
   const error = useRouteError();
   console.error(error);

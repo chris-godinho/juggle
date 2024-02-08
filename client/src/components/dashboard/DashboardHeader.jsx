@@ -170,20 +170,16 @@ export default function DashboardHeader() {
       )}
       <div className="date-percentage-container-jg">
         <div className="mobile-percentages-container-jg">
-          {(!hasLeftSidebar &&
-            !hasRightSidebar &&
-            fetchedSettings?.showStats) ||
-            (isMobileView && fetchedSettings?.showStats && (
+          {fetchedSettings?.showStats && (
               <>
                 <div className="dashboard-header-mobile-percentage-jg work-text-jg">
                   <h2>{displayPercentages[0]}%</h2>
                   <p>Work</p>
                 </div>
               </>
-            ))}
+            )}
           {fetchedSettings?.showStats &&
-            !fetchedSettings?.ignoreUnalotted &&
-            isMobileView && (
+            !fetchedSettings?.ignoreUnalotted && (
               <div className="dashboard-header-mobile-percentage-jg grey-text-jg">
                 <h2>
                   {" "}
@@ -195,17 +191,14 @@ export default function DashboardHeader() {
                 <p>Unalotted</p>
               </div>
             )}
-          {(!hasLeftSidebar &&
-            !hasRightSidebar &&
-            fetchedSettings?.showStats) ||
-            (isMobileView && fetchedSettings?.showStats && (
+          {fetchedSettings?.showStats && (
               <>
                 <div className="dashboard-header-mobile-percentage-jg life-text-jg">
                   <h2>{displayPercentages[1]}%</h2>
                   <p>Life</p>
                 </div>
               </>
-            ))}
+            )}
         </div>
         <div className="selected-date-container-jg">
           <a href="#" onClick={selectPreviousDay}>
