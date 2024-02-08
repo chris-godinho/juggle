@@ -89,7 +89,7 @@ export default function DashboardHeader() {
     );
     console.log("[DashboardHeader.jsx] isSidebarOpen:", isSidebarOpen);
     console.log("[DashboardHeader.jsx] Toggling sidebar");
-    mobileSidebar.current.style.left = isSidebarOpen ? "-50%" : "0";
+    mobileSidebar.current.style.left = isSidebarOpen ? "-65%" : "0";
     setIsSidebarOpen(!isSidebarOpen);
   };
 

@@ -3247,7 +3247,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .round-button-jg.work-border-jg {
-    right: -24em;
+    right: -81.5vw;
   }
 
   .dashboard-header-percentage-jg {
@@ -3256,18 +3256,18 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .dashboard-header-percentage-jg.work-text-jg {
-    left: 11em;
-    top: 1em;
+    left: 28vw;
+    top: 2.5vh;
   }
 
   .dashboard-header-percentage-jg.life-text-jg {
-    left: 16.8em;
-    top: 1em;
+    left: 43vw;
+    top: 2.5vh;
   }
 
   .dashboard-header-percentage-jg.grey-text-jg {
-    left: 22em;
-    top: 1em;
+    left: 57vw;
+    top: 2.5vh;
   }
 
   .dashboard-header-percentage-jg h2 {
@@ -3299,14 +3299,14 @@ path[class="firework-stroke-color-1-jg"] {
 
   .menu-container-jg {
     position: absolute;
-    top: -2.65em;
-    left: -2em;
+    top: -7vh;
+    left: -5.5vw;
   }
 
   .menu-brand-container-jg h2 {
     position: absolute;
-    top: -2.4em;
-    left: 0.5em;
+    top: -9.5vh;
+    left: 1.4vw;
   }
 
   .menu-icon-jg {
@@ -3406,6 +3406,28 @@ path[class="firework-stroke-color-1-jg"] {
   .signup-box-jg {
     min-width: 75%;
   }
+
+  .round-button-jg.work-border-jg,
+  .dashboard-header-percentage-jg p,
+  .menu-brand-container-jg h2 {
+    display: none;
+  }
+
+  .dashboard-header-percentage-jg.work-text-jg {
+    left: 25vw;
+    top: 3vh;
+  }
+
+  .dashboard-header-percentage-jg.life-text-jg {
+    left: auto;
+    right: 25vw;
+    top: 3vh;
+  }
+
+  .dashboard-header-percentage-jg.grey-text-jg {
+    left: 47vw;
+    top: 3vh;
+  }
 }
 
 @media screen and (max-width: 440px) {
@@ -3467,6 +3489,11 @@ path[class="firework-stroke-color-1-jg"] {
   .navigation-arrow-container-jg {
     min-width: 70vw;
   }
+
+  .mobile-sidebar-jg {
+    left: -65%;
+    width: 60%;
+  }
 }
 
 @media screen and (max-width: 395px) {
@@ -3522,4 +3549,14 @@ path[class="firework-stroke-color-1-jg"] {
   .color-scheme-name-jg {
     margin-top: 0.8em;
   }
+
+  .side-panel-logo-jg {
+    height: 1.5em;
+    width: 1.5em;
+  }
+
+  #color-scheme-jg > header > div.mobile-sidebar-jg > div > div > h2 {
+    font-size: 1.2em;
+  }
+
 }
