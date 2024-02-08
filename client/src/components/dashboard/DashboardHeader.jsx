@@ -259,9 +259,13 @@ export default function DashboardHeader() {
         </button>
       </div>
       <div className="mobile-sidebar-jg" ref={mobileSidebar}>
-        <SidePanelBrand />
-        <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
-        <SidePanelMenu />
+        {isMobileView && (
+          <>
+            <SidePanelBrand />
+            <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
+            <SidePanelMenu />
+          </>
+        )}
       </div>
       {isSidebarOpen && (
         <div
