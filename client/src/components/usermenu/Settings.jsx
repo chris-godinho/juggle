@@ -15,12 +15,12 @@ import ColorSchemeTable from "../settings/ColorSchemeTable.jsx";
 import AuthService from "../../utils/auth.js";
 
 export default function Settings() {
-
   const userProfile = AuthService.getProfile();
 
   const [settingsScreen, setSettingsScreen] = useState("stats");
   const [activePreferredActivities, setActivePreferredActivities] =
     useState("work");
+  const [mobileMenuOption, setMobileMenuOption] = useState("stats");
 
   const { formData, setFormData, userSettings } = useDataContext();
   console.log("[Settings.jsx] userSettings: ", userSettings);
@@ -223,9 +223,30 @@ export default function Settings() {
     });
   };
 
+  const handleMobileMenuChange = (event) => {
+    setMobileMenuOption(event.target.value);
+    setSettingsScreen(event.target.value);
+  };
+
   return (
     <div className="modal-inner-content-jg">
-      <h1 className="settings-title-jg">Settings</h1>
+      <div className="settings-top-row-jg">
+        <h1 className="settings-title-jg">Settings</h1>
+        <select
+          className="settings-mobile-menu-select-jg"
+          name="menu"
+          value={mobileMenuOption}
+          onChange={handleMobileMenuChange}
+        >
+          <option value="stats">Stats</option>
+          <option value="sleepingHours">Sleeping Hours</option>
+          <option value="preferredActivities">Preferred Activities</option>
+          <option value="events">Events</option>
+          <option value="layout">Layout</option>
+          <option value="theme">Theme</option>
+          <option value="localization">Localization</option>
+        </select>
+      </div>
       <div className="settings-container-jg">
         <div className="settings-sidebar-menu-jg">
           <a
@@ -348,26 +369,26 @@ export default function Settings() {
                     Ignore unalotted time
                   </label>
                   {!formData?.user?.statSettings?.ignoreUnalotted && (
-                  <div
-                    className="settings-select-line-jg"
-                    title="The total number of hours upon which your stats are calculated."
-                  >
-                    <p className="settings-label-jg">
-                      Percentage Calculation Basis
-                    </p>
-                    <select
-                      className="settings-select-jg"
-                      name="statSettings-percentageBasis"
-                      value={
-                        formData?.user?.statSettings?.percentageBasis ||
-                        "waking"
-                      }
-                      onChange={handleInputChange}
+                    <div
+                      className="settings-select-line-jg"
+                      title="The total number of hours upon which your stats are calculated."
                     >
-                      <option value="waking">Your waking hours</option>
-                      <option value="fullDay">Entire day</option>
-                    </select>
-                  </div>
+                      <p className="settings-label-jg">
+                        Percentage Calculation Basis
+                      </p>
+                      <select
+                        className="settings-select-jg"
+                        name="statSettings-percentageBasis"
+                        value={
+                          formData?.user?.statSettings?.percentageBasis ||
+                          "waking"
+                        }
+                        onChange={handleInputChange}
+                      >
+                        <option value="waking">Your waking hours</option>
+                        <option value="fullDay">Entire day</option>
+                      </select>
+                    </div>
                   )}
                 </>
               )}
@@ -375,7 +396,10 @@ export default function Settings() {
           ) : settingsScreen === "sleepingHours" ? (
             /* Sleeping Hours Settings */ <>
               <p className="settings-top-label-jg sleeping-hours-label-jg">
-                Set your regular sleeping hours here.{formData?.user?.statSettings?.percentageBasis === "waking" ? " All statistics will ignore those hours when calculated." : ""}
+                Set your regular sleeping hours here.
+                {formData?.user?.statSettings?.percentageBasis === "waking"
+                  ? " All statistics will ignore those hours when calculated."
+                  : ""}
               </p>
               <SleepDropdownArea />
             </>

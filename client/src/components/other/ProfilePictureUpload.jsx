@@ -153,7 +153,7 @@ const ProfilePictureUpload = () => {
   );
 
   return (
-    <div>
+    <div className="upload-area-container-jg">
       {uppy && (
         <div
           className={
