@@ -12,6 +12,7 @@ export default defineConfig({
         name: "Juggler",
         short_name: "Juggler",
         description: "A task management app with a focus on work/life balance.",
+        start_url: "/",
         icons: [
           {
             src: "/android-chrome-192x192.png",
