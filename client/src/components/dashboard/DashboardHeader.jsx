@@ -1,6 +1,6 @@
 // DashboardHeader.jsx
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
@@ -10,6 +10,8 @@ import "flatpickr/dist/themes/dark.css";
 
 import NewEvent from "./NewEvent.jsx";
 import UserMenu from "../usermenu/UserMenu.jsx";
+import SidePanelBrand from "./SidePanelBrand.jsx";
+import SidePanelMenu from "./SidePanelMenu.jsx";
 
 import { findDisplayPercentage } from "../../utils/eventUtils.js";
 
@@ -19,6 +21,7 @@ export default function DashboardHeader() {
     setSelectedDate,
     hasRightSidebar,
     hasLeftSidebar,
+    isMobileView,
     eventsRefetch,
     fetchedSettings,
     fetchedEventData,
@@ -31,6 +34,10 @@ export default function DashboardHeader() {
     unalottedTimePercentageWithSleepingHours,
     setUnalottedTimePercentageWithSleepingHours,
   ] = useState(0);
+
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const mobileSidebar = useRef(null);
 
   const eventTypes = ["Work", "Life"];
 
@@ -75,12 +82,61 @@ export default function DashboardHeader() {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
   };
 
+  const toggleSidebar = () => {
+    console.log(
+      "[DashboardHeader.jsx] mobileSidebar.current:",
+      mobileSidebar.current
+    );
+    console.log("[DashboardHeader.jsx] isSidebarOpen:", isSidebarOpen);
+    console.log("[DashboardHeader.jsx] Toggling sidebar");
+    mobileSidebar.current.style.left = isSidebarOpen ? "-50%" : "0";
+    setIsSidebarOpen(!isSidebarOpen);
+  };
+
   return (
     <header
       className={`dashboard-header-jg ${
         !hasRightSidebar ? "dashboard-header-one-sidebar-left-jg" : ""
       } ${!hasLeftSidebar ? "dashboard-header-one-sidebar-right-jg" : ""}`}
     >
+      {isMobileView && (
+        <div className="menu-brand-container-jg">
+          <div className="menu-container-jg">
+            <svg
+              className="menu-icon-jg"
+              width="2.5em"
+              height="2.5em"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              onClick={toggleSidebar}
+            >
+              <path
+                className="menu-icon-bottom-bar-jg"
+                d="M4 18L20 18"
+                stroke="#000000"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                className="menu-icon-middle-bar-jg"
+                d="M4 12L20 12"
+                stroke="#000000"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+              <path
+                className="menu-icon-top-bar-jg"
+                d="M4 6L20 6"
+                stroke="#000000"
+                strokeWidth="2"
+                strokeLinecap="round"
+              />
+            </svg>
+          </div>
+          <h2>Juggler</h2>
+        </div>
+      )}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg work-border-jg work-border-link-jg"
@@ -104,14 +160,15 @@ export default function DashboardHeader() {
           />
         </button>
       </div>
-      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
-        <>
-          <div className="dashboard-header-percentage-jg work-text-jg">
-            <h2>{displayPercentages[0]}%</h2>
-            <p>Work</p>
-          </div>
-        </>
-      )}
+      {(!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats) ||
+        (isMobileView && (
+          <>
+            <div className="dashboard-header-percentage-jg work-text-jg">
+              <h2>{displayPercentages[0]}%</h2>
+              <p>Work</p>
+            </div>
+          </>
+        ))}
       <div className="date-percentage-container-jg">
         <div className="selected-date-container-jg">
           <a href="#" onClick={selectPreviousDay}>
@@ -134,26 +191,43 @@ export default function DashboardHeader() {
             <span className="material-symbols-outlined">arrow_forward_ios</span>
           </a>
         </div>
-        {fetchedSettings?.showStats && !fetchedSettings?.ignoreUnalotted && (
-          <div className="unalotted-percentage-jg">
-            <p>
-              Unalotted Time:{" "}
+        {fetchedSettings?.showStats &&
+          !fetchedSettings?.ignoreUnalotted &&
+          !isMobileView && (
+            <div className="unalotted-percentage-jg">
+              <p>
+                Unalotted Time:{" "}
+                {fetchedSettings?.percentageBasis === "waking"
+                  ? unalottedTimePercentage
+                  : unalottedTimePercentageWithSleepingHours}
+                %
+              </p>
+            </div>
+          )}
+      </div>
+      {fetchedSettings?.showStats &&
+        !fetchedSettings?.ignoreUnalotted &&
+        isMobileView && (
+          <div className="dashboard-header-percentage-jg grey-text-jg">
+            <h2>
+              {" "}
               {fetchedSettings?.percentageBasis === "waking"
                 ? unalottedTimePercentage
                 : unalottedTimePercentageWithSleepingHours}
               %
-            </p>
+            </h2>
+            <p>Unalotted</p>
           </div>
         )}
-      </div>
-      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
-        <>
-          <div className="dashboard-header-percentage-jg life-text-jg">
-            <h2>{displayPercentages[1]}%</h2>
-            <p>Life</p>
-          </div>
-        </>
-      )}
+      {(!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats) ||
+        (isMobileView && (
+          <>
+            <div className="dashboard-header-percentage-jg life-text-jg">
+              <h2>{displayPercentages[1]}%</h2>
+              <p>Life</p>
+            </div>
+          </>
+        ))}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg life-border-jg life-border-link-jg"
@@ -184,6 +258,17 @@ export default function DashboardHeader() {
           </svg>
         </button>
       </div>
+      <div className="mobile-sidebar-jg" ref={mobileSidebar}>
+        <SidePanelBrand />
+        <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
+        <SidePanelMenu />
+      </div>
+      {isSidebarOpen && (
+        <div
+          className="mobile-sidebar-overlay-jg"
+          onClick={toggleSidebar}
+        ></div>
+      )}
     </header>
   );
 }

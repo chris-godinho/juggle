@@ -2917,6 +2917,26 @@ path[class="firework-stroke-color-1-jg"] {
 }
 
 /* Media Queries */
+@media screen and (max-width: 1280px) {
+  .dashboard-main-panel-jg {
+    margin-left: 20%;
+    margin-right: 19.5%;
+  }
+
+  .dashboard-side-panel-jg {
+    width: 20%;
+  }
+
+  .dashboard-header-jg {
+    padding-left: calc(20% + 2.7em);
+    padding-right: calc(20% + 2.7em);
+  }
+
+  .selected-date-box-input-jg {
+    font-size: 0.9em;
+  }
+}
+
 @media screen and (max-width: 1100px) {
   .welcome-text-jg h1 {
     font-size: 1.5em;
@@ -3034,6 +3054,60 @@ path[class="firework-stroke-color-1-jg"] {
 
   .work-life-activity-checkbox-jg {
     font-size: 0.7em;
+  }
+
+  .dashboard-main-panel-jg {
+    margin-left: 25%;
+    margin-right: 24.2%;
+  }
+
+  .dashboard-side-panel-jg {
+    width: 25%;
+  }
+
+  .dashboard-header-jg {
+    padding-left: calc(25% + 2.7em);
+    padding-right: calc(25% + 2.7em);
+  }
+
+  .dashboard-header-button-container-jg {
+    position: relative;
+  }
+
+  .round-button-jg {
+    position: absolute;
+    height: 2em;
+    width: 2em;
+    font-size: 1.3em;
+  }
+
+  .round-button-jg.work-border-jg {
+    top: -2em;
+    right: -0.6em;
+  }
+
+  .round-button-jg.life-border-jg {
+    top: -2em;
+    right: -1.3em;
+  }
+
+  .selected-date-box-input-jg {
+    font-size: 0.9em;
+  }
+
+  .date-percentage-container-jg {
+    width: 100%;
+    margin-top: 4em;
+  }
+
+  .selected-date-box-input-jg {
+    font-size: 0.8em;
+  }
+
+  .unalotted-percentage-jg {
+    position: absolute;
+    width: 100%;
+    top: -3.3em;
   }
 }
 
@@ -3156,6 +3230,141 @@ path[class="firework-stroke-color-1-jg"] {
 
   .navigation-arrow-container-jg {
     margin-top: 1em;
+  }
+
+  .dashboard-main-panel-jg {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .dashboard-side-panel-jg {
+    display: none;
+  }
+
+  .dashboard-header-jg {
+    padding-left: 2.7em;
+    padding-right: 2.7em;
+  }
+
+  .round-button-jg.work-border-jg {
+    right: -24em;
+  }
+
+  .dashboard-header-percentage-jg {
+    position: absolute;
+    flex-direction: row;
+  }
+
+  .dashboard-header-percentage-jg.work-text-jg {
+    left: 11em;
+    top: 1em;
+  }
+
+  .dashboard-header-percentage-jg.life-text-jg {
+    left: 16.8em;
+    top: 1em;
+  }
+
+  .dashboard-header-percentage-jg.grey-text-jg {
+    left: 22em;
+    top: 1em;
+  }
+
+  .dashboard-header-percentage-jg h2 {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 1.4em;
+  }
+
+  .dashboard-header-percentage-jg p {
+    position: relative;
+    margin-bottom: 0.2em;
+    margin-left: 0.2em;
+    top: auto;
+    left: auto;
+    transform: none;
+    align-self: flex-end;
+    font-size: 0.8em;
+  }
+
+  .grey-text-jg {
+    color: var(--input-placeholder-text-color);
+  }
+
+  .menu-brand-container-jg {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .menu-container-jg {
+    position: absolute;
+    top: -2.65em;
+    left: -2em;
+  }
+
+  .menu-brand-container-jg h2 {
+    position: absolute;
+    top: -2.4em;
+    left: 0.5em;
+  }
+
+  .menu-icon-jg {
+    transition: transform 0.2s ease-in-out, filter 0.2s ease-in-out;
+    cursor: pointer;
+  }
+
+  .menu-icon-jg:hover {
+    transform: scale(0.93);
+    filter: brightness(1.5);
+  }
+
+  .menu-icon-top-bar-jg {
+    stroke: var(--work-event-color);
+  }
+
+  .menu-icon-middle-bar-jg {
+    stroke: var(--main-text-color);
+  }
+
+  .menu-icon-bottom-bar-jg {
+    stroke: var(--life-event-color);
+  }
+
+  .mobile-sidebar-overlay-jg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--box-shadow-color);
+    z-index: 1500;
+  }
+
+  .mobile-sidebar-jg {
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: -50%;
+    top: 0;
+    height: 100vh;
+    width: 45%;
+    background-color: var(--main-background-color);
+    box-shadow: 5px 5px 10px 3px var(--box-shadow-color);
+    z-index: 1550;
+    transition: left 0.2s ease-in-out;
+  }
+
+  .mobile-sidebar-active-jg {
+    left: 0;
+  }
+
+  .side-panel-brand-jg {
+    justify-content: left;
+    margin-left: 10%;
   }
 }
 

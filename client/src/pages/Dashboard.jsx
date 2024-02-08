@@ -70,6 +70,8 @@ export default function Dashboard() {
   const [hasRightSidebar, setHasRightSidebar] = useState(true);
   const [isOneBarLayout, setIsOneBarLayout] = useState(false);
 
+  const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 620);
+
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
     spinnerHeight: "80vh",
@@ -86,6 +88,20 @@ export default function Dashboard() {
   });
 
   const events = eventsData?.eventsByDate || [];
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobileView(window.innerWidth < 450);
+    };
+
+    // Add event listener for window resize
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
   // TODO: Remove this after testing
   useEffect(() => {
@@ -167,6 +183,7 @@ export default function Dashboard() {
         isOneBarLayout,
         hasLeftSidebar,
         hasRightSidebar,
+        isMobileView,
         scheduleSpinnerStyle,
         eventsLoading,
         eventsRefetch,
