@@ -2485,7 +2485,8 @@ input[type="checkbox"]:disabled {
 .settings-events-container-jg,
 .settings-layout-container-jg,
 .settings-theme-container-jg,
-.settings-localization-container {
+.settings-localization-container-jg,
+.settings-install-container-jg {
   margin-left: 2em;
 }
 
@@ -2548,6 +2549,12 @@ input[type="checkbox"]:disabled {
   margin-top: 0.9em;
   margin-bottom: 1em;
   font-size: 0.8em;
+}
+
+.settings-install-container-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 /* Work/Life Slider rules */
@@ -3574,7 +3581,8 @@ path[class="firework-stroke-color-1-jg"] {
   .settings-events-container-jg,
   .settings-layout-container-jg,
   .settings-theme-container-jg,
-  .settings-localization-container {
+  .settings-localization-container-jg,
+  .settings-install-container-jg {
     margin-left: 0;
   }
 

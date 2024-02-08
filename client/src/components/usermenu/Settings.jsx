@@ -32,6 +32,7 @@ export default function Settings() {
     useState("");
   const [displayAddSubtypeFormError, setDisplayAddSubtypeFormError] =
     useState(false);
+  const [deferredPrompt, setDeferredPrompt] = useState(null);
 
   const { data: userData, error: userError } = useQuery(QUERY_USER, {
     variables: { username: userProfile.data.username },
@@ -53,6 +54,43 @@ export default function Settings() {
       });
     }
   }, [userData]);
+
+  if ("beforeinstallprompt" in window) {
+    console.log("[Settings.jsx] beforeinstallprompt event listener is supported");
+    // Check for PWA installation before showing install button
+    window.addEventListener("beforeinstallprompt", (event) => {
+      event.preventDefault();
+
+      setDeferredPrompt(event);
+
+      console.log("[Settings.jsx] beforeinstallprompt fired");
+      console.log("[Settings.jsx] deferredPrompt:", deferredPrompt);
+    });
+  } else {
+    console.log(
+      "[Settings.jsx] beforeinstallprompt event listener is not supported"
+    );
+  }
+
+  const handleInstallButtonClick = () => {
+    console.log("[Settings.jsx] Install button clicked");
+    console.log("[Settings.jsx] deferredPrompt:", deferredPrompt);
+    if (deferredPrompt) {
+      console.log("[Settings.jsx] Prompting user to install...");
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then((choiceResult) => {
+        console.log("[Settings.jsx] User choice:", choiceResult);
+        if (choiceResult.outcome === "accepted") {
+          console.log("User accepted the install prompt");
+        } else {
+          console.log("User dismissed the install prompt");
+        }
+
+        setDeferredPrompt(null);
+      });
+    }
+  };
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -245,6 +283,7 @@ export default function Settings() {
           <option value="layout">Layout</option>
           <option value="theme">Theme</option>
           <option value="localization">Localization</option>
+          <option value="install">Install</option>
         </select>
       </div>
       <div className="settings-container-jg">
@@ -325,6 +364,17 @@ export default function Settings() {
             onClick={() => setSettingsScreen("localization")}
           >
             Localization
+          </a>
+          <a
+            href="#"
+            className={
+              settingsScreen === "install"
+                ? "settings-sidebar-item-jg settings-active-submenu-jg"
+                : "settings-sidebar-item-jg"
+            }
+            onClick={() => setSettingsScreen("install")}
+          >
+            Install
           </a>
         </div>
         <div className="settings-main-jg">
@@ -542,8 +592,8 @@ export default function Settings() {
               </h3>
               <ColorSchemeTable cardSize="small" />
             </div>
-          ) : (
-            /* Localization Settings */ <div className="settings-localization-container">
+          ) : settingsScreen === "localization" ? (
+            /* Localization Settings */ <div className="settings-localization-container-jg">
               <div
                 className="settings-select-line-jg"
                 title="Select your local timezone."
@@ -624,6 +674,17 @@ export default function Settings() {
                   <option value="24-hour">14:25</option>
                 </select>
               </div>
+            </div>
+          ) : (
+            <div className="settings-install-container-jg">
+              <h3 className="settings-label-jg">Install Juggler</h3>
+              <button
+                id="pwa-install-button"
+                className="button-jg"
+                onClick={handleInstallButtonClick}
+              >
+                Install
+              </button>
             </div>
           )}
         </div>
