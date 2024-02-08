@@ -67,13 +67,15 @@ export default function SidePanelMenu() {
       >
         View/Edit Profile
       </a>
-      <a
-        href="#"
-        className="side-panel-link-jg"
-        onClick={() => openMenuModal("WorkLifeStats")}
-      >
-        View Stats
-      </a>
+      {fetchedSettings?.showStats && (
+        <a
+          href="#"
+          className="side-panel-link-jg"
+          onClick={() => openMenuModal("WorkLifeStats")}
+        >
+          View Stats
+        </a>
+      )}
       <a
         href="#"
         className="side-panel-link-jg"

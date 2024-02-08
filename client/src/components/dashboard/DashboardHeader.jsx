@@ -160,16 +160,53 @@ export default function DashboardHeader() {
           />
         </button>
       </div>
-      {(!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats) ||
-        (isMobileView && (
-          <>
-            <div className="dashboard-header-percentage-jg work-text-jg">
-              <h2>{displayPercentages[0]}%</h2>
-              <p>Work</p>
-            </div>
-          </>
-        ))}
+      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
+        <>
+          <div className="dashboard-header-percentage-jg work-text-jg">
+            <h2>{displayPercentages[0]}%</h2>
+            <p>Work</p>
+          </div>
+        </>
+      )}
       <div className="date-percentage-container-jg">
+        <div className="mobile-percentages-container-jg">
+          {(!hasLeftSidebar &&
+            !hasRightSidebar &&
+            fetchedSettings?.showStats) ||
+            (isMobileView && fetchedSettings?.showStats && (
+              <>
+                <div className="dashboard-header-mobile-percentage-jg work-text-jg">
+                  <h2>{displayPercentages[0]}%</h2>
+                  <p>Work</p>
+                </div>
+              </>
+            ))}
+          {fetchedSettings?.showStats &&
+            !fetchedSettings?.ignoreUnalotted &&
+            isMobileView && (
+              <div className="dashboard-header-mobile-percentage-jg grey-text-jg">
+                <h2>
+                  {" "}
+                  {fetchedSettings?.percentageBasis === "waking"
+                    ? unalottedTimePercentage
+                    : unalottedTimePercentageWithSleepingHours}
+                  %
+                </h2>
+                <p>Unalotted</p>
+              </div>
+            )}
+          {(!hasLeftSidebar &&
+            !hasRightSidebar &&
+            fetchedSettings?.showStats) ||
+            (isMobileView && fetchedSettings?.showStats && (
+              <>
+                <div className="dashboard-header-mobile-percentage-jg life-text-jg">
+                  <h2>{displayPercentages[1]}%</h2>
+                  <p>Life</p>
+                </div>
+              </>
+            ))}
+        </div>
         <div className="selected-date-container-jg">
           <a href="#" onClick={selectPreviousDay}>
             <span className="material-symbols-outlined">
@@ -205,29 +242,14 @@ export default function DashboardHeader() {
             </div>
           )}
       </div>
-      {fetchedSettings?.showStats &&
-        !fetchedSettings?.ignoreUnalotted &&
-        isMobileView && (
-          <div className="dashboard-header-percentage-jg grey-text-jg">
-            <h2>
-              {" "}
-              {fetchedSettings?.percentageBasis === "waking"
-                ? unalottedTimePercentage
-                : unalottedTimePercentageWithSleepingHours}
-              %
-            </h2>
-            <p>Unalotted</p>
+      {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (
+        <>
+          <div className="dashboard-header-percentage-jg life-text-jg">
+            <h2>{displayPercentages[1]}%</h2>
+            <p>Life</p>
           </div>
-        )}
-      {(!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats) ||
-        (isMobileView && (
-          <>
-            <div className="dashboard-header-percentage-jg life-text-jg">
-              <h2>{displayPercentages[1]}%</h2>
-              <p>Life</p>
-            </div>
-          </>
-        ))}
+        </>
+      )}
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg life-border-jg life-border-link-jg"

@@ -57,13 +57,15 @@ export default function UserMenuOptions({ username, setUserMenuModalContent }) {
       >
         View/Edit Profile
       </a>
-      <a
-        href="#"
-        className="user-menu-link-jg"
-        onClick={() => setUserMenuModalContent("WorkLifeStats")}
-      >
-        View Stats
-      </a>
+      {userSettings?.statSettings?.showStats && (
+        <a
+          href="#"
+          className="user-menu-link-jg"
+          onClick={() => setUserMenuModalContent("WorkLifeStats")}
+        >
+          View Stats
+        </a>
+      )}
       <a
         href="#"
         className="user-menu-link-jg"
