@@ -6,7 +6,8 @@ const assignClassNames = (
   startsPreviousDay,
   endsOnSelectedDate,
   startsOnSelectedDate,
-  endsNextDay
+  endsNextDay,
+  nextDay
 ) => {
   let className = "schedule-event-box-jg";
 
@@ -18,7 +19,7 @@ const assignClassNames = (
       className += " schedule-event-box-work-previous-day-jg";
     } else if (startsOnSelectedDate && endsNextDay) {
       // Assign styles for work events that start on the selected date and end on a future date
-      if (event.eventEnd !== tomorrowDate.toISOString()) {
+      if (event.eventEnd !== nextDay.toISOString()) {
         // Only assign styles for work events that do not end at midnight
         className += " schedule-event-box-work-next-day-jg";
       }
@@ -34,7 +35,7 @@ const assignClassNames = (
       className += " schedule-event-box-life-previous-day-jg";
     } else if (startsOnSelectedDate && endsNextDay) {
       // Assign styles for life events that start on the selected date and end on a future date
-      if (event.eventEnd !== tomorrowDate.toISOString()) {
+      if (event.eventEnd !== nextDay.toISOString()) {
         // Only assign styles for life events that do not end at midnight
         className += " schedule-event-box-life-next-day-jg";
       }
@@ -50,7 +51,7 @@ const assignClassNames = (
       className += " schedule-event-box-unspecified-previous-day-jg";
     } else if (startsOnSelectedDate && endsNextDay) {
       // Assign styles for unspecified events that start on the selected date and end on a future date
-      if (event.eventEnd !== tomorrowDate.toISOString()) {
+      if (event.eventEnd !== nextDay.toISOString()) {
         // Only assign styles for unspecified events that do not end at midnight
         className += " schedule-event-box-unspecified-next-day-jg";
       }
@@ -168,7 +169,6 @@ export const buildEventBox = (event, displayDate) => {
   let adjustedBoxHeight = size;
 
   // Check if the event starts on the previous day and ends on the selectedDate
-  // TODO: Can I just use tomorrowDate instead?
   const nextDay = new Date(displayDate);
   nextDay.setDate(displayDate.getDate() + 1);
 
@@ -201,7 +201,8 @@ export const buildEventBox = (event, displayDate) => {
     startsPreviousDay,
     endsOnSelectedDate,
     startsOnSelectedDate,
-    endsNextDay
+    endsNextDay,
+    nextDay
   );
 
   return { adjustedBoxHeight, adjustedBoxPosition, className };

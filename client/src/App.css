@@ -9,7 +9,10 @@
 .color-scheme-sample-bar-jg.default-mode-jg {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
-  --main-background-color-darker-accent: rgba(20, 27, 25, 1);
+  --main-background-color-darker-accent: rgba(58, 65, 63, 1);
+
+  --box-color: rgba(58, 65, 63, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
 
   --main-separator-color: rgba(148, 151, 149, 0.2);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
@@ -21,6 +24,8 @@
   --button-text-color: rgba(28, 35, 33, 1);
 
   --warning-color: rgba(146, 45, 80, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -41,27 +46,32 @@
 .color-scheme-sample-bar-jg.light-mode-jg {
   --main-background-color: rgba(238, 241, 239, 1);
   --main-background-color-accent: rgba(198, 201, 199, 1);
-  --main-background-color-darker-accent: rgba(218, 221, 219, 1);
+  --main-background-color-darker-accent: rgba(198, 201, 199, 1);
 
-  --main-separator-color: rgba(28, 35, 33, 0.8);
-  --main-separator-color-light: rgba(48, 55, 53, 0.8);
+  --box-color: rgba(198, 201, 199, 1);
+  --box-text-color: rgba(28, 35, 33, 1);
+
+  --main-separator-color: rgba(28, 35, 33, 0.5);
+  --main-separator-color-light: rgba(48, 55, 53, 0.5);
 
   --input-background-color: rgba(238, 241, 239, 1);
   --input-text-color: rgba(28, 35, 33, 1);
   --input-placeholder-text-color: rgba(118, 111, 119, 1);
 
-  --button-text-color: rgba(28, 35, 33, 1);
+  --button-text-color: rgba(238, 241, 239, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(146, 45, 80, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(42, 203, 152, 1);
-  --life-event-color-light: rgba(62, 223, 172, 1);
-  --life-event-color-dark: rgba(82, 243, 192, 1);
-  --work-event-color: rgba(255, 100, 0, 1);
-  --work-event-color-light: rgba(255, 120, 20, 1);
-  --work-event-color-dark: rgba(235, 80, 0, 1);
+  --life-event-color: rgba(0, 143, 92, 1);
+  --life-event-color-light: rgba(42, 203, 152, 1);
+  --life-event-color-dark: rgba(0, 113, 62, 1);
+  --work-event-color: rgba(205, 50, 0, 1);
+  --work-event-color-light: rgba(255, 110, 30, 1);
+  --work-event-color-dark: rgba(185, 30, 0, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
   --secondary-text-color: rgba(28, 35, 33, 1);
@@ -73,9 +83,12 @@
 .color-scheme-sample-bar-jg.mono-mode-jg {
   --main-background-color: rgba(28, 35, 33, 1);
   --main-background-color-accent: rgba(48, 55, 53, 1);
-  --main-background-color-darker-accent: rgba(20, 27, 25, 1);
+  --main-background-color-darker-accent: rgba(58, 65, 63, 1);
 
-  --main-separator-color: rgba(148, 151, 149, 0.5);
+  --box-color: rgba(58, 65, 63, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
+
+  --main-separator-color: rgba(148, 151, 149, 0.2);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
   --input-background-color: rgba(28, 35, 33, 1);
@@ -84,7 +97,9 @@
 
   --button-text-color: rgba(28, 35, 33, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(238, 241, 239, 1);
+  --warning-text-color: rgba(255, 0, 0, 1);
+  --warning-button-text-color: rgba(255, 0, 0, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -107,8 +122,11 @@
   --main-background-color-accent: rgba(76, 106, 148, 1);
   --main-background-color-darker-accent: rgba(29, 47, 74, 1);
 
-  --main-separator-color: rgba(238, 241, 239, 0.8);
-  --main-separator-color-light: rgba(238, 241, 239, 0.6);
+  --box-color: rgba(29, 47, 74, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
+
+  --main-separator-color: rgba(238, 241, 239, 0.5);
+  --main-separator-color-light: rgba(238, 241, 239, 0.3);
 
   --input-background-color: rgba(53, 73, 94, 1);
   --input-text-color: rgba(238, 241, 239, 1);
@@ -116,7 +134,9 @@
 
   --button-text-color: rgba(28, 35, 33, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(218, 98, 125, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -137,10 +157,13 @@
 .color-scheme-sample-bar-jg.beige-mode-jg {
   --main-background-color: rgba(249, 224, 217, 1);
   --main-background-color-accent: rgba(53, 33, 44, 1);
-  --main-background-color-darker-accent: rgba(145, 127, 123, 1);
+  --main-background-color-darker-accent: rgba(105, 87, 83, 1);
 
-  --main-separator-color: rgba(98, 101, 99, 0.8);
-  --main-separator-color-light: rgba(98, 101, 99, 0.8);
+  --box-color: rgba(105, 87, 83, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
+
+  --main-separator-color: rgba(98, 101, 99, 0.5);
+  --main-separator-color-light: rgba(98, 101, 99, 0.5);
 
   --input-background-color: rgba(249, 224, 217, 1);
   --input-text-color: rgba(28, 35, 33, 1);
@@ -148,16 +171,18 @@
 
   --button-text-color: rgba(238, 241, 239, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(218, 98, 125, 1);
+  --warning-text-color: rgba(28, 35, 33, 1);
+  --warning-button-text-color: rgba(28, 35, 33, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(102, 41, 70, 1);
   --life-event-color-light: rgba(132, 71, 100, 1);
   --life-event-color-dark: rgba(72, 31, 40, 1);
-  --work-event-color: rgba(57, 79, 91, 1);
-  --work-event-color-light: rgba(87, 109, 121, 1);
-  --work-event-color-dark: rgba(27, 49, 61, 1);
+  --work-event-color: rgba(87, 109, 121, 1);
+  --work-event-color-light: rgba(117, 139, 151, 1);
+  --work-event-color-dark: rgba(57, 79, 91, 1);
 
   --main-text-color: rgba(28, 35, 33, 1);
   --secondary-text-color: rgba(238, 241, 239, 1);
@@ -171,16 +196,21 @@
   --main-background-color-accent: rgba(82, 32, 24, 1);
   --main-background-color-darker-accent: rgba(122, 45, 33, 1);
 
+  --box-color: rgba(122, 45, 33, 1);
+  --box-text-color: rgba(252, 246, 188, 1);
+
   --main-separator-color: rgba(148, 151, 149, 0.5);
   --main-separator-color-light: rgba(158, 171, 169, 0.5);
 
   --input-background-color: rgba(62, 12, 4, 1);
   --input-text-color: rgba(252, 246, 188, 1);
-  --input-placeholder-text-color: rgba(168, 161, 169, 1);
+  --input-placeholder-text-color: rgba(252, 246, 188, 0.5);
 
   --button-text-color: rgba(28, 35, 33, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(231, 90, 124, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
@@ -199,26 +229,31 @@
 
 #color-scheme-jg.green-mode-jg,
 .color-scheme-sample-bar-jg.green-mode-jg {
-  --main-background-color: rgba(14, 71, 73, 1);
+  --main-background-color: rgba(4, 61, 63, 1);
   --main-background-color-accent: rgba(44, 101, 103, 1);
-  --main-background-color-darker-accent: rgba(229, 88, 18, 1);
+  --main-background-color-darker-accent: rgba(189, 48, 0, 1);
 
-  --main-separator-color: rgba(248, 251, 249, 0.5);
-  --main-separator-color-light: rgba(248, 251, 249, 0.5);
+  --box-color: rgba(189, 48, 0, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
 
-  --input-background-color: rgba(14, 71, 73, 1);
+  --main-separator-color: rgba(248, 251, 249, 0.3);
+  --main-separator-color-light: rgba(248, 251, 249, 0.3);
+
+  --input-background-color: rgba(4, 61, 63, 1);
   --input-text-color: rgba(239, 231, 218, 1);
   --input-placeholder-text-color: rgba(218, 211, 219, 0.8);
 
   --button-text-color: rgba(28, 35, 33, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(107, 5, 4, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(149, 198, 35, 1);
-  --life-event-color-light: rgba(169, 218, 55, 1);
-  --life-event-color-dark: rgba(129, 178, 15, 1);
+  --life-event-color-light: rgba(179, 228, 65, 1);
+  --life-event-color-dark: rgba(119, 168, 5, 1);
   --work-event-color: rgba(249, 108, 38, 1);
   --work-event-color-light: rgba(255, 138, 68, 1);
   --work-event-color-dark: rgba(219, 78, 8, 1);
@@ -231,32 +266,37 @@
 
 #color-scheme-jg.purple-mode-jg,
 .color-scheme-sample-bar-jg.purple-mode-jg {
-  --main-background-color: rgba(0, 33, 139, 1);
-  --main-background-color-accent: rgba(30, 83, 199, 1);
-  --main-background-color-darker-accent: rgba(115, 37, 111, 1);
+  --main-background-color: rgba(25, 19, 8, 1);
+  --main-background-color-accent: rgba(185, 109, 180, 1);
+  --main-background-color-darker-accent: rgba(105, 29, 100, 1);
 
-  --main-separator-color: rgba(238, 241, 239, 0.5);
-  --main-separator-color-light: rgba(238, 241, 239, 0.5);
+  --box-color: rgba(155, 79, 150, 1);
+  --box-text-color: rgba(255, 209, 255, 1);
 
-  --input-background-color: rgba(0, 33, 139, 1);
-  --input-text-color: rgba(238, 241, 239, 1);
-  --input-placeholder-text-color: rgba(178, 171, 179, 1);
+  --main-separator-color: rgba(185, 109, 180, 0.6);
+  --main-separator-color-light: rgba(185, 109, 180, 0.6);
 
-  --button-text-color: rgba(238, 241, 239, 1);
+  --input-background-color: rgba(25, 19, 8, 1);
+  --input-text-color: rgba(185, 109, 180, 1);
+  --input-placeholder-text-color: rgba(185, 109, 180, 0.6);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --button-text-color: rgba(225, 179, 225, 1);
+
+  --warning-color: rgba(241, 143, 1, 1);
+  --warning-text-color: rgba(25, 19, 8, 1);
+  --warning-button-text-color: rgba(25, 19, 8, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(255, 40, 142, 1);
-  --life-event-color-light: rgba(255, 60, 162, 1);
-  --life-event-color-dark: rgba(225, 20, 122, 1);
-  --work-event-color: rgba(255, 197, 255, 1);
-  --work-event-color-light: rgba(255, 177, 251, 1);
-  --work-event-color-dark: rgba(195, 117, 191, 1);
+  --life-event-color: rgba(30, 86, 198, 1);
+  --life-event-color-light: rgba(60, 116, 228, 1);
+  --life-event-color-dark: rgba(0, 56, 168, 1);
+  --work-event-color: rgba(214, 12, 112, 1);
+  --work-event-color-light: rgba(244, 42, 142, 1);
+  --work-event-color-dark: rgba(184, 0, 82, 1);
 
-  --main-text-color: rgba(238, 241, 239, 1);
-  --secondary-text-color: rgba(238, 241, 239, 1);
+  --main-text-color: rgba(185, 109, 180, 1);
+  --secondary-text-color: rgba(255, 209, 255, 1);
 
   --main-font-family: "Exo 2", sans-serif;
 }
@@ -265,24 +305,29 @@
 .color-scheme-sample-bar-jg.yellow-mode-jg {
   --main-background-color: rgba(255, 202, 58, 1);
   --main-background-color-accent: rgba(25, 130, 196, 1);
-  --main-background-color-darker-accent: rgba(255, 89, 94, 1);
+  --main-background-color-darker-accent: rgba(56, 26, 97, 1);
 
-  --main-separator-color: rgba(28, 35, 33, 1);
-  --main-separator-color-light: rgba(28, 35, 33, 1);
+  --box-color: rgba(106, 76, 147, 1);
+  --box-text-color: rgba(238, 241, 239, 1);
+
+  --main-separator-color: rgba(28, 35, 33, 0.5);
+  --main-separator-color-light: rgba(28, 35, 33, 0.3);
 
   --input-background-color: rgba(255, 202, 58, 1);
   --input-text-color: rgba(28, 35, 33, 1);
-  --input-placeholder-text-color: rgba(238, 241, 239, 0.7);
+  --input-placeholder-text-color: rgba(28, 35, 33, 0.5);
 
   --button-text-color: rgba(238, 241, 239, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(255, 89, 94, 1);
+  --warning-text-color: rgba(28, 35, 33, 1);
+  --warning-button-text-color: rgba(28, 35, 33, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --life-event-color: rgba(108, 171, 8, 1);
-  --life-event-color-light: rgba(138, 201, 38, 1);
-  --life-event-color-dark: rgba(78, 141, 0, 1);
+  --life-event-color: rgba(58, 111, 0, 1);
+  --life-event-color-light: rgba(88, 141, 30, 1);
+  --life-event-color-dark: rgba(28, 81, 0, 1);
   --work-event-color: rgba(106, 76, 147, 1);
   --work-event-color-light: rgba(136, 106, 177, 1);
   --work-event-color-dark: rgba(76, 46, 117, 1);
@@ -295,29 +340,34 @@
 
 #color-scheme-jg.pastel-mode-jg,
 .color-scheme-sample-bar-jg.pastel-mode-jg {
-  --main-background-color: rgba(174, 92, 19, 1);
-  --main-background-color-accent: rgba(214, 208, 93, 1);
+  --main-background-color: rgba(144, 62, 0, 1);
+  --main-background-color-accent: rgba(87, 19, 35, 1);
   --main-background-color-darker-accent: rgba(57, 67, 183, 1);
 
-  --main-separator-color: rgba(87, 19, 35, 1);
-  --main-separator-color-light: rgba(87, 19, 35, 1);
+  --box-color: rgba(57, 67, 183, 1);
+  --box-text-color: rgba(244, 238, 123, 1);
 
-  --input-background-color: rgba(174, 92, 19, 1);
+  --main-separator-color: rgba(244, 238, 123, 0.5);
+  --main-separator-color-light: rgba(57, 67, 183, 0.9);
+
+  --input-background-color: rgba(144, 62, 0, 1);
   --input-text-color: rgba(244, 238, 123, 1);
-  --input-placeholder-text-color: rgba(87, 19, 35, 0.8);
+  --input-placeholder-text-color: rgba(244, 238, 123, 0.5);
 
   --button-text-color: rgba(87, 19, 35, 1);
 
-  --warning-color: rgba(255, 0, 0, 1);
+  --warning-color: rgba(87, 19, 35, 1);
+  --warning-text-color: rgba(238, 241, 239, 1);
+  --warning-button-text-color: rgba(238, 241, 239, 1);
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
   --life-event-color: rgba(145, 255, 135, 1);
   --life-event-color-light: rgba(185, 255, 175, 1);
   --life-event-color-dark: rgba(125, 213, 115, 1);
-  --work-event-color: rgba(137, 147, 253, 1);
-  --work-event-color-light: rgba(167, 177, 255, 1);
-  --work-event-color-dark: rgba(107, 117, 223, 1);
+  --work-event-color: rgba(167, 177, 255, 1);
+  --work-event-color-light: rgba(197, 207, 255, 1);
+  --work-event-color-dark: rgba(137, 147, 225, 1);
 
   --main-text-color: rgba(244, 238, 123, 1);
   --secondary-text-color: rgba(87, 19, 35, 1);
@@ -760,7 +810,7 @@ input[type="checkbox"]:disabled {
 
 .error-notification-jg {
   background-color: var(--warning-color);
-  color: var(--main-text-color);
+  color: var(--warning-text-color);
 }
 
 .notification-close-button-jg {
@@ -768,7 +818,11 @@ input[type="checkbox"]:disabled {
   top: 0.5em;
   right: 0.5em;
   color: var(--main-separator-color-light);
-  transition: color 0.1s ease-in-out;
+  transition: filter 0.1s ease-in-out;
+}
+
+.error-notification-jg .notification-close-button-jg {
+  color: var(--warning-text-color);
 }
 
 .notification-close-button-icon-jg {
@@ -776,7 +830,7 @@ input[type="checkbox"]:disabled {
 }
 
 .notification-close-button-jg:hover {
-  color: var(--main-text-color);
+  filter: brightness(1.5);
 }
 
 .work-notification-close-button-jg,
@@ -876,11 +930,13 @@ input[type="checkbox"]:disabled {
 }
 
 .header-brand-name-jg a h2 {
+  color: var(--box-text-color);
   margin-top: 0.6em;
   margin-bottom: 0.6em;
 }
 
 .loggedin-text-jg {
+  color: var(--box-text-color);
   display: inline;
   margin-right: 2em;
 }
@@ -941,8 +997,8 @@ input[type="checkbox"]:disabled {
 }
 
 .box-jg {
-  background-color: var(--main-background-color-accent);
-  color: var(--secondary-text-color);
+  background-color: var(--box-color);
+  color: var(--box-text-color);
   margin: 0vh 25vw;
   min-width: 30vw;
   border-radius: 1em;
@@ -951,8 +1007,9 @@ input[type="checkbox"]:disabled {
 }
 
 .box-jg input {
-  border-color: var(--secondary-text-color);
-  color: var(--secondary-text-color);
+  background-color: var(--box-color);
+  border-color: var(--box-text-color);
+  color: var(--box-text-color);
 }
 
 .login-signup-box-jg {
@@ -1528,6 +1585,15 @@ input[type="checkbox"]:disabled {
   margin-top: 2em;
 }
 
+.navigation-arrow-button-jg span {
+  color: var(--main-text-color);
+  transition: filter 0.1s ease-in-out;
+}
+
+.navigation-arrow-button-jg span:hover {
+  filter: brightness(1.5);
+}
+
 /* Dashboard page rules */
 .mobile-sidebar-jg {
   display: none;
@@ -1569,7 +1635,7 @@ input[type="checkbox"]:disabled {
   flex-direction: column;
   align-items: center;
   width: 16%;
-  height: 95vh;
+  height: 100vh;
   box-sizing: border-box;
   position: fixed;
   z-index: 10;
@@ -1649,7 +1715,8 @@ input[type="checkbox"]:disabled {
 }
 
 .life-sidebar-jg {
-  right: 0;
+  width: 15.5%;
+  right: 0.5%;
   border-left: 1px solid var(--main-separator-color);
 }
 
@@ -1810,7 +1877,7 @@ input[type="checkbox"]:disabled {
 .dashboard-header-jg {
   background-color: var(--main-background-color);
   border-bottom: 1px solid var(--main-separator-color);
-  width: 100%;
+  width: 99.5%;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -2208,7 +2275,7 @@ input[type="checkbox"]:disabled {
 }
 
 #priority-icon-low-jg {
-  filter: brightness(0.5);
+  filter: brightness(0.7);
 }
 
 .event-details-line-jg {
@@ -2251,18 +2318,19 @@ input[type="checkbox"]:disabled {
   margin-right: 30%;
 }
 
-.event-delete-button-jg {
-  background-color: var(--work-event-color);
-  transition: color 0.2s ease-in-out scale 0.2s ease-in-out;
+.button-jg.event-delete-button-jg {
+  background-color: var(--warning-color);
+  color: var(--warning-button-text-color);
+  transition: filter 0.2s ease-in-out scale 0.2s ease-in-out;
 }
 
-.event-delete-button-jg:hover {
-  background-color: var(--work-event-color-light);
+.button-jg.event-delete-button-jg:hover {
+  filter: brightness(1.5);
 }
 
-.event-delete-button-jg:focus,
-.event-delete-button-jg:active {
-  background-color: var(--work-event-color-dark);
+.button-jg.event-delete-button-jg:focus,
+.button-jg.event-delete-button-jg:active {
+  background-color: var(--warning-color);
 }
 
 /* User Menu rules */
@@ -2382,12 +2450,12 @@ input[type="checkbox"]:disabled {
   margin-top: 1.5em;
 }
 
-.login-signup-delete-button-jg {
+.button-jg.login-signup-delete-button-jg {
   background-color: var(--warning-color);
+  color: var(--warning-button-text-color);
 }
 
-.login-signup-delete-button-jg:hover {
-  background-color: var(--warning-color);
+.button-jg.login-signup-delete-button-jg:hover {
   filter: brightness(1.5);
 }
 
@@ -2443,7 +2511,11 @@ input[type="checkbox"]:disabled {
 
 .settings-sidebar-item-jg {
   margin-bottom: 1em;
-  transition: font-weight 0.2s ease-in-out;
+  transition: font-weight 0.2s ease-in-out brightness 0.2s ease-in-out;
+}
+
+.settings-sidebar-item-jg:hover {
+  filter: brightness(1.5);
 }
 
 .settings-active-submenu-jg {
