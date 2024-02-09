@@ -26,7 +26,7 @@ const assignClassNames = (
       // Assign styles for work events that start on the previous day and end on the next day
       className += " schedule-event-box-work-prev-next-day-jg";
     }
-  } else {
+  } else if (event.type === "life") {
     // Assign basic life event styles
     className += " schedule-event-box-life-jg";
     if (startsPreviousDay && endsOnSelectedDate) {
@@ -41,6 +41,22 @@ const assignClassNames = (
     } else if (startsPreviousDay && endsNextDay) {
       // Assign styles for life events that start on the previous day and end on the next day
       className += " schedule-event-box-life-prev-next-day-jg";
+    }
+  } else {
+    // Assign basic unspecified event styles
+    className += " schedule-event-box-unspecified-jg";
+    if (startsPreviousDay && endsOnSelectedDate) {
+      // Assign styles for unspecified events that start on a previous date and end on the selected date
+      className += " schedule-event-box-unspecified-previous-day-jg";
+    } else if (startsOnSelectedDate && endsNextDay) {
+      // Assign styles for unspecified events that start on the selected date and end on a future date
+      if (event.eventEnd !== tomorrowDate.toISOString()) {
+        // Only assign styles for unspecified events that do not end at midnight
+        className += " schedule-event-box-unspecified-next-day-jg";
+      }
+    } else if (startsPreviousDay && endsNextDay) {
+      // Assign styles for unspecified events that start on the previous day and end on the next day
+      className += " schedule-event-box-unspecified-prev-next-day-jg";
     }
   }
 

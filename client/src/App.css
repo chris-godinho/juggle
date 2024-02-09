@@ -1991,6 +1991,10 @@ input[type="checkbox"]:disabled {
   background-color: var(--life-event-color);
 }
 
+.schedule-event-box-unspecified-jg {
+  background-color: var(--main-text-color);
+}
+
 .schedule-event-box-work-previous-day-jg {
   background-color: var(--work-event-color);
   border-radius: 0 0 1em 1em;
@@ -2005,6 +2009,13 @@ input[type="checkbox"]:disabled {
   color: var(--main-text-color);
 }
 
+.schedule-event-box-unspecified-previous-day-jg {
+  background-color: var(--main-text-color);
+  border-radius: 0 0 1em 1em;
+  background: linear-gradient(to top, var(--main-text-color), transparent);
+  color: var(--main-background-color);
+}
+
 .schedule-event-box-work-next-day-jg {
   background-color: var(--work-event-color);
   border-radius: 1em 1em 0 0;
@@ -2015,6 +2026,12 @@ input[type="checkbox"]:disabled {
   background-color: var(--life-event-color);
   border-radius: 1em 1em 0 0;
   background: linear-gradient(to bottom, var(--life-event-color), transparent);
+}
+
+.schedule-event-box-unspecified-next-day-jg {
+  background-color: var(--main-text-color);
+  border-radius: 1em 1em 0 0;
+  background: linear-gradient(to bottom, var(--main-text-color), transparent);
 }
 
 .schedule-event-box-work-prev-next-day-jg {
@@ -2041,6 +2058,19 @@ input[type="checkbox"]:disabled {
     transparent
   );
   color: var(--main-text-color);
+}
+
+.schedule-event-box-unspecified-prev-next-day-jg {
+  background-color: var(--main-background-color-accent);
+  border-radius: 0;
+  background: linear-gradient(
+    to top,
+    transparent,
+    var(--main-text-color),
+    var(--main-text-color),
+    transparent
+  );
+  color: var(--main-background-color);
 }
 
 .schedule-event-name-jg {
