@@ -27,6 +27,7 @@ export default function SidePanelMenu() {
           eventSubtypes={fetchedSettings?.eventSubtypes}
           handleNewEventModalClose={handleNewEventModalClose}
           userId={fetchedSettings?.userId}
+          showStats={fetchedSettings?.showStats}
         />
       );
     } else {

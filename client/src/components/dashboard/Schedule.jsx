@@ -21,7 +21,7 @@ import "/node_modules/react-resizable/css/styles.css";
 const Schedule = () => {
   console.log("[Schedule.jsx] rendering...");
 
-  const { events, selectedDate, eventSubtypes, eventsRefetch, scheduleSpinnerStyle } = useDataContext();
+  const { events, selectedDate, eventSubtypes, eventsRefetch, scheduleSpinnerStyle, fetchedSettings } = useDataContext();
 
   // Initialize the modal context for displaying event details
   const { openModal } = useModal();
@@ -84,6 +84,7 @@ const Schedule = () => {
         eventCompleted={event.completed}
         eventSubtypes={eventSubtypes}
         eventsRefetch={eventsRefetch}
+        showStats={fetchedSettings?.showStats}
       />
     );
   };

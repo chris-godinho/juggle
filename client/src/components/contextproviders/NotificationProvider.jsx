@@ -26,7 +26,7 @@ export const NotificationProvider = ({ children }) => {
     >
       {children}
       {isNotificationOpen && notificationContent && (
-        <div className={`notification-jg ${notificationType === "work" ? "work-notification-jg" : notificationType === "life" ? "life-notification-jg" : ""}`}>
+        <div className={`notification-jg ${notificationType === "work" ? "work-notification-jg" : notificationType === "life" ? "life-notification-jg" : notificationType === "error" ? "error-notification-jg" : ""}`}>
           <a
             href="#"
             className={`notification-close-button-jg ${notificationType === "work" ? "work-notification-close-button-jg" : notificationType === "life" ? "life-notification-close-button-jg" : ""}`}

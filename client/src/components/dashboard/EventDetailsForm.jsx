@@ -7,7 +7,7 @@ import { useDataContext } from "../contextproviders/DataContext";
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
-export default function EventDetailsForm({ formType }) {
+export default function EventDetailsForm({ formType, showStats }) {
   const { formData, setFormData, eventSubtypes } = useDataContext();
 
   const [isTitleEditable, setIsTitleEditable] = useState(false);
@@ -22,39 +22,45 @@ export default function EventDetailsForm({ formType }) {
         [name]: checked,
       }));
     } else if (name === "subtype") {
-      const selectedSubtype = eventSubtypes.find(
-        (subtype) => subtype.subtype.toLowerCase() === value.toLowerCase()
-      );
-      if (selectedSubtype) {
-        // Handle category change and update corresponding type
-        const correspondingType = selectedSubtype.parentType;
-        setFormData((prevData) => {
-          const newData = {
-            ...prevData,
-            [name]: value,
-            type: correspondingType,
-          };
-          console.log("[EventDetails.jsx] Updated formData:", newData);
-          return newData;
-        });
-      }
-    } else if (name === "type") {
-      if (formData.subtype) {
-        // Handle category change and update corresponding type
-        const correspondingSubtype = eventSubtypes.find(
-          (subtype) => subtype.parentType.toLowerCase() === value.toLowerCase()
+      if (value !== "") {
+        const selectedSubtype = eventSubtypes.find(
+          (subtype) => subtype.subtype.toLowerCase() === value.toLowerCase()
         );
-        if (correspondingSubtype !== formData.subtype) {
+        if (selectedSubtype) {
+          // Handle category change and update corresponding type
+          const correspondingType = selectedSubtype.parentType;
           setFormData((prevData) => {
             const newData = {
               ...prevData,
               [name]: value,
-              subtype: "",
+              type: correspondingType,
             };
             console.log("[EventDetails.jsx] Updated formData:", newData);
             return newData;
           });
         }
+      } else {
+        setFormData((prevData) => {
+          const newData = { ...prevData, [name]: value, type: "" };
+          console.log("[EventDetails.jsx] Updated formData:", newData);
+          return newData;
+        });
+      }
+    } else if (name === "type" && formData.subtype) {
+      // Handle category change and update corresponding type
+      const correspondingSubtype = eventSubtypes.find(
+        (subtype) => subtype.parentType.toLowerCase() === value.toLowerCase()
+      );
+      if (correspondingSubtype !== formData.subtype) {
+        setFormData((prevData) => {
+          const newData = {
+            ...prevData,
+            [name]: value,
+            subtype: "",
+          };
+          console.log("[EventDetails.jsx] Updated formData:", newData);
+          return newData;
+        });
       }
     } else {
       setFormData((prevData) => {
@@ -169,6 +175,7 @@ export default function EventDetailsForm({ formType }) {
         <div className="priority-icon-container-jg">
           <span
             onClick={togglePriority}
+            title={`Event priority: ${formData.priority}`}
             className={
               formData.type === "work"
                 ? "material-symbols-outlined priority-icon-jg work-text-jg"
@@ -319,34 +326,36 @@ export default function EventDetailsForm({ formType }) {
           }}
         />
       </div>
-      <div className="event-details-line-jg">
-        <p className="event-details-label-jg">Category</p>
-        <select
-          className="event-input-jg event-select-jg"
-          name="subtype"
-          value={formData.subtype || ""}
-          onChange={handleInputChange}
-        >
-          <option value=""></option>
-          {eventSubtypes &&
-            eventSubtypes.map((subtype, index) => (
-              <option key={index} value={subtype.subtype}>
-                {subtype.subtype}
-              </option>
-            ))}
-        </select>
-        <p className="event-details-label-jg event-middle-label-jg">Type</p>
-        <select
-          className="event-input-jg event-select-jg"
-          name="type"
-          value={formData.type || ""}
-          onChange={handleInputChange}
-        >
-          <option value=""></option>
-          <option value="work">Work</option>
-          <option value="life">Life</option>
-        </select>
-      </div>
+      {showStats && (
+        <div className="event-details-line-jg">
+          <p className="event-details-label-jg">Category</p>
+          <select
+            className="event-input-jg event-select-jg"
+            name="subtype"
+            value={formData.subtype || ""}
+            onChange={handleInputChange}
+          >
+            <option value=""></option>
+            {eventSubtypes &&
+              eventSubtypes.map((subtype, index) => (
+                <option key={index} value={subtype.subtype}>
+                  {subtype.subtype}
+                </option>
+              ))}
+          </select>
+          <p className="event-details-label-jg event-middle-label-jg">Type</p>
+          <select
+            className="event-input-jg event-select-jg"
+            name="type"
+            value={formData.type || ""}
+            onChange={handleInputChange}
+          >
+            <option value=""></option>
+            <option value="work">Work</option>
+            <option value="life">Life</option>
+          </select>
+        </div>
+      )}
       <div className="event-details-line-jg">
         <p className="event-details-label-jg">Location</p>
         <input

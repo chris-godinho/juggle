@@ -27,6 +27,7 @@ export default function EventDetails({
   eventCompleted,
   eventSubtypes,
   eventsRefetch,
+  showStats,
 }) {
   console.log("[EventDetails.jsx] Component is rendering");
 
@@ -145,7 +146,7 @@ export default function EventDetails({
               >
                 <span className="material-symbols-outlined">close</span>
               </a>
-              <EventDetailsForm formType="edit" />
+              <EventDetailsForm formType="edit" showStats={showStats}/>
               <div className="event-details-button-tray-jg">
                 <button
                   className="button-jg"

@@ -13,7 +13,7 @@ const eventSchema = new Schema({
   },
   type: {
     type: String,
-    enum: ["life", "work"],
+    enum: ["life", "work", "unspecified"],
   },
   subtype: {
     type: String,

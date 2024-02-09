@@ -252,6 +252,7 @@ export default function DashboardHeader() {
                 eventSubtypes={fetchedSettings?.eventSubtypes}
                 handleNewEventModalClose={handleNewEventModalClose}
                 userId={fetchedSettings?.userId}
+                showStats={fetchedSettings?.showStats}
               />
             )
           }
