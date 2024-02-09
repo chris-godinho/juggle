@@ -9,56 +9,40 @@ const assignClassNames = (
   endsNextDay,
   nextDay
 ) => {
+  console.log("[scheduleUtils.js] in assignClassNames()");
+  console.log("[scheduleUtils.js] event:", event);
+  console.log("[scheduleUtils.js] startsPreviousDay:", startsPreviousDay);
+  console.log("[scheduleUtils.js] endsOnSelectedDate:", endsOnSelectedDate);
+  console.log("[scheduleUtils.js] startsOnSelectedDate:", startsOnSelectedDate);
+  console.log("[scheduleUtils.js] endsNextDay:", endsNextDay);
+  console.log("[scheduleUtils.js] nextDay:", nextDay);
+
+  console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
+
+  const eventEndTime = new Date(event.eventEnd);
+  const midnightNextDayTime = new Date(nextDay);
+  const eventPriority = event.priority.toLowerCase();
+
+  console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
+  console.log("[scheduleUtils.js] midnightNextDayTime:", midnightNextDayTime);
+
+  // Assign basic event box class name
   let className = "schedule-event-box-jg";
 
-  if (event.type === "work") {
-    // Assign basic work event styles
-    className += " schedule-event-box-work-jg";
-    if (startsPreviousDay && endsOnSelectedDate) {
-      // Assign styles for work events that start on a previous date and end on the selected date
-      className += " schedule-event-box-work-previous-day-jg";
-    } else if (startsOnSelectedDate && endsNextDay) {
-      // Assign styles for work events that start on the selected date and end on a future date
-      if (event.eventEnd !== nextDay.toISOString()) {
-        // Only assign styles for work events that do not end at midnight
-        className += " schedule-event-box-work-next-day-jg";
-      }
-    } else if (startsPreviousDay && endsNextDay) {
-      // Assign styles for work events that start on the previous day and end on the next day
-      className += " schedule-event-box-work-prev-next-day-jg";
-    }
-  } else if (event.type === "life") {
-    // Assign basic life event styles
-    className += " schedule-event-box-life-jg";
-    if (startsPreviousDay && endsOnSelectedDate) {
-      // Assign styles for life events that start on a previous date and end on the selected date
-      className += " schedule-event-box-life-previous-day-jg";
-    } else if (startsOnSelectedDate && endsNextDay) {
-      // Assign styles for life events that start on the selected date and end on a future date
-      if (event.eventEnd !== nextDay.toISOString()) {
-        // Only assign styles for life events that do not end at midnight
-        className += " schedule-event-box-life-next-day-jg";
-      }
-    } else if (startsPreviousDay && endsNextDay) {
-      // Assign styles for life events that start on the previous day and end on the next day
-      className += " schedule-event-box-life-prev-next-day-jg";
-    }
-  } else {
-    // Assign basic unspecified event styles
-    className += " schedule-event-box-unspecified-jg";
-    if (startsPreviousDay && endsOnSelectedDate) {
-      // Assign styles for unspecified events that start on a previous date and end on the selected date
-      className += " schedule-event-box-unspecified-previous-day-jg";
-    } else if (startsOnSelectedDate && endsNextDay) {
-      // Assign styles for unspecified events that start on the selected date and end on a future date
-      if (event.eventEnd !== nextDay.toISOString()) {
-        // Only assign styles for unspecified events that do not end at midnight
-        className += " schedule-event-box-unspecified-next-day-jg";
-      }
-    } else if (startsPreviousDay && endsNextDay) {
-      // Assign styles for unspecified events that start on the previous day and end on the next day
-      className += " schedule-event-box-unspecified-prev-next-day-jg";
-    }
+  // Add additional class names based on event type and priority
+  className += ` schedule-event-${eventPriority}-box-${event.type}-jg`;
+
+  // Add additional class names based on event type and time
+  if (startsPreviousDay && endsOnSelectedDate) {
+    className += ` schedule-event-box-previous-day-jg schedule-event-${eventPriority}-box-${event.type}-previous-day-jg`;
+  } else if (
+    startsOnSelectedDate &&
+    endsNextDay &&
+    eventEndTime > midnightNextDayTime
+  ) {
+    className += ` schedule-event-box-next-day-jg schedule-event-${eventPriority}-box-${event.type}-next-day-jg`;
+  } else if (startsPreviousDay && endsNextDay) {
+    className += ` schedule-event-box-prev-next-day-jg schedule-event-${eventPriority}-box-${event.type}-prev-next-day-jg`;
   }
 
   return className;
@@ -149,9 +133,14 @@ export const adjustOverlappingEvents = (layout) => {
 export const buildEventBox = (event, displayDate) => {
   // Calculate the size and position based on start time and duration
   const eventStartTime = new Date(event.eventStart);
+  console.log("[scheduleUtils.js] buildEventBox()");
+  console.log("[scheduleUtils.js] event.eventStart:", event.eventStart);
+  console.log("[scheduleUtils.js] eventStartTime:", eventStartTime);
   const startTimeMinutes =
     eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
   const eventEndTime = new Date(event.eventEnd);
+  console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
+  console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
   const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
   const size = Math.ceil(durationMinutes / 30);
   let adjustedBoxPosition = Math.ceil(startTimeMinutes / 30);

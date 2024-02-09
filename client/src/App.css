@@ -2050,99 +2050,228 @@ input[type="checkbox"]:disabled {
     inset 0px 0px 0px 1px var(--main-background-color-accent);
 }
 
-.schedule-event-box-work-jg {
+.schedule-event-normal-box-work-jg {
   background-color: var(--work-event-color);
 }
 
-.schedule-event-box-life-jg {
+.schedule-event-normal-box-life-jg {
   background-color: var(--life-event-color);
 }
 
-.schedule-event-box-unspecified-jg {
+.schedule-event-normal-box-unspecified-jg {
   background-color: var(--main-text-color);
 }
 
-.schedule-event-box-work-previous-day-jg {
-  background-color: var(--work-event-color);
+.schedule-event-low-box-work-jg {
+  background-color: var(--work-event-color-dark);
+}
+
+.schedule-event-low-box-life-jg {
+  background-color: var(--life-event-color-dark);
+}
+
+.schedule-event-low-box-unspecified-jg {
+  filter: brightness(0.8);
+}
+
+.schedule-event-high-box-work-jg {
+  background-color: var(--work-event-color-light);
+}
+
+.schedule-event-high-box-life-jg {
+  background-color: var(--life-event-color-light);
+}
+
+.schedule-event-high-box-unspecified-jg {
+  filter: brightness(1.2);
+}
+
+.schedule-event-box-previous-day-jg {
   border-radius: 0 0 1em 1em;
-  background: linear-gradient(to top, var(--work-event-color), transparent);
   color: var(--main-text-color);
 }
 
-.schedule-event-box-life-previous-day-jg {
-  background-color: var(--life-event-color);
-  border-radius: 0 0 1em 1em;
-  background: linear-gradient(to top, var(--life-event-color), transparent);
-  color: var(--main-text-color);
+.schedule-event-normal-box-work-previous-day-jg {
+  background: linear-gradient(to top, var(--work-event-color) 85%, transparent);
 }
 
-.schedule-event-box-unspecified-previous-day-jg {
-  background-color: var(--main-text-color);
-  border-radius: 0 0 1em 1em;
-  background: linear-gradient(to top, var(--main-text-color), transparent);
+.schedule-event-normal-box-life-previous-day-jg {
+  background: linear-gradient(to top, var(--life-event-color) 85%, transparent);
+}
+
+.schedule-event-normal-box-unspecified-previous-day-jg {
+  background: linear-gradient(to top, var(--main-text-color) 85%, transparent);
   color: var(--main-background-color);
 }
 
-.schedule-event-box-work-next-day-jg {
-  background-color: var(--work-event-color);
-  border-radius: 1em 1em 0 0;
-  background: linear-gradient(to bottom, var(--work-event-color), transparent);
+.schedule-event-low-box-work-previous-day-jg {
+  background: linear-gradient(to top, var(--work-event-color-dark) 85%, transparent);
 }
 
-.schedule-event-box-life-next-day-jg {
-  background-color: var(--life-event-color);
-  border-radius: 1em 1em 0 0;
-  background: linear-gradient(to bottom, var(--life-event-color), transparent);
+.schedule-event-low-box-life-previous-day-jg {
+  background: linear-gradient(to top, var(--life-event-color-dark) 85%, transparent);
 }
 
-.schedule-event-box-unspecified-next-day-jg {
-  background-color: var(--main-text-color);
-  border-radius: 1em 1em 0 0;
-  background: linear-gradient(to bottom, var(--main-text-color), transparent);
+.schedule-event-low-box-unspecified-previous-day-jg {
+  background: linear-gradient(to top, var(--main-text-color) 85%, transparent);
+  filter: brightness(0.8);
+  color: var(--main-background-color);
 }
 
-.schedule-event-box-work-prev-next-day-jg {
-  background-color: var(--main-background-color-accent);
+.schedule-event-high-box-work-previous-day-jg {
+  background: linear-gradient(to top, var(--work-event-color-light) 85%, transparent);
+}
+
+.schedule-event-high-box-life-previous-day-jg {
+  background: linear-gradient(to top, var(--life-event-color-light) 85%, transparent);
+}
+
+.schedule-event-high-box-unspecified-previous-day-jg {
+  background: linear-gradient(to top, var(--main-text-color) 85%, transparent);
+  filter: brightness(1.2);
+  color: var(--main-background-color);
+}
+
+.schedule-event-box-next-day-jg {
+  border-radius: 1em 1em 0 0;
+}
+
+.schedule-event-normal-box-work-next-day-jg {
+  background: linear-gradient(to bottom, var(--work-event-color) 85%, transparent);
+}
+
+.schedule-event-normal-box-life-next-day-jg {
+  background: linear-gradient(to bottom, var(--life-event-color) 85%, transparent);
+}
+
+.schedule-event-normal-box-unspecified-next-day-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+}
+
+.schedule-event-low-box-work-next-day-jg {
+  background: linear-gradient(to bottom, var(--work-event-color-dark) 85%, transparent);
+}
+
+.schedule-event-low-box-life-next-day-jg {
+  background: linear-gradient(to bottom, var(--life-event-color-dark) 85%, transparent);
+}
+
+.schedule-event-low-box-unspecified-next-day-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+  filter: brightness(0.8);
+}
+
+.schedule-event-high-box-work-next-day-jg {
+  background: linear-gradient(to bottom, var(--work-event-color-light) 85%, transparent);
+}
+
+.schedule-event-high-box-life-next-day-jg {
+  background: linear-gradient(to bottom, var(--life-event-color-light) 85%, transparent);
+}
+
+.schedule-event-high-box-unspecified-next-day-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+  filter: brightness(1.2);
+}
+
+.schedule-event-box-prev-next-day-jg {
   border-radius: 0;
-  background: linear-gradient(
-    to top,
-    transparent,
-    var(--work-event-color),
-    var(--work-event-color),
-    transparent
-  );
   color: var(--main-text-color);
 }
 
-.schedule-event-box-life-prev-next-day-jg {
-  background-color: var(--main-background-color-accent);
-  border-radius: 0;
+.schedule-event-normal-box-work-prev-next-day-jg {
   background: linear-gradient(
-    to top,
     transparent,
-    var(--life-event-color),
-    var(--life-event-color),
+    var(--work-event-color) 5%,
+    var(--work-event-color) 95%,
     transparent
   );
-  color: var(--main-text-color);
 }
 
-.schedule-event-box-unspecified-prev-next-day-jg {
-  background-color: var(--main-background-color-accent);
+.schedule-event-normal-box-life-prev-next-day-jg {
+  background: linear-gradient(
+    transparent,
+    var(--life-event-color) 5%,
+    var(--life-event-color) 95%,
+    transparent
+  );
+}
+
+.schedule-event-normal-box-unspecified-prev-next-day-jg {
   border-radius: 0;
   background: linear-gradient(
-    to top,
     transparent,
-    var(--main-text-color),
-    var(--main-text-color),
+    var(--main-text-color) 5%,
+    var(--main-text-color) 95%,
     transparent
   );
   color: var(--main-background-color);
+}
+
+.schedule-event-low-box-work-prev-next-day-jg {
+  background: linear-gradient(
+    transparent,
+    var(--work-event-color-dark) 5%,
+    var(--work-event-color-dark) 95%,
+    transparent
+  );
+}
+
+.schedule-event-low-box-life-prev-next-day-jg {
+  background: linear-gradient(
+    transparent,
+    var(--life-event-color-dark) 5%,
+    var(--life-event-color-dark) 95%,
+    transparent
+  );
+}
+
+.schedule-event-low-box-unspecified-prev-next-day-jg {
+  border-radius: 0;
+  background: linear-gradient(
+    transparent,
+    var(--main-text-color) 5%,
+    var(--main-text-color) 95%,
+    transparent
+  );
+  color: var(--main-background-color);
+  filter: brightness(0.8);
+}
+
+.schedule-event-high-box-work-prev-next-day-jg {
+  background: linear-gradient(
+    transparent,
+    var(--work-event-color-dark) 5%,
+    var(--work-event-color-dark) 95%,
+    transparent
+  );
+}
+
+.schedule-event-high-box-life-prev-next-day-jg {
+  background: linear-gradient(
+    transparent,
+    var(--life-event-color-dark) 5%,
+    var(--life-event-color-dark) 95%,
+    transparent
+  );
+}
+
+.schedule-event-high-box-unspecified-prev-next-day-jg {
+  border-radius: 0;
+  background: linear-gradient(
+    transparent,
+    var(--main-text-color) 5%,
+    var(--main-text-color) 95%,
+    transparent
+  );
+  color: var(--main-background-color);
+  filter: brightness(1.2);
 }
 
 .schedule-event-name-jg {
   margin-top: 0.2em;
   margin-left: 1em;
+  margin-right: 1em;
   cursor: pointer;
   width: auto;
   display: inline-block;
@@ -3589,7 +3718,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .notification-jg {
-    width: 100vw;
+    width: 89vw;
   }
 }
 
