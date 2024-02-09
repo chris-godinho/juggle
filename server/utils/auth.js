@@ -1,3 +1,5 @@
+// auth.js
+
 const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
@@ -10,9 +12,14 @@ const secret = process.env.JWT_SECRET;
 const expiration = process.env.JWT_EXPIRATION || '24h';
 
 module.exports = {
-  AuthenticationError: new GraphQLError('Could not authenticate user.', {
+  UserNotFoundError: new GraphQLError('Username not found. Please sign up to create a new account.', {
     extensions: {
-      code: 'UNAUTHENTICATED',
+      code: 'USER_NOT_FOUND',
+    },
+  }),
+  IncorrectPasswordError: new GraphQLError('Incorrect password. Please try again.', {
+    extensions: {
+      code: 'INCORRECT_PASSWORD',
     },
   }),
   signToken: function ({ email, username, _id }) {

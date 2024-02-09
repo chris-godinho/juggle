@@ -1,13 +1,17 @@
 import { useState } from "react";
-
 import { useMutation } from "@apollo/client";
+
+import { useNotification } from "../components/contextproviders/NotificationProvider.jsx";
+
+import Header from "../components/other/Header";
+
 import { ADD_USER } from "../utils/mutations";
 
 import Auth from "../utils/auth";
 
-import Header from "../components/other/Header";
-
 const Signup = () => {
+  const { openNotification } = useNotification();
+
   const [formState, setFormState] = useState({
     username: "",
     email: "",
@@ -27,6 +31,67 @@ const Signup = () => {
     });
   };
 
+  const handleSignupError = (error) => {
+    let errorMessage = "";
+
+    if (
+      error.message.includes("Path `username` is required") &&
+      !errorMessage
+    ) {
+      errorMessage = "Please enter a username.";
+    } else if (
+      error.message.includes(
+        "E11000 duplicate key error collection: workflow-db.users index: username_1 dup key"
+      ) &&
+      !errorMessage
+    ) {
+      errorMessage =
+        "This username is already taken, please choose a different one.";
+    } else if (
+      error.message.includes("Path `email` is required") &&
+      !errorMessage
+    ) {
+      errorMessage = "Please enter an e-mail address.";
+    } else if (
+      error.message.includes(
+        "This field must contain a valid e-mail address"
+      ) &&
+      !errorMessage
+    ) {
+      errorMessage = "Invalid e-mail address. Please try again.";
+    } else if (
+      error.message.includes(
+        "E11000 duplicate key error collection: workflow-db.users index: email_1 dup key"
+      ) &&
+      !errorMessage
+    ) {
+      errorMessage =
+        "There is already an account for that e-mail address, please log in instead.";
+    } else if (
+      error.message.includes("Path `firstName` is required.") &&
+      !errorMessage
+    ) {
+      errorMessage = "Please enter your first name.";
+    } else if (
+      error.message.includes("Path `password` is required") &&
+      !errorMessage
+    ) {
+      errorMessage = "Please enter a password.";
+    } else if (
+      error.message.includes(
+        "is shorter than the minimum allowed length (8)"
+      ) &&
+      !errorMessage
+    ) {
+      errorMessage = "Your password must be at least 8 characters long.";
+    } else {
+      console.log(error);
+      errorMessage = "An error occurred. Please try again.";
+    }
+
+    openNotification(errorMessage, "error");
+  };
+
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
@@ -39,6 +104,7 @@ const Signup = () => {
       Auth.login(data.addUser.token, true);
     } catch (e) {
       console.error(e);
+      handleSignupError(e);
     }
   };
 
@@ -118,8 +184,6 @@ const Signup = () => {
                 </button>
               </form>
             )}
-
-            {error && <div>{error.message}</div>}
           </div>
         </div>
       </div>
