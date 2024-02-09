@@ -594,3 +594,89 @@ export const calculateMacroStats = (events) => {
     previousWeekMacroStats,
   };
 };
+
+export const validateEventForm = (formData, showStats) => {
+  let errorMessage = "";
+  let finalFormData;
+
+  if (formData.completed === "") {
+    formData.completed = false;
+  }
+
+  if (formData.title === "" && !errorMessage) {
+    errorMessage = "Please enter a title for the event.";
+  }
+
+  console.log("[eventUtils.jsx] formData.type:", formData.type);
+
+  if (formData.type === "" && showStats && !errorMessage) {
+    errorMessage = "Please select a type for the event.";
+  }
+
+  if (formData.type === "" && !showStats) {
+    formData.type = "unspecified";
+  }
+
+  if (
+    (formData.startDate === "" || formData.startTime === "") &&
+    (formData.endDate !== "" || formData.endTime !== "") &&
+    !errorMessage
+  ) {
+    errorMessage =
+      "Event start date and time must be set when setting an end date/time.";
+  }
+
+  if (
+    (formData.startDate !== "" || formData.startTime !== "") &&
+    ((formData.endDate === "" && formData.endTime !== "") ||
+      (formData.endDate !== "" && formData.endTime === "")) &&
+    !errorMessage
+  ) {
+    errorMessage = "Please enter both an end date and time.";
+  }
+
+  // Combine startDate and startTime into eventStart
+  const eventStartDate = formData.startDate || new Date().toLocaleDateString();
+  const eventStartTime = formData.startTime || "00:00";
+  const eventStart = new Date(`${eventStartDate} ${eventStartTime}`);
+
+  // Combine endDate and endTime into eventEnd
+  const eventEndDate = formData.endDate;
+  const eventEndTime = formData.endTime || "00:00";
+  const eventEnd = new Date(`${eventEndDate} ${eventEndTime}`);
+
+  console.log("[eventUtils.jsx] eventStart:", eventStart);
+  console.log("[eventUtils.jsx] eventEnd:", eventEnd);
+
+  if (eventEnd < eventStart && !errorMessage) {
+    errorMessage = "Event end date must be later than the start date.";
+  }
+
+  // Combine reminderDate and reminderTime into eventReminderTime
+  const eventReminderTime = formData.reminderTime || "00:00";
+  let eventReminderDate;
+  if (formData.reminderDate === "" && formData.reminderTime !== "") {
+    eventReminderDate = eventStartDate;
+  } else {
+    eventReminderDate = formData.reminderDate;
+  }
+  const reminderTime = new Date(`${eventReminderDate} ${eventReminderTime}`);
+
+  if (reminderTime > eventStart && !errorMessage) {
+    errorMessage =
+      "Reminder must be set for a time before the start of the event.";
+  }
+
+  // Create the final form data
+  finalFormData = {
+    ...formData,
+    eventStart,
+    eventEnd,
+    reminderTime,
+  };
+
+  return {
+    finalFormData,
+    errorMessage,
+  };
+};

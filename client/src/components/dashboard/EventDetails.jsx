@@ -5,10 +5,13 @@ import { useMutation } from "@apollo/client";
 
 import DataContext from "../contextproviders/DataContext.jsx";
 import { useModal } from "../contextproviders/ModalProvider";
+import { useNotification } from "../contextproviders/NotificationProvider.jsx";
 
 import EventDetailsForm from "./EventDetailsForm";
 
 import { UPDATE_EVENT, REMOVE_EVENT } from "../../utils/mutations";
+
+import { validateEventForm } from "../../utils/eventUtils.js";
 
 export default function EventDetails({
   eventId,
@@ -30,6 +33,8 @@ export default function EventDetails({
   showStats,
 }) {
   console.log("[EventDetails.jsx] Component is rendering");
+
+  const { openNotification } = useNotification();
 
   const { closeModal } = useModal();
 
@@ -82,35 +87,27 @@ export default function EventDetails({
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    const formattedEventStart = new Date(
-      `${formData.startDate} ${formData.startTime}`
-    );
-    const formattedEventEnd = new Date(
-      `${formData.endDate} ${formData.endTime}`
-    );
-    const formattedReminder = new Date(
-      `${formData.reminderDate} ${formData.reminderTime}`
-    );
-
-    const formattedFormData = {
-      ...formData,
-      eventStart: formattedEventStart,
-      eventEnd: formattedEventEnd,
-      reminderTime: formattedReminder,
-    };
-
-    console.log("[EventDetails.jsx] formattedFormData:", formattedFormData);
-
     try {
+
+      console.log("[EventDetails.jsx] handleFormSubmit()");
+      console.log("[EventDetails.jsx] formData:", formData);
+  
+      const { finalFormData, errorMessage } = validateEventForm(formData, showStats);
+
+      if (errorMessage) {
+        throw new Error(errorMessage);
+      }
+
       const { data } = await updateEvent({
-        variables: { eventId, ...formattedFormData },
+        variables: { eventId, ...finalFormData },
       });
 
-      console.log("[EventDetails.jsx] data:", data);
-
       closeModal();
-    } catch (e) {
-      console.error(e);
+    } catch (error) {
+      openNotification(
+        <p>{error ? error.message : "An error occurred. Please try again."}</p>,
+        "error"
+      );
     }
   };
 

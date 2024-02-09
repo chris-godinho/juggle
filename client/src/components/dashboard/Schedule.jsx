@@ -101,7 +101,7 @@ const Schedule = () => {
 
       if (eventToUpdate) {
         // Calculate new start time and duration based on the moved layout
-        const newStartTimeMinutes = movedEvent.y * 30; // Assuming each row represents 30 minutes
+        const newStartTimeMinutes = movedEvent.y * 30; // Each row represents 30 minutes
         const newEndTimeMinutes = newStartTimeMinutes + movedEvent.h * 30;
 
         const updatedEventStart = new Date(selectedDate);

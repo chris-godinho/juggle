@@ -114,7 +114,7 @@ export default function EventDetailsForm({ formType, showStats }) {
           <input
             type="checkbox"
             name="completed"
-            checked={formData.completed ?? false}
+            checked={formData.completed || false}
             onChange={handleInputChange}
           />
         )}
