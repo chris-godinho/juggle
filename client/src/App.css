@@ -3587,6 +3587,10 @@ path[class="firework-stroke-color-1-jg"] {
   .settings-layout-card-container-jg {
     display: none;
   }
+
+  .notification-jg {
+    width: 100vw;
+  }
 }
 
 @media screen and (max-width: 576px) {
