@@ -3,9 +3,9 @@
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import DataContext from "../contextproviders/DataContext.jsx";
 import { useModal } from "../contextproviders/ModalProvider";
 import { useNotification } from "../contextproviders/NotificationProvider.jsx";
+import DataContext from "../contextproviders/DataContext";
 
 import EventDetailsForm from "./EventDetailsForm";
 
@@ -31,6 +31,7 @@ export default function EventDetails({
   eventSubtypes,
   eventsRefetch,
   showStats,
+  refreshResponsiveGrid
 }) {
   console.log("[EventDetails.jsx] Component is rendering");
 
@@ -88,11 +89,13 @@ export default function EventDetails({
     event.preventDefault();
 
     try {
-
       console.log("[EventDetails.jsx] handleFormSubmit()");
       console.log("[EventDetails.jsx] formData:", formData);
-  
-      const { finalFormData, errorMessage } = validateEventForm(formData, showStats);
+
+      const { finalFormData, errorMessage } = validateEventForm(
+        formData,
+        showStats
+      );
 
       if (errorMessage) {
         throw new Error(errorMessage);
@@ -103,6 +106,9 @@ export default function EventDetails({
       });
 
       closeModal();
+
+      refreshResponsiveGrid();
+
     } catch (error) {
       openNotification(
         <p>{error ? error.message : "An error occurred. Please try again."}</p>,
@@ -143,7 +149,7 @@ export default function EventDetails({
               >
                 <span className="material-symbols-outlined">close</span>
               </a>
-              <EventDetailsForm formType="edit" showStats={showStats}/>
+              <EventDetailsForm formType="edit" showStats={showStats} />
               <div className="event-details-button-tray-jg">
                 <button
                   className="button-jg"

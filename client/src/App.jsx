@@ -1,12 +1,12 @@
 // App.jsx
 
-import "./App.css";
 import {
   ApolloClient,
   InMemoryCache,
   ApolloProvider,
   createHttpLink,
 } from "@apollo/client";
+
 import { setContext } from "@apollo/client/link/context";
 import { ModalProvider } from "./components/contextproviders/ModalProvider.jsx";
 import { NotificationProvider } from "./components/contextproviders/NotificationProvider.jsx";
@@ -16,7 +16,10 @@ import {
 } from "./components/contextproviders/ColorSchemeProvider.jsx";
 import { LayoutProvider } from "./components/contextproviders/LayoutProvider.jsx";
 import { UserSettingsProvider } from "./components/contextproviders/UserSettingsProvider.jsx";
+
 import { Outlet } from "react-router-dom";
+
+import "./App.css";
 
 // Construct our main GraphQL API endpoint
 const httpLink = createHttpLink({

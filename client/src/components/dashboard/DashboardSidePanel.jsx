@@ -10,7 +10,7 @@ import SidePanelEvents from "./SidePanelEvents.jsx";
 import SidePanelRecommendations from "./SidePanelRecommendations.jsx";
 import DigitalClock from "./DigitalClock.jsx";
 
-export default function DashboardSidePanel({ sidebarToRender }) {
+export default function DashboardSidePanel({ sidebarToRender,  refreshResponsiveGrid }) {
   const sidePanelSpinnerStyle = {
     spinnerWidth: "16%",
     spinnerHeight: "95vh",
@@ -69,7 +69,7 @@ export default function DashboardSidePanel({ sidebarToRender }) {
           <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
         )}
         {!fetchedSettings?.showStats && sidebarToRender === "left" && (
-          <SidePanelMenu />
+          <SidePanelMenu refreshResponsiveGrid={refreshResponsiveGrid} />
         )}
         {eventsLoading ? (
           <LoadingSpinner

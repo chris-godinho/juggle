@@ -23,7 +23,7 @@ import {
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
-const Schedule = () => {
+const Schedule = ({ refreshResponsiveGrid }) => {
   console.log("[Schedule.jsx] rendering...");
 
   const scheduleGridContainer = useRef(null);
@@ -35,6 +35,7 @@ const Schedule = () => {
     eventsRefetch,
     scheduleSpinnerStyle,
     fetchedSettings,
+    responsiveGridTimestampKey,
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -79,7 +80,7 @@ const Schedule = () => {
 
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout));
-    // currentLayout = adjustOverlappingEvents(initialLayout);
+    refreshResponsiveGrid();
 
     console.log("[Schedule.jsx] buildLayout() - currentLayout:", currentLayout);
   };
@@ -105,6 +106,7 @@ const Schedule = () => {
         eventSubtypes={eventSubtypes}
         eventsRefetch={eventsRefetch}
         showStats={fetchedSettings?.showStats}
+        refreshResponsiveGrid={refreshResponsiveGrid}
       />
     );
   };
@@ -169,10 +171,13 @@ const Schedule = () => {
     handleEventChange(adjustedLayout);
 
     // Update the layout variables
-    // currentLayout = adjustedLayout;
     setCurrentLayout(adjustedLayout);
+    refreshResponsiveGrid();
 
-    console.log("[Schedule.jsx] handleDragResizeStop() - currentLayout:", currentLayout);
+    console.log(
+      "[Schedule.jsx] handleDragResizeStop() - currentLayout:",
+      currentLayout
+    );
   };
 
   useEffect(() => {
@@ -192,16 +197,44 @@ const Schedule = () => {
         0 0 / 100% 40px,
         url("/schedule_hours.png") left center / contain no-repeat,
         linear-gradient(to bottom,
-          ${firstBlockPixelHeight !== 1 ? `transparent ${firstBlockPixelHeight}px,` : ""}
+          ${
+            firstBlockPixelHeight !== 1
+              ? `transparent ${firstBlockPixelHeight}px,`
+              : ""
+          }
           ${firstBlockPixelHeight !== 1 ? `transparent 1px,` : ""}
-          ${firstBlockPixelHeight !== 1 ? `var(--schedule-sleep-background-color) 1px,` : ""}
-          ${firstBlockPixelHeight ? `var(--schedule-sleep-background-color) ${secondBlockPixelHeight}px,` : ""}
-          ${firstBlockPixelHeight ? `var(--schedule-sleep-background-color) 1px,` : ""}
+          ${
+            firstBlockPixelHeight !== 1
+              ? `var(--schedule-sleep-background-color) 1px,`
+              : ""
+          }
+          ${
+            firstBlockPixelHeight
+              ? `var(--schedule-sleep-background-color) ${secondBlockPixelHeight}px,`
+              : ""
+          }
+          ${
+            firstBlockPixelHeight
+              ? `var(--schedule-sleep-background-color) 1px,`
+              : ""
+          }
           ${firstBlockPixelHeight ? `transparent 1px,` : ""}
-          ${thirdBlockPixelHeight ? `transparent ${thirdBlockPixelHeight}px,` : ""}
+          ${
+            thirdBlockPixelHeight
+              ? `transparent ${thirdBlockPixelHeight}px,`
+              : ""
+          }
           ${thirdBlockPixelHeight ? `transparent 1px,` : ""}
-          ${thirdBlockPixelHeight ? `var(--schedule-sleep-background-color) 1px,` : ""}
-          ${thirdBlockPixelHeight ? `var(--schedule-sleep-background-color) ${fourthBlockPixelHeight}px,` : ""}
+          ${
+            thirdBlockPixelHeight
+              ? `var(--schedule-sleep-background-color) 1px,`
+              : ""
+          }
+          ${
+            thirdBlockPixelHeight
+              ? `var(--schedule-sleep-background-color) ${fourthBlockPixelHeight}px,`
+              : ""
+          }
           ${thirdBlockPixelHeight ? `transparent 1px,` : ""}
           transparent)
       `;
@@ -233,6 +266,7 @@ const Schedule = () => {
         />
       ) : (
         <ResponsiveGridLayout
+          key={responsiveGridTimestampKey}
           className="layout"
           layouts={{
             lg: currentLayout,

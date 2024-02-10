@@ -72,6 +72,8 @@ export default function Dashboard() {
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 620);
 
+  const [responsiveGridTimestampKey, setResponsiveGridTimestampKey] = useState(Math.random());
+
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
     spinnerHeight: "80vh",
@@ -89,17 +91,22 @@ export default function Dashboard() {
 
   const events = eventsData?.eventsByDate || [];
 
+  const refreshResponsiveGrid = () => {
+    setResponsiveGridTimestampKey(Math.random());
+    eventsRefetch();
+  };
+
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 450);
     };
 
     // Add event listener for window resize
-    window.addEventListener('resize', handleResize);
+    window.addEventListener("resize", handleResize);
 
     // Cleanup the event listener on component unmount
     return () => {
-      window.removeEventListener('resize', handleResize);
+      window.removeEventListener("resize", handleResize);
     };
   }, []);
 
@@ -110,7 +117,9 @@ export default function Dashboard() {
 
   // TODO: Remove this after testing
   useEffect(() => {
-    console.log("[Dashboard.jsx] useEffect triggered, isNotificationOpen has been changed.");
+    console.log(
+      "[Dashboard.jsx] useEffect triggered, isNotificationOpen has been changed."
+    );
   }, [isNotificationOpen]);
 
   useEffect(() => {
@@ -137,7 +146,8 @@ export default function Dashboard() {
         eventSubtypes: userSettings?.eventSubtypes || {},
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
-        profilePictureUrl: userSettings?.profilePictureUrl || "/default-profile-picture.png",
+        profilePictureUrl:
+          userSettings?.profilePictureUrl || "/default-profile-picture.png",
       });
       const leftSidebar =
         userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||
@@ -158,7 +168,11 @@ export default function Dashboard() {
     if (!eventsLoading) {
       try {
         // Fetch data or perform any necessary asynchronous operation
-        const result = calculateEventStats(events, fetchedSettings, selectedDate);
+        const result = calculateEventStats(
+          events,
+          fetchedSettings,
+          selectedDate
+        );
         // Set state variables with the same names
         setFetchedEventData(result);
       } catch (error) {
@@ -188,12 +202,14 @@ export default function Dashboard() {
         events,
         fetchedSettings,
         fetchedEventData,
+        responsiveGridTimestampKey,
+        setResponsiveGridTimestampKey,
       }}
     >
-      <DashboardHeader />
+      <DashboardHeader refreshResponsiveGrid={refreshResponsiveGrid} />
       <main className="main-jg">
         <div className="dashboard-grid-jg">
-          {hasLeftSidebar && <DashboardSidePanel sidebarToRender="left" />}
+          {hasLeftSidebar && <DashboardSidePanel sidebarToRender="left" refreshResponsiveGrid={refreshResponsiveGrid} />}
 
           <div
             className={`dashboard-main-panel-jg ${
@@ -207,11 +223,11 @@ export default function Dashboard() {
                   spinnerElWidthHeight="100px"
                 />
               ) : (
-                <Schedule key={selectedDate.getTime()} />
+                <Schedule key={selectedDate.getTime()} refreshResponsiveGrid={refreshResponsiveGrid} />
               )}
             </div>
           </div>
-          {hasRightSidebar && <DashboardSidePanel sidebarToRender="right" />}
+          {hasRightSidebar && <DashboardSidePanel sidebarToRender="right" refreshResponsiveGrid={refreshResponsiveGrid} />}
         </div>
       </main>
       <NotificationManager />

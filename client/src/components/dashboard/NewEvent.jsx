@@ -3,9 +3,9 @@
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
-import DataContext from "../contextproviders/DataContext.jsx";
 import { useModal } from "../contextproviders/ModalProvider";
 import { useNotification } from "../contextproviders/NotificationProvider.jsx";
+import DataContext from "../contextproviders/DataContext";
 
 import EventDetailsForm from "./EventDetailsForm";
 
@@ -13,7 +13,7 @@ import { ADD_EVENT } from "../../utils/mutations";
 
 import { validateEventForm } from "../../utils/eventUtils.js";
 
-const NewEvent = ({ eventSubtypes, userId, showStats }) => {
+const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) => {
   console.log("[NewEvent.jsx] Component is rendering");
 
   const { openNotification } = useNotification();
@@ -41,14 +41,15 @@ const NewEvent = ({ eventSubtypes, userId, showStats }) => {
   const { closeModal } = useModal();
 
   const handleFormSubmit = async () => {
-
     // Add event to database
     try {
-
       console.log("[NewEvent.jsx] handleFormSubmit()");
       console.log("[NewEvent.jsx] formData:", formData);
-  
-      const { finalFormData, errorMessage } = validateEventForm(formData, showStats);
+
+      const { finalFormData, errorMessage } = validateEventForm(
+        formData,
+        showStats
+      );
 
       if (errorMessage) {
         throw new Error(errorMessage);
@@ -61,6 +62,9 @@ const NewEvent = ({ eventSubtypes, userId, showStats }) => {
       setFormData({});
 
       closeModal();
+
+      refreshResponsiveGrid();
+
     } catch (error) {
       openNotification(
         <p>{error ? error.message : "An error occurred. Please try again."}</p>,

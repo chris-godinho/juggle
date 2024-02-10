@@ -15,7 +15,7 @@ import SidePanelMenu from "./SidePanelMenu.jsx";
 
 import { findDisplayPercentage } from "../../utils/eventUtils.js";
 
-export default function DashboardHeader() {
+export default function DashboardHeader({ refreshResponsiveGrid }) {
   const {
     selectedDate,
     setSelectedDate,
@@ -253,6 +253,7 @@ export default function DashboardHeader() {
                 handleNewEventModalClose={handleNewEventModalClose}
                 userId={fetchedSettings?.userId}
                 showStats={fetchedSettings?.showStats}
+                refreshResponsiveGrid={refreshResponsiveGrid}
               />
             )
           }
@@ -279,7 +280,7 @@ export default function DashboardHeader() {
           <>
             <SidePanelBrand />
             <hr className={`side-panel-hr-jg no-stats-hr-jg`} />
-            <SidePanelMenu />
+            <SidePanelMenu refreshResponsiveGrid={refreshResponsiveGrid} />
           </>
         )}
       </div>

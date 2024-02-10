@@ -8,7 +8,7 @@ import NewEvent from "./NewEvent.jsx";
 
 import Auth from "../../utils/auth";
 
-export default function SidePanelMenu() {
+export default function SidePanelMenu({ refreshResponsiveGrid }) {
   const { openModal } = useModal();
 
   const { fetchedSettings, eventsRefetch } = useDataContext();
@@ -28,6 +28,7 @@ export default function SidePanelMenu() {
           handleNewEventModalClose={handleNewEventModalClose}
           userId={fetchedSettings?.userId}
           showStats={fetchedSettings?.showStats}
+          refreshResponsiveGrid={refreshResponsiveGrid}
         />
       );
     } else {
