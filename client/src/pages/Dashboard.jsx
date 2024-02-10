@@ -159,10 +159,8 @@ export default function Dashboard() {
       try {
         // Fetch data or perform any necessary asynchronous operation
         const result = calculateEventStats(events, fetchedSettings, selectedDate);
-        console.log("[Dashboard.jsx] result:", result);
         // Set state variables with the same names
         setFetchedEventData(result);
-        console.log("[Dashboard.jsx] fetchedEventData:", fetchedEventData);
       } catch (error) {
         // Handle errors
         console.error("[Dashboard.jsx] Error fetching data:", error);

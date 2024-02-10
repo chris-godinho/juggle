@@ -53,8 +53,6 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
 
   const compiledEventList = compileEventList(events, eventType);
 
-  console.log("[SidePanelEvents.jsx] sidebarToRender:", sidebarToRender);
-
   return (
     <>
       {fetchedSettings?.showStats && (

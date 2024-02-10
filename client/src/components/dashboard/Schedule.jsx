@@ -44,6 +44,7 @@ const Schedule = () => {
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
+  // let currentLayout;
   const [currentLayout, setCurrentLayout] = useState([]);
   const [eventBoxProps, setEventBoxProps] = useState([]);
 
@@ -75,8 +76,12 @@ const Schedule = () => {
         { event, className },
       ]);
     });
+
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout));
+    // currentLayout = adjustOverlappingEvents(initialLayout);
+
+    console.log("[Schedule.jsx] currentLayout:", currentLayout);
   };
 
   // Function to handle clicking on an event (opens the event details modal)
@@ -155,6 +160,8 @@ const Schedule = () => {
 
   // Function to handle dragging an event
   const handleDragResizeStop = (layout) => {
+    console.log("[Schedule.jsx] in handleDragResizeStop()");
+
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout);
 
@@ -162,7 +169,10 @@ const Schedule = () => {
     handleEventChange(adjustedLayout);
 
     // Update the layout variables
+    // currentLayout = adjustedLayout;
     setCurrentLayout(adjustedLayout);
+
+    console.log("[Schedule.jsx] currentLayout:", currentLayout);
   };
 
   useEffect(() => {
@@ -174,12 +184,6 @@ const Schedule = () => {
         fourthBlockPixelHeight,
       } = calculateSleepingHoursPixelHeights(fetchedSettings, selectedDate);
 
-      console.log("[Schedule.jsx] firstBlockPixelHeight:", firstBlockPixelHeight);
-      console.log("[Schedule.jsx] secondBlockPixelHeight:", secondBlockPixelHeight);
-      console.log("[Schedule.jsx] thirdBlockPixelHeight:", thirdBlockPixelHeight);
-      console.log("[Schedule.jsx] fourthBlockPixelHeight:", fourthBlockPixelHeight);
-
-      // TODO: Assemble the string for the sleep hours background with all blocks
       const sleepHoursBackground = `
         repeating-linear-gradient(
           var(--main-separator-color) 0 1px,
@@ -201,13 +205,13 @@ const Schedule = () => {
           ${thirdBlockPixelHeight ? `transparent 1px,` : ""}
           transparent)
       `;
-      console.log("[Schedule.jsx] sleepHoursBackground:", sleepHoursBackground);
       scheduleGridContainer.current.style.background = sleepHoursBackground;
     }
   }, []);
 
   // Build the initial layout
   useEffect(() => {
+    console.log("[Schedule.jsx] in useEffect() (Building initial layout)...");
     const initializeSchedule = () => {
       setIsLoading(true);
       buildLayout(events);

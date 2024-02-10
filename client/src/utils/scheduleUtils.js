@@ -11,15 +11,6 @@ const assignClassNames = (
   endsNextDay,
   nextDay
 ) => {
-  console.log("[scheduleUtils.js] in assignClassNames()");
-  console.log("[scheduleUtils.js] event:", event);
-  console.log("[scheduleUtils.js] startsPreviousDay:", startsPreviousDay);
-  console.log("[scheduleUtils.js] endsOnSelectedDate:", endsOnSelectedDate);
-  console.log("[scheduleUtils.js] startsOnSelectedDate:", startsOnSelectedDate);
-  console.log("[scheduleUtils.js] endsNextDay:", endsNextDay);
-  console.log("[scheduleUtils.js] nextDay:", nextDay);
-
-  console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
 
   let eventEndTime;
   if (event.eventEnd) {
@@ -28,9 +19,6 @@ const assignClassNames = (
 
   const midnightNextDayTime = new Date(nextDay);
   const eventPriority = event.priority.toLowerCase();
-
-  console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
-  console.log("[scheduleUtils.js] midnightNextDayTime:", midnightNextDayTime);
 
   // Assign basic event box class name
   let className = "schedule-event-box-jg";
@@ -52,8 +40,6 @@ const assignClassNames = (
   } else if (startsPreviousDay && endsNextDay) {
     className += ` schedule-event-box-prev-next-day-jg schedule-event-${eventPriority}-box-${event.type}-prev-next-day-jg`;
   }
-
-  console.log("[scheduleUtils.js] event.completed:", event.completed);
 
   // Add additional class names based on event completion status
   if (event.completed) {
@@ -228,25 +214,10 @@ export const buildEventBox = (event, displayDate) => {
 };
 
 export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
-  // TODO: Find out what day of the week the selected date is
-  console.log("[scheduleUtils.jsx] selectedDate: ", selectedDate);
-  console.log("[scheduleUtils.jsx] typeOf selectedDate: ", typeof selectedDate);
-  console.log("[scheduleUtils.jsx] fetchedSettings: ", fetchedSettings);
-  console.log(
-    "[scheduleUtils.jsx] fetchedSettings?.sleepingHours: ",
-    fetchedSettings?.sleepingHours
-  );
 
   const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
 
-  console.log("[scheduleUtils.jsx] sleepingHoursMatrix: ", sleepingHoursMatrix);
-
   const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
-
-  console.log(
-    "[scheduleUtils.jsx] filteredSleepingHoursMatrix: ",
-    filteredSleepingHoursMatrix
-  );
 
   const selectedWeekday = weekdayList[selectedDate.getDay()];
   let selectedStartTime;
@@ -254,18 +225,13 @@ export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
 
   if (filteredSleepingHoursMatrix[selectedWeekday]) {
     const { start, end } = filteredSleepingHoursMatrix[selectedWeekday];
-    console.log("[scheduleUtils.jsx] start: ", start);
-    console.log("[scheduleUtils.jsx] end: ", end);
 
     // Convert start and end times to Date objects
     selectedStartTime = new Date(`January 1, 2022 ${start}`);
     selectedEndTime = new Date(`January 1, 2022 ${end}`);
-    console.log("[scheduleUtils.jsx] selectedStartTime: ", selectedStartTime);
-    console.log("[scheduleUtils.jsx] selectedEndTime: ", selectedEndTime);
 
     // Check if end time is earlier than start time (next day)
     if (selectedEndTime < selectedStartTime) {
-      console.log("[scheduleUtils.jsx] selectedEndTime < selectedStartTime.");
       selectedEndTime.setDate(selectedEndTime.getDate() + 1);
       selectedEndTime.setHours(0, 0, 0, 0);
     } else {
@@ -283,18 +249,13 @@ export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
 
   if (filteredSleepingHoursMatrix[previousWeekday]) {
     const { start, end } = filteredSleepingHoursMatrix[previousWeekday];
-    console.log("[scheduleUtils.jsx] start: ", start);
-    console.log("[scheduleUtils.jsx] end: ", end);
 
     // Convert start and end times to Date objects
     previousStartTime = new Date(`January 1, 2022 ${start}`);
     previousEndTime = new Date(`January 1, 2022 ${end}`);
-    console.log("[scheduleUtils.jsx] previousStartTime: ", previousStartTime);
-    console.log("[scheduleUtils.jsx] previousEndTime: ", previousEndTime);
 
     // Check if end time is earlier than start time (next day)
     if (previousEndTime < previousStartTime) {
-      console.log("[scheduleUtils.jsx] previousEndTime < previousStartTime.");
       previousStartTime.setHours(0, 0, 0, 0);
     }
   }

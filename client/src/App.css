@@ -241,7 +241,7 @@
 
 #color-scheme-jg.green-mode-jg,
 .color-scheme-sample-bar-jg.green-mode-jg {
-  --main-background-color: rgba(4, 61, 63, 1);
+  --main-background-color: rgba(0, 57, 59, 1);
   --main-background-color-accent: rgba(44, 101, 103, 1);
   --main-background-color-darker-accent: rgba(189, 48, 0, 1);
 
@@ -251,7 +251,7 @@
   --main-separator-color: rgba(248, 251, 249, 0.3);
   --main-separator-color-light: rgba(248, 251, 249, 0.3);
 
-  --input-background-color: rgba(4, 61, 63, 1);
+  --input-background-color: rgba(0, 57, 59, 1);
   --input-text-color: rgba(239, 231, 218, 1);
   --input-placeholder-text-color: rgba(218, 211, 219, 0.8);
 
