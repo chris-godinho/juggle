@@ -19,7 +19,11 @@ const assignClassNames = (
 
   console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
 
-  const eventEndTime = new Date(event.eventEnd);
+  let eventEndTime;
+  if (event.eventEnd) {
+    eventEndTime = new Date(event.eventEnd);
+  }
+
   const midnightNextDayTime = new Date(nextDay);
   const eventPriority = event.priority.toLowerCase();
 
@@ -33,7 +37,9 @@ const assignClassNames = (
   className += ` schedule-event-${eventPriority}-box-${event.type}-jg`;
 
   // Add additional class names based on event type and time
-  if (startsPreviousDay && endsOnSelectedDate) {
+  if (!event.eventEnd) {
+    className += ` schedule-event-box-open-jg schedule-event-${eventPriority}-box-${event.type}-open-jg`;
+  } else if (startsPreviousDay && endsOnSelectedDate) {
     className += ` schedule-event-box-previous-day-jg schedule-event-${eventPriority}-box-${event.type}-previous-day-jg`;
   } else if (
     startsOnSelectedDate &&
@@ -131,57 +137,72 @@ export const adjustOverlappingEvents = (layout) => {
 };
 
 export const buildEventBox = (event, displayDate) => {
-  // Calculate the size and position based on start time and duration
-  const eventStartTime = new Date(event.eventStart);
-  console.log("[scheduleUtils.js] buildEventBox()");
-  console.log("[scheduleUtils.js] event.eventStart:", event.eventStart);
-  console.log("[scheduleUtils.js] eventStartTime:", eventStartTime);
-  const startTimeMinutes =
-    eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
-  const eventEndTime = new Date(event.eventEnd);
-  console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
-  console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
-  const durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
-  const size = Math.ceil(durationMinutes / 30);
-  let adjustedBoxPosition = Math.ceil(startTimeMinutes / 30);
-
-  // Check if the event starts on the previous day and ends on the selectedDate
-  const startsPreviousDay = eventStartTime.getDate() < displayDate.getDate();
-  const endsOnSelectedDate = eventEndTime.getDate() === displayDate.getDate();
-
-  // Check if the event starts on the selectedDate and ends on the next day
-  const startsOnSelectedDate =
-    eventStartTime.getDate() === displayDate.getDate();
-  const endsNextDay = eventEndTime.getDate() > displayDate.getDate();
-
-  // Calculate the adjusted size based on the time within the selected day
-  let adjustedBoxHeight = size;
-
-  // Check if the event starts on the previous day and ends on the selectedDate
   const nextDay = new Date(displayDate);
   nextDay.setDate(displayDate.getDate() + 1);
 
-  if (startsPreviousDay && endsOnSelectedDate) {
-    // Adjust the size based on the amount of event time on the selected day
-    const minutesOnSelectedDay =
-      (eventEndTime - new Date(displayDate)) / (1000 * 60);
-    adjustedBoxHeight = Math.min(
-      adjustedBoxHeight,
-      Math.ceil(minutesOnSelectedDay / 30)
-    );
-    // Adjust the position to start at the beginning of the selected day
-    adjustedBoxPosition = 0;
-  } else if (startsOnSelectedDate && endsNextDay) {
-    // Adjust the size based on the amount of event time on the selected day
-    const minutesOnSelectedDay = (nextDay - eventStartTime) / (1000 * 60);
-    adjustedBoxHeight = Math.min(
-      adjustedBoxHeight,
-      Math.ceil(minutesOnSelectedDay / 30)
-    );
-  } else if (startsPreviousDay && endsNextDay) {
-    // Adjust the size of events that start on a previous date and end on a future date
-    adjustedBoxHeight = 48;
-    adjustedBoxPosition = 0;
+  let eventStartTime,
+    startTimeMinutes,
+    eventEndTime,
+    durationMinutes,
+    adjustedBoxPosition,
+    size,
+    startsPreviousDay,
+    endsOnSelectedDate,
+    startsOnSelectedDate,
+    endsNextDay,
+    adjustedBoxHeight;
+
+  // Calculate the size and position based on start time and duration
+  eventStartTime = new Date(event.eventStart);
+  console.log("[scheduleUtils.js] buildEventBox()");
+  console.log("[scheduleUtils.js] event.eventStart:", event.eventStart);
+  console.log("[scheduleUtils.js] eventStartTime:", eventStartTime);
+  startTimeMinutes =
+    eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
+  adjustedBoxPosition = Math.ceil(startTimeMinutes / 30);
+
+  if (event.eventEnd) {
+    eventEndTime = new Date(event.eventEnd);
+    console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
+    console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
+    durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
+    size = Math.ceil(durationMinutes / 30);
+
+    // Check if the event starts on the previous day and ends on the selectedDate
+    startsPreviousDay = eventStartTime.getDate() < displayDate.getDate();
+    endsOnSelectedDate = eventEndTime.getDate() === displayDate.getDate();
+
+    // Check if the event starts on the selectedDate and ends on the next day
+    startsOnSelectedDate = eventStartTime.getDate() === displayDate.getDate();
+    endsNextDay = eventEndTime.getDate() > displayDate.getDate();
+
+    // Calculate the adjusted size based on the time within the selected day
+    adjustedBoxHeight = size;
+
+    if (startsPreviousDay && endsOnSelectedDate) {
+      // Adjust the size based on the amount of event time on the selected day
+      const minutesOnSelectedDay =
+        (eventEndTime - new Date(displayDate)) / (1000 * 60);
+      adjustedBoxHeight = Math.min(
+        adjustedBoxHeight,
+        Math.ceil(minutesOnSelectedDay / 30)
+      );
+      // Adjust the position to start at the beginning of the selected day
+      adjustedBoxPosition = 0;
+    } else if (startsOnSelectedDate && endsNextDay) {
+      // Adjust the size based on the amount of event time on the selected day
+      const minutesOnSelectedDay = (nextDay - eventStartTime) / (1000 * 60);
+      adjustedBoxHeight = Math.min(
+        adjustedBoxHeight,
+        Math.ceil(minutesOnSelectedDay / 30)
+      );
+    } else if (startsPreviousDay && endsNextDay) {
+      // Adjust the size of events that start on a previous date and end on a future date
+      adjustedBoxHeight = 48;
+      adjustedBoxPosition = 0;
+    }
+  } else {
+    adjustedBoxHeight = 1;
   }
 
   // Assign class names to each event box

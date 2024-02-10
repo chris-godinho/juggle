@@ -2268,6 +2268,48 @@ input[type="checkbox"]:disabled {
   filter: brightness(1.2);
 }
 
+.schedule-event-box-open-jg {
+  border-radius: 1em 1em 0 0;
+}
+
+.schedule-event-normal-box-work-open-jg {
+  background: linear-gradient(to bottom, var(--work-event-color) 60%, transparent);
+}
+
+.schedule-event-normal-box-life-open-jg {
+  background: linear-gradient(to bottom, var(--life-event-color) 60%, transparent);
+}
+
+.schedule-event-normal-box-unspecified-open-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+}
+
+.schedule-event-low-box-work-open-jg {
+  background: linear-gradient(to bottom, var(--work-event-color-dark) 60%, transparent);
+}
+
+.schedule-event-low-box-life-open-jg {
+  background: linear-gradient(to bottom, var(--life-event-color-dark) 60%, transparent);
+}
+
+.schedule-event-low-box-unspecified-open-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+  filter: brightness(0.8);
+}
+
+.schedule-event-high-box-work-open-jg {
+  background: linear-gradient(to bottom, var(--work-event-color-light) 60%, transparent);
+}
+
+.schedule-event-high-box-life-open-jg {
+  background: linear-gradient(to bottom, var(--life-event-color-light) 60%, transparent);
+}
+
+.schedule-event-high-box-unspecified-open-jg {
+  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+  filter: brightness(1.2);
+}
+
 .schedule-event-name-jg {
   margin-top: 0.2em;
   margin-left: 1em;
