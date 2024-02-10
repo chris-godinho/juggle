@@ -3,61 +3,35 @@
 import { removeTypename, weekdayList } from "./helpers";
 
 export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
-  console.log("[eventUtils.js] fetchedSettings: ", fetchedSettings);
-  console.log(
-    "[eventUtils.js] fetchedSettings?.sleepingHours: ",
-    fetchedSettings?.sleepingHours
-  );
   const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
-  console.log("[eventUtils.js] sleepingHoursMatrix: ", sleepingHoursMatrix);
   const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
-  console.log(
-    "[eventUtils.js] filteredSleepingHoursMatrix: ",
-    filteredSleepingHoursMatrix
-  );
   let sleepingHoursInMinutes = 0;
   const targetDay = weekdayList[selectedDate.getDay()];
 
   if (filteredSleepingHoursMatrix[targetDay]) {
     const { start, end } = filteredSleepingHoursMatrix[targetDay];
-    console.log("[eventUtils.js] start: ", start);
-    console.log("[eventUtils.js] end: ", end);
 
     // Convert start and end times to Date objects
     const startTime = new Date(`January 1, 2022 ${start}`);
     const endTime = new Date(`January 1, 2022 ${end}`);
-    console.log("[eventUtils.js] startTime: ", startTime);
-    console.log("[eventUtils.js] endTime: ", endTime);
 
     // Check if end time is earlier than start time (next day)
     if (endTime < startTime) {
-      console.log(
-        "[eventUtils.js] endTime < startTime, adjusting end time to next day..."
-      );
       // Adjust the end time to be on the next day
       endTime.setDate(endTime.getDate() + 1);
-      console.log("[eventUtils.js] new endTime: ", endTime);
     }
 
     // Calculate the time difference in milliseconds
     const timeDifference = endTime - startTime;
-    console.log("[eventUtils.js] timeDifference: ", timeDifference);
 
     // Convert milliseconds to minutes
     sleepingHoursInMinutes = timeDifference / (1000 * 60);
   }
 
-  console.log(
-    "[eventUtils.js] sleepingHoursInMinutes: ",
-    sleepingHoursInMinutes
-  );
-
   return sleepingHoursInMinutes;
 };
 
 export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
-  console.log("[eventUtils.js] selectedDate: ", selectedDate);
-
   // Initialize counters
   let workCount = 0;
   let workTotalTime = 0;
@@ -402,11 +376,6 @@ const findEventPools = (events) => {
       new Date(event.eventStart) < firstDayOfCurrentWeek
   );
 
-  console.log("[eventUtils.js] eventsInCurrentMonth: ", eventsInCurrentMonth);
-  console.log("[eventUtils.js] eventsInPreviousMonth: ", eventsInPreviousMonth);
-  console.log("[eventUtils.js] eventsInCurrentWeek: ", eventsInCurrentWeek);
-  console.log("[eventUtils.js] eventsInPreviousWeek: ", eventsInPreviousWeek);
-
   return {
     eventsInCurrentMonth,
     eventsInPreviousMonth,
@@ -436,11 +405,6 @@ const calculateTotalEventTime = (events) => {
 };
 
 export const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
-  console.log(
-    "[eventUtils.js] formatMinutesAsHoursAndMinutes() - totalMinutes: ",
-    totalMinutes
-  );
-
   const roundedTotalMinutes = Math.round(totalMinutes);
 
   const hours = Math.floor(roundedTotalMinutes / 60);
@@ -454,11 +418,6 @@ export const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
 };
 
 const calculateEventPoolsStats = (events) => {
-  console.log(
-    "[eventUtils.js] calculateEventPoolsStats() - Event pool: ",
-    events
-  );
-
   const totalEventCount = events.length;
 
   const workEvents = events.filter((event) => event.type === "work");
@@ -475,11 +434,8 @@ const calculateEventPoolsStats = (events) => {
   );
 
   const totalEventTime = calculateTotalEventTime(events);
-  console.log("[eventUtils.js] totalEventTime: ", totalEventTime);
   const workEventTime = calculateTotalEventTime(workEvents);
-  console.log("[eventUtils.js] workEventTime: ", workEventTime);
   const lifeEventTime = calculateTotalEventTime(lifeEvents);
-  console.log("[eventUtils.js] lifeEventTime: ", lifeEventTime);
 
   const formattedTotalEventTime =
     formatMinutesAsHoursAndMinutes(totalEventTime);
@@ -544,36 +500,20 @@ const calculateEventPoolsStats = (events) => {
 };
 
 export const calculateMacroStats = (events) => {
-  console.log("[eventUtils.js] events: ", events);
-
   const eventPools = findEventPools(events);
 
   const allTimeMacroStats = calculateEventPoolsStats(events);
-  console.log("[eventUtils.js] allTimeMacroStats: ", allTimeMacroStats);
   const currentMonthMacroStats = calculateEventPoolsStats(
     eventPools.eventsInCurrentMonth
-  );
-  console.log(
-    "[eventUtils.js] currentMonthMacroStats: ",
-    currentMonthMacroStats
   );
   const previousMonthMacroStats = calculateEventPoolsStats(
     eventPools.eventsInPreviousMonth
   );
-  console.log(
-    "[eventUtils.js] previousMonthMacroStats: ",
-    previousMonthMacroStats
-  );
   const currentWeekMacroStats = calculateEventPoolsStats(
     eventPools.eventsInCurrentWeek
   );
-  console.log("[eventUtils.js] currentWeekMacroStats: ", currentWeekMacroStats);
   const previousWeekMacroStats = calculateEventPoolsStats(
     eventPools.eventsInPreviousWeek
-  );
-  console.log(
-    "[eventUtils.js] previousWeekMacroStats: ",
-    previousWeekMacroStats
   );
 
   return {
@@ -586,6 +526,8 @@ export const calculateMacroStats = (events) => {
 };
 
 export const validateEventForm = (formData, showStats) => {
+  console.log("[eventUtils.jsx] in validateEventForm()");
+
   let errorMessage = "";
   let finalFormData;
 

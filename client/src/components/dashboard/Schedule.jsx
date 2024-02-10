@@ -81,7 +81,7 @@ const Schedule = () => {
     setCurrentLayout(adjustOverlappingEvents(initialLayout));
     // currentLayout = adjustOverlappingEvents(initialLayout);
 
-    console.log("[Schedule.jsx] currentLayout:", currentLayout);
+    console.log("[Schedule.jsx] buildLayout() - currentLayout:", currentLayout);
   };
 
   // Function to handle clicking on an event (opens the event details modal)
@@ -172,7 +172,7 @@ const Schedule = () => {
     // currentLayout = adjustedLayout;
     setCurrentLayout(adjustedLayout);
 
-    console.log("[Schedule.jsx] currentLayout:", currentLayout);
+    console.log("[Schedule.jsx] handleDragResizeStop() - currentLayout:", currentLayout);
   };
 
   useEffect(() => {
