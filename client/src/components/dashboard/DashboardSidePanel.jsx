@@ -85,7 +85,7 @@ export default function DashboardSidePanel({ sidebarToRender }) {
               <SidePanelEvents eventType={upperOrSingleBarEventType} sidebarToRender={sidebarToRender}/>
             )}
             {fetchedSettings?.showStats && (
-              <SidePanelRecommendations eventType={upperOrSingleBarEventType} />
+              <SidePanelRecommendations eventType={upperOrSingleBarEventType} sidebarToRender={sidebarToRender} />
             )}
           </>
         )}
@@ -95,7 +95,7 @@ export default function DashboardSidePanel({ sidebarToRender }) {
           <hr className="side-panel-hr-jg no-stats-hr-jg" />
           <div className="dashboard-side-panel-bottom-jg life-text-jg">
             <SidePanelStats eventType="Life" />
-            <SidePanelRecommendations eventType="Life" />
+            <SidePanelRecommendations eventType="Life" sidebarToRender={sidebarToRender} />
           </div>
         </>
       )}

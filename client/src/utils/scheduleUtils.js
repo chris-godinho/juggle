@@ -51,6 +51,13 @@ const assignClassNames = (
     className += ` schedule-event-box-prev-next-day-jg schedule-event-${eventPriority}-box-${event.type}-prev-next-day-jg`;
   }
 
+  console.log("[scheduleUtils.js] event.completed:", event.completed);
+
+  // Add additional class names based on event completion status
+  if (event.completed) {
+    className += " schedule-event-box-completed-jg";
+  }
+
   return className;
 };
 

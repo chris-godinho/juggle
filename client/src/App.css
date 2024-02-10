@@ -1741,6 +1741,22 @@ input[type="checkbox"]:disabled {
   font-size: 1em;
 }
 
+@property --num {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+
+.display-percentage-jg {
+  --display-percentage-time: 1000ms;
+  transition: --num var(--display-percentage-time) linear;
+  counter-set: num var(--num);
+}
+
+.display-percentage-jg::after {
+  content: counter(num) "%";
+}
+
 .side-panel-middle-jg {
   display: flex;
   height: 10vh;
@@ -1781,6 +1797,66 @@ input[type="checkbox"]:disabled {
   width: 100%;
   overflow-x: hidden;
   margin-bottom: 0.9em;
+}
+
+.side-panel-event-list-jg {
+  animation: elementRise 1s ease-in-out, fadeIn 2s ease-in-out;
+}
+
+.recommendation-left-top-hr-jg {
+  animation: elementFromLeft 1s ease-in-out, fadeIn 2s ease-in-out;
+}
+
+.recommendation-right-top-hr-jg {
+  animation: elementFromRight 1s ease-in-out, fadeIn 2s ease-in-out;
+}
+
+.recommendation-left-bottom-hr-jg {
+  animation: elementFromLeft 1.3s ease-in-out, fadeIn 2.2s ease-in-out;
+}
+
+.recommendation-right-bottom-hr-jg {
+  animation: elementFromRight 1.3s ease-in-out, fadeIn 2.2s ease-in-out;
+}
+
+.side-panel-recommendation-list-jg {
+  animation: elementRise 1.3s ease-in-out, fadeIn 2.2s ease-in-out;
+}
+
+@keyframes elementRise {
+  from {
+    transform: translateY(500%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+
+@keyframes elementFromLeft {
+  from {
+    transform: translateX(-500%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes elementFromRight {
+  from {
+    transform: translateX(500%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .side-panel-event-header-jg {
@@ -2050,6 +2126,10 @@ input[type="checkbox"]:disabled {
     inset 0px 0px 0px 1px var(--main-background-color-accent);
 }
 
+.schedule-event-box-completed-jg {
+  opacity: 0.3;
+}
+
 .schedule-event-normal-box-work-jg {
   background-color: var(--work-event-color);
 }
@@ -2105,11 +2185,19 @@ input[type="checkbox"]:disabled {
 }
 
 .schedule-event-low-box-work-previous-day-jg {
-  background: linear-gradient(to top, var(--work-event-color-dark) 85%, transparent);
+  background: linear-gradient(
+    to top,
+    var(--work-event-color-dark) 85%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-life-previous-day-jg {
-  background: linear-gradient(to top, var(--life-event-color-dark) 85%, transparent);
+  background: linear-gradient(
+    to top,
+    var(--life-event-color-dark) 85%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-unspecified-previous-day-jg {
@@ -2119,11 +2207,19 @@ input[type="checkbox"]:disabled {
 }
 
 .schedule-event-high-box-work-previous-day-jg {
-  background: linear-gradient(to top, var(--work-event-color-light) 85%, transparent);
+  background: linear-gradient(
+    to top,
+    var(--work-event-color-light) 85%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-life-previous-day-jg {
-  background: linear-gradient(to top, var(--life-event-color-light) 85%, transparent);
+  background: linear-gradient(
+    to top,
+    var(--life-event-color-light) 85%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-unspecified-previous-day-jg {
@@ -2137,40 +2233,76 @@ input[type="checkbox"]:disabled {
 }
 
 .schedule-event-normal-box-work-next-day-jg {
-  background: linear-gradient(to bottom, var(--work-event-color) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color) 85%,
+    transparent
+  );
 }
 
 .schedule-event-normal-box-life-next-day-jg {
-  background: linear-gradient(to bottom, var(--life-event-color) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color) 85%,
+    transparent
+  );
 }
 
 .schedule-event-normal-box-unspecified-next-day-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 85%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-work-next-day-jg {
-  background: linear-gradient(to bottom, var(--work-event-color-dark) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color-dark) 85%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-life-next-day-jg {
-  background: linear-gradient(to bottom, var(--life-event-color-dark) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color-dark) 85%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-unspecified-next-day-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 85%,
+    transparent
+  );
   filter: brightness(0.8);
 }
 
 .schedule-event-high-box-work-next-day-jg {
-  background: linear-gradient(to bottom, var(--work-event-color-light) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color-light) 85%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-life-next-day-jg {
-  background: linear-gradient(to bottom, var(--life-event-color-light) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color-light) 85%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-unspecified-next-day-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 85%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 85%,
+    transparent
+  );
   filter: brightness(1.2);
 }
 
@@ -2273,40 +2405,76 @@ input[type="checkbox"]:disabled {
 }
 
 .schedule-event-normal-box-work-open-jg {
-  background: linear-gradient(to bottom, var(--work-event-color) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color) 60%,
+    transparent
+  );
 }
 
 .schedule-event-normal-box-life-open-jg {
-  background: linear-gradient(to bottom, var(--life-event-color) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color) 60%,
+    transparent
+  );
 }
 
 .schedule-event-normal-box-unspecified-open-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 60%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-work-open-jg {
-  background: linear-gradient(to bottom, var(--work-event-color-dark) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color-dark) 60%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-life-open-jg {
-  background: linear-gradient(to bottom, var(--life-event-color-dark) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color-dark) 60%,
+    transparent
+  );
 }
 
 .schedule-event-low-box-unspecified-open-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 60%,
+    transparent
+  );
   filter: brightness(0.8);
 }
 
 .schedule-event-high-box-work-open-jg {
-  background: linear-gradient(to bottom, var(--work-event-color-light) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--work-event-color-light) 60%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-life-open-jg {
-  background: linear-gradient(to bottom, var(--life-event-color-light) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--life-event-color-light) 60%,
+    transparent
+  );
 }
 
 .schedule-event-high-box-unspecified-open-jg {
-  background: linear-gradient(to bottom, var(--main-text-color) 60%, transparent);
+  background: linear-gradient(
+    to bottom,
+    var(--main-text-color) 60%,
+    transparent
+  );
   filter: brightness(1.2);
 }
 
@@ -3332,7 +3500,7 @@ path[class="firework-stroke-color-1-jg"] {
     top: 0em;
     left: -0.8em;
   }
-  
+
   .modal-close-button-jg {
     top: 0em;
     right: -0.8em;
@@ -3892,7 +4060,7 @@ path[class="firework-stroke-color-1-jg"] {
   .modal-back-button-jg {
     left: -0.5em;
   }
-  
+
   .modal-close-button-jg {
     right: -0.5em;
   }

@@ -59,8 +59,14 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
     <>
       {fetchedSettings?.showStats && (
         <hr
-          className={`side-panel-hr-jg ${
-            eventType === "Work" ? "work-hr-jg" : "life-hr-jg"
+          className={`${
+            eventType === "Work"
+              ? "side-panel-hr-jg work-hr-jg"
+              : " side-panel-hr-jg life-hr-jg"
+          } ${
+            sidebarToRender === "left"
+              ? "recommendation-left-top-hr-jg"
+              : "recommendation-right-top-hr-jg"
           }`}
         />
       )}

@@ -11,7 +11,7 @@ import {
   lifeGoalActivities,
 } from "../../utils/preferredActivities.js";
 
-export default function SidePanelRecommendations({ eventType }) {
+export default function SidePanelRecommendations({ eventType, sidebarToRender }) {
   const {
     isLoadingSettings,
     eventsLoading,
@@ -69,11 +69,15 @@ export default function SidePanelRecommendations({ eventType }) {
     <>
       {recommendationList.length > 0 && (
         <hr
-          className={
+          className={`${
             eventType === "Work"
               ? "side-panel-hr-jg work-hr-jg"
-              : "side-panel-hr-jg life-hr-jg"
-          }
+              : " side-panel-hr-jg life-hr-jg"
+          } ${
+            sidebarToRender === "left"
+              ? "recommendation-left-bottom-hr-jg"
+              : "recommendation-right-bottom-hr-jg"
+          }`}
         />
       )}
       <div className="side-panel-recommendation-list-jg">
