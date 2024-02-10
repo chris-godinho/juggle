@@ -1,18 +1,8 @@
 // eventUtils.js
 
-import { removeTypename } from "./helpers";
+import { removeTypename, weekdayList } from "./helpers";
 
 export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
-  const weekdayList = [
-    "sunday",
-    "monday",
-    "tuesday",
-    "wednesday",
-    "thursday",
-    "friday",
-    "saturday",
-  ];
-
   console.log("[eventUtils.js] fetchedSettings: ", fetchedSettings);
   console.log(
     "[eventUtils.js] fetchedSettings?.sleepingHours: ",

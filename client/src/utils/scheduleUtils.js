@@ -1,5 +1,7 @@
 // scheduleUtils.js
 
+import { removeTypename, weekdayList } from "./helpers";
+
 // Function to assign class names to each event box according to the event type and time
 const assignClassNames = (
   event,
@@ -223,6 +225,130 @@ export const buildEventBox = (event, displayDate) => {
   );
 
   return { adjustedBoxHeight, adjustedBoxPosition, className };
+};
+
+export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
+  // TODO: Find out what day of the week the selected date is
+  console.log("[scheduleUtils.jsx] selectedDate: ", selectedDate);
+  console.log("[scheduleUtils.jsx] typeOf selectedDate: ", typeof selectedDate);
+  console.log("[scheduleUtils.jsx] fetchedSettings: ", fetchedSettings);
+  console.log(
+    "[scheduleUtils.jsx] fetchedSettings?.sleepingHours: ",
+    fetchedSettings?.sleepingHours
+  );
+
+  const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
+
+  console.log("[scheduleUtils.jsx] sleepingHoursMatrix: ", sleepingHoursMatrix);
+
+  const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
+
+  console.log(
+    "[scheduleUtils.jsx] filteredSleepingHoursMatrix: ",
+    filteredSleepingHoursMatrix
+  );
+
+  const selectedWeekday = weekdayList[selectedDate.getDay()];
+  let selectedStartTime;
+  let selectedEndTime;
+
+  if (filteredSleepingHoursMatrix[selectedWeekday]) {
+    const { start, end } = filteredSleepingHoursMatrix[selectedWeekday];
+    console.log("[scheduleUtils.jsx] start: ", start);
+    console.log("[scheduleUtils.jsx] end: ", end);
+
+    // Convert start and end times to Date objects
+    selectedStartTime = new Date(`January 1, 2022 ${start}`);
+    selectedEndTime = new Date(`January 1, 2022 ${end}`);
+    console.log("[scheduleUtils.jsx] selectedStartTime: ", selectedStartTime);
+    console.log("[scheduleUtils.jsx] selectedEndTime: ", selectedEndTime);
+
+    // Check if end time is earlier than start time (next day)
+    if (selectedEndTime < selectedStartTime) {
+      console.log("[scheduleUtils.jsx] selectedEndTime < selectedStartTime.");
+      selectedEndTime.setDate(selectedEndTime.getDate() + 1);
+      selectedEndTime.setHours(0, 0, 0, 0);
+    } else {
+      selectedStartTime = null;
+      selectedEndTime = null;
+    }
+  }
+
+  const previousDay = new Date(selectedDate);
+  previousDay.setDate(selectedDate.getDate() - 1);
+
+  const previousWeekday = weekdayList[previousDay.getDay()];
+  let previousStartTime;
+  let previousEndTime;
+
+  if (filteredSleepingHoursMatrix[previousWeekday]) {
+    const { start, end } = filteredSleepingHoursMatrix[previousWeekday];
+    console.log("[scheduleUtils.jsx] start: ", start);
+    console.log("[scheduleUtils.jsx] end: ", end);
+
+    // Convert start and end times to Date objects
+    previousStartTime = new Date(`January 1, 2022 ${start}`);
+    previousEndTime = new Date(`January 1, 2022 ${end}`);
+    console.log("[scheduleUtils.jsx] previousStartTime: ", previousStartTime);
+    console.log("[scheduleUtils.jsx] previousEndTime: ", previousEndTime);
+
+    // Check if end time is earlier than start time (next day)
+    if (previousEndTime < previousStartTime) {
+      console.log("[scheduleUtils.jsx] previousEndTime < previousStartTime.");
+      previousStartTime.setHours(0, 0, 0, 0);
+    }
+  }
+
+  return {
+    selectedStartTime,
+    selectedEndTime,
+    previousStartTime,
+    previousEndTime,
+  };
+};
+
+const getTotalMinutes = (dateObject) => {
+  return dateObject.getHours() * 60 + dateObject.getMinutes();
+};
+
+export const calculateSleepingHoursPixelHeights = (
+  fetchedSettings,
+  selectedDate
+) => {
+  const {
+    selectedStartTime,
+    selectedEndTime,
+    previousStartTime,
+    previousEndTime,
+  } = calculateSleepingHoursForDay(fetchedSettings, selectedDate);
+
+  let firstBlockPixelHeight = null;
+  if (getTotalMinutes(previousStartTime) === 0) {
+    firstBlockPixelHeight = 1;
+  } else {
+    firstBlockPixelHeight = (getTotalMinutes(previousStartTime) / 30) * 40;
+  }
+
+  let secondBlockPixelHeight = null;
+  secondBlockPixelHeight = (getTotalMinutes(previousEndTime) / 30) * 40;
+
+  let thirdBlockPixelHeight = null;
+  let fourthBlockPixelHeight = null;
+  if (selectedStartTime || selectedEndTime) {
+    thirdBlockPixelHeight = (getTotalMinutes(selectedStartTime) / 30) * 40;
+
+    fourthBlockPixelHeight = 1920;
+    if (getTotalMinutes(selectedEndTime) !== 0) {
+      fourthBlockPixelHeight = (getTotalMinutes(selectedEndTime) / 30) * 40;
+    }
+  }
+
+  return {
+    firstBlockPixelHeight,
+    secondBlockPixelHeight,
+    thirdBlockPixelHeight,
+    fourthBlockPixelHeight,
+  };
 };
 
 // Function to format the time for display

@@ -21,3 +21,13 @@ export const removeTypename = (obj) => {
   }
   return obj;
 };
+
+export const weekdayList = [
+  "sunday",
+  "monday",
+  "tuesday",
+  "wednesday",
+  "thursday",
+  "friday",
+  "saturday",
+];

@@ -1,9 +1,9 @@
 // Schedule.jsx
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 
-import { useDataContext } from "../contextproviders/DataContext"
+import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
 
 import { UPDATE_EVENT } from "../../utils/mutations.js";
@@ -13,7 +13,12 @@ const ResponsiveGridLayout = WidthProvider(Responsive);
 import LoadingSpinner from "../other/LoadingSpinner.jsx";
 import EventDetails from "../dashboard/EventDetails.jsx";
 
-import { adjustOverlappingEvents, buildEventBox, formatTime } from "../../utils/scheduleUtils.js";
+import {
+  adjustOverlappingEvents,
+  buildEventBox,
+  formatTime,
+  calculateSleepingHoursPixelHeights,
+} from "../../utils/scheduleUtils.js";
 
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
@@ -21,7 +26,16 @@ import "/node_modules/react-resizable/css/styles.css";
 const Schedule = () => {
   console.log("[Schedule.jsx] rendering...");
 
-  const { events, selectedDate, eventSubtypes, eventsRefetch, scheduleSpinnerStyle, fetchedSettings } = useDataContext();
+  const scheduleGridContainer = useRef(null);
+
+  const {
+    events,
+    selectedDate,
+    eventSubtypes,
+    eventsRefetch,
+    scheduleSpinnerStyle,
+    fetchedSettings,
+  } = useDataContext();
 
   // Initialize the modal context for displaying event details
   const { openModal } = useModal();
@@ -43,7 +57,8 @@ const Schedule = () => {
   const buildLayout = (events) => {
     const initialLayout = [];
     events.map((event) => {
-      const { adjustedBoxHeight, adjustedBoxPosition, className } = buildEventBox(event, displayDate);
+      const { adjustedBoxHeight, adjustedBoxPosition, className } =
+        buildEventBox(event, displayDate);
 
       // Add the event to the initial layout
       initialLayout.push({
@@ -140,7 +155,6 @@ const Schedule = () => {
 
   // Function to handle dragging an event
   const handleDragResizeStop = (layout) => {
-
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout);
 
@@ -150,6 +164,47 @@ const Schedule = () => {
     // Update the layout variables
     setCurrentLayout(adjustedLayout);
   };
+
+  useEffect(() => {
+    if (scheduleGridContainer.current) {
+      const {
+        firstBlockPixelHeight,
+        secondBlockPixelHeight,
+        thirdBlockPixelHeight,
+        fourthBlockPixelHeight,
+      } = calculateSleepingHoursPixelHeights(fetchedSettings, selectedDate);
+
+      console.log("[Schedule.jsx] firstBlockPixelHeight:", firstBlockPixelHeight);
+      console.log("[Schedule.jsx] secondBlockPixelHeight:", secondBlockPixelHeight);
+      console.log("[Schedule.jsx] thirdBlockPixelHeight:", thirdBlockPixelHeight);
+      console.log("[Schedule.jsx] fourthBlockPixelHeight:", fourthBlockPixelHeight);
+
+      // TODO: Assemble the string for the sleep hours background with all blocks
+      const sleepHoursBackground = `
+        repeating-linear-gradient(
+          var(--main-separator-color) 0 1px,
+          transparent 1px 40px
+        )
+        0 0 / 100% 40px,
+        url("/schedule_hours.png") left center / contain no-repeat,
+        linear-gradient(to bottom,
+          ${firstBlockPixelHeight !== 1 ? `transparent ${firstBlockPixelHeight}px,` : ""}
+          ${firstBlockPixelHeight !== 1 ? `transparent 1px,` : ""}
+          ${firstBlockPixelHeight !== 1 ? `var(--schedule-sleep-background-color) 1px,` : ""}
+          ${firstBlockPixelHeight ? `var(--schedule-sleep-background-color) ${secondBlockPixelHeight}px,` : ""}
+          ${firstBlockPixelHeight ? `var(--schedule-sleep-background-color) 1px,` : ""}
+          ${firstBlockPixelHeight ? `transparent 1px,` : ""}
+          ${thirdBlockPixelHeight ? `transparent ${thirdBlockPixelHeight}px,` : ""}
+          ${thirdBlockPixelHeight ? `transparent 1px,` : ""}
+          ${thirdBlockPixelHeight ? `var(--schedule-sleep-background-color) 1px,` : ""}
+          ${thirdBlockPixelHeight ? `var(--schedule-sleep-background-color) ${fourthBlockPixelHeight}px,` : ""}
+          ${thirdBlockPixelHeight ? `transparent 1px,` : ""}
+          transparent)
+      `;
+      console.log("[Schedule.jsx] sleepHoursBackground:", sleepHoursBackground);
+      scheduleGridContainer.current.style.background = sleepHoursBackground;
+    }
+  }, []);
 
   // Build the initial layout
   useEffect(() => {
@@ -163,7 +218,10 @@ const Schedule = () => {
   }, [events, selectedDate]);
 
   return (
-    <div className="schedule-container-jg grid-container-background-jg">
+    <div
+      ref={scheduleGridContainer}
+      className="schedule-container-jg grid-container-background-jg"
+    >
       {isLoading ? (
         <LoadingSpinner
           spinnerStyle={scheduleSpinnerStyle}
@@ -194,7 +252,6 @@ const Schedule = () => {
           onResizeStop={handleDragResizeStop}
         >
           {events.map((event) => {
-
             const matchingProp = eventBoxProps.find(
               (eventBoxProp) => eventBoxProp.event._id === event._id
             );
