@@ -3479,6 +3479,10 @@ path[class="firework-stroke-color-1-jg"] {
     margin-left: 25%;
     margin-right: 25%;
   }
+  
+  .unalotted-percentage-jg {
+    font-size: 0.8em;
+  }
 }
 
 @media screen and (max-width: 992px) {
@@ -3843,7 +3847,9 @@ path[class="firework-stroke-color-1-jg"] {
     justify-content: space-between;
     width: 55%;
   }
+
   .dashboard-header-mobile-percentage-jg h2 {
+    font-size: 1.2em;
     margin-top: 0;
     margin-bottom: 0;
   }
@@ -3857,6 +3863,15 @@ path[class="firework-stroke-color-1-jg"] {
     position: relative;
     top: 0;
     right: 0;
+  }
+
+  .selected-date-container-jg {
+    flex-basis: min-content;
+    width: auto;
+  }
+
+  .selected-date-box-input-jg.flatpickr-mobile {
+    text-align: center;
   }
 
   .grey-text-jg {
@@ -4102,7 +4117,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .mobile-percentages-container-jg p {
-    font-size: 0.8em;
+    font-size: 0.6em;
   }
 }
 
