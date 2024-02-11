@@ -73,6 +73,8 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
     }
   };
 
+  console.log("[NewEvent.jsx] formData:", formData);
+
   return (
     <DataContext.Provider value={{ formData, setFormData, eventSubtypes }}>
       <div className="modal-jg event-details-modal-container-jg">

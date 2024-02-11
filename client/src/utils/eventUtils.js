@@ -580,7 +580,7 @@ export const validateEventForm = (formData, showStats) => {
   console.log("[eventUtils.jsx] eventStart:", eventStart);
   console.log("[eventUtils.jsx] eventEnd:", eventEnd);
 
-  if (eventEnd < eventStart && !errorMessage) {
+  if (eventEnd <= eventStart && !errorMessage) {
     errorMessage = "Event end date must be later than the start date.";
   }
 

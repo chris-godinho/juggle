@@ -42,21 +42,21 @@ export default function EventDetails({
   const [updateEvent] = useMutation(UPDATE_EVENT);
   const [removeEvent] = useMutation(REMOVE_EVENT);
 
-  const eventStartDate = new Date(eventStart);
-  const eventEndDate = new Date(eventEnd);
-  const reminderDate = new Date(eventReminderTime);
-  const formattedStartDate = `${
+  const eventStartDate = eventStart === null ? "" : new Date(eventStart);
+  const eventEndDate = eventEnd === null ? "" : new Date(eventEnd);
+  const reminderDate = eventReminderTime === null ? "" : new Date(eventReminderTime);
+  const formattedStartDate = eventStartDate === "" ? "" : `${
     eventStartDate.getMonth() + 1
   }/${eventStartDate.getDate()}/${eventStartDate.getFullYear()}`;
-  const formattedStartTime = `${eventStartDate.getHours()}:${eventStartDate.getMinutes()}`;
-  const formattedEndDate = `${
+  const formattedStartTime = eventStartDate === "" ? "" : `${eventStartDate.getHours()}:${eventStartDate.getMinutes()}`;
+  const formattedEndDate = eventEndDate === "" ? "" : `${
     eventEndDate.getMonth() + 1
   }/${eventEndDate.getDate()}/${eventEndDate.getFullYear()}`;
-  const formattedEndTime = `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
-  const formattedReminderDate = `${
+  const formattedEndTime = eventEndDate === "" ? "" : `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
+  const formattedReminderDate = reminderDate === "" ? "" : `${
     reminderDate.getMonth() + 1
   }/${reminderDate.getDate()}/${reminderDate.getFullYear()}`;
-  const formattedReminderTime = `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
+  const formattedReminderTime = reminderDate === "" ? "" : `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
 
   const [eventScreen, setEventScreen] = useState("EventDetails");
 
@@ -117,6 +117,8 @@ export default function EventDetails({
     }
   };
 
+  console.log("[EventDetails.jsx] formData:", formData);
+
   const handleDeleteEvent = async (event) => {
     event.preventDefault();
 
@@ -127,7 +129,7 @@ export default function EventDetails({
         variables: { eventId: eventId },
       });
 
-      console.log("[UserProfile.jsx] removeEvent:", removedEvent);
+      console.log("[EventDetails.jsx] removeEvent:", removedEvent);
 
       eventsRefetch();
       closeModal();

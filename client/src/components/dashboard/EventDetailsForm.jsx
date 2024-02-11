@@ -142,7 +142,6 @@ export default function EventDetailsForm({ formType, showStats }) {
           ) : (
             <>
               {isTitleEditable ? (
-                // Render an input field when in edit mode
                 <input
                   type="text"
                   name="title"
@@ -156,7 +155,6 @@ export default function EventDetailsForm({ formType, showStats }) {
                   }
                 />
               ) : (
-                // Render a non-editable h1 element when not in edit mode
                 <h1
                   className={
                     formData.type === "work"
