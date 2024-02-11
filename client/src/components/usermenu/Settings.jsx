@@ -58,7 +58,9 @@ export default function Settings() {
   }, [userData]);
 
   if ("beforeinstallprompt" in window) {
-    console.log("[Settings.jsx] beforeinstallprompt event listener is supported");
+    console.log(
+      "[Settings.jsx] beforeinstallprompt event listener is supported"
+    );
     // Check for PWA installation before showing install button
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
@@ -284,8 +286,10 @@ export default function Settings() {
           <option value="events">Events</option>
           <option value="layout">Layout</option>
           <option value="theme">Theme</option>
+          {/*
           <option value="localization">Localization</option>
           <option value="install">Install</option>
+          */}
         </select>
       </div>
       <div className="settings-container-jg">
@@ -356,6 +360,7 @@ export default function Settings() {
           >
             Theme
           </a>
+          {/*
           <a
             href="#"
             className={
@@ -378,6 +383,7 @@ export default function Settings() {
           >
             Install
           </a>
+          */}
         </div>
         <div className="settings-main-jg">
           {settingsScreen === "stats" ? (
@@ -486,6 +492,7 @@ export default function Settings() {
             </div>
           ) : settingsScreen === "events" ? (
             /* Events Settings */ <div className="settings-events-container-jg">
+              {/*
               <label
                 key="work-life-optout-jg"
                 className="settings-stats-checkbox-jg checkbox-jg"
@@ -501,6 +508,7 @@ export default function Settings() {
                 />
                 Mark events as complete after their end time
               </label>
+              */}
               <h3 className="settings-label-jg">Event Categories</h3>
               <p className="settings-label-jg">
                 Add or remove categories for your events here.

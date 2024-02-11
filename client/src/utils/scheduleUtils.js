@@ -51,25 +51,45 @@ const assignClassNames = (
 const findEventW = (event, eventsInLine, receivedLayout) => {
   let newW;
 
-  switch (eventsInLine.length) {
-    case 1:
-      newW = 6;
-      break;
-    case 2:
-      newW = 3;
-      break;
-    case 3:
-      newW = 2;
-      break;
-    case 4:
-    case 5:
-    case 6:
-      newW = 1;
-      break;
-    default:
-      newW = event.w;
-      break;
+  if (
+    eventsInLine.indexOf(event.i) === eventsInLine.length - 1 &&
+    eventsInLine.length > 1
+  ) {
+    let occupiedW = 0;
+    for (let i = 0; i < eventsInLine.length; i++) {
+      if (event.i !== eventsInLine[i]) {
+        const currentEvent = receivedLayout.find(
+          (layoutEvent) => layoutEvent.i === eventsInLine[i]
+        );
+        console.log("[scheduleUtils.js] currentEvent: ", currentEvent);
+        console.log("[scheduleUtils.js] currentEvent.w: ", currentEvent.w);
+        occupiedW += currentEvent.w;
+        newW = 6 - occupiedW;
+      }
+    }
+  } else {
+    switch (eventsInLine.length) {
+      case 1:
+        newW = 6;
+        break;
+      case 2:
+        newW = 3;
+        break;
+      case 3:
+        newW = 2;
+        break;
+      case 4:
+      case 5:
+      case 6:
+        newW = 1;
+        break;
+      default:
+        newW = event.w;
+        break;
+    }
   }
+
+  console.log("[scheduleUtils.js] newW: ", newW);
 
   return newW;
 };
@@ -187,11 +207,19 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
         console.log(
           "[scheduleUtils.js] currentLineBreakdown includes currentProcessedEvent"
         );
-        const newW = findEventW(currentProcessedEvent, currentLineBreakdown, receivedLayout);
+        const newW = findEventW(
+          currentProcessedEvent,
+          currentLineBreakdown,
+          receivedLayout
+        );
         console.log("[scheduleUtils.js] newW: ", newW);
         if (newW < currentW) {
           currentW = newW;
-          currentX = findEventX(currentProcessedEvent, currentLineBreakdown, receivedLayout);
+          currentX = findEventX(
+            currentProcessedEvent,
+            currentLineBreakdown,
+            receivedLayout
+          );
         }
         console.log("[scheduleUtils.js] currentW: ", currentW);
         console.log("[scheduleUtils.js] currentX: ", currentX);
