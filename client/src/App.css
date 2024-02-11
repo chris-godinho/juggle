@@ -2150,6 +2150,7 @@ input[type="checkbox"]:disabled {
   text-align: left;
   font-weight: 550;
   cursor: grab;
+  overflow: hidden;
   box-shadow: 3px 3px 5px 1px var(--box-shadow-color),
     inset 0px 0px 0px 1px var(--main-background-color-accent);
 }
@@ -3989,6 +3990,11 @@ path[class="firework-stroke-color-1-jg"] {
 
   .notification-jg {
     width: 89vw;
+  }
+
+  .schedule-event-name-jg {
+    font-size: 0.8em;
+    text-overflow: ellipsis;
   }
 }
 
