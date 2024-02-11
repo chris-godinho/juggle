@@ -99,7 +99,7 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         !hasRightSidebar ? "dashboard-header-one-sidebar-left-jg" : ""
       } ${!hasLeftSidebar ? "dashboard-header-one-sidebar-right-jg" : ""}`}
     >
-      <div className="dashboard-mobile-header-top-brand-jg">
+      <div className="dashboard-mobile-header-top-brand-jg" onClick={toggleSidebar}>
         <SidePanelBrand />
       </div>
       <div className="dashboard-mobile-header-top-jg">
