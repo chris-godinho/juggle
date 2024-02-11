@@ -99,7 +99,10 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         !hasRightSidebar ? "dashboard-header-one-sidebar-left-jg" : ""
       } ${!hasLeftSidebar ? "dashboard-header-one-sidebar-right-jg" : ""}`}
     >
-      {isMobileView && (
+      <div className="dashboard-mobile-header-top-brand-jg">
+        <SidePanelBrand />
+      </div>
+      <div className="dashboard-mobile-header-top-jg">
         <div className="menu-brand-container-jg">
           <div className="menu-container-jg">
             <svg
@@ -134,9 +137,70 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
               />
             </svg>
           </div>
-          <h2>Juggler</h2>
         </div>
-      )}
+        <div className="mobile-percentages-container-jg">
+          {fetchedSettings?.showStats && (
+            <>
+              <div title="Work Percentage" className="dashboard-header-mobile-percentage-jg work-text-jg">
+                <h2>{displayPercentages[0]}%</h2>
+                <p>Work</p>
+              </div>
+            </>
+          )}
+          {fetchedSettings?.showStats && !fetchedSettings?.ignoreUnalotted && (
+            <div title="Unallotted Percentage" className="dashboard-header-mobile-percentage-jg grey-text-jg">
+              <h2>
+                {" "}
+                {fetchedSettings?.percentageBasis === "waking"
+                  ? unalottedTimePercentage
+                  : unalottedTimePercentageWithSleepingHours}
+                %
+              </h2>
+              <p>Unalotted</p>
+            </div>
+          )}
+          {fetchedSettings?.showStats && (
+            <>
+              <div title="Life Percentage" className="dashboard-header-mobile-percentage-jg life-text-jg">
+                <h2>{displayPercentages[1]}%</h2>
+                <p>Life</p>
+              </div>
+            </>
+          )}
+        </div>
+        <div className="dashboard-header-mobile-button-container-jg">
+          <button
+            className="round-button-jg life-border-jg life-border-link-jg"
+            onClick={() =>
+              openModal(
+                <NewEvent
+                  eventSubtypes={fetchedSettings?.eventSubtypes}
+                  handleNewEventModalClose={handleNewEventModalClose}
+                  userId={fetchedSettings?.userId}
+                  showStats={fetchedSettings?.showStats}
+                  refreshResponsiveGrid={refreshResponsiveGrid}
+                />
+              )
+            }
+          >
+            <svg
+              className="add-event-picture-jg"
+              xmlns="http://www.w3.org/2000/svg"
+              width="512"
+              height="512"
+              viewBox="0 0 512 512"
+              version="1.1"
+            >
+              <path d="" stroke="none" fillRule="evenodd" />
+              <path
+                d="M 242.184 209.500 L 242.629 243 205.314 243 L 168 243 168 255.500 L 168 268 205.500 268 L 243 268 243 301.500 L 243 335 256 335 L 269 335 269 301.500 L 269 268 306.500 268 L 344 268 344 255.500 L 344 243 306.686 243 L 269.371 243 269.816 209.500 L 270.260 176 256 176 L 241.740 176 242.184 209.500"
+                stroke="none"
+                fillRule="evenodd"
+              />
+            </svg>
+          </button>
+        </div>
+      </div>
       <div className="dashboard-header-button-container-jg">
         <button
           className="round-button-jg work-border-jg work-border-link-jg"
@@ -169,37 +233,6 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         </>
       )}
       <div className="date-percentage-container-jg">
-        <div className="mobile-percentages-container-jg">
-          {fetchedSettings?.showStats && (
-              <>
-                <div className="dashboard-header-mobile-percentage-jg work-text-jg">
-                  <h2>{displayPercentages[0]}%</h2>
-                  <p>Work</p>
-                </div>
-              </>
-            )}
-          {fetchedSettings?.showStats &&
-            !fetchedSettings?.ignoreUnalotted && (
-              <div className="dashboard-header-mobile-percentage-jg grey-text-jg">
-                <h2>
-                  {" "}
-                  {fetchedSettings?.percentageBasis === "waking"
-                    ? unalottedTimePercentage
-                    : unalottedTimePercentageWithSleepingHours}
-                  %
-                </h2>
-                <p>Unalotted</p>
-              </div>
-            )}
-          {fetchedSettings?.showStats && (
-              <>
-                <div className="dashboard-header-mobile-percentage-jg life-text-jg">
-                  <h2>{displayPercentages[1]}%</h2>
-                  <p>Life</p>
-                </div>
-              </>
-            )}
-        </div>
         <div className="selected-date-container-jg">
           <a href="#" onClick={selectPreviousDay}>
             <span className="material-symbols-outlined">
