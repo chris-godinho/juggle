@@ -78,8 +78,10 @@ const Schedule = ({ refreshResponsiveGrid }) => {
       ]);
     });
 
+    console.log("[Schedule.jsx] buildLayout() - initialLayout:", initialLayout);
+
     // Adjust overlapping events before setting the layout
-    setCurrentLayout(adjustOverlappingEvents(initialLayout));
+    setCurrentLayout(adjustOverlappingEvents(initialLayout, events));
     refreshResponsiveGrid();
 
     console.log("[Schedule.jsx] buildLayout() - currentLayout:", currentLayout);
@@ -165,7 +167,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     console.log("[Schedule.jsx] in handleDragResizeStop()");
 
     // Adjust overlapping events before handling the change
-    const adjustedLayout = adjustOverlappingEvents(layout);
+    const adjustedLayout = adjustOverlappingEvents(layout, events);
 
     // Update the database with the new layout
     handleEventChange(adjustedLayout);

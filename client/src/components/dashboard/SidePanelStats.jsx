@@ -33,9 +33,6 @@ export default function SidePanelStats({ eventType }) {
   );
 
   useEffect(() => {
-    console.log("[SidePanelStats.jsx] useEffect() rendering...");
-    console.log("[SidePanelStats.jsx] displayPercentage:", displayPercentage);
-    console.log("[SidePanelStats.jsx] countUpRef.current:", countUpRef.current);
     // Set the --num variable to the target number on the referenced element
     if (countUpRef.current) {
       countUpRef.current.style.setProperty(

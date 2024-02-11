@@ -50,10 +50,6 @@ export default function SidePanelRecommendations({ eventType, sidebarToRender })
         fetchedEventData?.lifePercentageIgnoreUnalotted
       );
       setRecommendationList(resultList);
-      console.log(
-        "[SidePanelRecommendations.jsx] recommendationList:",
-        recommendationList
-      );
     }
   }, [
     isLoadingSettings,

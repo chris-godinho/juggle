@@ -11,7 +11,6 @@ const assignClassNames = (
   endsNextDay,
   nextDay
 ) => {
-
   let eventEndTime;
   if (event.eventEnd) {
     eventEndTime = new Date(event.eventEnd);
@@ -49,86 +48,287 @@ const assignClassNames = (
   return className;
 };
 
-export const adjustOverlappingEvents = (layout) => {
-  console.log("[Schedule.jsx] in adjustOverlappingEvents()");
-  // Save current layout to a new array
-  const adjustedLayout = [...layout];
-  let isUpdated = false;
+// Function to update the layout of an event if necessary
+const updateEventLayout = (eventToUpdate, newW, newX) => {
+  eventToUpdate.w = newW;
+  eventToUpdate.x = newX;
 
-  // Function to update the layout of an event if necessary
-  const updateEventLayout = (eventToUpdate, newW, newX) => {
-    const eventIndex = adjustedLayout.findIndex(
-      (event) => event.i === eventToUpdate.i
-    );
+  console.log("[scheduleUtils.js] newW: ", newW);
+  console.log("[scheduleUtils.js] newX: ", newX);
 
-    adjustedLayout[eventIndex].w = newW;
-    adjustedLayout[eventIndex].x = newX;
-
-    isUpdated = true;
+  const updatedEvent = {
+    i: eventToUpdate.i,
+    x: newX,
+    y: eventToUpdate.y,
+    w: newW,
+    h: eventToUpdate.h,
   };
 
-  // Iterate through each event in the layout
-  for (let i = 0; i < adjustedLayout.length; i++) {
-    const currentEvent = adjustedLayout[i];
-    const currentOverlappingEvents = [];
+  return updatedEvent;
+};
 
-    // Compare the current event with each other event in the layout
-    for (let j = i + 1; j < adjustedLayout.length; j++) {
-      const otherEvent = adjustedLayout[j];
+const adjustEventLayout = (targetEventForAdjustment, overlapRank) => {
+  let newW = targetEventForAdjustment.w;
+  let newX = targetEventForAdjustment.x;
 
-      // Check if there is a vertical overlap between the current event and the other event
-      const verticalOverlap =
-        currentEvent.y < otherEvent.y + otherEvent.h &&
-        currentEvent.y + currentEvent.h > otherEvent.y &&
-        currentEvent.i !== otherEvent.i;
+  console.log(
+    "[scheduleUtils.js] targetEventForAdjustment.overlapCount: ",
+    targetEventForAdjustment.overlapCount
+  );
+  console.log(
+    "[scheduleUtils.js] Type of targetEventForAdjustment.overlapCount: ",
+    typeof targetEventForAdjustment.overlapCount
+  );
 
-      // If there is a vertical overlap, add the other event to the list of overlapping events
-      if (verticalOverlap) {
-        console.log("[Schedule.jsx] Vertical overlap found!");
-        currentOverlappingEvents.push(otherEvent);
+  switch (targetEventForAdjustment.overlapCount) {
+    case 1:
+      console.log(
+        "[scheduleUtils.js] Case 1: ",
+        targetEventForAdjustment.overlapCount
+      );
+      newW = 3;
+      overlapRank === 1 ? (newX = 0) : (newX = 3);
+      break;
+    case 2:
+      console.log(
+        "[scheduleUtils.js] Case 2: ",
+        targetEventForAdjustment.overlapCount
+      );
+      newW = 2;
+      overlapRank === 1
+        ? (newX = 0)
+        : overlapRank === 2
+        ? (newX = 2)
+        : (newX = 4);
+      break;
+    case 3:
+    case 4:
+    case 5:
+      console.log(
+        "[scheduleUtils.js] Case 3, 4, 5: ",
+        targetEventForAdjustment.overlapCount
+      );
+      newW = 1;
+      newX = overlapRank - 1;
+      break;
+    case 6:
+      console.log(
+        "[scheduleUtils.js] Case 6: ",
+        targetEventForAdjustment.overlapCount
+      );
+      // TODO: If there are more than 5 overlapping events, what to do?
+      break;
+    default:
+      console.log(
+        "[scheduleUtils.js] Default case: ",
+        targetEventForAdjustment.overlapCount
+      );
+      break;
+  }
+
+  const updatedEvent = updateEventLayout(targetEventForAdjustment, newW, newX);
+
+  console.log(
+    "[scheduleUtils.js] Updated event layout: ",
+    JSON.stringify(updatedEvent, null, 2)
+  );
+
+  return updatedEvent;
+};
+
+export const adjustOverlappingEvents = (receivedLayout, events) => {
+  console.log("[scheduleUtils.js] in adjustOverlappingEvents");
+  console.log("[scheduleUtils.js] Received layout: ", receivedLayout);
+
+  // Create a copy of the received layout
+  let workingLayout = [...receivedLayout];
+
+  // Create an empty array to store the final layout
+  let finalLayout = [];
+
+  // Loop through all 48 lines in schedule (y-index)
+  for (let line = 0; line < 47; line++) {
+    console.log(
+      "--------------------------------------------------------------------------------------------------"
+    );
+    console.log("[scheduleUtils.js] Line: ", line);
+
+    // Create an empty array to store the events that match the current line
+    let lineMatches = [];
+
+    // Loop through the working layout and find all events that occupy the current line
+    for (let j = 0; j < workingLayout.length; j++) {
+      const currentLineCheckedEvent = workingLayout[j];
+
+      const currentLineCheckedEventData = events.find(
+        (event) => event._id === currentLineCheckedEvent.i
+      );
+
+      console.log(
+        "[scheduleUtils.js] Checking if event",
+        currentLineCheckedEventData.title,
+        "is on line:",
+        line
+      );
+
+      // Check if the event is on the current line
+      if (
+        line >= currentLineCheckedEvent.y &&
+        line <= currentLineCheckedEvent.y + currentLineCheckedEvent.h - 1
+      ) {
+        // Event is on this line
+        console.log(
+          "[scheduleUtils.js] MATCH! Event",
+          currentLineCheckedEventData.title,
+          "is on line:",
+          line
+        );
+        // Add the event to the line matches array
+        lineMatches.push(currentLineCheckedEvent);
       }
     }
 
-    // Adjust the layout of the current event based on the number of overlapping events
-    if (currentOverlappingEvents.length === 1) {
-      console.log("[Schedule.jsx] currentOverlappingEvents.length === 1");
-      updateEventLayout(currentEvent, 3, 3);
-      updateEventLayout(currentOverlappingEvents[0], 3, 0);
-    } else if (currentOverlappingEvents.length === 2) {
-      console.log("[Schedule.jsx] currentOverlappingEvents.length === 2");
-      updateEventLayout(currentEvent, 2, 4);
-      updateEventLayout(currentOverlappingEvents[0], 2, 0);
-      updateEventLayout(currentOverlappingEvents[1], 2, 2);
-    } else if (currentOverlappingEvents.length === 3) {
-      console.log("[Schedule.jsx] currentOverlappingEvents.length === 3");
-      updateEventLayout(currentEvent, 1, 5);
-      updateEventLayout(currentOverlappingEvents[0], 2, 0);
-      updateEventLayout(currentOverlappingEvents[1], 2, 2);
-      updateEventLayout(currentOverlappingEvents[2], 1, 4);
-    } else if (currentOverlappingEvents.length === 4) {
-      console.log("[Schedule.jsx] currentOverlappingEvents.length === 4");
-      updateEventLayout(currentEvent, 1, 5);
-      updateEventLayout(currentOverlappingEvents[0], 2, 0);
-      updateEventLayout(currentOverlappingEvents[1], 1, 2);
-      updateEventLayout(currentOverlappingEvents[2], 1, 3);
-      updateEventLayout(currentOverlappingEvents[3], 1, 4);
-    } else if (currentOverlappingEvents.length === 5) {
-      console.log("[Schedule.jsx] currentOverlappingEvents.length === 5");
-      updateEventLayout(currentEvent, 1, 5);
-      updateEventLayout(currentOverlappingEvents[0], 1, 0);
-      updateEventLayout(currentOverlappingEvents[1], 1, 1);
-      updateEventLayout(currentOverlappingEvents[2], 1, 2);
-      updateEventLayout(currentOverlappingEvents[3], 1, 3);
-      updateEventLayout(currentOverlappingEvents[4], 1, 4);
-    }
+    // If there are events on this line, check for overlaps with other events (on any line)
+    if (lineMatches.length > 0) {
+      // There are events on this line
+      console.log(
+        "[scheduleUtils.js] There are",
+        lineMatches.length,
+        "events on line:",
+        line
+      );
 
-    if (isUpdated) {
-      // If the layout was updated, break out of the loop and start over
-      break;
+      // Loop through the line matches to check for overlaps
+      for (let k = 0; k < lineMatches.length; k++) {
+        const currentOverlapCheckedEvent = lineMatches[k];
+        lineMatches[k].overlapCount = 0;
+        lineMatches[k].overlappingEvents = [];
+
+        const currentOverlapCheckedEventData = events.find(
+          (event) => event._id === currentOverlapCheckedEvent.i
+        );
+
+        console.log(
+          "[scheduleUtils.js] Checking event",
+          currentOverlapCheckedEventData.title,
+          "for overlaps"
+        );
+
+        // Loop through the event list and try to find overlaps with currently checked event
+        for (let l = 0; l < receivedLayout.length; l++) {
+          const currentOverlapComparedEvent = receivedLayout[l];
+
+          const currentOverlapComparedEventData = events.find(
+            (event) => event._id === currentOverlapComparedEvent.i
+          );
+
+          // Check for vertical overlap between the two events
+          const hasVerticalOverlap =
+            currentOverlapCheckedEvent.y <
+              currentOverlapComparedEvent.y + currentOverlapComparedEvent.h &&
+            currentOverlapCheckedEvent.y + currentOverlapCheckedEvent.h >
+              currentOverlapComparedEvent.y &&
+            currentOverlapCheckedEvent.i !== currentOverlapComparedEvent.i;
+
+          if (hasVerticalOverlap) {
+            // There is overlap between the two events
+            console.log(
+              "[scheduleUtils.js] Overlap between",
+              currentOverlapCheckedEventData.title,
+              "and",
+              currentOverlapComparedEventData.title
+            );
+
+            // Increment the overlap count for the currently checked event
+            lineMatches[k].overlapCount++;
+            // Add the overlapping event to the currently checked event's array of overlapping events
+            lineMatches[k].overlappingEvents.push(currentOverlapComparedEvent);
+          }
+        }
+        console.log(
+          "[scheduleUtils.js]",
+          lineMatches[k].overlapCount,
+          "overlaps found for event",
+          currentOverlapCheckedEventData.title
+        );
+      }
+
+      let overlapRank = 1;
+
+      // Loop through the line matches and adjust the layout of all events, in overlapCount order
+      while (lineMatches.length > 0) {
+
+        // Find the event with the most overlaps
+        const targetEventForAdjustment = lineMatches.reduce((max, current) => {
+          return current.overlapCount > max.overlapCount ? current : max;
+        }, lineMatches[0]);
+
+        let adjustedOverlapRank;
+
+        console.log("[scheduleUtils.js] Target Overlapping Events: ", targetEventForAdjustment.overlappingEvents);
+
+        const targetEventForAdjustmentData = events.find(
+          (event) => event._id === targetEventForAdjustment.i
+        );
+
+        console.log(
+          "[scheduleUtils.js] Target event for adjustment: ",
+          targetEventForAdjustmentData.title
+        );
+        console.log("[scheduleUtils.js] Overlap rank: ", overlapRank);
+        console.log(
+          "[scheduleUtils.js] Overlap count: ",
+          targetEventForAdjustment.overlapCount
+        );
+
+        // TODO: Check if the overlapping events are already in the final layout
+        // TODO: If so, skip it and increment overlapRank by 1
+
+        const alreadyAdjustedEvents = targetEventForAdjustment.overlappingEvents.filter(event =>
+          !workingLayout.some(layoutElement => layoutElement.i === event.i)
+        );
+
+        console.log("[scheduleUtils.js] Already adjusted elements: ", alreadyAdjustedEvents);
+
+        adjustedOverlapRank = overlapRank + alreadyAdjustedEvents.length; 
+
+        console.log("[scheduleUtils.js] Adjusted overlap rank: ", adjustedOverlapRank);
+
+        let updatedEventLayout = targetEventForAdjustment;
+
+        if (targetEventForAdjustment.overlapCount > 0) {
+          // Adjust the layout of the event with the most overlaps
+          console.log(
+            "[scheduleUtils.js] Overlaps found. Moving to adjustEventLayout"
+          );
+          updatedEventLayout = adjustEventLayout(
+            targetEventForAdjustment,
+            adjustedOverlapRank
+          );
+        } else {
+          // No overlaps found
+          console.log("[scheduleUtils.js] No overlaps found for event.");
+        }
+
+        // Add the adjusted event to the final layout
+        finalLayout.push(updatedEventLayout);
+
+        // Remove this event from the working layout
+        workingLayout = workingLayout.filter(
+          (event) => event.i !== targetEventForAdjustment.i
+        );
+
+        // Remove this event from the line matches
+        lineMatches = lineMatches.filter(
+          (event) => event.i !== targetEventForAdjustment.i
+        );
+      }
     }
   }
 
-  return adjustedLayout;
+  console.log("[scheduleUtils.js] Final layout: ", finalLayout);
+
+  return finalLayout;
 };
 
 export const buildEventBox = (event, displayDate) => {
@@ -149,17 +349,12 @@ export const buildEventBox = (event, displayDate) => {
 
   // Calculate the size and position based on start time and duration
   eventStartTime = new Date(event.eventStart);
-  console.log("[scheduleUtils.js] buildEventBox()");
-  console.log("[scheduleUtils.js] event.eventStart:", event.eventStart);
-  console.log("[scheduleUtils.js] eventStartTime:", eventStartTime);
   startTimeMinutes =
     eventStartTime.getHours() * 60 + eventStartTime.getMinutes();
   adjustedBoxPosition = Math.ceil(startTimeMinutes / 30);
 
   if (event.eventEnd) {
     eventEndTime = new Date(event.eventEnd);
-    console.log("[scheduleUtils.js] event.eventEnd:", event.eventEnd);
-    console.log("[scheduleUtils.js] eventEndTime:", eventEndTime);
     durationMinutes = (eventEndTime - eventStartTime) / (1000 * 60);
     size = Math.ceil(durationMinutes / 30);
 
@@ -214,7 +409,6 @@ export const buildEventBox = (event, displayDate) => {
 };
 
 export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
-
   const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
 
   const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
