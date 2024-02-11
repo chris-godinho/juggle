@@ -44,8 +44,11 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
     const { type, eventStart, eventEnd } = event;
 
     // Calculate duration in milliseconds
-    const duration =
-      new Date(eventEnd).getTime() - new Date(eventStart).getTime();
+
+    let duration = 30 * 60 * 1000;
+    if (eventStart && eventEnd) {
+      duration = new Date(eventEnd).getTime() - new Date(eventStart).getTime();
+    }
 
     // Update counters based on event type
     if (type === "work") {
@@ -65,7 +68,7 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
     fetchedSettings,
     selectedDate
   );
-  // const sleepingHours = 8 * 60;
+
   const totalAlottedTimeWithSleepingHours = 24 * 60;
   const totalAlottedTime =
     totalAlottedTimeWithSleepingHours - sleepingHoursInMinutes;
@@ -131,8 +134,11 @@ export const calculateSingleEventPercentage = (
 ) => {
   let eventPercentage;
 
-  const eventDuration =
-    (new Date(event.eventEnd) - new Date(event.eventStart)) / (1000 * 60);
+  let eventDuration = 30;
+  if (event.eventStart && event.eventEnd) {
+    eventDuration =
+      (new Date(event.eventEnd) - new Date(event.eventStart)) / (1000 * 60);
+  }
 
   let totalTime;
   if (ignoreUnalotted) {
