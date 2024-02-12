@@ -30,6 +30,8 @@ export default function Dashboard() {
   midnightLocalDate.setHours(0, 0, 0, 0);
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
 
+  const [scheduleComponentRandomKey, setScheduleComponentRandomKey] = useState(Math.random());
+
   // Get user profile
   const userProfile = AuthService.getProfile();
 
@@ -91,9 +93,12 @@ export default function Dashboard() {
 
   const events = eventsData?.eventsByDate || [];
 
-  const refreshResponsiveGrid = () => {
+  const refreshResponsiveGrid = (refreshType = "change") => {
     console.log("refreshResponsiveGrid() called");
     setResponsiveGridTimestampKey(Math.random());
+    if (refreshType === "change") {
+       setScheduleComponentRandomKey(Math.random());
+    }
     eventsRefetch();
   };
 
@@ -224,7 +229,7 @@ export default function Dashboard() {
                   spinnerElWidthHeight="100px"
                 />
               ) : (
-                <Schedule refreshResponsiveGrid={refreshResponsiveGrid} />
+                <Schedule key={scheduleComponentRandomKey} refreshResponsiveGrid={refreshResponsiveGrid} />
               )}
             </div>
           </div>

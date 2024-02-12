@@ -64,7 +64,7 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
 
       closeModal();
 
-      refreshResponsiveGrid();
+      refreshResponsiveGrid("change");
 
     } catch (error) {
       openNotification(

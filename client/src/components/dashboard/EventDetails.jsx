@@ -134,7 +134,7 @@ export default function EventDetails({
 
       closeModal();
 
-      refreshResponsiveGrid();
+      refreshResponsiveGrid("change");
     } catch (error) {
       openNotification(
         <p>{error ? error.message : "An error occurred. Please try again."}</p>,

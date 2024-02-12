@@ -60,6 +60,8 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   // Function to build the initial layout
   const buildLayout = (events) => {
     const initialLayout = [];
+    setAllDayEvents([]);
+    setCurrentLayout([]);
     events.map((event) => {
       if (event.isAllDay) {
         setAllDayEvents((prevAllDayEvents) => [...prevAllDayEvents, event]);
@@ -86,7 +88,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
 
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout, events));
-    refreshResponsiveGrid();
+    refreshResponsiveGrid("initial");
   };
 
   // Function to handle clicking on an event (opens the event details modal)
@@ -201,8 +203,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
 
     // Update the layout variables
     setCurrentLayout(adjustedLayout);
-    refreshResponsiveGrid();
-    setAllDayEvents([]);
+    refreshResponsiveGrid("change");
   };
 
   useEffect(() => {
