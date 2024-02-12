@@ -233,7 +233,7 @@ const resolvers = {
         links,
         files,
         priority,
-        setReminder,
+        isAllDay,
         reminderTime,
       }
     ) => {
@@ -260,8 +260,8 @@ const resolvers = {
         files,
         "priority =",
         priority,
-        "setReminder =",
-        setReminder,
+        "isAllDay =",
+        isAllDay,
         "reminderTime =",
         reminderTime
       );
@@ -277,7 +277,7 @@ const resolvers = {
         links,
         files,
         priority,
-        setReminder,
+        isAllDay,
         reminderTime,
       });
 
@@ -304,7 +304,7 @@ const resolvers = {
         links,
         files,
         priority,
-        setReminder,
+        isAllDay,
         reminderTime,
         completed,
       }
@@ -332,8 +332,8 @@ const resolvers = {
         files,
         "priority =",
         priority,
-        "setReminder =",
-        setReminder,
+        "isAllDay =",
+        isAllDay,
         "reminderTime =",
         reminderTime,
         "completed =",
@@ -353,7 +353,7 @@ const resolvers = {
           links,
           files,
           priority,
-          setReminder,
+          isAllDay,
           reminderTime,
           completed,
         },

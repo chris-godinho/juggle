@@ -534,6 +534,9 @@ export const calculateMacroStats = (events) => {
 export const validateEventForm = (formData, showStats) => {
   console.log("[eventUtils.jsx] in validateEventForm()");
 
+  const midnightToday = new Date();
+  midnightToday.setHours(0, 0, 0, 0);
+
   let errorMessage = "";
   let finalFormData;
 
@@ -573,9 +576,15 @@ export const validateEventForm = (formData, showStats) => {
     errorMessage = "Please enter both an end date and time.";
   }
 
+  let isAllDay = false;
+  if (formData.startDate === "") {
+    formData.startDate = midnightToday.toISOString().slice(0, 10);
+    isAllDay = true;
+  }
+
   // Combine startDate and startTime into eventStart
-  const eventStartDate = formData.startDate || new Date().toLocaleDateString();
-  const eventStartTime = formData.startTime || "00:00";
+  const eventStartDate = formData.startDate || midnightToday.toISOString().slice(0, 10);
+  const eventStartTime = formData.startTime;
   const eventStart = new Date(`${eventStartDate} ${eventStartTime}`);
 
   // Combine endDate and endTime into eventEnd
@@ -611,6 +620,7 @@ export const validateEventForm = (formData, showStats) => {
     eventStart,
     eventEnd,
     reminderTime,
+    isAllDay: isAllDay,
   };
 
   return {

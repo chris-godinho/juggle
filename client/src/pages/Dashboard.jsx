@@ -92,6 +92,7 @@ export default function Dashboard() {
   const events = eventsData?.eventsByDate || [];
 
   const refreshResponsiveGrid = () => {
+    console.log("refreshResponsiveGrid() called");
     setResponsiveGridTimestampKey(Math.random());
     eventsRefetch();
   };
@@ -223,7 +224,7 @@ export default function Dashboard() {
                   spinnerElWidthHeight="100px"
                 />
               ) : (
-                <Schedule key={selectedDate.getTime()} refreshResponsiveGrid={refreshResponsiveGrid} />
+                <Schedule refreshResponsiveGrid={refreshResponsiveGrid} />
               )}
             </div>
           </div>

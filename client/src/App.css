@@ -29,7 +29,7 @@
 
   --box-shadow-color: rgba(0, 0, 0, 0.5);
 
-  --schedule-sleep-background-color: rgba(158, 171, 169, 0.05);
+  --schedule-sleep-background-color: rgba(158, 171, 169, 0.06);
 
   --life-event-color: rgba(42, 203, 152, 1);
   --life-event-color-light: rgba(82, 243, 192, 1);
@@ -396,6 +396,11 @@
 }
 
 /* Main container rules */
+*, html {
+  scroll-behavior: smooth !important;
+  scroll-padding-top: 20vh !important;
+}
+
 html,
 body {
   background-color: var(--main-background-color);
@@ -721,7 +726,7 @@ input[type="checkbox"]:disabled {
 
 /* Rules for Hidden, Disabled and Camouflaged elements */
 .hidden-jg {
-  display: none;
+  display: none !important;
 }
 
 .disabled-jg {
@@ -1644,10 +1649,6 @@ input[type="checkbox"]:disabled {
   margin-left: 0;
 }
 
-.schedule-grid-container-jg {
-  margin-top: 13.2vh;
-}
-
 /* Dashboard Side Panel rules */
 .dashboard-side-panel-jg {
   background-color: var(--main-background-color);
@@ -2126,8 +2127,68 @@ input[type="checkbox"]:disabled {
 }
 
 /* Schedule page rules */
+.schedule-filler-jg {
+  min-height: 18vh;
+}
+
+.schedule-all-day-toolbox-jg {
+  padding: 0 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  overflow-y: auto;
+}
+
+.schedule-all-day-placeholder-jg {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  flex: 1;
+  color: transparent;
+  border: 2px dashed var(--main-separator-color);
+  border-radius: 1em;  
+  transition: color 0.2s ease-in-out;
+}
+
+.schedule-all-day-placeholder-jg:hover {
+  color: var(--main-separator-color);
+}
+
+.schedule-all-day-placeholder-jg p {
+  margin-top: 0;
+  margin-left: 1em;
+  margin-right: 1em;
+  margin-bottom: 0;
+  text-align: left;
+}
+
+.schedule-event-all-day-box-jg {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flex;
+  align-items: center;
+  height: 30px;
+  color: var(--main-background-color);
+  border: 1px solid var(--main-background-color-accent);
+  border-radius: 1em;
+  text-align: left;
+  font-weight: 550;
+  cursor: grab;
+  overflow: hidden;
+  box-shadow: 3px 3px 5px 1px var(--box-shadow-color),
+    inset 0px 0px 0px 1px var(--main-background-color-accent);
+}
+
+.schedule-all-day-event-name-jg {
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 1em;
+  margin-right: 1em;
+  cursor: pointer;
+  width: auto;
+  display: inline-block;
+}
+
 .schedule-container-jg {
-  margin-top: 2em;
   overflow-x: hidden;
 }
 
@@ -2430,80 +2491,48 @@ input[type="checkbox"]:disabled {
 }
 
 .schedule-event-box-open-jg {
-  border-radius: 1em 1em 0 0;
+  background-color: var(--main-background-color-accent);
+  box-shadow: inset 3px 0 0,
+  inset -3px 0 0,
+  inset 0 3px 0,
+  inset 0 -3px 0;
 }
 
 .schedule-event-normal-box-work-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--work-event-color) 60%,
-    transparent
-  );
+  color: var(--work-event-color);
 }
 
 .schedule-event-normal-box-life-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--life-event-color) 60%,
-    transparent
-  );
+  color: var(--life-event-color);
 }
 
 .schedule-event-normal-box-unspecified-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--main-text-color) 60%,
-    transparent
-  );
+  color: var(--main-text-color);
 }
 
 .schedule-event-low-box-work-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--work-event-color-dark) 60%,
-    transparent
-  );
+  color: var(--work-event-color-dark);
 }
 
 .schedule-event-low-box-life-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--life-event-color-dark) 60%,
-    transparent
-  );
+  color: var(--life-event-color-dark);
 }
 
 .schedule-event-low-box-unspecified-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--main-text-color) 60%,
-    transparent
-  );
+  color: var(--main-text-color);
   filter: brightness(0.8);
 }
 
 .schedule-event-high-box-work-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--work-event-color-light) 60%,
-    transparent
-  );
+  color: var(--work-event-color-light);
 }
 
 .schedule-event-high-box-life-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--life-event-color-light) 60%,
-    transparent
-  );
+  color: var(--life-event-color-light);
 }
 
 .schedule-event-high-box-unspecified-open-jg {
-  background: linear-gradient(
-    to bottom,
-    var(--main-text-color) 60%,
-    transparent
-  );
+  color: var(--main-text-color);
   filter: brightness(1.2);
 }
 

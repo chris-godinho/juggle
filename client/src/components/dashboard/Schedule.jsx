@@ -1,6 +1,6 @@
 // Schedule.jsx
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useReducer } from "react";
 import { useMutation } from "@apollo/client";
 
 import { useDataContext } from "../contextproviders/DataContext";
@@ -36,6 +36,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     scheduleSpinnerStyle,
     fetchedSettings,
     responsiveGridTimestampKey,
+    setScheduleComponentRandomKey
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -45,9 +46,11 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
-  // let currentLayout;
+
   const [currentLayout, setCurrentLayout] = useState([]);
   const [eventBoxProps, setEventBoxProps] = useState([]);
+  const [allDayEvents, setAllDayEvents] = useState([]);
+  const [movedAllDayEventId, setMovedAllDayEventId] = useState(null);
 
   // Initialize variables for the selected date and the next day
   const displayDate = new Date(selectedDate);
@@ -59,32 +62,33 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   const buildLayout = (events) => {
     const initialLayout = [];
     events.map((event) => {
-      const { adjustedBoxHeight, adjustedBoxPosition, className } =
-        buildEventBox(event, displayDate);
+      if (event.isAllDay) {
+        setAllDayEvents((prevAllDayEvents) => [...prevAllDayEvents, event]);
+      } else {
+        const { adjustedBoxHeight, adjustedBoxPosition, className } =
+          buildEventBox(event, displayDate);
 
-      // Add the event to the initial layout
-      initialLayout.push({
-        i: event._id,
-        w: 6,
-        h: adjustedBoxHeight,
-        x: 0,
-        y: adjustedBoxPosition,
-      });
+        // Add the event to the initial layout
+        initialLayout.push({
+          i: event._id,
+          w: 6,
+          h: adjustedBoxHeight,
+          x: 0,
+          y: adjustedBoxPosition,
+        });
 
-      // Add the event to the event box props for future reference
-      setEventBoxProps((prevEventBoxProps) => [
-        ...prevEventBoxProps,
-        { event, className },
-      ]);
+        // Add the event to the event box props for future reference
+        setEventBoxProps((prevEventBoxProps) => [
+          ...prevEventBoxProps,
+          { event, className },
+        ]);
+      }
     });
-
-    console.log("[Schedule.jsx] buildLayout() - initialLayout:", initialLayout);
 
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout, events));
     refreshResponsiveGrid();
 
-    console.log("[Schedule.jsx] buildLayout() - currentLayout:", currentLayout);
   };
 
   // Function to handle clicking on an event (opens the event details modal)
@@ -102,7 +106,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
         eventLinks={event.links}
         eventFiles={event.files}
         eventPriority={event.priority}
-        eventSetReminder={event.setReminder}
+        eventIsAllDay={event.isAllDay}
         eventReminderTime={event.reminderTime}
         eventCompleted={event.completed}
         eventSubtypes={eventSubtypes}
@@ -118,10 +122,13 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     console.log("[Schedule.jsx] in handleEventChange()");
     // Iterate through each moved event
     for (const movedEvent of layout) {
+      console.log("[Schedule.jsx] handleEventChange() - movedEvent:", movedEvent);
       const eventId = movedEvent.i;
 
       // Find the corresponding event in the events array
       const eventToUpdate = events.find((event) => event._id === eventId);
+
+      console.log("[Schedule.jsx] handleEventChange() - eventToUpdate:", eventToUpdate);
 
       if (eventToUpdate) {
         // Calculate new start time and duration based on the moved layout
@@ -150,7 +157,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
               links: eventToUpdate.links,
               files: eventToUpdate.files,
               priority: eventToUpdate.priority,
-              setReminder: eventToUpdate.setReminder,
+              isAllDay: false,
               reminderTime: eventToUpdate.reminderTime,
               completed: eventToUpdate.completed,
             },
@@ -162,6 +169,26 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     }
   };
 
+  const handleAllDayEventDragStart = (e) => {
+    console.log("[Schedule.jsx] in handleAllDayEventDragStart()");
+    console.log("[Schedule.jsx] e.target.dataset.eventId:", e.target.dataset.eventId);
+    setMovedAllDayEventId(e.target.dataset.eventId);
+  };
+
+  const handleAllDayEventDrop = (layout, layoutItem, _event) => {
+    console.log("[Schedule.jsx] in handleAllDayEventDrop()");
+    console.log("[Schedule.jsx] layout:", layout);
+    console.log("[Schedule.jsx] layoutItem:", layoutItem);
+    for (const key in layout) {
+      if (layout[key].i === '__dropping-elem__') {
+        layout[key].i = movedAllDayEventId;
+        break;
+      }
+    }
+    setMovedAllDayEventId(null);
+    handleDragResizeStop(layout);
+  };
+
   // Function to handle dragging an event
   const handleDragResizeStop = (layout) => {
     console.log("[Schedule.jsx] in handleDragResizeStop()");
@@ -169,17 +196,15 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout, events);
 
+    console.log("[Schedule.jsx] handleDragResizeStop() - adjustedLayout:", adjustedLayout);
+
     // Update the database with the new layout
     handleEventChange(adjustedLayout);
 
     // Update the layout variables
+
     setCurrentLayout(adjustedLayout);
     refreshResponsiveGrid();
-
-    console.log(
-      "[Schedule.jsx] handleDragResizeStop() - currentLayout:",
-      currentLayout
-    );
   };
 
   useEffect(() => {
@@ -256,69 +281,105 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     initializeSchedule();
   }, [events, selectedDate]);
 
+  useEffect(() => {
+    console.log("[Schedule.jsx] in useEffect() currentLayout:", currentLayout);
+  }, [currentLayout]);
+
   return (
-    <div
-      ref={scheduleGridContainer}
-      className="schedule-container-jg grid-container-background-jg"
-    >
-      {isLoading ? (
-        <LoadingSpinner
-          spinnerStyle={scheduleSpinnerStyle}
-          spinnerElWidthHeight="100px"
-        />
-      ) : (
-        <ResponsiveGridLayout
-          key={responsiveGridTimestampKey}
-          className="layout"
-          layouts={{
-            lg: currentLayout,
-            md: currentLayout,
-            sm: currentLayout,
-            xs: currentLayout,
-            xxs: currentLayout,
-          }}
-          breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
-          cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
-          compactType={null}
-          draggableCancel=".widget-prevent-drag-wf"
-          autoSize={false}
-          rowHeight={30}
-          maxRows={48}
-          containerPadding={[10, 5]}
-          margin={[5, 10]}
-          resizeHandles={["n", "s"]}
-          allowOverlap={true}
-          onDragStop={handleDragResizeStop}
-          onResizeStop={handleDragResizeStop}
-        >
-          {events.map((event) => {
-            const matchingProp = eventBoxProps.find(
-              (eventBoxProp) => eventBoxProp.event._id === event._id
-            );
-
-            const className = matchingProp ? matchingProp.className : "";
-
-            return (
-              <div
-                key={event._id}
-                id={event._id}
-                title={`${formatTime(new Date(event.eventStart))} - ${
-                  event.title
-                }`}
-                className={className}
+    <>
+      <div className="schedule-filler-jg"></div>
+      <div
+        key={`random-key-${Math.floor(Math.random() * 1000000)}`}
+        className="schedule-all-day-toolbox-jg"
+      >
+        {allDayEvents.map((event) => {
+          console.log("[Schedule.jsx] allDayEvents.map() - event:", event);
+          return (
+            <div
+              key={event._id}
+              data-event-id={event._id}
+              draggable="true"
+              onDragStart={handleAllDayEventDragStart}
+              title={event.title}
+              className={`schedule-event-all-day-box-jg schedule-event-box-open-jg schedule-event-${event.priority.toLowerCase()}-box-${event.type.toLowerCase()}-open-jg`}
+            >
+              <p
+                onClick={() => handleEventClick(event)}
+                className="schedule-all-day-event-name-jg widget-prevent-drag-wf"
               >
-                <p
-                  className="schedule-event-name-jg widget-prevent-drag-wf"
-                  onClick={() => handleEventClick(event)}
+                {event.title}
+              </p>
+            </div>
+          );
+        })}
+      </div>
+      <div
+        ref={scheduleGridContainer}
+        className="schedule-container-jg grid-container-background-jg"
+      >
+        {isLoading ? (
+          <LoadingSpinner
+            spinnerStyle={scheduleSpinnerStyle}
+            spinnerElWidthHeight="100px"
+          />
+        ) : (
+          <ResponsiveGridLayout
+            key={responsiveGridTimestampKey}
+            className="layout"
+            layouts={{
+              lg: currentLayout,
+              md: currentLayout,
+              sm: currentLayout,
+              xs: currentLayout,
+              xxs: currentLayout,
+            }}
+            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+            cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
+            compactType={null}
+            draggableCancel=".widget-prevent-drag-wf"
+            rowHeight={30}
+            maxRows={48}
+            containerPadding={[10, 5]}
+            margin={[5, 10]}
+            resizeHandles={["n", "s"]}
+            allowOverlap={true}
+            onDragStop={handleDragResizeStop}
+            onResizeStop={handleDragResizeStop}
+            isDroppable={true}
+            onDrop={handleAllDayEventDrop}
+            useCSSTransforms={false}
+          >
+            {events.map((event) => {
+              if (event.isAllDay) return null;
+
+              const matchingProp = eventBoxProps.find(
+                (eventBoxProp) => eventBoxProp.event._id === event._id
+              );
+
+              const className = matchingProp ? matchingProp.className : "";
+
+              return (
+                <div
+                  key={event._id}
+                  id={event._id}
+                  title={`${formatTime(new Date(event.eventStart))} - ${
+                    event.title
+                  }`}
+                  className={className}
                 >
-                  {formatTime(new Date(event.eventStart))} - {event.title}
-                </p>
-              </div>
-            );
-          })}
-        </ResponsiveGridLayout>
-      )}
-    </div>
+                  <p
+                    className="schedule-event-name-jg widget-prevent-drag-wf"
+                    onClick={() => handleEventClick(event)}
+                  >
+                    {formatTime(new Date(event.eventStart))} - {event.title}
+                  </p>
+                </div>
+              );
+            })}
+          </ResponsiveGridLayout>
+        )}
+      </div>
+    </>
   );
 };
 

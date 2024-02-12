@@ -49,9 +49,6 @@ const NotificationManager = () => {
   const scheduleEventNotifications = (events) => {
     events.forEach((event) => {
       if (event.reminderTime !== undefined) {
-        console.log(
-          `[NotificationManager.jsx] Scheduling notification for event: ${event.title}`
-        );
 
         const now = new Date();
 
@@ -68,11 +65,6 @@ const NotificationManager = () => {
           eventStart.getMonth() + 1
         }/${eventStart.getDate()}/${eventStart.getFullYear()} at ${formattedEventTime}`;
 
-        console.log(`[NotificationManager.jsx] Event start: ${eventStart}`);
-        console.log(
-          `[NotificationManager.jsx] Time until event: ${timeUntilEvent}`
-        );
-
         const eventReminderTime = new Date(event.reminderTime);
         const timeUntilReminder = eventReminderTime - now;
 
@@ -86,7 +78,6 @@ const NotificationManager = () => {
               </p>,
               event.type.toLowerCase()
             );
-            console.log(`[NotificationManager.jsx] Notification for event: ${event.title}`);
             // After displaying the notification, refetch events to update the UI
             notificationRefetch();
           }, timeUntilReminder);

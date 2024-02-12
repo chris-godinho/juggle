@@ -31,6 +31,7 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
     links: "",
     files: "",
     priority: "Normal",
+    isAllDay: false,
     reminderDate: "",
     reminderTime: "",
   });

@@ -209,7 +209,7 @@ const typeDefs = `
     links: [String]
     files: [String]
     priority: String
-    setReminder: Boolean
+    isAllDay: Boolean
     reminderTime: DateTime
     completed: Boolean
   }
@@ -241,8 +241,8 @@ const typeDefs = `
     updateUserSettings(username: String!, colorModeSetting: String, eventSubtypes: [EventSubtypeInput], statSettings: StatSettingMatrixInput, sleepingHours: SleepingHoursMatrixInput, lifePreferredActivities: LifePreferredActivitiesMatrixInput, workPreferredActivities: WorkPreferredActivitiesMatrixInput, eventSettings: EventSettingMatrixInput, layoutSettings: LayoutSettingMatrixInput, localizationSettings: LocalizationSettingMatrixInput): User
     deleteUser(username: String!): DeleteUserResponse
     login(username: String!, password: String!): Auth
-    addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime): Event
-    updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, setReminder: Boolean, reminderTime: DateTime, completed: Boolean): Event
+    addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, isAllDay: Boolean, reminderTime: DateTime): Event
+    updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, isAllDay: Boolean, reminderTime: DateTime, completed: Boolean): Event
     removeEvent(eventId: ID!): Event
     deleteFile(username: String!, fileName: String!): Boolean
   }

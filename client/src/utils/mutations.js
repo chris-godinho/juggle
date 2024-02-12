@@ -208,7 +208,7 @@ export const ADD_EVENT = gql`
     $links: [String]
     $files: [String]
     $priority: String
-    $setReminder: Boolean
+    $isAllDay: Boolean
     $reminderTime: DateTime
   ) {
     addEvent(
@@ -223,7 +223,7 @@ export const ADD_EVENT = gql`
       links: $links
       files: $files
       priority: $priority
-      setReminder: $setReminder
+      isAllDay: $isAllDay
       reminderTime: $reminderTime
     ) {
       _id
@@ -238,7 +238,7 @@ export const ADD_EVENT = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }
@@ -258,7 +258,7 @@ export const UPDATE_EVENT = gql`
     $links: [String]
     $files: [String]
     $priority: String
-    $setReminder: Boolean
+    $isAllDay: Boolean
     $reminderTime: DateTime
     $completed: Boolean
   ) {
@@ -274,7 +274,7 @@ export const UPDATE_EVENT = gql`
       links: $links
       files: $files
       priority: $priority
-      setReminder: $setReminder
+      isAllDay: $isAllDay
       reminderTime: $reminderTime
       completed: $completed
     ) {
@@ -290,7 +290,7 @@ export const UPDATE_EVENT = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }
@@ -312,7 +312,7 @@ export const REMOVE_EVENT = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }

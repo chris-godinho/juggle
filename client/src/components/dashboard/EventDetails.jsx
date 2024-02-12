@@ -25,13 +25,13 @@ export default function EventDetails({
   eventLinks,
   eventFiles,
   eventPriority,
-  eventSetReminder,
+  eventIsAllDay,
   eventReminderTime,
   eventCompleted,
   eventSubtypes,
   eventsRefetch,
   showStats,
-  refreshResponsiveGrid
+  refreshResponsiveGrid,
 }) {
   console.log("[EventDetails.jsx] Component is rendering");
 
@@ -42,21 +42,47 @@ export default function EventDetails({
   const [updateEvent] = useMutation(UPDATE_EVENT);
   const [removeEvent] = useMutation(REMOVE_EVENT);
 
-  const eventStartDate = eventStart === null ? "" : new Date(eventStart);
+  let formattedStartDate = "";
+  let formattedStartTime = "";
+
+  if (!eventIsAllDay) {
+    const eventStartDate = eventStart === null ? "" : new Date(eventStart);
+    formattedStartDate =
+      eventStartDate === ""
+        ? ""
+        : `${
+            eventStartDate.getMonth() + 1
+          }/${eventStartDate.getDate()}/${eventStartDate.getFullYear()}`;
+    formattedStartTime =
+      eventStartDate === ""
+        ? ""
+        : `${eventStartDate.getHours()}:${eventStartDate.getMinutes()}`;
+  }
+
   const eventEndDate = eventEnd === null ? "" : new Date(eventEnd);
-  const reminderDate = eventReminderTime === null ? "" : new Date(eventReminderTime);
-  const formattedStartDate = eventStartDate === "" ? "" : `${
-    eventStartDate.getMonth() + 1
-  }/${eventStartDate.getDate()}/${eventStartDate.getFullYear()}`;
-  const formattedStartTime = eventStartDate === "" ? "" : `${eventStartDate.getHours()}:${eventStartDate.getMinutes()}`;
-  const formattedEndDate = eventEndDate === "" ? "" : `${
-    eventEndDate.getMonth() + 1
-  }/${eventEndDate.getDate()}/${eventEndDate.getFullYear()}`;
-  const formattedEndTime = eventEndDate === "" ? "" : `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
-  const formattedReminderDate = reminderDate === "" ? "" : `${
-    reminderDate.getMonth() + 1
-  }/${reminderDate.getDate()}/${reminderDate.getFullYear()}`;
-  const formattedReminderTime = reminderDate === "" ? "" : `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
+  const formattedEndDate =
+    eventEndDate === ""
+      ? ""
+      : `${
+          eventEndDate.getMonth() + 1
+        }/${eventEndDate.getDate()}/${eventEndDate.getFullYear()}`;
+  const formattedEndTime =
+    eventEndDate === ""
+      ? ""
+      : `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
+
+  const reminderDate =
+    eventReminderTime === null ? "" : new Date(eventReminderTime);
+  const formattedReminderDate =
+    reminderDate === ""
+      ? ""
+      : `${
+          reminderDate.getMonth() + 1
+        }/${reminderDate.getDate()}/${reminderDate.getFullYear()}`;
+  const formattedReminderTime =
+    reminderDate === ""
+      ? ""
+      : `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
 
   const [eventScreen, setEventScreen] = useState("EventDetails");
 
@@ -80,6 +106,7 @@ export default function EventDetails({
     links: eventLinks || "",
     files: eventFiles || "",
     priority: eventPriority || "",
+    isAllDay: eventIsAllDay || false,
     completed: eventCompleted || "",
     reminderDate: formattedReminderDate || "",
     reminderTime: formattedReminderTime || "",
@@ -108,7 +135,6 @@ export default function EventDetails({
       closeModal();
 
       refreshResponsiveGrid();
-
     } catch (error) {
       openNotification(
         <p>{error ? error.message : "An error occurred. Please try again."}</p>,

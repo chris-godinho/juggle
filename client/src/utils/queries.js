@@ -120,7 +120,7 @@ export const QUERY_USER = gql`
         links
         files
         priority
-        setReminder
+        isAllDay
         reminderTime
         completed
       }
@@ -143,7 +143,7 @@ export const QUERY_EVENTS_BY_USER = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }
@@ -165,7 +165,7 @@ export const QUERY_EVENTS_BY_DATE = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }
@@ -187,7 +187,7 @@ export const QUERY_SINGLE_EVENT = gql`
       links
       files
       priority
-      setReminder
+      isAllDay
       reminderTime
       completed
     }

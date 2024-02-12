@@ -41,7 +41,7 @@ const eventSchema = new Schema({
     enum: ["Low", "Normal", "High"],
     default: "Normal",
   },
-  setReminder: {
+  isAllDay: {
     type: Boolean,
     default: false,
   },

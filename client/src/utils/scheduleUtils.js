@@ -61,8 +61,6 @@ const findEventW = (event, eventsInLine, receivedLayout) => {
         const currentEvent = receivedLayout.find(
           (layoutEvent) => layoutEvent.i === eventsInLine[i]
         );
-        console.log("[scheduleUtils.js] currentEvent: ", currentEvent);
-        console.log("[scheduleUtils.js] currentEvent.w: ", currentEvent.w);
         occupiedW += currentEvent.w;
         newW = 6 - occupiedW;
       }
@@ -89,41 +87,28 @@ const findEventW = (event, eventsInLine, receivedLayout) => {
     }
   }
 
-  console.log("[scheduleUtils.js] newW: ", newW);
-
   return newW;
 };
 
 const findEventX = (event, eventsInLine, receivedLayout) => {
   let currentX;
 
-  console.log("[scheduleUtils.js] eventsInLine: ", eventsInLine);
-  console.log(
-    "[scheduleUtils.js] eventsInLine.indexOf(event.i): ",
-    eventsInLine.indexOf(event.i)
-  );
-
   switch (eventsInLine.length) {
     case 1:
-      console.log("[scheduleUtils.js] Case 1");
       currentX = 0;
       break;
     case 2:
-      console.log("[scheduleUtils.js] Case 2");
       currentX = eventsInLine.indexOf(event.i) * 3;
       break;
     case 3:
-      console.log("[scheduleUtils.js] Case 3");
       currentX = eventsInLine.indexOf(event.i) * 2;
       break;
     case 4:
     case 5:
     case 6:
-      console.log("[scheduleUtils.js] Case 4, 5, 6");
       currentX = eventsInLine.indexOf(event.i);
       break;
     default:
-      console.log("[scheduleUtils.js] Default case");
       currentX = event.x;
       break;
   }
@@ -132,8 +117,6 @@ const findEventX = (event, eventsInLine, receivedLayout) => {
 };
 
 export const adjustOverlappingEvents = (receivedLayout, events) => {
-  console.log("[scheduleUtils.js] in adjustOverlappingEvents");
-  console.log("[scheduleUtils.js] Received layout: ", receivedLayout);
 
   // Sort by "y" in ascending order, then by "h" in descending order
   receivedLayout.sort((a, b) => {
@@ -146,12 +129,9 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
     return b.h - a.h;
   });
 
-  console.log("[scheduleUtils.js] Sorted layout: ", receivedLayout);
-
   let layoutBreakdown = [];
 
   for (let gridLineIndex = 0; gridLineIndex < 48; gridLineIndex++) {
-    console.log("[scheduleUtils.js] gridLineIndex: ", gridLineIndex);
     let lineMatches = [];
     for (
       let receivedLayoutIndex = 0;
@@ -164,27 +144,18 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
         gridLineIndex >= currentCheckedEvent.y &&
         gridLineIndex < currentCheckedEvent.y + currentCheckedEvent.h
       ) {
-        console.log("[scheduleUtils.js] Match found");
         lineMatches.push(currentCheckedEvent.i);
       }
     }
-    console.log("[scheduleUtils.js] lineMatches: ", lineMatches);
     layoutBreakdown.push(lineMatches);
   }
 
-  console.log("[scheduleUtils.js] layoutBreakdown: ", layoutBreakdown);
-
-  for (
+ for (
     let receivedLayoutIndex = 0;
     receivedLayoutIndex < receivedLayout.length;
     receivedLayoutIndex++
   ) {
     const currentProcessedEvent = receivedLayout[receivedLayoutIndex];
-
-    console.log(
-      "[scheduleUtils.js] currentProcessedEvent: ",
-      currentProcessedEvent
-    );
 
     let currentW = 6;
     let currentX = 0;
@@ -197,22 +168,12 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
     ) {
       currentLineBreakdown = layoutBreakdown[layoutBreakdownIndex];
 
-      console.log(
-        "[scheduleUtils.js] currentLineBreakdown: ",
-        layoutBreakdownIndex,
-        currentLineBreakdown
-      );
-
       if (currentLineBreakdown.includes(currentProcessedEvent.i)) {
-        console.log(
-          "[scheduleUtils.js] currentLineBreakdown includes currentProcessedEvent"
-        );
         const newW = findEventW(
           currentProcessedEvent,
           currentLineBreakdown,
           receivedLayout
         );
-        console.log("[scheduleUtils.js] newW: ", newW);
         if (newW < currentW) {
           currentW = newW;
           currentX = findEventX(
@@ -221,8 +182,6 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
             receivedLayout
           );
         }
-        console.log("[scheduleUtils.js] currentW: ", currentW);
-        console.log("[scheduleUtils.js] currentX: ", currentX);
       }
     }
 
@@ -230,7 +189,8 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
     receivedLayout[receivedLayoutIndex].x = currentX;
   }
 
-  console.log("[scheduleUtils.js] Adjusted layout: ", receivedLayout);
+  console.log("[scheduleUtils.js] final layout:", receivedLayout);
+
   return receivedLayout;
 };
 
