@@ -2748,11 +2748,6 @@ input[type="checkbox"]:disabled {
     filter 0.2s ease-in-out;
 }
 
-.user-profile-picture-jg:hover {
-  scale: 0.98;
-  filter: brightness(1.1);
-}
-
 .user-menu-username-jg a {
   color: var(--work-event-color);
 }
@@ -3396,6 +3391,32 @@ path[class="firework-stroke-color-1-jg"] {
 .contact-form-container-jg button {
   width: 15%;
   align-self: center;
+}
+
+/* Default Profile Picture rules */
+/* Credit: Peter Selinger 2001-2017 */
+.round-button-jg .default-profile-picture-jg,
+.user-profile-picture-jg .default-profile-picture-jg {
+  height: 150%;
+  width: 150%;
+  position: absolute;
+  top: -20%;
+  left: -20%;
+}
+
+.profile-picture-ball-1-jg,
+.profile-picture-ball-3-jg {
+  fill: var(--work-event-color);
+}
+
+.profile-picture-ball-2-jg,
+.profile-picture-ball-4-jg {
+  fill: var(--life-event-color);
+}
+
+.profile-picture-clown-jg {
+  fill: var(--main-background-color-accent);
+  filter: brightness(1.5);
 }
 
 /* Digital Clock rules */

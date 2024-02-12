@@ -4,19 +4,21 @@ import { useState, useEffect } from "react";
 
 import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
+import DefaultProfilePicture from "../other/DefaultProfilePicture.jsx";
+
 import Auth from "../../utils/auth";
 
 export default function UserMenuOptions({ username, setUserMenuModalContent }) {
   const { userSettings, isLoadingSettings } = useUserSettings();
 
   const [profilePictureUrl, setProfilePictureUrl] = useState(
-    "/default-profile-picture.png"
+    null
   );
 
   useEffect(() => {
     if (!isLoadingSettings) {
       setProfilePictureUrl(
-        userSettings?.profilePictureUrl || "/default-profile-picture.png"
+        userSettings?.profilePictureUrl || null
       );
     }
   }, [isLoadingSettings, userSettings]);
@@ -37,12 +39,16 @@ export default function UserMenuOptions({ username, setUserMenuModalContent }) {
     <div className="modal-inner-content-jg">
       <div className="user-profile-picture-jg work-border-jg work-border-link-jg">
         <a href="#">
+          {profilePictureUrl ? (
           <img
             className="dashboard-profile-picture-jg"
             src={profilePictureUrl}
             alt="profile picture"
             onClick={() => setUserMenuModalContent("UserProfile")}
           />
+          ) : (
+          <DefaultProfilePicture />
+          )}
         </a>
       </div>
       <h1 className="user-menu-username-jg">

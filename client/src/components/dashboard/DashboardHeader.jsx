@@ -12,6 +12,7 @@ import NewEvent from "./NewEvent.jsx";
 import UserMenu from "../usermenu/UserMenu.jsx";
 import SidePanelBrand from "./SidePanelBrand.jsx";
 import SidePanelMenu from "./SidePanelMenu.jsx";
+import DefaultProfilePicture from "../other/DefaultProfilePicture.jsx";
 
 import { findDisplayPercentage } from "../../utils/eventUtils.js";
 
@@ -103,7 +104,10 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         !hasRightSidebar ? "dashboard-header-one-sidebar-left-jg" : ""
       } ${!hasLeftSidebar ? "dashboard-header-one-sidebar-right-jg" : ""}`}
     >
-      <div className="dashboard-mobile-header-top-brand-jg" onClick={toggleSidebar}>
+      <div
+        className="dashboard-mobile-header-top-brand-jg"
+        onClick={toggleSidebar}
+      >
         <SidePanelBrand />
       </div>
       <div className="dashboard-mobile-header-top-jg">
@@ -145,14 +149,20 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         <div className="mobile-percentages-container-jg">
           {fetchedSettings?.showStats && (
             <>
-              <div title="Work Percentage" className="dashboard-header-mobile-percentage-jg work-text-jg">
+              <div
+                title="Work Percentage"
+                className="dashboard-header-mobile-percentage-jg work-text-jg"
+              >
                 <h2>{displayPercentages[0]}%</h2>
                 <p>Work</p>
               </div>
             </>
           )}
           {fetchedSettings?.showStats && !fetchedSettings?.ignoreUnalotted && (
-            <div title="Unallotted Percentage" className="dashboard-header-mobile-percentage-jg grey-text-jg">
+            <div
+              title="Unallotted Percentage"
+              className="dashboard-header-mobile-percentage-jg grey-text-jg"
+            >
               <h2>
                 {" "}
                 {fetchedSettings?.percentageBasis === "waking"
@@ -165,7 +175,10 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
           )}
           {fetchedSettings?.showStats && (
             <>
-              <div title="Life Percentage" className="dashboard-header-mobile-percentage-jg life-text-jg">
+              <div
+                title="Life Percentage"
+                className="dashboard-header-mobile-percentage-jg life-text-jg"
+              >
                 <h2>{displayPercentages[1]}%</h2>
                 <p>Life</p>
               </div>
@@ -218,14 +231,15 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
             )
           }
         >
-          <img
-            className="dashboard-profile-picture-jg"
-            src={
-              fetchedSettings?.profilePictureUrl ||
-              "/default-profile-picture.png"
-            }
-            alt="profile picture"
-          />
+          {fetchedSettings?.profilePictureUrl ? (
+            <img
+              className="dashboard-profile-picture-jg"
+              src={fetchedSettings?.profilePictureUrl || null}
+              alt="profile picture"
+            />
+          ) : (
+            <DefaultProfilePicture />
+          )}
         </button>
       </div>
       {!hasLeftSidebar && !hasRightSidebar && fetchedSettings?.showStats && (

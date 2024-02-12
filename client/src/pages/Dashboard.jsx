@@ -50,7 +50,7 @@ export default function Dashboard() {
     lifePreferredActivities: {},
     dashboardLayout: localStorageLayout || "two-sidebars",
     viewStyle: "calendar",
-    profilePictureUrl: "/default-profile-picture.png",
+    profilePictureUrl: null,
   });
 
   const [fetchedEventData, setFetchedEventData] = useState({
@@ -145,7 +145,7 @@ export default function Dashboard() {
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
         profilePictureUrl:
-          userSettings?.profilePictureUrl || "/default-profile-picture.png",
+          userSettings?.profilePictureUrl || null,
       });
       const leftSidebar =
         userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||
