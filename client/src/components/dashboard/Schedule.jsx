@@ -52,6 +52,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   const [movedAllDayEventId, setMovedAllDayEventId] = useState(null);
 
   // Initialize variables for the selected date and the next day
+  // TODO: Can I just use the selectedDate/tomorrowDate from the context?
   const displayDate = new Date(selectedDate);
   displayDate.setHours(0, 0, 0, 0);
   const tomorrowDate = new Date(displayDate);

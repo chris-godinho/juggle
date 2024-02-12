@@ -28,7 +28,10 @@ export default function Dashboard() {
   const localDate = new Date();
   const midnightLocalDate = new Date(localDate);
   midnightLocalDate.setHours(0, 0, 0, 0);
+  const midnightTomorrowLocalDate = new Date(midnightLocalDate);
+  midnightTomorrowLocalDate.setDate(midnightTomorrowLocalDate.getDate() + 1);
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
+  const [tomorrowDate, setTomorrowDate] = useState(midnightTomorrowLocalDate);
 
   const [scheduleComponentRandomKey, setScheduleComponentRandomKey] = useState(Math.random());
 
@@ -46,6 +49,7 @@ export default function Dashboard() {
     workPreferredActivities: {},
     lifePreferredActivities: {},
     dashboardLayout: localStorageLayout || "two-sidebars",
+    viewStyle: "calendar",
     profilePictureUrl: "/default-profile-picture.png",
   });
 
@@ -88,7 +92,7 @@ export default function Dashboard() {
     data: eventsData,
     refetch: eventsRefetch,
   } = useQuery(QUERY_EVENTS_BY_DATE, {
-    variables: { user: fetchedSettings.userId, eventStart: selectedDate },
+    variables: { user: fetchedSettings.userId, selectedDateStart: selectedDate, selectedDateEnd: tomorrowDate },
   });
 
   const events = eventsData?.eventsByDate || [];
@@ -115,18 +119,6 @@ export default function Dashboard() {
       window.removeEventListener("resize", handleResize);
     };
   }, []);
-
-  // TODO: Remove this after testing
-  useEffect(() => {
-    console.log("[Dashboard.jsx] fetchedSettings:", fetchedSettings);
-  }, [fetchedSettings]);
-
-  // TODO: Remove this after testing
-  useEffect(() => {
-    console.log(
-      "[Dashboard.jsx] useEffect triggered, isNotificationOpen has been changed."
-    );
-  }, [isNotificationOpen]);
 
   useEffect(() => {
     if (!isLoadingSettings) {
@@ -189,7 +181,7 @@ export default function Dashboard() {
   }, [events, eventsLoading, fetchedSettings, selectedDate]);
 
   useEffect(() => {
-    eventsRefetch();
+    refreshResponsiveGrid("initial");
   }, [selectedDate]);
 
   return (
@@ -198,6 +190,8 @@ export default function Dashboard() {
         isLoadingSettings,
         selectedDate,
         setSelectedDate,
+        tomorrowDate,
+        setTomorrowDate,
         isOneBarLayout,
         hasLeftSidebar,
         hasRightSidebar,

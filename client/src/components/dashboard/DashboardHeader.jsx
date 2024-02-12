@@ -19,6 +19,8 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
   const {
     selectedDate,
     setSelectedDate,
+    tomorrowDate,
+    setTomorrowDate,
     hasRightSidebar,
     hasLeftSidebar,
     isMobileView,
@@ -76,10 +78,12 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
 
   const selectPreviousDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
+    setTomorrowDate(new Date(tomorrowDate.setDate(tomorrowDate.getDate() - 1)));
   };
 
   const selectNextDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
+    setTomorrowDate(new Date(tomorrowDate.setDate(tomorrowDate.getDate() + 1)));
   };
 
   const toggleSidebar = () => {
@@ -246,7 +250,12 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
               options={{
                 dateFormat: "l, F j, Y",
                 defaultDate: selectedDate,
-                onChange: (date) => setSelectedDate(date[0]),
+                onChange: (date) => {
+                  setSelectedDate(date[0]);
+                  const newTomorrowDate = new Date(date[0]);
+                  newTomorrowDate.setDate(newTomorrowDate.getDate() + 1);
+                  setTomorrowDate(newTomorrowDate);
+                },
               }}
             />
           </div>
