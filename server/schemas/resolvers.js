@@ -24,6 +24,7 @@ const resolvers = {
       parent,
       { user, selectedDateStart, selectedDateEnd }
     ) => {
+      
       console.log(
         "[resolvers.js] eventsByDate: user =",
         user,

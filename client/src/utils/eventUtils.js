@@ -582,6 +582,11 @@ export const validateEventForm = (formData, showStats) => {
     isAllDay = true;
   }
 
+  if (formData.startDate !== "" && formData.startTime === "") {
+    formData.startTime = "00:00";
+    isAllDay = true;
+  }
+
   // Combine startDate and startTime into eventStart
   const eventStartDate = formData.startDate || midnightToday.toISOString().slice(0, 10);
   const eventStartTime = formData.startTime;
