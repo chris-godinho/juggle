@@ -1,6 +1,6 @@
 // Schedule.jsx
 
-import React, { useState, useEffect, useRef, useReducer } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
 
 import { useDataContext } from "../contextproviders/DataContext";
@@ -36,7 +36,6 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     scheduleSpinnerStyle,
     fetchedSettings,
     responsiveGridTimestampKey,
-    setScheduleComponentRandomKey
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -88,7 +87,6 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout, events));
     refreshResponsiveGrid();
-
   };
 
   // Function to handle clicking on an event (opens the event details modal)
@@ -202,9 +200,9 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     handleEventChange(adjustedLayout);
 
     // Update the layout variables
-
     setCurrentLayout(adjustedLayout);
     refreshResponsiveGrid();
+    setAllDayEvents([]);
   };
 
   useEffect(() => {
