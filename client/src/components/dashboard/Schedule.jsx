@@ -36,6 +36,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     scheduleSpinnerStyle,
     fetchedSettings,
     responsiveGridTimestampKey,
+    isMobileView
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -123,13 +124,19 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     console.log("[Schedule.jsx] in handleEventChange()");
     // Iterate through each moved event
     for (const movedEvent of layout) {
-      console.log("[Schedule.jsx] handleEventChange() - movedEvent:", movedEvent);
+      console.log(
+        "[Schedule.jsx] handleEventChange() - movedEvent:",
+        movedEvent
+      );
       const eventId = movedEvent.i;
 
       // Find the corresponding event in the events array
       const eventToUpdate = events.find((event) => event._id === eventId);
 
-      console.log("[Schedule.jsx] handleEventChange() - eventToUpdate:", eventToUpdate);
+      console.log(
+        "[Schedule.jsx] handleEventChange() - eventToUpdate:",
+        eventToUpdate
+      );
 
       if (eventToUpdate) {
         // Calculate new start time and duration based on the moved layout
@@ -172,7 +179,10 @@ const Schedule = ({ refreshResponsiveGrid }) => {
 
   const handleAllDayEventDragStart = (e) => {
     console.log("[Schedule.jsx] in handleAllDayEventDragStart()");
-    console.log("[Schedule.jsx] e.target.dataset.eventId:", e.target.dataset.eventId);
+    console.log(
+      "[Schedule.jsx] e.target.dataset.eventId:",
+      e.target.dataset.eventId
+    );
     setMovedAllDayEventId(e.target.dataset.eventId);
   };
 
@@ -181,7 +191,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     console.log("[Schedule.jsx] layout:", layout);
     console.log("[Schedule.jsx] layoutItem:", layoutItem);
     for (const key in layout) {
-      if (layout[key].i === '__dropping-elem__') {
+      if (layout[key].i === "__dropping-elem__") {
         layout[key].i = movedAllDayEventId;
         break;
       }
@@ -197,7 +207,10 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout, events);
 
-    console.log("[Schedule.jsx] handleDragResizeStop() - adjustedLayout:", adjustedLayout);
+    console.log(
+      "[Schedule.jsx] handleDragResizeStop() - adjustedLayout:",
+      adjustedLayout
+    );
 
     // Update the database with the new layout
     handleEventChange(adjustedLayout);
@@ -336,6 +349,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
             breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
             cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
             compactType={null}
+            draggableHandle={isMobileView ? ".schedule-drag-handle-jg" : ""}
             draggableCancel=".prevent-drag-jg"
             rowHeight={30}
             maxRows={48}
@@ -373,6 +387,9 @@ const Schedule = ({ refreshResponsiveGrid }) => {
                   >
                     {formatTime(new Date(event.eventStart))} - {event.title}
                   </p>
+                  <span className="material-symbols-outlined schedule-drag-handle-jg">
+                    drag_indicator
+                  </span>
                 </div>
               );
             })}

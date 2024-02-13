@@ -2207,6 +2207,8 @@ input[type="checkbox"]:disabled {
 
 .schedule-event-box-jg {
   color: var(--main-background-color);
+  display: flex;
+  flex-direction: row;
   border: 1px solid var(--main-background-color-accent);
   border-radius: 1em;
   text-align: left;
@@ -2541,6 +2543,10 @@ input[type="checkbox"]:disabled {
   cursor: pointer;
   width: auto;
   display: inline-block;
+}
+
+.schedule-drag-handle-jg {
+  display: none;
 }
 
 .react-grid-item > .react-resizable-handle.react-resizable-handle-n,
@@ -3843,6 +3849,16 @@ path[class="firework-stroke-color-1-jg"] {
 
   .task-details-jg {
     display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .schedule-drag-handle-jg {
+    display: block;
+    margin-top: auto;
+    margin-left: auto;
+    margin-bottom: 0.5em;
+    margin-right: 0.5em;
   }
 }
 
