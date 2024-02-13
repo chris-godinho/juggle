@@ -32,6 +32,8 @@ export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
 };
 
 export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
+  console.log("[eventUtils.jsx] in calculateEventStats()");
+
   // Initialize counters
   let workCount = 0;
   let workTotalTime = 0;
@@ -59,6 +61,12 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
       lifeTotalTime += duration;
     }
   });
+
+  const workTaskPercentage = Math.round((workCount / eventCount) * 100);
+  const lifeTaskPercentage = 100 - workTaskPercentage;
+
+  console.log("[eventUtils.jsx] workTaskPercentage:", workTaskPercentage);
+  console.log("[eventUtils.jsx] lifeTaskPercentage:", lifeTaskPercentage);
 
   // Convert total time from milliseconds to minutes
   workTotalTime /= 1000 * 60;
@@ -114,11 +122,13 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
     workCount,
     workTotalTime,
     workPercentage,
+    workTaskPercentage,
     workPercentageWithSleepingHours,
     workPercentageIgnoreUnalotted,
     lifeCount,
     lifeTotalTime,
     lifePercentage,
+    lifeTaskPercentage,
     lifePercentageWithSleepingHours,
     lifePercentageIgnoreUnalotted,
   };
@@ -158,42 +168,64 @@ export const findDisplayPercentage = (
   eventType,
   ignoreUnalotted,
   percentageBasis,
+  viewStyle,
   workPercentage,
+  workTaskPercentage,
   workPercentageIgnoreUnalotted,
   workPercentageWithSleepingHours,
   lifePercentage,
+  lifeTaskPercentage,
   lifePercentageIgnoreUnalotted,
   lifePercentageWithSleepingHours
 ) => {
+  console.log("[eventUtils.jsx] in findDisplayPercentage()");
+  console.log("[eventUtils.jsx] workTaskPercentage:", workTaskPercentage);
+  console.log("[eventUtils.jsx] lifeTaskPercentage:", lifeTaskPercentage);
+
   let displayPercentage;
+
   if (eventType === "Work") {
-    if (ignoreUnalotted) {
-      displayPercentage = workPercentageIgnoreUnalotted;
-    } else {
-      if (percentageBasis === "waking") {
-        displayPercentage = workPercentage;
+    if (viewStyle === "calendar") {
+      if (ignoreUnalotted) {
+        displayPercentage = workPercentageIgnoreUnalotted;
       } else {
-        displayPercentage = workPercentageWithSleepingHours;
+        if (percentageBasis === "waking") {
+          displayPercentage = workPercentage;
+        } else {
+          displayPercentage = workPercentageWithSleepingHours;
+        }
       }
+    } else {
+      displayPercentage = workTaskPercentage;
     }
   } else {
-    if (ignoreUnalotted) {
-      displayPercentage = lifePercentageIgnoreUnalotted;
-    } else {
-      if (percentageBasis === "waking") {
-        displayPercentage = lifePercentage;
+    if (viewStyle === "calendar") {
+      if (ignoreUnalotted) {
+        displayPercentage = lifePercentageIgnoreUnalotted;
       } else {
-        displayPercentage = lifePercentageWithSleepingHours;
+        if (percentageBasis === "waking") {
+          displayPercentage = lifePercentage;
+        } else {
+          displayPercentage = lifePercentageWithSleepingHours;
+        }
       }
+    } else {
+      displayPercentage = lifeTaskPercentage;
     }
   }
 
   return displayPercentage;
 };
 
-export const findDisplayText = (ignoreUnalotted, percentageBasis) => {
+export const findDisplayText = (
+  ignoreUnalotted,
+  percentageBasis,
+  viewStyle
+) => {
   let displayText;
-  if (ignoreUnalotted) {
+  if (viewStyle !== "calendar") {
+    displayText = "of your tasks";
+  } else if (ignoreUnalotted) {
     displayText = "of your allocated time";
   } else {
     displayText =
@@ -210,11 +242,14 @@ export const findRecommendations = (
   lifeGoalActivities,
   ignoreUnalotted,
   percentageBasis,
+  viewStyle,
   balanceGoal,
   workPreferredActivities,
   lifePreferredActivities,
   workPercentage,
   lifePercentage,
+  workTaskPercentage,
+  lifeTaskPercentage,
   workPercentageWithSleepingHours,
   lifePercentageWithSleepingHours,
   workPercentageIgnoreUnalotted,
@@ -232,7 +267,10 @@ export const findRecommendations = (
 
   if (eventType === "Work") {
     targetBalanceGoal = balanceGoal;
-    if (ignoreUnalotted) {
+    if (viewStyle !== "calendar") {
+      targetPercentage = workTaskPercentage;
+      otherPercentage = lifeTaskPercentage;
+    } else if (ignoreUnalotted) {
       targetPercentage = workPercentageIgnoreUnalotted;
       otherPercentage = lifePercentageIgnoreUnalotted;
     } else if (percentageBasis === "waking") {
@@ -246,7 +284,10 @@ export const findRecommendations = (
     recommendationSource = workGoalActivities;
   } else {
     targetBalanceGoal = 100 - balanceGoal;
-    if (ignoreUnalotted) {
+    if (viewStyle !== "calendar") {
+      targetPercentage = lifeTaskPercentage;
+      otherPercentage = workTaskPercentage;
+    } else if (ignoreUnalotted) {
       targetPercentage = lifePercentageIgnoreUnalotted;
       otherPercentage = workPercentageIgnoreUnalotted;
     } else if (percentageBasis === "waking") {
@@ -588,7 +629,8 @@ export const validateEventForm = (formData, showStats) => {
   }
 
   // Combine startDate and startTime into eventStart
-  const eventStartDate = formData.startDate || midnightToday.toISOString().slice(0, 10);
+  const eventStartDate =
+    formData.startDate || midnightToday.toISOString().slice(0, 10);
   const eventStartTime = formData.startTime;
   const eventStart = new Date(`${eventStartDate} ${eventStartTime}`);
 

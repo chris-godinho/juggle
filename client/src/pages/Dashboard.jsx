@@ -66,11 +66,13 @@ export default function Dashboard() {
     workCount: 0,
     workTotalTime: 0,
     workPercentage: 0,
+    workTaskPercentage: 0,
     workPercentageWithSleepingHours: 0,
     workPercentageIgnoreUnalotted: 0,
     lifeCount: 0,
     lifeTotalTime: 0,
     lifePercentage: 0,
+    lifeTaskPercentage: 0,
     lifePercentageWithSleepingHours: 0,
     lifePercentageIgnoreUnalotted: 0,
   });

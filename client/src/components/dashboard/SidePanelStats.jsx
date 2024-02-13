@@ -19,17 +19,21 @@ export default function SidePanelStats({ eventType }) {
     eventType,
     fetchedSettings?.ignoreUnalotted,
     fetchedSettings?.percentageBasis,
+    fetchedEventData?.viewStyle,
     fetchedEventData?.workPercentage,
+    fetchedEventData?.workTaskPercentage,
     fetchedEventData?.workPercentageIgnoreUnalotted,
     fetchedEventData?.workPercentageWithSleepingHours,
     fetchedEventData?.lifePercentage,
+    fetchedEventData?.lifeTaskPercentage,
     fetchedEventData?.lifePercentageIgnoreUnalotted,
     fetchedEventData?.lifePercentageWithSleepingHours
   );
 
   const displayText = findDisplayText(
     fetchedSettings?.ignoreUnalotted,
-    fetchedSettings?.percentageBasis
+    fetchedSettings?.percentageBasis,
+    fetchedSettings?.viewStyle
   );
 
   useEffect(() => {
