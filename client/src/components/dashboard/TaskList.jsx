@@ -8,15 +8,20 @@ import { useModal } from "../contextproviders/ModalProvider.jsx";
 
 import { UPDATE_EVENT } from "../../utils/mutations.js";
 
+import { Responsive, WidthProvider } from "react-grid-layout";
+const ResponsiveGridLayout = WidthProvider(Responsive);
 import LoadingSpinner from "../other/LoadingSpinner.jsx";
 import EventDetails from "../dashboard/EventDetails.jsx";
 
 import { formatTime, buildOrderedTaskList } from "../../utils/scheduleUtils.js";
 
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
+
 export default function TaskList({ refreshResponsiveGrid }) {
-  // TODO: Add a field to events called taskListOrder. This will be a number that will be used to sort the events in the task list.
-  // TODO: When an event is created, it will be assigned a taskListOrder number that is one higher than the highest taskListOrder number in the list.
-  // TODO: When events are reordered in the task list, the taskListOrder numbers will be updated to reflect the new order.
+  console.log("[TaskList.jsx] rendering...");
+
+  // TODO:
 
   const {
     events,
@@ -25,6 +30,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
     eventsRefetch,
     scheduleSpinnerStyle,
     fetchedSettings,
+    responsiveGridTimestampKey,
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -34,6 +40,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [currentLayout, setCurrentLayout] = useState([]);
   const [orderedTaskList, setOrderedTaskList] = useState([]);
 
   const buildTaskList = async (events) => {
@@ -95,6 +102,33 @@ export default function TaskList({ refreshResponsiveGrid }) {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const buildTaskLayout = () => {
+    console.log("[TaskList.jsx] in buildTaskLayout()");
+    const taskLayout = [];
+    for (let i = 0; i < orderedTaskList.length; i++) {
+      taskLayout.push({
+        i: orderedTaskList[i]._id,
+        x: 0,
+        y: i,
+        w: 1,
+        h: 1,
+      });
+    }
+    console.log("[TaskList.jsx] Task Layout:", taskLayout);
+    setCurrentLayout(taskLayout);
+    setIsLoading(false);
+  };
+
+  const handleTaskDragStop = async (
+    layout,
+    oldItem,
+    newItem,
+    placeholder,
+    e
+  ) => {
+    // TODO: Reorder the task list and update the taskListOrder field in the database
   };
 
   const handleCheckboxChange = async (event) => {
@@ -161,7 +195,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
     const initializeTaskList = () => {
       setIsLoading(true);
       buildTaskList(events);
-      setIsLoading(false);
+      buildTaskLayout();
     };
 
     initializeTaskList();
@@ -170,47 +204,87 @@ export default function TaskList({ refreshResponsiveGrid }) {
   return (
     <div className="task-list-container-jg">
       <div className="task-list-centered-jg">
-        {orderedTaskList.map((event) => {
-          return (
-            <div key={event._id} id={event._id} className="task-list-line-jg">
-              <label key={`checkbox-${event._id}`} className={`checkbox-jg`}>
-                <input
-                  type="checkbox"
-                  name={event._id}
-                  checked={event.completed || false}
-                  onChange={handleCheckboxChange}
-                  className="task-list-checkbox-jg"
-                />
-              </label>
-              <p
-                title={`${event.title} ${
-                  !event.isAllDay
-                    ? `(${formatTime(
-                        new Date(event.eventStart)
-                      )} - ${formatTime(new Date(event.eventEnd))})`
-                    : ""
-                } (${event.subtype})`}
-                id={event.completed ? "task-strikethrough-jg" : ""}
-                className={`task-name-jg task-name-${
-                  event.type
-                }-${event.priority.toLowerCase()}-jg ${
-                  event.completed ? "task-completed-jg" : ""
-                }`}
-                onClick={() => handleEventClick(event)}
-              >
-                {event.title}{" "}
-                {!event.isAllDay
-                  ? "(" +
-                    formatTime(new Date(event.eventStart)) +
-                    " - " +
-                    formatTime(new Date(event.eventEnd)) +
-                    ")"
-                  : ""}{" "}
-                ({event.subtype})
-              </p>
-            </div>
-          );
-        })}
+        {isLoading ? (
+          <LoadingSpinner
+            spinnerStyle={scheduleSpinnerStyle}
+            spinnerElWidthHeight="100px"
+          />
+        ) : (
+          <ResponsiveGridLayout
+            key={responsiveGridTimestampKey}
+            className="layout"
+            layouts={{
+              lg: currentLayout,
+              md: currentLayout,
+              sm: currentLayout,
+              xs: currentLayout,
+              xxs: currentLayout,
+            }}
+            breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
+            cols={{ lg: 1, md: 1, sm: 1, xs: 1, xxs: 1 }}
+            draggableCancel=".prevent-drag-jg"
+            draggableHandle=".drag-handle-jg"
+            isResizable={false}
+            rowHeight={40}
+            margin={[5, 10]}
+            onDragStop={handleTaskDragStop}
+            useCSSTransforms={false}
+          >
+            {orderedTaskList.map((event) => {
+              return (
+                <div key={event._id}>
+                  <div
+                    
+                    id={event._id}
+                    className="task-list-line-jg"
+                  >
+                    <span className="material-symbols-outlined drag-handle-jg">
+                      drag_indicator
+                    </span>
+                    <label
+                      key={`checkbox-${event._id}`}
+                      className={`checkbox-jg`}
+                    >
+                      <input
+                        type="checkbox"
+                        name={event._id}
+                        checked={event.completed || false}
+                        onChange={handleCheckboxChange}
+                        className="task-list-checkbox-jg"
+                      />
+                    </label>
+                    <p
+                      title={`${event.title} ${
+                        !event.isAllDay
+                          ? `(${formatTime(
+                              new Date(event.eventStart)
+                            )} - ${formatTime(new Date(event.eventEnd))})`
+                          : ""
+                      } (${event.subtype})`}
+                      id={event.completed ? "task-strikethrough-jg" : ""}
+                      className={`task-name-jg task-name-${
+                        event.type
+                      }-${event.priority.toLowerCase()}-jg ${
+                        event.completed ? "task-completed-jg" : ""
+                      }`}
+                      onClick={() => handleEventClick(event)}
+                    >
+                      {event.title}{" "}
+                      {!event.isAllDay
+                        ? "(" +
+                          formatTime(new Date(event.eventStart)) +
+                          " - " +
+                          formatTime(new Date(event.eventEnd)) +
+                          ")"
+                        : ""}{" "}
+                      ({event.subtype})
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
+          </ResponsiveGridLayout>
+        )}
       </div>
     </div>
   );

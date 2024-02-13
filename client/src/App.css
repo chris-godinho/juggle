@@ -2573,21 +2573,30 @@ input[type="checkbox"]:disabled {
 .task-list-container-jg {
   width: 100%;
   margin: 22.5vh 0 0 0;
-  display: flex;
-  justify-content: center;
 }
 
 .task-list-centered-jg {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
+  width: 60%;
+  margin: 0 auto;
 }
 
 .task-list-line-jg {
+  flex: 1;
   position: relative;
   margin-bottom: 1.5em;
   display: flex;
   align-items: center;
+}
+
+.drag-handle-jg {
+  cursor: grab;
+  margin-right: 0.3em;
+  color: var(--main-separator-color);
+  transition: color 0.2s ease-in-out;
+}
+
+.drag-handle-jg:hover {
+  color: var(--main-text-color);
 }
 
 .task-name-jg {

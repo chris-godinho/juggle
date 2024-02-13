@@ -305,7 +305,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
             >
               <p
                 onClick={() => handleEventClick(event)}
-                className="schedule-all-day-event-name-jg widget-prevent-drag-wf"
+                className="schedule-all-day-event-name-jg prevent-drag-jg"
               >
                 {event.title}
               </p>
@@ -336,7 +336,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
             breakpoints={{ lg: 1200, md: 996, sm: 768, xs: 480, xxs: 0 }}
             cols={{ lg: 6, md: 6, sm: 6, xs: 6, xxs: 6 }}
             compactType={null}
-            draggableCancel=".widget-prevent-drag-wf"
+            draggableCancel=".prevent-drag-jg"
             rowHeight={30}
             maxRows={48}
             containerPadding={[10, 5]}
@@ -368,7 +368,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
                   className={className}
                 >
                   <p
-                    className="schedule-event-name-jg widget-prevent-drag-wf"
+                    className="schedule-event-name-jg prevent-drag-jg"
                     onClick={() => handleEventClick(event)}
                   >
                     {formatTime(new Date(event.eventStart))} - {event.title}
