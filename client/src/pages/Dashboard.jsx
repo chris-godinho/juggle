@@ -192,6 +192,7 @@ export default function Dashboard() {
   }, [events, eventsLoading, fetchedSettings, selectedDate]);
 
   useEffect(() => {
+    console.log("[Dashboard.jsx] useEffect() - selectedDate has changed:", selectedDate);
     refreshResponsiveGrid("initial");
   }, [selectedDate]);
 

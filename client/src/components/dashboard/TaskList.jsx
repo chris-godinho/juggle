@@ -43,28 +43,118 @@ export default function TaskList({ refreshResponsiveGrid }) {
   const [currentLayout, setCurrentLayout] = useState([]);
   const [orderedTaskList, setOrderedTaskList] = useState([]);
 
+  const assignTaskListOrderNumbers = (eventList) => {
+    // Assign taskListOrder numbers to each event in the list
+
+    const eventListWithTaskListOrder = eventList
+      .filter((event) => typeof event.taskListOrder === "number")
+      .sort((a, b) => b.taskListOrder - a.taskListOrder);
+
+    let nextTaskListOrder =
+      eventListWithTaskListOrder.length > 0
+        ? eventListWithTaskListOrder[0].taskListOrder + 1
+        : 1;
+
+    // Some events might not have one
+    for (const event of eventList) {
+      if (typeof event.taskListOrder !== "number") {
+        event.taskListOrder = nextTaskListOrder++;
+      }
+    }
+
+    return eventList;
+  };
+
+  const buildAndUpdateOrderedTaskList = (eventListWithTaskOrderNumbers) => {
+    // Order the list of events by taskListOrder
+    console.log(
+      "[TaskList.jsx] in buildAndUpdateOrderedTaskList() - eventListWithTaskOrderNumbers:",
+      eventListWithTaskOrderNumbers
+    );
+    const reorderedTaskList = buildOrderedTaskList(
+      eventListWithTaskOrderNumbers
+    );
+    console.log(
+      "[TaskList.jsx] buildAndUpdateOrderedTaskList() - reorderedTaskList:",
+      reorderedTaskList
+    );
+    // Update the orderedTaskList state with the new list
+    setOrderedTaskList(reorderedTaskList);
+  };
+
+  const updateEventsInDatabase = async (eventListWithTaskOrderNumbers) => {
+    // This will update the taskListOrder in the database for each event
+    console.log(
+      "[TaskList.jsx] in updateEventsInDatabase() - eventListWithTaskOrderNumbers:",
+      eventListWithTaskOrderNumbers
+    );
+
+    for (let i = 0; i < eventListWithTaskOrderNumbers.length; i++) {
+      try {
+        const { data } = await updateEvent({
+          variables: {
+            eventId: eventListWithTaskOrderNumbers[i]._id,
+            title: eventListWithTaskOrderNumbers[i].title,
+            taskListOrder: eventListWithTaskOrderNumbers[i].taskListOrder,
+          },
+        });
+        // Handle success or log appropriately
+      } catch (error) {
+        console.error("[TaskList.jsx] Error updating event:", error);
+        // Handle error appropriately
+      }
+    }
+  };
+
+  const buildNewTaskLayout = (orderedTaskList) => {
+    console.log(
+      "[TaskList.jsx] in buildNewTaskLayout() - orderedTaskList:",
+      orderedTaskList
+    );
+    const taskLayout = [];
+    for (let i = 0; i < orderedTaskList.length; i++) {
+      taskLayout.push({
+        i: orderedTaskList[i]._id,
+        x: 0,
+        y: i,
+        w: 1,
+        h: 1,
+      });
+    }
+    setCurrentLayout(taskLayout);
+    setIsLoading(false);
+  };
+
+  const updateEventsTaskListOrder = async (updatedEvents) => {
+    console.log("[TaskList.jsx] in updateEventsTaskListOrder()");
+
+    for (let i = 0; i < updatedEvents.length; i++) {
+      try {
+        const { data } = await updateEvent({
+          variables: {
+            eventId: updatedEvents[i]._id,
+            title: updatedEvents[i].title,
+            taskListOrder: updatedEvents[i].taskListOrder,
+          },
+        });
+        // Handle success or log appropriately
+      } catch (error) {
+        console.error("[TaskList.jsx] Error updating event:", error);
+        // Handle error appropriately
+      }
+    }
+  };
+
   const buildTaskList = async (events) => {
     console.log("[TaskList.jsx] in buildTaskList()");
     try {
-      const orderedTaskList = buildOrderedTaskList(events);
-      console.log("[TaskList.jsx] Ordered Task List:", orderedTaskList);
-      setOrderedTaskList(orderedTaskList);
+      const reorderedTaskList = buildOrderedTaskList(events);
+      console.log("[TaskList.jsx] Reordered Task List:", reorderedTaskList);
+      setOrderedTaskList(reorderedTaskList);
 
       const updatedEvents = events.map((event) => {
-        console.log("[TaskList.jsx] buildTaskList() - event: ", event);
-
         const updatedEvent = orderedTaskList.find(
           (orderedEvent) => orderedEvent._id === event._id
-        );
-
-        console.log(
-          "[TaskList.jsx] buildTaskList() - event to update: ",
-          updatedEvent
-        );
-
-        console.log(
-          "[TaskList.jsx] buildTaskList() - orderedTaskList.indexOf(updatedEvent):",
-          orderedTaskList.indexOf(updatedEvent)
         );
 
         // Create a new object to avoid modifying the object in orderedTaskList
@@ -79,33 +169,21 @@ export default function TaskList({ refreshResponsiveGrid }) {
       });
 
       console.log(
-        "[TaskList.jsx] buildTaskList() - updatedEvents: ",
+        "[TaskList.jsx] updateEventsTaskListOrder() - updatedEvents: ",
         updatedEvents
       );
 
-      for (let i = 0; i < updatedEvents.length; i++) {
-        const { data } = await updateEvent({
-          variables: {
-            eventId: updatedEvents[i]._id,
-            title: updatedEvents[i].title,
-            taskListOrder: updatedEvents[i].taskListOrder,
-          },
-        });
+      updateEventsTaskListOrder(updatedEvents);
 
-        if (data) {
-          console.log(
-            "[TaskList.jsx] buildTaskList() - updatedEvents[i]: ",
-            updatedEvents[i]
-          );
-        }
-      }
+      refreshResponsiveGrid("initial");
     } catch (error) {
-      console.error(error);
+      console.error("[TaskList.jsx] Error building task list:", error);
     }
   };
 
   const buildTaskLayout = () => {
     console.log("[TaskList.jsx] in buildTaskLayout()");
+    console.log("[TaskList.jsx] orderedTaskList:", orderedTaskList);
     const taskLayout = [];
     for (let i = 0; i < orderedTaskList.length; i++) {
       taskLayout.push({
@@ -128,7 +206,28 @@ export default function TaskList({ refreshResponsiveGrid }) {
     placeholder,
     e
   ) => {
-    // TODO: Reorder the task list and update the taskListOrder field in the database
+    console.log("[TaskList.jsx] handleTaskDragStop() - layout:", layout);
+
+    const newEvents = events.map((event) => {
+      const updatedEvent = layout.find(
+        (layoutItem) => layoutItem.i === event._id
+      );
+      if (updatedEvent) {
+        return {
+          ...event,
+          taskListOrder: updatedEvent.y,
+        };
+      }
+      return event;
+    });
+
+    console.log("[TaskList.jsx] handleTaskDragStop() - newEvents:", newEvents);
+
+    const reorderedTaskList = buildOrderedTaskList(newEvents);
+    console.log("[TaskList.jsx] Reordered Task List:", reorderedTaskList);
+    setOrderedTaskList(reorderedTaskList);
+
+    updateEventsTaskListOrder(newEvents);
   };
 
   const handleCheckboxChange = async (event) => {
@@ -191,20 +290,30 @@ export default function TaskList({ refreshResponsiveGrid }) {
 
   // Build the task list
   useEffect(() => {
-    console.log("[TaskList.jsx] in useEffect() (Building task list)...");
+    console.log("[TaskList.jsx] in useEffect() (selectedDate has changed)...");
     const initializeTaskList = () => {
       setIsLoading(true);
       buildTaskList(events);
-      buildTaskLayout();
     };
 
     initializeTaskList();
-  }, [selectedDate]);
+  }, [selectedDate, events]);
+
+  useEffect(() => {
+    console.log("[TaskList.jsx] in useEffect() (Ordered task list changed)...");
+    console.log("[TaskList.jsx] orderedTaskList:", orderedTaskList);
+    buildTaskLayout();
+  }, [orderedTaskList]);
+
+  useEffect(() => {
+    console.log("[TaskList.jsx] in useEffect() (currentLayout changed)...");
+    console.log("[TaskList.jsx] currentLayout:", currentLayout);
+  }, [currentLayout]);
 
   return (
     <div className="task-list-container-jg">
       <div className="task-list-centered-jg">
-        {isLoading ? (
+        {isLoading && !currentLayout ? (
           <LoadingSpinner
             spinnerStyle={scheduleSpinnerStyle}
             spinnerElWidthHeight="100px"
@@ -233,11 +342,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
             {orderedTaskList.map((event) => {
               return (
                 <div key={event._id}>
-                  <div
-                    
-                    id={event._id}
-                    className="task-list-line-jg"
-                  >
+                  <div id={event._id} className="task-list-line-jg">
                     <span className="material-symbols-outlined drag-handle-jg">
                       drag_indicator
                     </span>

@@ -32,8 +32,6 @@ export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
 };
 
 export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
-  console.log("[eventUtils.jsx] in calculateEventStats()");
-
   // Initialize counters
   let workCount = 0;
   let workTotalTime = 0;
@@ -64,9 +62,6 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
 
   const workTaskPercentage = Math.round((workCount / eventCount) * 100);
   const lifeTaskPercentage = 100 - workTaskPercentage;
-
-  console.log("[eventUtils.jsx] workTaskPercentage:", workTaskPercentage);
-  console.log("[eventUtils.jsx] lifeTaskPercentage:", lifeTaskPercentage);
 
   // Convert total time from milliseconds to minutes
   workTotalTime /= 1000 * 60;
