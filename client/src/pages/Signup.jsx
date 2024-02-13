@@ -114,7 +114,7 @@ const Signup = () => {
       <div className="login-signup-jg">
         <div className="box-jg login-signup-box-jg signup-box-jg">
           <h4>Sign Up</h4>
-          <div className="login-signup-form-jg">
+          <div className="signup-form-jg">
             {data ? (
               <p>Sign up successful! Preparing your dashboard... </p>
             ) : (
@@ -132,7 +132,7 @@ const Signup = () => {
                     onChange={handleChange}
                   />
                   <input
-                    className="form-input login-signup-input-jg"
+                    className="form-input login-signup-input-jg signup-left-margin-input-jg"
                     placeholder="Your email"
                     name="email"
                     type="email"
@@ -150,7 +150,7 @@ const Signup = () => {
                     onChange={handleChange}
                   />
                   <input
-                    className="form-input login-signup-input-jg"
+                    className="form-input login-signup-input-jg signup-left-margin-input-jg"
                     placeholder="Your middle name"
                     name="middleName"
                     type="text"
@@ -158,7 +158,7 @@ const Signup = () => {
                     onChange={handleChange}
                   />
                   <input
-                    className="form-input login-signup-input-jg"
+                    className="form-input login-signup-input-jg signup-left-margin-input-jg"
                     placeholder="Your last name"
                     name="lastName"
                     type="text"

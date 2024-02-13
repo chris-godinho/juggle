@@ -68,7 +68,7 @@ const Login = (props) => {
       <div className="login-signup-jg">
         <div className="box-jg login-signup-box-jg">
           <h4>Login</h4>
-          <div className="login-signup-form-jg">
+          <div className="login-form-jg">
             {data ? (
               <p>Login successful! Preparing your dashboard... </p>
             ) : (
