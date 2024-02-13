@@ -146,6 +146,7 @@ export const QUERY_EVENTS_BY_USER = gql`
       isAllDay
       reminderTime
       completed
+      taskListOrder
     }
   }
 `;
@@ -168,6 +169,7 @@ export const QUERY_EVENTS_BY_DATE = gql`
       isAllDay
       reminderTime
       completed
+      taskListOrder
     }
   }
 `;
@@ -190,6 +192,7 @@ export const QUERY_SINGLE_EVENT = gql`
       isAllDay
       reminderTime
       completed
+      taskListOrder
     }
   }
 `;

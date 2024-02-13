@@ -8,11 +8,10 @@ import { useModal } from "../contextproviders/ModalProvider.jsx";
 
 import { UPDATE_EVENT } from "../../utils/mutations.js";
 
-import { Responsive, WidthProvider } from "react-grid-layout";
 import LoadingSpinner from "../other/LoadingSpinner.jsx";
 import EventDetails from "../dashboard/EventDetails.jsx";
 
-import { formatTime } from "../../utils/scheduleUtils.js";
+import { formatTime, buildOrderedTaskList } from "../../utils/scheduleUtils.js";
 
 export default function TaskList({ refreshResponsiveGrid }) {
   // TODO: Add a field to events called taskListOrder. This will be a number that will be used to sort the events in the task list.
@@ -26,7 +25,6 @@ export default function TaskList({ refreshResponsiveGrid }) {
     eventsRefetch,
     scheduleSpinnerStyle,
     fetchedSettings,
-    responsiveGridTimestampKey,
   } = useDataContext();
 
   // Initialize the modal context for displaying event details
@@ -36,8 +34,68 @@ export default function TaskList({ refreshResponsiveGrid }) {
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
+  const [orderedTaskList, setOrderedTaskList] = useState([]);
 
-  const buildTaskList = (events) => {};
+  const buildTaskList = async (events) => {
+    console.log("[TaskList.jsx] in buildTaskList()");
+    try {
+      const orderedTaskList = buildOrderedTaskList(events);
+      console.log("[TaskList.jsx] Ordered Task List:", orderedTaskList);
+      setOrderedTaskList(orderedTaskList);
+
+      const updatedEvents = events.map((event) => {
+        console.log("[TaskList.jsx] buildTaskList() - event: ", event);
+
+        const updatedEvent = orderedTaskList.find(
+          (orderedEvent) => orderedEvent._id === event._id
+        );
+
+        console.log(
+          "[TaskList.jsx] buildTaskList() - event to update: ",
+          updatedEvent
+        );
+
+        console.log(
+          "[TaskList.jsx] buildTaskList() - orderedTaskList.indexOf(updatedEvent):",
+          orderedTaskList.indexOf(updatedEvent)
+        );
+
+        // Create a new object to avoid modifying the object in orderedTaskList
+        if (updatedEvent) {
+          return {
+            ...updatedEvent,
+            taskListOrder: orderedTaskList.indexOf(updatedEvent),
+          };
+        }
+
+        return event; // Return the original event if not found in orderedTaskList
+      });
+
+      console.log(
+        "[TaskList.jsx] buildTaskList() - updatedEvents: ",
+        updatedEvents
+      );
+
+      for (let i = 0; i < updatedEvents.length; i++) {
+        const { data } = await updateEvent({
+          variables: {
+            eventId: updatedEvents[i]._id,
+            title: updatedEvents[i].title,
+            taskListOrder: updatedEvents[i].taskListOrder,
+          },
+        });
+
+        if (data) {
+          console.log(
+            "[TaskList.jsx] buildTaskList() - updatedEvents[i]: ",
+            updatedEvents[i]
+          );
+        }
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   const handleCheckboxChange = async (event) => {
     try {
@@ -107,12 +165,12 @@ export default function TaskList({ refreshResponsiveGrid }) {
     };
 
     initializeTaskList();
-  }, [events, selectedDate]);
+  }, [selectedDate]);
 
   return (
     <div className="task-list-container-jg">
       <div className="task-list-centered-jg">
-        {events.map((event) => {
+        {orderedTaskList.map((event) => {
           return (
             <div key={event._id} id={event._id} className="task-list-line-jg">
               <label key={`checkbox-${event._id}`} className={`checkbox-jg`}>
@@ -142,9 +200,11 @@ export default function TaskList({ refreshResponsiveGrid }) {
               >
                 {event.title}{" "}
                 {!event.isAllDay
-                  ? formatTime(new Date(event.eventStart)) +
+                  ? "(" +
+                    formatTime(new Date(event.eventStart)) +
                     " - " +
-                    formatTime(new Date(event.eventEnd))
+                    formatTime(new Date(event.eventEnd)) +
+                    ")"
                   : ""}{" "}
                 ({event.subtype})
               </p>

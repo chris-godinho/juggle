@@ -304,6 +304,7 @@ const resolvers = {
         isAllDay,
         reminderTime,
         completed,
+        taskListOrder,
       }
     ) => {
       console.log(
@@ -334,7 +335,9 @@ const resolvers = {
         "reminderTime =",
         reminderTime,
         "completed =",
-        completed
+        completed,
+        "taskListOrder =",
+        taskListOrder
       );
 
       const event = await Event.findOneAndUpdate(
@@ -353,6 +356,7 @@ const resolvers = {
           isAllDay,
           reminderTime,
           completed,
+          taskListOrder,
         },
         { new: true }
       );

@@ -178,9 +178,6 @@ export const findDisplayPercentage = (
   lifePercentageIgnoreUnalotted,
   lifePercentageWithSleepingHours
 ) => {
-  console.log("[eventUtils.jsx] in findDisplayPercentage()");
-  console.log("[eventUtils.jsx] workTaskPercentage:", workTaskPercentage);
-  console.log("[eventUtils.jsx] lifeTaskPercentage:", lifeTaskPercentage);
 
   let displayPercentage;
 

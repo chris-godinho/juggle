@@ -117,7 +117,6 @@ const findEventX = (event, eventsInLine, receivedLayout) => {
 };
 
 export const adjustOverlappingEvents = (receivedLayout, events) => {
-
   // Sort by "y" in ascending order, then by "h" in descending order
   receivedLayout.sort((a, b) => {
     // Compare "y" values
@@ -150,7 +149,7 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
     layoutBreakdown.push(lineMatches);
   }
 
- for (
+  for (
     let receivedLayoutIndex = 0;
     receivedLayoutIndex < receivedLayout.length;
     receivedLayoutIndex++
@@ -377,4 +376,26 @@ export const formatTime = (dateObject) => {
     hour12: true,
   });
   return result;
+};
+
+export const buildOrderedTaskList = (events) => {
+  console.log("[scheduleUtils.js] in buildOrderedTaskList()");
+  console.log("[scheduleUtils.js] events:", events);
+
+  const orderedTaskList = [];
+
+  // Order all events by taskListOrder. If taskListOrder is not set, add it to the end of the list.
+  const copiedEvents = [...events]; // Create a shallow copy
+  copiedEvents.sort((a, b) => {
+    const orderA = a.taskListOrder || Number.MAX_SAFE_INTEGER;
+    const orderB = b.taskListOrder || Number.MAX_SAFE_INTEGER;
+    return orderA - orderB;
+  });
+
+  // Add sorted events to orderedTaskList
+  orderedTaskList.push(...copiedEvents);
+
+  console.log("[scheduleUtils.js] orderedTaskList:", orderedTaskList);
+
+  return orderedTaskList;
 };

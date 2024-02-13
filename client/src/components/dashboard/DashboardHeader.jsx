@@ -49,10 +49,13 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
       eventType,
       fetchedSettings?.ignoreUnalotted,
       fetchedSettings?.percentageBasis,
+      fetchedSettings?.viewStyle,
       fetchedEventData?.workPercentage,
+      fetchedEventData?.workTaskPercentage,
       fetchedEventData?.workPercentageIgnoreUnalotted,
       fetchedEventData?.workPercentageWithSleepingHours,
       fetchedEventData?.lifePercentage,
+      fetchedEventData?.lifeTaskPercentage,
       fetchedEventData?.lifePercentageIgnoreUnalotted,
       fetchedEventData?.lifePercentageWithSleepingHours
     )

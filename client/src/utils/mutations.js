@@ -261,6 +261,7 @@ export const UPDATE_EVENT = gql`
     $isAllDay: Boolean
     $reminderTime: DateTime
     $completed: Boolean
+    $taskListOrder: Int
   ) {
     updateEvent(
       eventId: $eventId
@@ -277,6 +278,7 @@ export const UPDATE_EVENT = gql`
       isAllDay: $isAllDay
       reminderTime: $reminderTime
       completed: $completed
+      taskListOrder: $taskListOrder
     ) {
       _id
       user
@@ -293,6 +295,7 @@ export const UPDATE_EVENT = gql`
       isAllDay
       reminderTime
       completed
+      taskListOrder
     }
   }
 `;
@@ -315,6 +318,7 @@ export const REMOVE_EVENT = gql`
       isAllDay
       reminderTime
       completed
+      taskListOrder
     }
   }
 `;

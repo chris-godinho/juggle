@@ -212,6 +212,7 @@ const typeDefs = `
     isAllDay: Boolean
     reminderTime: DateTime
     completed: Boolean
+    taskListOrder: Int
   }
 
   type Auth {
@@ -242,7 +243,7 @@ const typeDefs = `
     deleteUser(username: String!): DeleteUserResponse
     login(username: String!, password: String!): Auth
     addEvent(user: ID!, title: String!, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, isAllDay: Boolean, reminderTime: DateTime): Event
-    updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, isAllDay: Boolean, reminderTime: DateTime, completed: Boolean): Event
+    updateEvent(eventId: ID!, title: String, type: String, subtype: String, details: String, eventStart: DateTime, eventEnd: DateTime, location: String, links: [String], files: [String], priority: String, isAllDay: Boolean, reminderTime: DateTime, completed: Boolean, taskListOrder: Int): Event
     removeEvent(eventId: ID!): Event
     deleteFile(username: String!, fileName: String!): Boolean
   }

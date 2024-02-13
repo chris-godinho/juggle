@@ -52,6 +52,10 @@ const eventSchema = new Schema({
     type: Boolean,
     default: false,
   },
+  taskListOrder: {
+    type: Number,
+    default: null,
+  },
 });
 
 const Event = model("Event", eventSchema);
