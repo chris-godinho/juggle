@@ -378,14 +378,14 @@ export const formatTime = (dateObject) => {
   return result;
 };
 
-export const buildOrderedTaskList = (events) => {
+export const buildOrderedTaskList = (eventListWithTaskOrderNumbers) => {
   console.log("[scheduleUtils.js] in buildOrderedTaskList()");
-  console.log("[scheduleUtils.js] events:", events);
+  console.log("[scheduleUtils.js] eventListWithTaskOrderNumbers:", eventListWithTaskOrderNumbers);
 
   const orderedTaskList = [];
 
   // Order all events by taskListOrder. If taskListOrder is not set, add it to the end of the list.
-  const copiedEvents = [...events]; // Create a shallow copy
+  const copiedEvents = [...eventListWithTaskOrderNumbers]; // Create a shallow copy
   copiedEvents.sort((a, b) => {
     const orderA = a.taskListOrder !== undefined ? a.taskListOrder : Number.MAX_SAFE_INTEGER;
     const orderB = b.taskListOrder !== undefined ? b.taskListOrder : Number.MAX_SAFE_INTEGER;
