@@ -8,6 +8,7 @@ import { useUserSettings } from "../components/contextproviders/UserSettingsProv
 import { useNotification } from "../components/contextproviders/NotificationProvider.jsx";
 
 import Schedule from "../components/dashboard/Schedule";
+import TaskList from "../components/dashboard/TaskList.jsx";
 import LoadingSpinner from "../components/other/LoadingSpinner.jsx";
 import DashboardHeader from "../components/dashboard/DashboardHeader.jsx";
 import DashboardSidePanel from "../components/dashboard/DashboardSidePanel.jsx";
@@ -33,7 +34,9 @@ export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
   const [tomorrowDate, setTomorrowDate] = useState(midnightTomorrowLocalDate);
 
-  const [scheduleComponentRandomKey, setScheduleComponentRandomKey] = useState(Math.random());
+  const [scheduleComponentRandomKey, setScheduleComponentRandomKey] = useState(
+    Math.random()
+  );
 
   // Get user profile
   const userProfile = AuthService.getProfile();
@@ -78,7 +81,9 @@ export default function Dashboard() {
 
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 620);
 
-  const [responsiveGridTimestampKey, setResponsiveGridTimestampKey] = useState(Math.random());
+  const [responsiveGridTimestampKey, setResponsiveGridTimestampKey] = useState(
+    Math.random()
+  );
 
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
@@ -92,7 +97,11 @@ export default function Dashboard() {
     data: eventsData,
     refetch: eventsRefetch,
   } = useQuery(QUERY_EVENTS_BY_DATE, {
-    variables: { user: fetchedSettings.userId, selectedDateStart: selectedDate, selectedDateEnd: tomorrowDate },
+    variables: {
+      user: fetchedSettings.userId,
+      selectedDateStart: selectedDate,
+      selectedDateEnd: tomorrowDate,
+    },
   });
 
   const events = eventsData?.eventsByDate || [];
@@ -101,7 +110,7 @@ export default function Dashboard() {
     console.log("refreshResponsiveGrid() called");
     setResponsiveGridTimestampKey(Math.random());
     if (refreshType === "change") {
-       setScheduleComponentRandomKey(Math.random());
+      setScheduleComponentRandomKey(Math.random());
     }
     eventsRefetch();
   };
@@ -144,8 +153,8 @@ export default function Dashboard() {
         eventSubtypes: userSettings?.eventSubtypes || {},
         workPreferredActivities: userSettings?.workPreferredActivities || {},
         lifePreferredActivities: userSettings?.lifePreferredActivities || {},
-        profilePictureUrl:
-          userSettings?.profilePictureUrl || null,
+        profilePictureUrl: userSettings?.profilePictureUrl || null,
+        viewStyle: userSettings?.layoutSettings?.viewStyle || "calendar",
       });
       const leftSidebar =
         userSettings?.layoutSettings?.dashboardLayout === "two-sidebars" ||
@@ -209,7 +218,12 @@ export default function Dashboard() {
       <DashboardHeader refreshResponsiveGrid={refreshResponsiveGrid} />
       <main className="main-jg">
         <div className="dashboard-grid-jg">
-          {hasLeftSidebar && <DashboardSidePanel sidebarToRender="left" refreshResponsiveGrid={refreshResponsiveGrid} />}
+          {hasLeftSidebar && (
+            <DashboardSidePanel
+              sidebarToRender="left"
+              refreshResponsiveGrid={refreshResponsiveGrid}
+            />
+          )}
 
           <div
             className={`dashboard-main-panel-jg ${
@@ -222,12 +236,22 @@ export default function Dashboard() {
                   spinnerStyle={scheduleSpinnerStyle}
                   spinnerElWidthHeight="100px"
                 />
+              ) : fetchedSettings?.viewStyle === "calendar" ? (
+                <Schedule
+                  key={scheduleComponentRandomKey}
+                  refreshResponsiveGrid={refreshResponsiveGrid}
+                />
               ) : (
-                <Schedule key={scheduleComponentRandomKey} refreshResponsiveGrid={refreshResponsiveGrid} />
+                <TaskList refreshResponsiveGrid={refreshResponsiveGrid} />
               )}
             </div>
           </div>
-          {hasRightSidebar && <DashboardSidePanel sidebarToRender="right" refreshResponsiveGrid={refreshResponsiveGrid} />}
+          {hasRightSidebar && (
+            <DashboardSidePanel
+              sidebarToRender="right"
+              refreshResponsiveGrid={refreshResponsiveGrid}
+            />
+          )}
         </div>
       </main>
       <NotificationManager />

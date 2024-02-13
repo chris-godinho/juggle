@@ -279,10 +279,11 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
         </div>
         {fetchedSettings?.showStats &&
           !fetchedSettings?.ignoreUnalotted &&
-          !isMobileView && (
+          !isMobileView &&
+          fetchedSettings?.viewStyle === "calendar" && (
             <div className="unalotted-percentage-jg">
               <p>
-                Unalotted Time:{" "}
+                Unallotted Time:{" "}
                 {fetchedSettings?.percentageBasis === "waking"
                   ? unalottedTimePercentage
                   : unalottedTimePercentageWithSleepingHours}

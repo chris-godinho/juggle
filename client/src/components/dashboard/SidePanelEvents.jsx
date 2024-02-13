@@ -4,9 +4,8 @@ import { useDataContext } from "../contextproviders/DataContext";
 
 import { calculateSingleEventPercentage } from "../../utils/eventUtils.js";
 
-export default function SidePanelEvents({ eventType,  sidebarToRender }) {
-  const { events, fetchedSettings, fetchedEventData } =
-    useDataContext();
+export default function SidePanelEvents({ eventType, sidebarToRender }) {
+  const { events, fetchedSettings, fetchedEventData } = useDataContext();
 
   const formatEventStartTime = (eventStart) => {
     const eventDateObject = new Date(eventStart);
@@ -28,6 +27,7 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
         formattedEvent.eventId = event._id;
         formattedEvent.startTime = formatEventStartTime(event.eventStart);
         formattedEvent.title = event.title;
+        formattedEvent.isAllDay = event.isAllDay;
         if (fetchedSettings?.showStats) {
           const eventPercentage = calculateSingleEventPercentage(
             event,
@@ -96,17 +96,20 @@ export default function SidePanelEvents({ eventType,  sidebarToRender }) {
                     }`}
                   >
                     <p className="side-panel-event-time-jg">
-                      {formattedEvent.startTime}
+                      {formattedEvent.isAllDay
+                        ? "All Day"
+                        : formattedEvent.startTime}
                       {":"}
                     </p>
                     <p className="side-panel-event-title-jg">
                       {formattedEvent.title}
                     </p>
-                    {fetchedSettings?.showStats && (
-                      <p className="side-panel-event-percentage-jg">
-                        {formattedEvent.percentage}
-                      </p>
-                    )}
+                    {fetchedSettings?.showStats &&
+                      fetchedSettings?.viewStyle === "calendar" && (
+                        <p className="side-panel-event-percentage-jg">
+                          {formattedEvent.percentage}
+                        </p>
+                      )}
                   </a>
                 </div>
               );

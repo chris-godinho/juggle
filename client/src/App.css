@@ -396,7 +396,8 @@
 }
 
 /* Main container rules */
-*, html {
+*,
+html {
   scroll-behavior: smooth !important;
   scroll-padding-top: 20vh !important;
 }
@@ -2145,7 +2146,7 @@ input[type="checkbox"]:disabled {
   flex: 1;
   color: transparent;
   border: 2px dashed var(--main-separator-color);
-  border-radius: 1em;  
+  border-radius: 1em;
   transition: color 0.2s ease-in-out;
 }
 
@@ -2492,10 +2493,7 @@ input[type="checkbox"]:disabled {
 
 .schedule-event-box-open-jg {
   background-color: var(--main-background-color-accent);
-  box-shadow: inset 3px 0 0,
-  inset -3px 0 0,
-  inset 0 3px 0,
-  inset 0 -3px 0;
+  box-shadow: inset 3px 0 0, inset -3px 0 0, inset 0 3px 0, inset 0 -3px 0;
 }
 
 .schedule-event-normal-box-work-open-jg {
@@ -2569,6 +2567,94 @@ input[type="checkbox"]:disabled {
   opacity: 0.8 !important;
   border-radius: 1em !important;
   border: 1px dashed var(--main-separator-color) !important;
+}
+
+/* Task List page rules */
+.task-list-container-jg {
+  width: 100%;
+  margin: 22.5vh 0 0 0;
+  display: flex;
+  justify-content: center;
+}
+
+.task-list-centered-jg {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.task-list-line-jg {
+  position: relative;
+  margin-bottom: 1.5em;
+  display: flex;
+  align-items: center;
+}
+
+.task-name-jg {
+  cursor: pointer;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: 0.6em;
+}
+
+/* Credit: https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline */
+.task-name-jg::after {
+  top: 50%;
+  left: 9.5%;
+  position: absolute;
+  content: "";
+  width: 0px;
+  height: 0.15em;
+  display: block;
+  background: var(--main-text-color);
+  border-radius: 5px;
+  transition: 300ms;
+}
+
+#task-strikethrough-jg::after {
+  width: 92.5%;
+}
+
+.task-name-work-high-jg {
+  color: var(--work-event-color-light);
+}
+
+.task-name-life-high-jg {
+  color: var(--life-event-color-light);
+}
+
+.task-name-work-low-jg {
+  color: var(--work-event-color-dark);
+}
+
+.task-name-life-low-jg {
+  color: var(--life-event-color-dark);
+}
+
+.task-name-work-normal-jg {
+  color: var(--work-event-color);
+}
+
+.task-name-life-normal-jg {
+  color: var(--life-event-color);
+}
+
+.task-name-unspecified-high-jg {
+  color: var(--main-text-color);
+  filter: brightness(1.2);
+}
+
+.task-name-unspecified-low-jg {
+  color: var(--main-text-color);
+  filter: brightness(0.8);
+}
+
+.task-name-unspecified-normal-jg {
+  color: var(--main-text-color);
+}
+
+.task-completed-jg {
+  opacity: 0.3;
 }
 
 /* Event details page rules */
@@ -3530,7 +3616,7 @@ path[class="firework-stroke-color-1-jg"] {
     margin-left: 25%;
     margin-right: 25%;
   }
-  
+
   .unalotted-percentage-jg {
     font-size: 0.8em;
   }

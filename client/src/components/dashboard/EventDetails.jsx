@@ -86,13 +86,6 @@ export default function EventDetails({
 
   const [eventScreen, setEventScreen] = useState("EventDetails");
 
-  console.log(
-    "[EventDetails.jsx] eventCompleted:",
-    eventCompleted,
-    "typeof eventCompleted:",
-    typeof eventCompleted
-  );
-
   const [formData, setFormData] = useState({
     title: eventTitle || "",
     type: eventType || "",
