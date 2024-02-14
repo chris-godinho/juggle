@@ -1,4 +1,5 @@
 // SidePanelStats.jsx
+// Displays percentage of time spent on work or life events
 
 import { useEffect, useRef } from "react";
 
@@ -10,11 +11,14 @@ import {
 } from "../../utils/eventUtils.js";
 
 export default function SidePanelStats({ eventType }) {
+
+  // Create a reference to the percentage display element for count up animation
   const countUpRef = useRef(null);
 
   const { fetchedSettings, fetchedEventData, isOneBarLayout } =
     useDataContext();
   
+  // Find the display percentage and text based on the settings and event type
   const displayPercentage = findDisplayPercentage(
     eventType,
     fetchedSettings?.ignoreUnalotted,
@@ -30,19 +34,22 @@ export default function SidePanelStats({ eventType }) {
     fetchedEventData?.lifePercentageWithSleepingHours
   );
 
+  // Find the display text based on user's stat settings
   const displayText = findDisplayText(
     fetchedSettings?.ignoreUnalotted,
     fetchedSettings?.percentageBasis,
     fetchedSettings?.viewStyle
   );
 
+  // Set the percentage value to the count up element and animate it
   useEffect(() => {
-    // Set the --num variable to the target number on the referenced element
     if (countUpRef.current) {
+      // Set time for the count up animation based on the display percentage
       countUpRef.current.style.setProperty(
         "--display-percentage-time",
         `${displayPercentage * 25}ms`
       );
+      // Set the target number for the count up animation
       countUpRef.current.style.setProperty("--num", displayPercentage);
     }
   }, [displayPercentage]);

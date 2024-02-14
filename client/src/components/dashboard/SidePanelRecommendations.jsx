@@ -1,4 +1,5 @@
 // SidePanelRecommendations.jsx
+// Displays personalized recommendations based on user's settings and event data
 
 import { useState, useEffect } from "react";
 
@@ -6,6 +7,7 @@ import { useDataContext } from "../contextproviders/DataContext";
 
 import { findRecommendations } from "../../utils/eventUtils.js";
 
+// Import preferred activities for work and life
 import {
   workGoalActivities,
   lifeGoalActivities,
@@ -20,8 +22,10 @@ export default function SidePanelRecommendations({ eventType, sidebarToRender })
     isOneBarLayout,
   } = useDataContext();
 
+  // State to store the sorted recommendation list
   const [recommendationList, setRecommendationList] = useState([]);
 
+  // Pick the right set of recommended activities based on user's settings and event type
   useEffect(() => {
     if (
       !isLoadingSettings &&
@@ -52,6 +56,8 @@ export default function SidePanelRecommendations({ eventType, sidebarToRender })
         fetchedEventData?.workPercentageIgnoreUnalotted,
         fetchedEventData?.lifePercentageIgnoreUnalotted
       );
+
+      // Set the final recommendation list
       setRecommendationList(resultList);
     }
   }, [

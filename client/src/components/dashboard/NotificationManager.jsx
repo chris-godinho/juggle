@@ -1,4 +1,5 @@
 // NotificationManager.jsx
+// Sets up and manages event notifications
 
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
@@ -15,6 +16,7 @@ const NotificationManager = () => {
 
   const { fetchedSettings } = useDataContext();
 
+  // Find all events for the current user
   const {
     loading: notificationLoading,
     data: notificationData,
@@ -24,6 +26,7 @@ const NotificationManager = () => {
     variables: { user: fetchedSettings.userId },
   });
 
+  // When the notification data is loaded, set the events and reset the event notifications
   useEffect(() => {
     if (!notificationLoading && notificationData) {
       setEvents(notificationData?.eventsByUser || []);
@@ -46,6 +49,7 @@ const NotificationManager = () => {
     // Example: clearTimeout(timeoutId);
   };
 
+  // Schedule notifications for events with reminder times
   const scheduleEventNotifications = (events) => {
     events.forEach((event) => {
       if (event.reminderTime !== undefined) {
@@ -55,6 +59,7 @@ const NotificationManager = () => {
         const eventStart = new Date(event.eventStart);
         const timeUntilEvent = eventStart - now;
 
+        // Format string for notification content
         const eventHours = eventStart.getHours();
         const eventMinutes = eventStart.getMinutes();
         let formattedMinutes = (eventMinutes < 10) ? '0' + eventMinutes : '' + eventMinutes;
@@ -68,7 +73,7 @@ const NotificationManager = () => {
         const eventReminderTime = new Date(event.reminderTime);
         const timeUntilReminder = eventReminderTime - now;
 
-        // TODO: Add timeUntilReminder > 0 to the condition below when debugged
+        // Set timer to display the notification
         if (timeUntilEvent > 0 && timeUntilReminder > 0) {
           setTimeout(() => {
             // Call a function to display the notification

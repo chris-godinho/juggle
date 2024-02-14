@@ -1,4 +1,5 @@
 // NewEvent.jsx
+// Displays the new event modal window
 
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
@@ -14,8 +15,8 @@ import { ADD_EVENT } from "../../utils/mutations";
 import { validateEventForm } from "../../utils/eventUtils.js";
 
 const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) => {
-  console.log("[NewEvent.jsx] Component is rendering");
 
+  // Set up context for notifications for error messages
   const { openNotification } = useNotification();
 
   const [formData, setFormData] = useState({

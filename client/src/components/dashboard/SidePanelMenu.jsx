@@ -1,4 +1,5 @@
 // SidePanelMenu.jsx
+// Displays the user menu in the side panel for mobile and no-stats setting
 
 import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
@@ -14,12 +15,13 @@ export default function SidePanelMenu({ refreshResponsiveGrid }) {
   const { fetchedSettings, eventsRefetch } = useDataContext();
 
   const logout = (event) => {
-    // Log user out and return them to welcome page
+    // Log user out and return them to home page
     event.preventDefault();
     Auth.logout();
     window.location.href = "/";
   };
 
+  // Open modal based on the menu option clicked
   const openMenuModal = (menuOption) => {
     if (menuOption === "NewEvent") {
       openModal(
@@ -42,6 +44,7 @@ export default function SidePanelMenu({ refreshResponsiveGrid }) {
     }
   };
 
+  // Close modal and refetch events
   const handleNewEventModalClose = () => {
     eventsRefetch();
   };

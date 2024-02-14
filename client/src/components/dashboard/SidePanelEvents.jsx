@@ -1,4 +1,5 @@
 // SidePanelEvents.jsx
+// Displays a list of events in the side panel based on the event type (or all events in no-stats setting)
 
 import { useDataContext } from "../contextproviders/DataContext";
 
@@ -7,6 +8,7 @@ import { calculateSingleEventPercentage } from "../../utils/eventUtils.js";
 export default function SidePanelEvents({ eventType, sidebarToRender }) {
   const { events, fetchedSettings, fetchedEventData } = useDataContext();
 
+  // Format event start time for display
   const formatEventStartTime = (eventStart) => {
     const eventDateObject = new Date(eventStart);
     const eventStartTime = eventDateObject.toLocaleString("en-US", {
@@ -17,8 +19,10 @@ export default function SidePanelEvents({ eventType, sidebarToRender }) {
     return eventStartTime;
   };
 
+  // Compile the list of events based on the event type
   const compileEventList = (events, eventType) => {
     const compiledList = events.map((event, index) => {
+      // If the event type matches the current event (or in no-stats setting), format the event string
       if (
         eventType.toLowerCase() === event.type.toLowerCase() ||
         !fetchedSettings?.showStats
@@ -41,16 +45,17 @@ export default function SidePanelEvents({ eventType, sidebarToRender }) {
         }
         return formattedEvent;
       }
-      // If the condition is not satisfied, return null or undefined
+      // If the condition is not satisfied, return null
       return null;
     });
 
-    // Filter out undefined/null values from the array
+    // Filter out null values from the array
     const filteredList = compiledList.filter((event) => event !== null);
 
     return filteredList;
   };
 
+  // Compile the list of events based on the event type
   const compiledEventList = compileEventList(events, eventType);
 
   return (

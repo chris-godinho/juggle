@@ -1,4 +1,5 @@
 // Schedule.jsx
+// Main dashboard panel for calendar view
 
 import React, { useState, useEffect, useRef } from "react";
 import { useMutation } from "@apollo/client";
@@ -20,12 +21,13 @@ import {
   calculateSleepingHoursPixelHeights,
 } from "../../utils/scheduleUtils.js";
 
+// Import react-grid-layout styles
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
 const Schedule = ({ refreshResponsiveGrid }) => {
-  console.log("[Schedule.jsx] rendering...");
 
+  // Initialize the schedule grid container reference for setting background
   const scheduleGridContainer = useRef(null);
 
   const {
@@ -46,7 +48,6 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
-
   const [currentLayout, setCurrentLayout] = useState([]);
   const [eventBoxProps, setEventBoxProps] = useState([]);
   const [allDayEvents, setAllDayEvents] = useState([]);
@@ -59,7 +60,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
   const tomorrowDate = new Date(displayDate);
   tomorrowDate.setDate(displayDate.getDate() + 1);
 
-  // Function to build the initial layout
+  // Build the initial layout
   const buildLayout = (events) => {
     const initialLayout = [];
     setAllDayEvents([]);
@@ -80,7 +81,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
           y: adjustedBoxPosition,
         });
 
-        // Add the event to the event box props for future reference
+        // Add the event to the event box props for styling
         setEventBoxProps((prevEventBoxProps) => [
           ...prevEventBoxProps,
           { event, className },
@@ -90,10 +91,12 @@ const Schedule = ({ refreshResponsiveGrid }) => {
 
     // Adjust overlapping events before setting the layout
     setCurrentLayout(adjustOverlappingEvents(initialLayout, events));
+
+    // Refresh the responsive grid
     refreshResponsiveGrid("initial");
   };
 
-  // Function to handle clicking on an event (opens the event details modal)
+  // Handle clicking on an event (opens event details modal)
   const handleEventClick = (event) => {
     openModal(
       <EventDetails
@@ -119,24 +122,14 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     );
   };
 
-  // Function to handle changes to the event layout
+  // Handle changes to the event layout
   const handleEventChange = async (layout) => {
-    console.log("[Schedule.jsx] in handleEventChange()");
     // Iterate through each moved event
     for (const movedEvent of layout) {
-      console.log(
-        "[Schedule.jsx] handleEventChange() - movedEvent:",
-        movedEvent
-      );
       const eventId = movedEvent.i;
 
       // Find the corresponding event in the events array
       const eventToUpdate = events.find((event) => event._id === eventId);
-
-      console.log(
-        "[Schedule.jsx] handleEventChange() - eventToUpdate:",
-        eventToUpdate
-      );
 
       if (eventToUpdate) {
         // Calculate new start time and duration based on the moved layout
@@ -177,49 +170,45 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     }
   };
 
+  // Store all-day event ID when dragging starts
   const handleAllDayEventDragStart = (e) => {
-    console.log("[Schedule.jsx] in handleAllDayEventDragStart()");
-    console.log(
-      "[Schedule.jsx] e.target.dataset.eventId:",
-      e.target.dataset.eventId
-    );
     setMovedAllDayEventId(e.target.dataset.eventId);
   };
 
-  const handleAllDayEventDrop = (layout, layoutItem, _event) => {
-    console.log("[Schedule.jsx] in handleAllDayEventDrop()");
-    console.log("[Schedule.jsx] layout:", layout);
-    console.log("[Schedule.jsx] layoutItem:", layoutItem);
+  const handleAllDayEventDrop = (layout, _event) => {
+
+    // Find the layout item that was dropped
     for (const key in layout) {
       if (layout[key].i === "__dropping-elem__") {
         layout[key].i = movedAllDayEventId;
         break;
       }
     }
+
+    // Clear the moved all-day event ID
     setMovedAllDayEventId(null);
+
+    // Handle the event change
     handleDragResizeStop(layout);
   };
 
-  // Function to handle dragging an event
+  // Handle dragging/resizing an event
   const handleDragResizeStop = (layout) => {
-    console.log("[Schedule.jsx] in handleDragResizeStop()");
 
     // Adjust overlapping events before handling the change
     const adjustedLayout = adjustOverlappingEvents(layout, events);
 
-    console.log(
-      "[Schedule.jsx] handleDragResizeStop() - adjustedLayout:",
-      adjustedLayout
-    );
-
     // Update the database with the new layout
     handleEventChange(adjustedLayout);
 
-    // Update the layout variables
+    // Set the current layout to the adjusted layout
     setCurrentLayout(adjustedLayout);
+
+    // Refresh the responsive grid
     refreshResponsiveGrid("change");
   };
 
+  // Calculate the pixel heights corresponding to user's sleeping hours and set the background
   useEffect(() => {
     if (scheduleGridContainer.current) {
       const {
@@ -229,6 +218,7 @@ const Schedule = ({ refreshResponsiveGrid }) => {
         fourthBlockPixelHeight,
       } = calculateSleepingHoursPixelHeights(fetchedSettings, selectedDate);
 
+      // Set style property for the schedule grid container background
       const sleepHoursBackground = `
         repeating-linear-gradient(
           var(--main-separator-color) 0 1px,
@@ -282,9 +272,8 @@ const Schedule = ({ refreshResponsiveGrid }) => {
     }
   }, []);
 
-  // Build the initial layout
+  // Build the initial layout at component mount or when the selected date changes
   useEffect(() => {
-    console.log("[Schedule.jsx] in useEffect() (Building initial layout)...");
     const initializeSchedule = () => {
       setIsLoading(true);
       buildLayout(events);
@@ -293,10 +282,6 @@ const Schedule = ({ refreshResponsiveGrid }) => {
 
     initializeSchedule();
   }, [events, selectedDate]);
-
-  useEffect(() => {
-    console.log("[Schedule.jsx] in useEffect() currentLayout:", currentLayout);
-  }, [currentLayout]);
 
   return (
     <>

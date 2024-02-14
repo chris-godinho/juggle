@@ -1,6 +1,7 @@
 // TaskList.jsx
+// Main dashboard panel for task list view
 
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useMutation } from "@apollo/client";
 
 import { useDataContext } from "../contextproviders/DataContext";
@@ -15,14 +16,11 @@ import EventDetails from "../dashboard/EventDetails.jsx";
 
 import { formatTime, buildOrderedTaskList } from "../../utils/scheduleUtils.js";
 
+// Import react-grid-layout styles
 import "/node_modules/react-grid-layout/css/styles.css";
 import "/node_modules/react-resizable/css/styles.css";
 
 export default function TaskList({ refreshResponsiveGrid }) {
-  console.log("[TaskList.jsx] rendering...");
-
-  // TODO:
-
   const {
     events,
     selectedDate,
@@ -33,10 +31,10 @@ export default function TaskList({ refreshResponsiveGrid }) {
     responsiveGridTimestampKey,
   } = useDataContext();
 
-  // Initialize the modal context for displaying event details
+  // Initialize modal context for displaying event details
   const { openModal } = useModal();
 
-  // Initialize the updateEvent mutation
+  // Initialize updateEvent mutation
   const [updateEvent] = useMutation(UPDATE_EVENT);
 
   const [isLoading, setIsLoading] = useState(true);
@@ -44,18 +42,14 @@ export default function TaskList({ refreshResponsiveGrid }) {
   const [orderedTaskList, setOrderedTaskList] = useState([]);
   const [isDragUpdate, setIsDragUpdate] = useState(false);
 
+  // Assign taskListOrder numbers to each event in the list
   const assignTaskListOrderNumbers = (eventList) => {
-    // Assign taskListOrder numbers to each event in the list
-
-    console.log(
-      "[TaskList.jsx] in assignTaskListOrderNumbers() - eventList:",
-      eventList
-    );
-
+    // Filter out events that don't have a taskListOrder number
     const eventListWithTaskListOrder = eventList
       .filter((event) => typeof event.taskListOrder === "number")
       .sort((a, b) => b.taskListOrder - a.taskListOrder);
 
+    // Set the next taskListOrder number
     let nextTaskListOrder =
       eventListWithTaskListOrder.length > 0
         ? eventListWithTaskListOrder[0].taskListOrder + 1
@@ -63,38 +57,30 @@ export default function TaskList({ refreshResponsiveGrid }) {
 
     const parsedEventList = JSON.parse(JSON.stringify(eventList));
 
-    // Some events might not have one
+    // If an event doesn't have a taskListOrder number, assign it the next number
     for (const event of parsedEventList) {
       if (typeof event.taskListOrder !== "number") {
         event.taskListOrder = nextTaskListOrder++;
       }
     }
 
-    console.log(
-      "[TaskList.jsx] assignTaskListOrderNumbers() - parsedEventList:",
-      parsedEventList
-    );
-
     return parsedEventList;
   };
 
+  // Order tasks by taskListOrder value
   const buildAndUpdateOrderedTaskList = (eventListWithTaskOrderNumbers) => {
-    // Order the list of events by taskListOrder
-    console.log(
-      "[TaskList.jsx] in buildAndUpdateOrderedTaskList() - eventListWithTaskOrderNumbers:",
-      eventListWithTaskOrderNumbers
-    );
+    // Build the ordered task list
     const reorderedTaskList = buildOrderedTaskList(
       eventListWithTaskOrderNumbers
     );
+
     // Update the orderedTaskList state with the new list
     setOrderedTaskList(reorderedTaskList);
   };
 
+  // Update the taskListOrder in the database for each event
   const updateEventsInDatabase = async () => {
-    // This will update the taskListOrder in the database for each event
-    console.log("[TaskList.jsx] in updateEventsInDatabase()");
-
+    // Update each event in the database
     for (let i = 0; i < orderedTaskList.length; i++) {
       try {
         const { data } = await updateEvent({
@@ -104,22 +90,18 @@ export default function TaskList({ refreshResponsiveGrid }) {
             taskListOrder: orderedTaskList[i].taskListOrder,
           },
         });
-        // Handle success or log appropriately
 
-        // After all updates are complete, call buildNewTaskLayout
+        // After all updates are complete, build the new task layout
         buildNewTaskLayout(orderedTaskList);
       } catch (error) {
         console.error("[TaskList.jsx] Error updating event:", error);
-        // Handle error appropriately
       }
     }
   };
 
+  // Build the new task layout
   const buildNewTaskLayout = (orderedTaskList) => {
-    console.log(
-      "[TaskList.jsx] in buildNewTaskLayout() - orderedTaskList:",
-      orderedTaskList
-    );
+    // Build the new task layout using the taskListOrder numbers as y values
     const taskLayout = [];
     for (let i = 0; i < orderedTaskList.length; i++) {
       taskLayout.push({
@@ -130,21 +112,20 @@ export default function TaskList({ refreshResponsiveGrid }) {
         h: 1,
       });
     }
+
+    // Set the currentLayout state with the new layout
     setCurrentLayout(taskLayout);
   };
 
-  const handleTaskDragStop = async (
-    layout,
-    oldItem,
-    newItem,
-    placeholder,
-    e
-  ) => {
-    console.log("[TaskList.jsx] handleTaskDragStop() - layout:", layout);
-
+  // Handle moving a task to a new position
+  const handleTaskDragStop = async (layout) => {
+    // Set the loading state to true to enable the spinner
     setIsLoading(true);
+
+    // Set the isDragUpdate state to true to prevent the database from being updated more than once
     setIsDragUpdate(true);
 
+    // Get the new task list order numbers from the items' y positions
     const newEvents = events.map((event) => {
       const updatedEvent = layout.find(
         (layoutItem) => layoutItem.i === event._id
@@ -158,29 +139,20 @@ export default function TaskList({ refreshResponsiveGrid }) {
       return event;
     });
 
-    console.log("[TaskList.jsx] handleTaskDragStop() - newEvents:", newEvents);
-
+    // Rebuild ordered task list
     buildAndUpdateOrderedTaskList(newEvents);
   };
 
+  // Update event when marked/unmarked as completed
   const handleCheckboxChange = async (event) => {
     try {
       const eventId = event.target.name;
       const eventToUpdate = events.find((event) => event._id === eventId);
+
+      // Toggle completed value
       const newCompletedValue = !eventToUpdate.completed;
 
-      console.log("[TaskList.jsx] handleCheckboxChange() - eventId: ", eventId);
-
-      console.log(
-        "[TaskList.jsx] handleCheckboxChange() - eventToUpdate: ",
-        eventToUpdate
-      );
-
-      console.log(
-        "[TaskList.jsx] handleCheckboxChange() - newCompletedValue: ",
-        newCompletedValue
-      );
-
+      // Update event in database
       const { data } = await updateEvent({
         variables: {
           eventId: eventId,
@@ -189,6 +161,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
         },
       });
 
+      // Refetch events
       if (data) {
         refreshResponsiveGrid();
       }
@@ -197,7 +170,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
     }
   };
 
-  // Function to handle clicking on an event (opens the event details modal)
+  // Handle clicking on an event (open event details modal)
   const handleEventClick = (event) => {
     openModal(
       <EventDetails
@@ -223,9 +196,9 @@ export default function TaskList({ refreshResponsiveGrid }) {
     );
   };
 
-  // Build the task list
+  // Build the task list layout at component mount or when the selected date changes
   useEffect(() => {
-    console.log("[TaskList.jsx] in useEffect() (selectedDate has changed)...");
+    // Skip rebuilding the task list layout if the hook was triggered by a drag event
     if (!isDragUpdate) {
       setIsLoading(true);
       const eventsWithTaskListOrderNumbers = assignTaskListOrderNumbers(events);
@@ -234,24 +207,15 @@ export default function TaskList({ refreshResponsiveGrid }) {
     }
   }, [selectedDate, events]);
 
+  // Update database after new taskListOrder numbers are set
   useEffect(() => {
-    console.log("[TaskList.jsx] in useEffect() (Ordered task list changed)...");
-    console.log("[TaskList.jsx] orderedTaskList:", orderedTaskList);
     updateEventsInDatabase();
   }, [orderedTaskList]);
 
+  // Set loading state to false after layout is built
   useEffect(() => {
-    console.log("[TaskList.jsx] in useEffect() (currentLayout changed)...");
-    console.log("[TaskList.jsx] currentLayout:", currentLayout);
     setIsLoading(false);
   }, [currentLayout]);
-
-  useEffect(() => {
-    console.log(
-      "[TaskList.jsx] in useEffect() isDragUpdate has been changed to:",
-      isDragUpdate
-    );
-  }, [isDragUpdate]);
 
   return (
     <div className="task-list-container-jg">
@@ -319,14 +283,14 @@ export default function TaskList({ refreshResponsiveGrid }) {
                     >
                       {event.title}{" "}
                       <span className="task-details-jg">
-                      {!event.isAllDay
-                        ? "(" +
-                          formatTime(new Date(event.eventStart)) +
-                          " - " +
-                          formatTime(new Date(event.eventEnd)) +
-                          ")"
-                        : ""}{" "}
-                      ({event.subtype})
+                        {!event.isAllDay
+                          ? "(" +
+                            formatTime(new Date(event.eventStart)) +
+                            " - " +
+                            formatTime(new Date(event.eventEnd)) +
+                            ")"
+                          : ""}{" "}
+                        ({event.subtype})
                       </span>
                     </p>
                   </div>

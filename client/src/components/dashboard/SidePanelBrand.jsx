@@ -1,4 +1,5 @@
 // SidePanelBrand.jsx
+// Displays the Juggler logo and brand name
 
 export default function SidePanelBrand() {
   return (
