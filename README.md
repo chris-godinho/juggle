@@ -28,9 +28,9 @@
 
 ## Description
 
-Juggler is a versatile task management app designed for individuals seeking a seamless blend of work and personal life organization. With a minimalist aesthetic and an emphasis on customization, Juggler offers various layout options and ten color themes, ensuring a tailored experience that suits your preferences.
+Juggler is a versatile task management app designed for individuals seeking a seamless blend of work and personal life organization. With a minimalist aesthetic and an emphasis on customization, Juggler offers various layout options and ten colour themes, ensuring a tailored experience that suits your preferences.
 
-Combining schedule/calendar functionalities and a task view, the app goes beyond conventional task management by providing work/life balance statistics and personalized recommendations for activities. Customize your experience with options like defining balance goals, setting sleeping hours, and selecting favorite activities for tailored suggestions.
+Combining schedule/calendar functionalities and a task view, the app goes beyond conventional task management by providing work/life balance statistics and personalized recommendations for activities. Customize your experience with options like defining balance goals, setting sleeping hours, and selecting favourite activities for tailored suggestions.
 
 Juggler offers a sleek, user-centric design, making it an ideal choice for those prioritizing a harmonious work-life balance.
 
@@ -52,7 +52,7 @@ Juggler offers a sleek, user-centric design, making it an ideal choice for those
 - Task view with rearrangeable, editable tasks;
 - Customizable statistics based on user's logged events;
 - Four layout options for the dashboard;
-- Ten different color schemes;
+- Ten different colour schemes;
 - Welcome wizard, allowing for a personalized experience from day one;
 - In-app event reminder notifications.
 

@@ -1,4 +1,5 @@
 // ColorSchemeProvider.js
+// Provides support for colour scheme changes
 
 import React, { createContext, useState, useContext } from "react";
 
