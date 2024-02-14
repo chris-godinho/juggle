@@ -3949,12 +3949,12 @@ path[class="firework-stroke-color-1-jg"] {
 
   .modal-back-button-jg {
     left: 1em;
-    top: 1em;
+    top: 3em;
   }
 
   .modal-close-button-jg {
     right: 1em;
-    top: 1em;
+    top: 3em;
   }
 
   .home-image-container-jg {
@@ -4588,6 +4588,10 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 0.85em;
   }
 
+  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.sleep-dropdown-area-jg {
+    font-size: 1.2em;
+  }
+
   #color-scheme-jg
     > main
     > div
@@ -4702,6 +4706,11 @@ path[class="firework-stroke-color-1-jg"] {
     width: 40%;
   }
 
+  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.settings-events-container-jg,
+  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.settings-stats-container-jg {
+    margin-bottom: 10vh;
+  }
+
   #color-scheme-jg
     > div
     > div
@@ -4713,6 +4722,10 @@ path[class="firework-stroke-color-1-jg"] {
     > div
     > div.sleep-datepicker-container-jg {
     flex-direction: row;
+  }
+
+  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div > h3.settings-theme-top-label-jg {
+    margin-bottom: 0;
   }
 
   .donate-logo-jg {
