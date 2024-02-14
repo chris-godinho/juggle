@@ -1,4 +1,5 @@
 // DashboardHeader.jsx
+// Displays the dashboard header, including the date, percentage, and buttons for adding events and opening the user menu
 
 import { useState, useEffect, useRef } from "react";
 
@@ -6,6 +7,7 @@ import { useDataContext } from "../contextproviders/DataContext";
 import { useModal } from "../contextproviders/ModalProvider.jsx";
 
 import Flatpickr from "react-flatpickr";
+// Import default styles for flatpickr
 import "flatpickr/dist/themes/dark.css";
 
 import NewEvent from "./NewEvent.jsx";
@@ -30,6 +32,7 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
     fetchedEventData,
   } = useDataContext();
 
+  // Open the modal
   const { openModal } = useModal();
 
   const [unalottedTimePercentage, setUnalottedTimePercentage] = useState(0);
@@ -38,12 +41,15 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
     setUnalottedTimePercentageWithSleepingHours,
   ] = useState(0);
 
+  // State for the mobile sidebar
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
 
+  // Ref for the mobile sidebar
   const mobileSidebar = useRef(null);
 
   const eventTypes = ["Work", "Life"];
 
+  // Find the display percentages for the event types
   const displayPercentages = eventTypes.map((eventType) =>
     findDisplayPercentage(
       eventType,
@@ -61,6 +67,7 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
     )
   );
 
+  // Update state when the fetched event data changes
   useEffect(() => {
     if (fetchedEventData?.unalottedTimePercentage < 0) {
       setUnalottedTimePercentage(0);
@@ -76,27 +83,25 @@ export default function DashboardHeader({ refreshResponsiveGrid }) {
     }
   }, [fetchedEventData]);
 
+  // Refresh component when a new event is added
   const handleNewEventModalClose = () => {
     eventsRefetch();
   };
 
+  // Select the previous day
   const selectPreviousDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() - 1)));
     setTomorrowDate(new Date(tomorrowDate.setDate(tomorrowDate.getDate() - 1)));
   };
 
+  // Select the next day
   const selectNextDay = (event) => {
     setSelectedDate(new Date(selectedDate.setDate(selectedDate.getDate() + 1)));
     setTomorrowDate(new Date(tomorrowDate.setDate(tomorrowDate.getDate() + 1)));
   };
 
+  // Toggle the mobile sidebar
   const toggleSidebar = () => {
-    console.log(
-      "[DashboardHeader.jsx] mobileSidebar.current:",
-      mobileSidebar.current
-    );
-    console.log("[DashboardHeader.jsx] isSidebarOpen:", isSidebarOpen);
-    console.log("[DashboardHeader.jsx] Toggling sidebar");
     mobileSidebar.current.style.left = isSidebarOpen ? "-65%" : "0";
     setIsSidebarOpen(!isSidebarOpen);
   };

@@ -1,17 +1,22 @@
 // EventDetailsForm.jsx
+// Form component for New Event and Event Details modals
 
 import React, { useState } from "react";
 
 import { useDataContext } from "../contextproviders/DataContext";
 
 import Flatpickr from "react-flatpickr";
+
+// Import default flatpickr styles
 import "flatpickr/dist/themes/dark.css";
 
 export default function EventDetailsForm({ formType, showStats }) {
   const { formData, setFormData, eventSubtypes } = useDataContext();
 
+  // Set up state for title edit mode
   const [isTitleEditable, setIsTitleEditable] = useState(false);
 
+  // Handle input changes
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
 
@@ -35,14 +40,12 @@ export default function EventDetailsForm({ formType, showStats }) {
               [name]: value,
               type: correspondingType,
             };
-            console.log("[EventDetails.jsx] Updated formData:", newData);
             return newData;
           });
         }
       } else {
         setFormData((prevData) => {
           const newData = { ...prevData, [name]: value, type: "" };
-          console.log("[EventDetails.jsx] Updated formData:", newData);
           return newData;
         });
       }
@@ -58,21 +61,19 @@ export default function EventDetailsForm({ formType, showStats }) {
             [name]: value,
             subtype: "",
           };
-          console.log("[EventDetails.jsx] Updated formData:", newData);
           return newData;
         });
       }
     } else {
       setFormData((prevData) => {
         const newData = { ...prevData, [name]: value };
-        console.log("[EventDetails.jsx] Updated formData:", newData);
         return newData;
       });
     }
 
-    console.log("[EventDetails.jsx] handleChange - formData:", name, value);
   };
 
+  // Handle priority change
   const togglePriority = () => {
     // Determine the new priority based on the current value
     const newPriority =
@@ -82,13 +83,12 @@ export default function EventDetailsForm({ formType, showStats }) {
         ? "Low"
         : "High";
 
-    // Update the formData state
+    // Update formData
     setFormData((prevData) => ({
       ...prevData,
       priority: newPriority,
     }));
 
-    console.log("[UserProfile.jsx] togglePriority - newPriority:", newPriority);
   };
 
   const handleTitleClick = () => {

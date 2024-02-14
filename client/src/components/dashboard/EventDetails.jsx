@@ -1,4 +1,5 @@
 // EventDetails.jsx
+// Displays the edit event modal window
 
 import React, { useState } from "react";
 import { useMutation } from "@apollo/client";
@@ -33,18 +34,21 @@ export default function EventDetails({
   showStats,
   refreshResponsiveGrid,
 }) {
-  console.log("[EventDetails.jsx] Component is rendering");
 
+  // Set up context for notifications for error messages
   const { openNotification } = useNotification();
 
+  // Set up context for modal window
   const { closeModal } = useModal();
 
+  // Set up mutations for updating/deleting events
   const [updateEvent] = useMutation(UPDATE_EVENT);
   const [removeEvent] = useMutation(REMOVE_EVENT);
 
   let formattedStartDate = "";
   let formattedStartTime = "";
 
+  // If event is not all-day, format start date and time
   if (!eventIsAllDay) {
     const eventStartDate = eventStart === null ? "" : new Date(eventStart);
     formattedStartDate =
@@ -59,6 +63,7 @@ export default function EventDetails({
         : `${eventStartDate.getHours()}:${eventStartDate.getMinutes()}`;
   }
 
+  // Format end date and time
   const eventEndDate = eventEnd === null ? "" : new Date(eventEnd);
   const formattedEndDate =
     eventEndDate === ""
@@ -71,6 +76,7 @@ export default function EventDetails({
       ? ""
       : `${eventEndDate.getHours()}:${eventEndDate.getMinutes()}`;
 
+  // Format reminder date and time
   const reminderDate =
     eventReminderTime === null ? "" : new Date(eventReminderTime);
   const formattedReminderDate =
@@ -84,8 +90,10 @@ export default function EventDetails({
       ? ""
       : `${reminderDate.getHours()}:${reminderDate.getMinutes()}`;
 
+  // Set up state for current screen
   const [eventScreen, setEventScreen] = useState("EventDetails");
 
+  // Set up state for form data
   const [formData, setFormData] = useState({
     title: eventTitle || "",
     type: eventType || "",
@@ -105,13 +113,13 @@ export default function EventDetails({
     reminderTime: formattedReminderTime || "",
   });
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
     try {
-      console.log("[EventDetails.jsx] handleFormSubmit()");
-      console.log("[EventDetails.jsx] formData:", formData);
 
+      // Validate form for errors
       const { finalFormData, errorMessage } = validateEventForm(
         formData,
         showStats
@@ -121,12 +129,15 @@ export default function EventDetails({
         throw new Error(errorMessage);
       }
 
+      // Update event in database
       const { data } = await updateEvent({
         variables: { eventId, ...finalFormData },
       });
 
+      // Close the modal
       closeModal();
 
+      // Refresh the responsive grid
       refreshResponsiveGrid("change");
     } catch (error) {
       openNotification(
@@ -136,21 +147,20 @@ export default function EventDetails({
     }
   };
 
-  console.log("[EventDetails.jsx] formData:", formData);
-
+  // Handle delete event
   const handleDeleteEvent = async (event) => {
     event.preventDefault();
 
-    console.log("[EventDetails.jsx] handleDeleteEvent - eventId:", eventId);
-
     try {
+      // Remove event from database
       const removedEvent = await removeEvent({
         variables: { eventId: eventId },
       });
 
-      console.log("[EventDetails.jsx] removeEvent:", removedEvent);
-
+      // Refresh events
       eventsRefetch();
+
+      // Close the modal
       closeModal();
     } catch (e) {
       console.error(e);

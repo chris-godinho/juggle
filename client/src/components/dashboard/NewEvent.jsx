@@ -19,6 +19,7 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
   // Set up context for notifications for error messages
   const { openNotification } = useNotification();
 
+  // Initialize state for form data
   const [formData, setFormData] = useState({
     title: "",
     type: "",
@@ -37,17 +38,16 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
     reminderTime: "",
   });
 
-  // Set up GraphQL mutation for adding events
+  // Set up mutation for adding events
   const [addEvent, { error, data }] = useMutation(ADD_EVENT);
 
+  // Set up context for modal window
   const { closeModal } = useModal();
 
   const handleFormSubmit = async () => {
     // Add event to database
     try {
-      console.log("[NewEvent.jsx] handleFormSubmit()");
-      console.log("[NewEvent.jsx] formData:", formData);
-
+      // Validate form for errors
       const { finalFormData, errorMessage } = validateEventForm(
         formData,
         showStats
@@ -61,10 +61,13 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
         variables: { user: userId, ...finalFormData },
       });
 
+      // Clear the form
       setFormData({});
 
+      // Close the modal
       closeModal();
 
+      // Refresh the responsive grid
       refreshResponsiveGrid("change");
 
     } catch (error) {
@@ -74,8 +77,6 @@ const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) =
       );
     }
   };
-
-  console.log("[NewEvent.jsx] formData:", formData);
 
   return (
     <DataContext.Provider value={{ formData, setFormData, eventSubtypes }}>

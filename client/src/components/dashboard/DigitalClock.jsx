@@ -1,10 +1,13 @@
 // DigitalClock.jsx
+// Display a simple digital clock in the dashboard side panel (in non-stats setting)
 
 import React, { useState, useEffect } from "react";
 
 const DigitalClock = () => {
+  // Set up state for current time
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  // Update current time every second
   useEffect(() => {
     const intervalId = setInterval(() => {
       setCurrentTime(new Date());
@@ -13,7 +16,7 @@ const DigitalClock = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  // TODO: To add seconds, add the following to the options: "second: '2-digit'"
+  // Format current time
   const formattedTime = currentTime.toLocaleTimeString([], {
     hour: "numeric", // Display hours without leading zero
     minute: "2-digit", // Display minutes with leading zero

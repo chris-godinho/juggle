@@ -1,4 +1,5 @@
 // DashboardSidePanel.jsx
+// Renders the side panel of the dashboard, which includes the brand, menu, stats, events, and recommendations
 
 import { useDataContext } from "../contextproviders/DataContext";
 
@@ -11,6 +12,8 @@ import SidePanelRecommendations from "./SidePanelRecommendations.jsx";
 import DigitalClock from "./DigitalClock.jsx";
 
 export default function DashboardSidePanel({ sidebarToRender,  refreshResponsiveGrid }) {
+
+  // Style for the loading spinner
   const sidePanelSpinnerStyle = {
     spinnerWidth: "16%",
     spinnerHeight: "95vh",
@@ -19,12 +22,14 @@ export default function DashboardSidePanel({ sidebarToRender,  refreshResponsive
 
   const { eventsLoading, fetchedSettings, isOneBarLayout } = useDataContext();
 
+  // Determine the event type to render based on the sidebar to render
   const upperOrSingleBarEventType = isOneBarLayout
     ? "Work"
     : !isOneBarLayout && sidebarToRender === "right"
     ? "Life"
     : "Work";
 
+  // Determine if the upper or single bar events should be rendered
   const renderUpperOrSingleBarEvents =
     (fetchedSettings?.showStats && !isOneBarLayout) ||
     (!fetchedSettings?.showStats && sidebarToRender === "right");
