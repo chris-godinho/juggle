@@ -4153,7 +4153,12 @@ path[class="firework-stroke-color-1-jg"] {
     width: 30vh;
   }
 
-  #color-scheme-jg > main > div > div.welcome-screen-jg.screen-8-jg > div > div.welcome-text-jg {
+  #color-scheme-jg
+    > main
+    > div
+    > div.welcome-screen-jg.screen-8-jg
+    > div
+    > div.welcome-text-jg {
     margin-bottom: 0;
   }
 
@@ -4477,6 +4482,19 @@ path[class="firework-stroke-color-1-jg"] {
     display: none;
   }
 
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > div
+    > div
+    > div.color-scheme-card-jg {
+      width: 40%;
+  }
+
   .notification-jg {
     width: 89vw;
   }
@@ -4642,8 +4660,33 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 0.6em;
   }
 
-  #color-scheme-jg > main > div > div.welcome-screen-jg.screen-7-jg > div > div > div > div > p {
+  #color-scheme-jg
+    > main
+    > div
+    > div.welcome-screen-jg.screen-7-jg
+    > div
+    > div
+    > div
+    > div
+    > p {
     font-size: 0.7em;
+  }
+
+  #color-scheme-jg > header > div.dashboard-mobile-header-top-brand-jg > div {
+    font-size: 1em;
+  }
+
+  #color-scheme-jg > header > div.dashboard-mobile-header-top-jg {
+    font-size: 0.8em;
+  }
+
+  #color-scheme-jg
+    > header
+    > div.dashboard-mobile-header-top-jg
+    > div.mobile-percentages-container-jg
+    > div
+    > h2 {
+    font-size: 1em;
   }
 
   .settings-activities-container-jg .work-life-activities-list-jg {
@@ -4814,9 +4857,16 @@ path[class="firework-stroke-color-1-jg"] {
 
   .header-logo-jg {
     margin-left: 0.5em;
-    margin-right: 30%;
     height: 2em;
     width: 2em;
+  }
+
+  #color-scheme-jg > main > header > div:nth-child(3) {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    max-height: 2em;
   }
 
   .button-jg {
