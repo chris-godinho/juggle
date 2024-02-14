@@ -1,4 +1,5 @@
-// UserSettingProvider.jsx
+// UserSettingsProvider.jsx
+// Allows user settings to be shared across the component tree
 
 import { useApolloClient } from "@apollo/client";
 
@@ -15,6 +16,7 @@ import AuthService from "../../utils/auth.js";
 
 const UserSettingsContext = createContext();
 
+// Spinner style for the UserSettingsProvider
 const providerSpinnerStyle = {
   spinnerWidth: "100%",
   spinnerHeight: "100vh",
@@ -33,6 +35,7 @@ export const UserSettingsProvider = ({ children }) => {
   const [updateUserSettings] = useMutation(UPDATE_USER_SETTINGS);
   const client = useApolloClient();
 
+  // Get username from the user's profile for the initial query and for the presigned URL
   let username;
   try {
     const userProfile = AuthService.getProfile();
@@ -41,11 +44,13 @@ export const UserSettingsProvider = ({ children }) => {
     username = null;
   }
 
+  // Query the user's settings
   const { loading, error, data } = useQuery(QUERY_USER, {
     skip: !username,
     variables: { username: username },
   });
 
+  // Fetch the presigned URL from S3 for the user's profile picture
   const fetchProfilePictureUrl = async () => {
     const fileName = "profilePicture.jpg";
 
@@ -77,6 +82,7 @@ export const UserSettingsProvider = ({ children }) => {
     setProfilePictureUpdated(false);
   };
 
+  // Store fetched user settings in the context and fetch the presigned URL for user's profile picture
   useEffect(() => {
     if (!loading && !error && data) {
       console.log(
@@ -85,33 +91,27 @@ export const UserSettingsProvider = ({ children }) => {
       );
       setUserSettings(data.user);
       setIsLoadingSettings(false);
-      console.log("[UserSettingsProvider.jsx] isLoadingSettings set to false");
 
       fetchProfilePictureUrl();
     }
   }, [loading, error, data]);
 
   const updateProviderUserSettings = async (newSettings) => {
-    console.log("[UserSettingsProvider.jsx] updateProviderUserSettings()");
-    console.log("[UserSettingsProvider.jsx] username:", username);
 
-    // Remove __typename from newSettings
+    // Remove __typename from newSettings for mutation
     const cleanSettings = removeTypename(newSettings);
-
-    console.log("[UserSettingsProvider.jsx] cleanSettings:", cleanSettings);
 
     setUserSettings((prevSettings) => ({
       ...prevSettings,
       ...newSettings,
     }));
 
-    console.log("[UserSettingsProvider.jsx] cleanSettings:", cleanSettings);
-
     try {
       const { data } = await updateUserSettings({
         variables: { ...cleanSettings },
       });
 
+      // Fetch the presigned URL for the user's profile picture after updating the settings
       fetchProfilePictureUrl();
     } catch (err) {
       console.error(err);
@@ -119,7 +119,7 @@ export const UserSettingsProvider = ({ children }) => {
   };
 
   if (loading) {
-    // Render loading state or a fallback UI while fetching user settings
+    // Render loading spinner while fetching user settings
     return (
       <div className="dark-background-jg">
         <LoadingSpinner

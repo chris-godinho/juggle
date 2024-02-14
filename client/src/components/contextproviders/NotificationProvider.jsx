@@ -1,12 +1,16 @@
 // NotificationProvider.jsx
+// Adds and sets timers for modal notifications
 
 import React, { createContext, useContext, useState } from "react";
 
 const NotificationContext = createContext();
 
 export const NotificationProvider = ({ children }) => {
+  // Stores the HTML content to be displayed in the notification
   const [notificationContent, setNotificationContent] = useState(null);
+  // Stores the type of notification (neutral, work or life for event reminders, error for error messages)
   const [notificationType, setNotificationType] = useState("neutral");
+  // Stores notification open/closed state
   const [isNotificationOpen, setIsNotificationOpen] = useState(false);
 
   const openNotification = (content, type = "neutral") => {

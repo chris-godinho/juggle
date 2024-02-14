@@ -1,4 +1,5 @@
 // DataContext.js
+// Allows general data sharing across the component tree
 
 import { createContext, useContext } from 'react';
 
