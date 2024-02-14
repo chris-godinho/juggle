@@ -30,7 +30,7 @@ export const useUserSettings = () => {
 export const UserSettingsProvider = ({ children }) => {
   const [userSettings, setUserSettings] = useState({});
   const [isLoadingSettings, setIsLoadingSettings] = useState(true);
-  const [profilePictureUpdated, setProfilePictureUpdated] = useState(false);
+  const [profilePictureUploadKey, setProfilePictureUploadKey] = useState(0);
 
   const [updateUserSettings] = useMutation(UPDATE_USER_SETTINGS);
   const client = useApolloClient();
@@ -55,10 +55,6 @@ export const UserSettingsProvider = ({ children }) => {
     const fileName = "profilePicture.jpg";
 
     try {
-
-      console.log("[UserSettingsProvider.jsx] fetchProfilePictureUrl()");
-      console.log("[UserSettingsProvider.jsx] username:", username);
-
       const { data } = await client.query({
         query: GET_PRESIGNED_URL,
         variables: {
@@ -67,28 +63,40 @@ export const UserSettingsProvider = ({ children }) => {
         },
       });
 
-      console.log("[UserSettingsProvider.jsx] fetchProfilePictureUrl() data:", data);
-
       // Update the User Settings context with the new profile picture URL
       setUserSettings((prevSettings) => ({
         ...prevSettings,
         profilePictureUrl: data.generatePresignedUrl,
       }));
-
     } catch (error) {
       console.error(`Error fetching presigned URL for ${fileName}:`, error);
     }
+  };
 
-    setProfilePictureUpdated(false);
+  // Delete the profile picture URL from the user settings
+  const deleteProfilePictureUrl = () => {
+    setUserSettings((prevSettings) => ({
+      ...prevSettings,
+      profilePictureUrl: "",
+    }));
+  }
+
+  // Set a temporary profile picture URL for the user settings
+  const setTemporaryProfilePictureUrl = (url) => {
+    setUserSettings((prevSettings) => ({
+      ...prevSettings,
+      profilePictureUrl: url,
+    }));
+  }
+
+  // Refreshes the Profile Picture Upload component
+  const refreshProfilePictureUpload = () => {
+    setProfilePictureUploadKey((prevKey) => prevKey + 1);
   };
 
   // Store fetched user settings in the context and fetch the presigned URL for user's profile picture
   useEffect(() => {
     if (!loading && !error && data) {
-      console.log(
-        "[UserSettingsProvider.jsx] User Settings query finished. data:",
-        data
-      );
       setUserSettings(data.user);
       setIsLoadingSettings(false);
 
@@ -97,7 +105,6 @@ export const UserSettingsProvider = ({ children }) => {
   }, [loading, error, data]);
 
   const updateProviderUserSettings = async (newSettings) => {
-
     // Remove __typename from newSettings for mutation
     const cleanSettings = removeTypename(newSettings);
 
@@ -132,7 +139,15 @@ export const UserSettingsProvider = ({ children }) => {
 
   return (
     <UserSettingsContext.Provider
-      value={{ userSettings, updateProviderUserSettings, setProfilePictureUpdated }}
+      value={{
+        userSettings,
+        updateProviderUserSettings,
+        fetchProfilePictureUrl,
+        deleteProfilePictureUrl,
+        setTemporaryProfilePictureUrl,
+        refreshProfilePictureUpload,
+        profilePictureUploadKey
+      }}
     >
       {children}
     </UserSettingsContext.Provider>

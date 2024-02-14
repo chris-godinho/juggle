@@ -1,12 +1,22 @@
+// ProfilePictureUpload.jsx
+// Used to upload a profile picture for the user
+
 import React, { useState, useEffect, useRef } from "react";
+import { useMutation } from "@apollo/client";
 
 import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
+import { useModal } from "../contextproviders/ModalProvider.jsx";
 
 import { Uppy } from "@uppy/core";
 import ImageEditor from "@uppy/image-editor";
 import { Dashboard, DragDrop, ProgressBar } from "@uppy/react";
 import Transloadit from "@uppy/transloadit";
 
+import DeleteProfilePictureModal from "./DeleteProfilePictureModal.jsx";
+
+import { DELETE_FILE } from "../../utils/mutations.js";
+
+// Import styles for @uppy plugins
 import "@uppy/core/dist/style.min.css";
 import "@uppy/dashboard/dist/style.min.css";
 import "@uppy/image-editor/dist/style.min.css";
@@ -14,84 +24,88 @@ import "@uppy/image-editor/dist/style.min.css";
 import Auth from "../../utils/auth.js";
 
 const ProfilePictureUpload = () => {
+  const {
+    userSettings,
+    isLoadingSettings,
+    deleteProfilePictureUrl,
+    setTemporaryProfilePictureUrl,
+    refreshProfilePictureUpload
+  } = useUserSettings();
 
-  const { userSettings, isLoadingSettings, setProfilePictureUpdated } = useUserSettings();
-
+  // Get the username from the user's profile for S3 folder name
   const userProfile = Auth.getProfile();
   const fetchedUsername = userProfile?.data?.username;
 
-  const [isUploaded, setIsUploaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState("");
-  const [uploadReset, setUploadReset] = useState(false);
+  // Initialize the deleteFile mutation
+  const [deleteFile] = useMutation(DELETE_FILE);
 
+  // State for the profile picture upload
+  const [isUploaded, setIsUploaded] = useState(false);
+
+  // Presigned URL for profile picture
+  const [imageUrl, setImageUrl] = useState("");
+
+  // Style element for the uploaded picture
   const styleElementRef = useRef(null);
 
+  // Open the modal
+  const { openModal } = useModal();
 
+  // Set the profile picture URL when the user settings are done loading
   useEffect(() => {
-    if (!isLoadingSettings) {
+    if (!isLoadingSettings && userSettings?.profilePictureUrl && !isUploaded) {
       setImageUrl(userSettings?.profilePictureUrl || "");
     }
   }, [isLoadingSettings, userSettings]);
 
+  // Apply profile picture URL to upload area's background
   useEffect(() => {
-    console.log("[ProfilePictureUpload.jsx] useEffect");
-    console.log("[ProfilePictureUpload.jsx] fetchedUsername:", fetchedUsername);
-    if (!uploadReset) {
-
-      setProfilePictureUpdated(true);
-
-      if (imageUrl && imageUrl !== "") {
-        console.log("[ProfilePictureUpload.jsx] imageUrl", imageUrl);
-        console.log("[ProfilePictureUpload.jsx] setting isUploaded to true...");
-        setIsUploaded(true);
-        if (styleElementRef.current) {
-          styleElementRef.current.innerHTML = `
+    if (imageUrl && imageUrl !== "") {
+      if (styleElementRef.current) {
+        styleElementRef.current.innerHTML = `
           .upload-area-jg::before {
             background-image: url(${imageUrl});
           }
         `;
-        } else {
-          // Create the style element
-          const styleElement = document.createElement("style");
-          styleElement.type = "text/css";
-          styleElement.innerHTML = `
+      } else {
+        // Create the style element
+        const styleElement = document.createElement("style");
+        styleElement.type = "text/css";
+        styleElement.innerHTML = `
           .uploaded-picture-jg::before {
             background-image: url(${imageUrl});
           }
         `;
-          // Append the style element to the head
-          document.head.appendChild(styleElement);
-          styleElementRef.current = styleElement;
-        }
+        // Append the style element to the head
+        document.head.appendChild(styleElement);
+        styleElementRef.current = styleElement;
       }
     }
-  }, [fetchedUsername, isUploaded, imageUrl, uploadReset]);
+  }, [fetchedUsername, imageUrl]);
 
-  const resetUpload = () => {
-    console.log("[ProfilePictureUpload.jsx] resetUpload");
-    console.log("[ProfilePictureUpload.jsx] Setting uploadReset to true...");
-    setUploadReset(true);
-  };
-
-  // TODO: Allow picture to be deleted?
-  // const [deleteFile] = useMutation(DELETE_FILE);
-  // Do all the setup if yes
-  /*
+  // Delete the file from S3
   const handleDeleteFile = async (fileName) => {
     try {
       // Send a request to the server to delete the file
       const response = await deleteFile({
         variables: {
-          username: username || userProfile?.data?.username,
-          fileName,
+          username: fetchedUsername || userProfile?.data?.username,
+          fileName: "profilePicture.jpg",
         },
       });
+
+      if (response?.data?.deleteFile) {
+        console.log(`File ${fileName} deleted?`);
+        console.log("Response:", response);
+        setImageUrl("");
+        deleteProfilePictureUrl();
+      }
     } catch (error) {
       console.error("[FileManagementWidget.jsx]: Error deleting file:", error);
     }
   };
-  */
 
+  // Initialize Uppy
   const [uppy] = useState(
     new Uppy({
       restrictions: {
@@ -130,47 +144,69 @@ const ProfilePictureUpload = () => {
           cropWidescreenVertical: false,
         },
         cropperOptions: {
+          viewMode: 1,
           dragMode: "move",
-          aspectRatio: 1,
+          background: false,
           guides: false,
           center: false,
-          cropBoxMovable: false,
           cropBoxResizable: false,
-          viewMode: 1,
           responsive: true,
           movable: true,
           scalable: true,
-          background: false,
+          zoomable: true,
+          zoomOnTouch: true,
+          zoomOnWheel: true,
           style: { width: "100%", height: "100%" },
           autoCropArea: 1,
           checkCrossOrigin: false,
         },
       })
+      .on("file-added", (file) => {
+        setIsUploaded(false);
+        setImageUrl("");
+      })
       .on("upload-success", (file, response) => {
         setIsUploaded(true);
-        setUploadReset(false);
+        setImageUrl(response?.uploadURL || "");
+        setTemporaryProfilePictureUrl(response?.uploadURL || "");
+        refreshProfilePictureUpload();
       })
   );
 
   return (
     <div className="upload-area-container-jg">
       {uppy && (
-        <div
-          className={
-            isUploaded && !uploadReset ? "uploaded-picture-jg upload-area-jg" : "upload-area-jg"
-          }
-        >
-          <Dashboard
-            id="uppy-dashboard-jg"
-            uppy={uppy}
-            plugins={["ImageEditor"]}
-            height="39vh"
-            width="39vh"
-            autoOpenFileEditor={true}
-            theme="dark"
-            onClick={resetUpload}
-          />
-        </div>
+        <>
+          <div
+            className={
+              imageUrl ? "uploaded-picture-jg upload-area-jg" : "upload-area-jg"
+            }
+          >
+            <Dashboard
+              id="uppy-dashboard-jg"
+              uppy={uppy}
+              plugins={["ImageEditor"]}
+              height="39vh"
+              width="39vh"
+              autoOpenFileEditor={true}
+              theme="dark"
+            />
+          </div>
+          {imageUrl && (
+          <button
+            className="button-jg login-signup-delete-button-jg profile-picture-delete-button-jg"
+            onClick={() =>
+              openModal(
+                <DeleteProfilePictureModal
+                  handleDeleteFile={handleDeleteFile}
+                />
+              )
+            }
+          >
+            Delete
+          </button>
+        )}
+        </>
       )}
     </div>
   );

@@ -24,13 +24,17 @@ const generatePresignedUrl = async (username, fileName) => {
     Prefix: prefix,
   };
 
+  console.log(`[awsS3.js]: listParams:`, listParams);
+
   try {
     // List objects with the specified prefix
     const listData = await s3.listObjectsV2(listParams).promise();
 
+    console.log(`[awsS3.js]: listData:`, listData);
+
     // Check if the array is empty (no files found)
     if (listData.Contents.length === 0) {
-      console.log(`No files found for the username: ${username}`);
+      console.log(`[awsS3.js]: No files found for the username: ${username}`);
       return null;
     }
 
@@ -44,9 +48,10 @@ const generatePresignedUrl = async (username, fileName) => {
 
     // Generate pre-signed URL
     const url = await s3.getSignedUrlPromise("getObject", params);
+    console.log(`[awsS3.js]: Pre-signed URL for ${fileName}: ${url}`);
     return url;
   } catch (error) {
-    console.error("Error generating pre-signed URL:", error);
+    console.error("[awsS3.js]: Error generating pre-signed URL:", error);
     throw error;
   }
 };

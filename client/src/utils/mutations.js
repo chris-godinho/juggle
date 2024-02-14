@@ -322,3 +322,9 @@ export const REMOVE_EVENT = gql`
     }
   }
 `;
+
+export const DELETE_FILE = gql`
+  mutation DeleteFile($username: String!, $fileName: String!) {
+    deleteFile(username: $username, fileName: $fileName)
+  }
+`;

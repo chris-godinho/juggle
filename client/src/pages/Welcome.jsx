@@ -23,7 +23,7 @@ const Welcome = () => {
   const progressBar = useRef(null);
   const welcomeScreens = Array.from({ length: 8 }, () => useRef(null));
 
-  const { updateProviderUserSettings } = useUserSettings();
+  const { updateProviderUserSettings, profilePictureUploadKey } = useUserSettings();
 
   const userProfile = AuthService.getProfile();
 
@@ -263,7 +263,7 @@ const Welcome = () => {
                   </p>
                 </div>
                 <div className="welcome-upload-area-jg">
-                  <ProfilePictureUpload />
+                  <ProfilePictureUpload key={profilePictureUploadKey} />
                 </div>
               </div>
             </div>

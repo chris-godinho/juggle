@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
+import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
+
 import Flatpickr from "react-flatpickr";
 import "flatpickr/dist/themes/dark.css";
 
@@ -11,9 +13,10 @@ import ProfilePictureUpload from "../other/ProfilePictureUpload.jsx";
 
 import Auth from "../../utils/auth";
 
-// TODO: Add upload area to profile picture
-
 export default function UserProfile({ username, backToMenu, setUserDeleted }) {
+
+  const { profilePictureUploadKey } = useUserSettings();
+
   const [profileScreen, setProfileScreen] = useState("UserProfile");
 
   const logout = (event) => {
@@ -111,7 +114,7 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
   return (
     <div className="modal-inner-content-jg">
       <div className="user-profile-container-jg">
-        <ProfilePictureUpload />
+        <ProfilePictureUpload key={profilePictureUploadKey} />
         <div className="user-profile-info-jg">
           <h1 className="work-text-jg">{username}</h1>
           {profileScreen === "UserProfile" ? (
