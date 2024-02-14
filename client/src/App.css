@@ -4392,6 +4392,11 @@ path[class="firework-stroke-color-1-jg"] {
     padding: 0;
   }
 
+  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > p.sleeping-hours-label-jg {
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+
   .settings-main-jg .sleep-dropdown-area-jg {
     flex: 1;
     display: flex;
@@ -4438,7 +4443,6 @@ path[class="firework-stroke-color-1-jg"] {
   .sleep-datepicker-container-jg {
     flex: 1;
     display: flex;
-    flex-direction: column;
     align-items: flex-start;
   }
 

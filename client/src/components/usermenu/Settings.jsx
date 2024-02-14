@@ -424,7 +424,7 @@ export default function Settings() {
                       }
                       onChange={handleInputChange}
                     />
-                    Ignore unalotted time
+                    Ignore unallotted time
                   </label>
                   {!formData?.user?.statSettings?.ignoreUnalotted && (
                     <div
