@@ -2627,24 +2627,6 @@ input[type="checkbox"]:disabled {
   text-overflow: ellipsis;
 }
 
-/* Credit: https://stackoverflow.com/questions/30352431/css-transition-not-working-with-underline */
-.task-name-jg::after {
-  top: 50%;
-  left: 9.5%;
-  position: absolute;
-  content: "";
-  width: 0px;
-  height: 0.15em;
-  display: block;
-  background: var(--main-text-color);
-  border-radius: 5px;
-  transition: 300ms;
-}
-
-#task-strikethrough-jg::after {
-  width: 92.5%;
-}
-
 .task-name-work-high-jg {
   color: var(--work-event-color-light);
 }
