@@ -4782,7 +4782,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   #color-scheme-jg > header > div.dashboard-mobile-header-top-jg {
-    font-size: 0.8em;
+    font-size: 1em;
   }
 
   #color-scheme-jg
@@ -4792,11 +4792,6 @@ path[class="firework-stroke-color-1-jg"] {
     > div
     > h2 {
     font-size: 1em;
-  }
-
-  #color-scheme-jg > header > div.dashboard-mobile-header-top-jg > div.dashboard-header-mobile-button-container-jg > button {
-    height: 1.5em;
-    width: 1.5em;
   }
 
   .user-profile-picture-jg {
