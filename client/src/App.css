@@ -1506,8 +1506,7 @@ div.uppy-Dashboard-Item-fileInfoAndButtons
   height: 7.7vh !important;
 }
 
-div.uppy-Dashboard-Item-preview
-  > div.uppy-Dashboard-Item-progress {
+div.uppy-Dashboard-Item-preview > div.uppy-Dashboard-Item-progress {
   display: none !important;
 }
 
@@ -3921,10 +3920,10 @@ path[class="firework-stroke-color-1-jg"] {
     opacity: 0.5;
   }
 
-.modal-content-jg {
-  padding-top: 5vh;
-  padding-bottom: 5vh;
-}
+  .modal-content-jg {
+    padding-top: 5vh;
+    padding-bottom: 5vh;
+  }
 
   .modal-content-jg,
   .modal-inner-content-jg {
@@ -4424,7 +4423,14 @@ path[class="firework-stroke-color-1-jg"] {
     padding-bottom: 15vh;
   }
 
-  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > p.sleeping-hours-label-jg {
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > p.sleeping-hours-label-jg {
     margin-top: 2em;
     margin-bottom: 1em;
   }
@@ -4484,7 +4490,6 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .settings-select-activities-jg {
-    margin-top: 1em;
     margin-bottom: 0;
   }
 
@@ -4528,7 +4533,7 @@ path[class="firework-stroke-color-1-jg"] {
     > div
     > div
     > div.color-scheme-card-jg {
-      width: 40%;
+    width: 40%;
   }
 
   .notification-jg {
@@ -4545,7 +4550,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .user-profile-picture-jg {
-    margin-top: 10vh;
+    margin-top: 5vh;
     margin-bottom: 3vh;
   }
 
@@ -4566,18 +4571,52 @@ path[class="firework-stroke-color-1-jg"] {
     align-self: center;
   }
 
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.user-profile-container-jg
+    > div.upload-area-container-jg
+    > div.upload-area-jg {
+    height: 25vh;
+    width: 25vh;
+  }
+
+  #uppy-dashboard-jg
+    > div
+    > div
+    > div.uppy-Dashboard-inner
+    > div
+    > div.uppy-Dashboard-AddFiles
+    > div.uppy-Dashboard-AddFiles-title {
+    color: transparent !important;
+  }
+
+  #uppy-dashboard-jg
+    > div
+    > div
+    > div.uppy-Dashboard-inner
+    > div
+    > div.uppy-Dashboard-AddFiles
+    > div.uppy-Dashboard-AddFiles-title
+    > button {
+    margin-left: -57vw;
+    margin-top: 2.5vh;
+  }
+
   .user-profile-info-jg {
     margin: 0 4vw;
   }
 
   .stats-inner-content-jg {
     margin-top: 5vh;
-    min-height: 75vh;
+    min-height: 65vh;
     justify-content: space-between !important;
   }
 
   .donate-logo-jg {
-    margin-top: 8vh;
+    margin-top: 5vh;
     margin-bottom: 2em;
   }
 
@@ -4589,6 +4628,12 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 1.2em;
   }
 
+  .about-us-heading-jg {
+    font-size: 2em;
+    margin-top: 0;
+
+  }
+
   .about-us-image-jg {
     max-width: 50%;
     margin-bottom: 1em;
@@ -4596,7 +4641,7 @@ path[class="firework-stroke-color-1-jg"] {
 
   .contact-form-container-jg {
     flex: 1;
-    margin-bottom: 10vh;
+    margin-bottom: 25vh;
   }
 
   .contact-form-container-jg button {
@@ -4630,7 +4675,14 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 0.85em;
   }
 
-  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.sleep-dropdown-area-jg {
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > div.sleep-dropdown-area-jg {
     font-size: 1.2em;
   }
 
@@ -4748,8 +4800,22 @@ path[class="firework-stroke-color-1-jg"] {
     width: 40%;
   }
 
-  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.settings-events-container-jg,
-  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div.settings-stats-container-jg {
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > div.settings-events-container-jg,
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > div.settings-stats-container-jg {
     margin-bottom: 10vh;
   }
 
@@ -4766,7 +4832,15 @@ path[class="firework-stroke-color-1-jg"] {
     flex-direction: row;
   }
 
-  #color-scheme-jg > div > div > div > div > div.settings-container-jg > div.settings-main-jg > div > h3.settings-theme-top-label-jg {
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.settings-container-jg
+    > div.settings-main-jg
+    > div
+    > h3.settings-theme-top-label-jg {
     margin-bottom: 0;
   }
 
