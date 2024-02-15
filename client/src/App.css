@@ -4649,6 +4649,10 @@ path[class="firework-stroke-color-1-jg"] {
 }
 
 @media screen and (max-width: 620px) and (max-height: 800px) {
+  .event-details-modal-container-jg .modal-content-jg {
+    padding-top: 3em;
+  }
+
   .welcome-text-jg > h1 {
     font-size: 1.2em;
     margin: 0;
@@ -4786,6 +4790,44 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 1em;
   }
 
+  .user-profile-picture-jg {
+    margin-top: 0;
+    margin-bottom: 1vh;
+  }
+
+  .user-menu-username-jg {
+    font-size: 1.5em;
+  }
+
+  #color-scheme-jg
+    > div
+    > div
+    > div
+    > div
+    > div.user-profile-container-jg
+    > div.upload-area-container-jg
+    > div.upload-area-jg {
+    height: 15vh;
+    width: 15vh;
+  }
+
+  #uppy-dashboard-jg
+    > div
+    > div
+    > div.uppy-Dashboard-inner
+    > div
+    > div.uppy-Dashboard-AddFiles
+    > div.uppy-Dashboard-AddFiles-title
+    > button {
+      font-size: 0.65em;
+    margin-left: -73vw;
+    margin-top: 2.5vh;
+  }
+
+  #color-scheme-jg > div > div > div > div > div > div.user-profile-info-jg > h1 {
+    font-size: 1em;
+  }
+
   .settings-activities-container-jg .work-life-activities-list-jg {
     flex-direction: row;
     font-size: 1.2em;
@@ -4795,7 +4837,7 @@ path[class="firework-stroke-color-1-jg"] {
     .work-life-activities-list-jg
     .work-life-activity-checkbox-jg {
     margin-right: 0em;
-    margin-bottom: 2em;
+    margin-bottom: 1.5em;
     width: 40%;
   }
 
