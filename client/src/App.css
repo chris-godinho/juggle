@@ -4336,19 +4336,19 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .event-middle-label-jg {
-    margin-left: 1.5em;
+    margin-left: 10%;
   }
 
   .event-left-input-jg {
-    margin-right: 1em;
+    margin-right: 6.5%;
   }
 
   .event-middle-input-jg {
-    margin-left: 1em;
+    margin-left: 6.5%;
   }
 
   .event-datepicker-jg {
-    flex: 1;
+    width: 87%;
   }
 
   .contact-form-container-jg button {
