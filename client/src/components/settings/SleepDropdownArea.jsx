@@ -1,8 +1,10 @@
 // SleepDropDownArea.jsx
+// Dropdown table for sleep hours selection
 
 import { useDataContext } from "../contextproviders/DataContext";
 
 import Flatpickr from "react-flatpickr";
+// Import styles for flatpickr
 import "flatpickr/dist/themes/dark.css";
 
 export default function SleepDropdownArea() {
@@ -18,6 +20,7 @@ export default function SleepDropdownArea() {
     "Saturday",
   ];
 
+  // Update form data with sleep hours
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 

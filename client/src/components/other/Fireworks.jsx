@@ -1,4 +1,5 @@
 // Fireworks.jsx
+// Fireworks SVG graphic to be displayed at the end of the welcome wizard
 
 export default function Fireworks() {
   return (

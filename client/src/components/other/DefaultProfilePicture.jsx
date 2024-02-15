@@ -1,4 +1,5 @@
 // DefaultProfilePicture.jsx
+// Default SVG graphic to be displayed when user has no profile picture
 
 export default function DefaultProfilePicture() {
   return (

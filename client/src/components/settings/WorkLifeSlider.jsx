@@ -1,4 +1,5 @@
 // WorkLifeSlider.jsx
+// Slider for setting work-life balance goal in Settings and Welcome pages
 
 import { useDataContext } from "../contextproviders/DataContext"
 
@@ -6,6 +7,7 @@ export default function WorkLifeSlider() {
 
   const { formData, setFormData } = useDataContext();
 
+  // Update form data with work-life balance goal
   const handleSliderChange = (event) => {
     const value = parseInt(event.target.value, 10);
 

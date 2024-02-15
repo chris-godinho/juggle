@@ -1,6 +1,9 @@
 // LoadingSpinner.jsx
+// Loading spinner component
 
 const LoadingSpinner = ({ spinnerStyle, spinnerElWidthHeight }) => {
+
+  // Style settings will be passed in as props
 
   return (
     <div className="spinner-container-jg" style={spinnerStyle}>

@@ -1,4 +1,5 @@
 // LayoutTable.jsx
+// Table with layout mockups and names for selection
 
 import { useLayout } from "../contextproviders/LayoutProvider.jsx";
 import { useDataContext } from "../contextproviders/DataContext";
@@ -8,6 +9,7 @@ export default function LayoutTable() {
 
   const { changeLayout } = useLayout();
 
+  // Change layout in User Settings and Local Storage
   const handleLayoutChange = (key) => {
     changeLayout(key);
     setFormData({

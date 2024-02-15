@@ -1,4 +1,5 @@
 // Header.jsx
+// Header component for Home, Login/Signup and Welcome pages
 
 import { Link } from "react-router-dom";
 

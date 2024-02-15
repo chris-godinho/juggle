@@ -1,4 +1,5 @@
 // ColorSchemeTable.jsx
+// Table with color scheme samples and names for selection
 
 import { useColorScheme } from "../contextproviders/ColorSchemeProvider.jsx";
 import { useDataContext } from "../contextproviders/DataContext";
@@ -6,10 +7,12 @@ import { useDataContext } from "../contextproviders/DataContext";
 import { colorSchemes } from "../../utils/colorSchemes.js";
 
 export default function ColorSchemeTable({ cardSize = "normal" }) {
+
   const { formData, setFormData } = useDataContext();
 
   const { changeColorScheme } = useColorScheme();
 
+  // Change color scheme in User Settings and Local Storage
   const handleColorSchemeChange = (key) => {
     changeColorScheme(key);
     setFormData({
