@@ -201,7 +201,7 @@ export default function EventDetailsForm({ formType, showStats }) {
           type="text"
           name="details"
           value={formData.details || ""}
-          className="event-input-jg"
+          className="event-input-jg event-text-input-jg"
           placeholder="Details"
           onChange={handleInputChange}
         />
@@ -372,7 +372,7 @@ export default function EventDetailsForm({ formType, showStats }) {
           type="text"
           name="location"
           value={formData.location || ""}
-          className="event-input-jg"
+          className="event-input-jg event-text-input-jg"
           placeholder="Location"
           onChange={handleInputChange}
         />
