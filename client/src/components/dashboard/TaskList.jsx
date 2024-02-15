@@ -272,7 +272,6 @@ export default function TaskList({ refreshResponsiveGrid }) {
                             )} - ${formatTime(new Date(event.eventEnd))})`
                           : ""
                       } (${event.subtype})`}
-                      id={event.completed ? "task-strikethrough-jg" : ""}
                       className={`task-name-jg task-name-${
                         event.type
                       }-${event.priority.toLowerCase()}-jg ${
