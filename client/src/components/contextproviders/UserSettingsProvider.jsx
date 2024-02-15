@@ -45,7 +45,7 @@ export const UserSettingsProvider = ({ children }) => {
   }
 
   // Query the user's settings
-  const { loading, error, data } = useQuery(QUERY_USER, {
+  const { loading, error, data, refetch } = useQuery(QUERY_USER, {
     skip: !username,
     variables: { username: username },
   });
@@ -113,10 +113,14 @@ export const UserSettingsProvider = ({ children }) => {
       ...newSettings,
     }));
 
+    console.log("[UserSettingsProvider.jsx] updateProviderUserSettings() userSettings:", userSettings);
+
     try {
       const { data } = await updateUserSettings({
         variables: { ...cleanSettings },
       });
+
+      refetch();
 
       // Fetch the presigned URL for the user's profile picture after updating the settings
       fetchProfilePictureUrl();

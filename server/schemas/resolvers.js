@@ -1,11 +1,7 @@
 const { User, Event } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { DateTimeResolver } = require("graphql-scalars");
-const {
-  fetchFileList,
-  generatePresignedUrl,
-  deleteFile,
-} = require("../utils/awsS3.js");
+const { generatePresignedUrl, deleteFile } = require("../utils/awsS3.js");
 
 const resolvers = {
   DateTime: DateTimeResolver,
@@ -24,16 +20,6 @@ const resolvers = {
       parent,
       { user, selectedDateStart, selectedDateEnd }
     ) => {
-      
-      console.log(
-        "[resolvers.js] eventsByDate: user =",
-        user,
-        "selectedDateStart =",
-        selectedDateStart,
-        "selectedDateEnd =",
-        selectedDateEnd
-      );
-
       let params = { user };
 
       params.$or = [
@@ -52,7 +38,12 @@ const resolvers = {
       ];
 
       const result = await Event.find(params).sort({ eventStart: 1 });
+      /*
+      console.log(
+        "-----------------------------------------------------------------"
+      );
       console.log("[resolvers.js] eventsByDate: result =", result);
+      */
       return result;
     },
     event: async (parent, { eventId }) => {
@@ -103,15 +94,6 @@ const resolvers = {
       return { token, user };
     },
     updateUser: async (parent, { username, email, password, birthDate }) => {
-      console.log(
-        "[resolvers.js] updateUser: email =",
-        email,
-        "password =",
-        password,
-        "birthDate =",
-        birthDate
-      );
-
       // Create an object to store the fields with values
       const updateFields = {};
 
@@ -120,8 +102,6 @@ const resolvers = {
       if (password !== "") updateFields.password = password;
       if (birthDate !== "") updateFields.birthDate = birthDate;
 
-      console.log("[resolvers.js] updateUser: updateFields =", updateFields);
-
       // Use the $set operator to update only the specified fields
       const user = await User.findOneAndUpdate(
         { username },
@@ -129,7 +109,6 @@ const resolvers = {
         { new: true }
       );
 
-      console.log("[resolvers.js] updateUser: user =", user);
       return { user };
     },
     updateUserSettings: async (
@@ -147,6 +126,9 @@ const resolvers = {
         localizationSettings,
       }
     ) => {
+      console.log(
+        "-----------------------------------------------------------------"
+      );
       console.log(
         "[resolvers.js] updateUserSettings: username =",
         username,
@@ -188,6 +170,9 @@ const resolvers = {
         updateFields.localizationSettings = localizationSettings;
 
       console.log(
+        "-----------------------------------------------------------------"
+      );
+      console.log(
         "[resolvers.js] updateUserSettings: updateFields =",
         updateFields
       );
@@ -199,17 +184,18 @@ const resolvers = {
         { new: true }
       );
 
+      console.log(
+        "-----------------------------------------------------------------"
+      );
       console.log("[resolvers.js] updateUserSettings: user =", user);
       return { user };
     },
     deleteUser: async (parent, { username }) => {
-      console.log("[resolvers.js] deleteUser: username =", username);
 
       try {
         // Find and remove the user
         const deletedUser = await User.findOneAndDelete({ username });
 
-        console.log("[resolvers.js] deleteUser: user deleted =", deletedUser);
         return { success: true, message: "User deleted successfully." };
       } catch (error) {
         console.error("[resolvers.js] deleteUser error:", error);
@@ -234,34 +220,7 @@ const resolvers = {
         reminderTime,
       }
     ) => {
-      console.log(
-        "[resolvers.js] addEvent: user =",
-        user,
-        "title =",
-        title,
-        "type =",
-        type,
-        "subtype =",
-        subtype,
-        "details =",
-        details,
-        "eventStart =",
-        eventStart,
-        "eventEnd =",
-        eventEnd,
-        "location =",
-        location,
-        "links =",
-        links,
-        "files =",
-        files,
-        "priority =",
-        priority,
-        "isAllDay =",
-        isAllDay,
-        "reminderTime =",
-        reminderTime
-      );
+
       const event = await Event.create({
         user,
         title,
@@ -282,8 +241,6 @@ const resolvers = {
         { _id: user },
         { $addToSet: { events: event._id } }
       );
-
-      console.log("[resolvers.js] addEvent: event =", event);
 
       return event;
     },
@@ -307,39 +264,6 @@ const resolvers = {
         taskListOrder,
       }
     ) => {
-      console.log(
-        "[resolvers.js] updateEvent: eventId =",
-        eventId,
-        "title =",
-        title,
-        "type =",
-        type,
-        "subtype =",
-        subtype,
-        "details =",
-        details,
-        "eventStart =",
-        eventStart,
-        "eventEnd =",
-        eventEnd,
-        "location =",
-        location,
-        "links =",
-        links,
-        "files =",
-        files,
-        "priority =",
-        priority,
-        "isAllDay =",
-        isAllDay,
-        "reminderTime =",
-        reminderTime,
-        "completed =",
-        completed,
-        "taskListOrder =",
-        taskListOrder
-      );
-
       const event = await Event.findOneAndUpdate(
         { _id: eventId },
         {
@@ -360,8 +284,6 @@ const resolvers = {
         },
         { new: true }
       );
-
-      console.log("[resolvers.js] updateEvent: event =", event);
 
       return event;
     },

@@ -24,6 +24,10 @@ export default function Dashboard() {
   const { isNotificationOpen } = useNotification();
 
   const localStorageLayout = localStorage.getItem("layout");
+  const localStorageEventView = localStorage.getItem("eventView");
+
+  console.log("[Dashboard.jsx] localStorageLayout:", localStorageLayout);
+  console.log("[Dashboard.jsx] localStorageEventView:", localStorageEventView);
 
   // Set up date variables for queries and new events
   const localDate = new Date();
@@ -52,7 +56,7 @@ export default function Dashboard() {
     workPreferredActivities: {},
     lifePreferredActivities: {},
     dashboardLayout: localStorageLayout || "two-sidebars",
-    viewStyle: "calendar",
+    viewStyle: localStorageEventView || "calendar",
     profilePictureUrl: null,
   });
 
@@ -116,6 +120,11 @@ export default function Dashboard() {
     }
     eventsRefetch();
   };
+
+  useEffect(() => {
+    console.log("[Dashboard.jsx] useEffect() - fetchedSettings has changed:", fetchedSettings);
+    console.log("[Dashboard.jsx] useEffect() - fetchedSettings.viewStyle:", fetchedSettings.viewStyle);
+  }, [fetchedSettings]);
 
   useEffect(() => {
     const handleResize = () => {
@@ -234,7 +243,7 @@ export default function Dashboard() {
             } ${!hasLeftSidebar ? "dashboard-main-one-sidebar-right-jg" : ""}`}
           >
             <div className="schedule-grid-container-jg">
-              {eventsLoading ? (
+              {eventsLoading || isLoadingSettings ? (
                 <LoadingSpinner
                   spinnerStyle={scheduleSpinnerStyle}
                   spinnerElWidthHeight="100px"

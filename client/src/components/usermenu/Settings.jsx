@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
 
+import { useLayout } from "../contextproviders/LayoutProvider.jsx";
 import { useDataContext } from "../contextproviders/DataContext";
 
 import { QUERY_USER } from "../../utils/queries.js";
@@ -17,6 +18,9 @@ import ColorSchemeTable from "../settings/ColorSchemeTable.jsx";
 import AuthService from "../../utils/auth.js";
 
 export default function Settings() {
+
+  const { changeEventView } = useLayout();
+
   const userProfile = AuthService.getProfile();
 
   const [settingsScreen, setSettingsScreen] = useState("stats");
@@ -152,6 +156,22 @@ export default function Settings() {
         "[Settings.jsx] eventRemoveSubtypeFormData:",
         eventRemoveSubtypeFormData
       );
+    } else if (name === "layoutSettings-viewStyle") {
+      console.log("[Settings.jsx] handleInputChange - viewStyle");
+      console.log("[Settings.jsx] value:", value);
+
+      changeEventView(value);
+
+      setFormData({
+        ...formData,
+        user: {
+          ...formData.user,
+          layoutSettings: {
+            ...formData?.user?.layoutSettings,
+            viewStyle: value,
+          },
+        },
+      });
     } else if (name === "localizationSettings-timeZone") {
       console.log("[Settings.jsx] handleInputChange - timeZone");
       console.log("[Settings.jsx] value:", value);
