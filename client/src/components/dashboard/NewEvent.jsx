@@ -16,6 +16,8 @@ import { validateEventForm } from "../../utils/eventUtils.js";
 
 const NewEvent = ({ eventSubtypes, userId, showStats, refreshResponsiveGrid }) => {
 
+  console.log("[NewEvent.jsx] eventSubtypes:", eventSubtypes);
+
   // Set up context for notifications for error messages
   const { openNotification } = useNotification();
 

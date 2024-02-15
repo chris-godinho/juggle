@@ -24,7 +24,6 @@ export default function TaskList({ refreshResponsiveGrid }) {
   const {
     events,
     selectedDate,
-    eventSubtypes,
     eventsRefetch,
     scheduleSpinnerStyle,
     fetchedSettings,
@@ -188,7 +187,7 @@ export default function TaskList({ refreshResponsiveGrid }) {
         eventIsAllDay={event.isAllDay}
         eventReminderTime={event.reminderTime}
         eventCompleted={event.completed}
-        eventSubtypes={eventSubtypes}
+        eventSubtypes={fetchedSettings?.eventSubtypes}
         eventsRefetch={eventsRefetch}
         showStats={fetchedSettings?.showStats}
         refreshResponsiveGrid={refreshResponsiveGrid}

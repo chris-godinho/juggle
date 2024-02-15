@@ -34,6 +34,26 @@ export default function EventDetails({
   showStats,
   refreshResponsiveGrid,
 }) {
+  console.log("[EventDetails.jsx] Props:", {
+    eventId,
+    eventTitle,
+    eventType,
+    eventSubtype,
+    eventDescription,
+    eventStart,
+    eventEnd,
+    eventLocation,
+    eventLinks,
+    eventFiles,
+    eventPriority,
+    eventIsAllDay,
+    eventReminderTime,
+    eventCompleted,
+    eventSubtypes,
+    eventsRefetch,
+    showStats,
+    refreshResponsiveGrid,
+  });
 
   // Set up context for notifications for error messages
   const { openNotification } = useNotification();
@@ -118,7 +138,6 @@ export default function EventDetails({
     event.preventDefault();
 
     try {
-
       // Validate form for errors
       const { finalFormData, errorMessage } = validateEventForm(
         formData,
