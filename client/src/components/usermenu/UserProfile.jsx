@@ -1,9 +1,13 @@
+// UserProfile.jsx
+// User profile edit page for the User Menu
+
 import React, { useState } from "react";
 import { useQuery, useMutation } from "@apollo/client";
 
 import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 
 import Flatpickr from "react-flatpickr";
+// Import styles for Flatpickr
 import "flatpickr/dist/themes/dark.css";
 
 import { QUERY_USER } from "../../utils/queries";
@@ -15,8 +19,10 @@ import Auth from "../../utils/auth";
 
 export default function UserProfile({ username, backToMenu, setUserDeleted }) {
 
+  // Get profile picture upload key from User Settings context
   const { profilePictureUploadKey } = useUserSettings();
 
+  // Define state variable for active screen
   const [profileScreen, setProfileScreen] = useState("UserProfile");
 
   const logout = (event) => {
@@ -26,9 +32,11 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
     window.location.href = "/";
   };
 
+  // Define mutations for updating/deleting user
   const [updateUser, { error: updateError }] = useMutation(UPDATE_USER);
   const [deleteUser, { error: deleteError }] = useMutation(DELETE_USER);
 
+  // Query for fetching user data
   const { data: userData, error: userError, refetch: userRefetch } = useQuery(QUERY_USER, {
     variables: { username: username },
   });
@@ -48,8 +56,7 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
     birthDate: userData?.user.birthDate || "",
   });
 
-  console.log("[UserProfile.jsx] formData:", formData);
-
+  // Handle form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -58,12 +65,13 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
       [name]: value,
     });
 
-    console.log("[UserProfile.jsx] handleChange - formData:", name, value);
   };
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
+    // Format birth date for submission
     const formattedBirthDate = new Date(`${formData.birthDate} 00:00`);
 
     const formattedFormData = {
@@ -71,8 +79,7 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
       birthDate: formattedBirthDate,
     };
 
-    console.log("[UserProfile.jsx] formattedFormData:", formattedFormData);
-
+    // Update the database with the new user data
     try {
       const { data } = await updateUser({
         variables: { ...formattedFormData },
@@ -83,28 +90,32 @@ export default function UserProfile({ username, backToMenu, setUserDeleted }) {
         password: "", // Clear the password field
       });
 
+      // Refetch user data
       userRefetch();
 
+      // Move user to confirmation screen
       setProfileScreen("saveConfirmed");
 
-      console.log("[UserProfile.jsx] data:", data);
     } catch (e) {
       console.error(e);
     }
   };
 
+  // Handle user deletion request
   const handleDeleteUser = async (event) => {
     event.preventDefault();
 
-    console.log("[UserProfile.jsx] handleDeleteUser - username:", username);
-
     try {
+
+      // Delete the user from the database
       const { success, message } = await deleteUser({
         variables: { username: username },
       });
 
-      console.log("[UserProfile.jsx] deleteUser:", success, message);
+      // Log user out after deletion
       setUserDeleted(true);
+
+      // Move user to confirmation screen
       setProfileScreen("deleteConfirmed");
     } catch (e) {
       console.error(e);

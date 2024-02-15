@@ -1,6 +1,9 @@
 // Donate.jsx
+// Stripe-powered donation page
 
 export default function Donate() {
+
+  // Open Stripe donation page in new tab
   const handleDonateClick = () => {
     window.open("https://donate.stripe.com/8wM3dFa433Urdva6oo", "_blank");
   };

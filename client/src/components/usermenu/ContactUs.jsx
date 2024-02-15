@@ -1,4 +1,5 @@
 // ContactUs.jsx
+// HeroTofu-powered contact form
 
 import { useState } from "react";
 import { validateEmail } from "../../utils/helpers.js";

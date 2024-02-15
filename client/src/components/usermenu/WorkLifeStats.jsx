@@ -1,4 +1,5 @@
 // WorkLifeStats.jsx
+// Displays work/life stats based on user's logged events
 
 import { useState, useEffect, useRef } from "react";
 
@@ -7,6 +8,8 @@ import { useUserSettings } from "../contextproviders/UserSettingsProvider.jsx";
 import { calculateMacroStats } from "../../utils/eventUtils.js";
 
 export default function WorkLifeStats() {
+
+  // Initialize refs for stats bars
   const eventBar = useRef(null);
   const timeBar = useRef(null);
   const averageEventBar = useRef(null);
@@ -14,6 +17,7 @@ export default function WorkLifeStats() {
 
   const { userSettings, isLoadingSettings } = useUserSettings();
 
+  // Initialize state for selected stat type
   const [selectedStat, setSelectedStat] = useState("all-time");
   const [macroStats, setMacroStats] = useState({});
   const [displayMacroStats, setDisplayMacroStats] = useState({});
@@ -31,6 +35,7 @@ export default function WorkLifeStats() {
     }
   }, [isLoadingSettings, userSettings]);
 
+  // Update stats bars' widths after stats are calculated
   useEffect(() => {
     if (displayMacroStats?.totalEventCount > 0) {
       const newEventWidth = `${
@@ -59,35 +64,23 @@ export default function WorkLifeStats() {
     }
   }, [selectedStat, displayMacroStats]);
 
-  console.log("[WorkLifeStats.jsx] macroStats:", macroStats);
-  console.log("[WorkLifeStats.jsx] displayMacroStats:", displayMacroStats);
-
+  // Update displayed stats based on selected stat type
   const handleStatSelectChange = (e) => {
     setSelectedStat(e.target.value);
     switch (e.target.value) {
       case "all-time":
-        console.log("all-time");
-        console.log(macroStats?.allTimeMacroStats);
         setDisplayMacroStats(macroStats?.allTimeMacroStats);
         break;
       case "this-month":
-        console.log("this-month");
-        console.log(macroStats?.thisMonthMacroStats);
         setDisplayMacroStats(macroStats?.currentMonthMacroStats);
         break;
       case "last-month":
-        console.log("last-month");
-        console.log(macroStats?.lastMonthMacroStats);
         setDisplayMacroStats(macroStats?.previousMonthMacroStats);
         break;
       case "this-week":
-        console.log("this-week");
-        console.log(macroStats?.thisWeekMacroStats);
         setDisplayMacroStats(macroStats?.currentWeekMacroStats);
         break;
       case "last-week":
-        console.log("last-week");
-        console.log(macroStats?.lastWeekMacroStats);
         setDisplayMacroStats(macroStats?.previousWeekMacroStats);
         break;
       default:

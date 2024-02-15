@@ -1,4 +1,5 @@
 // UserMenu.jsx
+// User menu wrapper component
 
 import React, { useState } from "react";
 
@@ -15,25 +16,33 @@ import AboutUs from "./AboutUs.jsx";
 import ContactUs from "./ContactUs.jsx";
 
 export default function UserMenu({ username, userId, modalContent }) {
+
+  // Define state variable for user menu modal content
   const [userMenuModalContent, setUserMenuModalContent] =
     useState(modalContent);
+
+  // Define state variable for user deletion status
   const [userDeleted, setUserDeleted] = useState(false);
 
   const { updateProviderUserSettings, userSettings } = useUserSettings();
 
+  // Define state variable for form data (Settings)
   const [formData, setFormData] = useState({});
 
   const { closeModal } = useModal();
 
+  // Handle Settings form submission at modal close
   const handleFormSubmit = async (event) => {
     console.log("[UserMenu.jsx] handleFormSubmit()");
     console.log("[UserMenu.jsx] formData: ", formData);
 
+    // Update user settings context
     updateProviderUserSettings(formData?.user);
 
     setFormData({});
   };
 
+  // Navigate back to user menu options and handle form submission if necessary
   const backToMenu = (event) => {
     if (userMenuModalContent === "Settings") {
       handleFormSubmit();
@@ -41,6 +50,7 @@ export default function UserMenu({ username, userId, modalContent }) {
     setUserMenuModalContent("UserMenuOptions");
   };
 
+  // Close modal and handle form submission if necessary
   const checkCloseModal = (event) => {
     if (userMenuModalContent === "Settings") {
       handleFormSubmit();
@@ -48,6 +58,7 @@ export default function UserMenu({ username, userId, modalContent }) {
     closeModal();
   };
 
+  // Render user menu modal content based on state variable
   const renderContent = () => {
     switch (userMenuModalContent) {
       case "UserMenuOptions":

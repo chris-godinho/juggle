@@ -1,4 +1,5 @@
 // Settings.jsx
+// Settings page for the User Menu
 
 import React, { useState, useEffect } from "react";
 import { useQuery } from "@apollo/client";
@@ -18,18 +19,25 @@ import ColorSchemeTable from "../settings/ColorSchemeTable.jsx";
 import AuthService from "../../utils/auth.js";
 
 export default function Settings() {
-
+  // Get layout context for updating view style
   const { changeEventView } = useLayout();
 
+  // Get user profile data
   const userProfile = AuthService.getProfile();
 
+  // Initialize state for Settings active screen
   const [settingsScreen, setSettingsScreen] = useState("stats");
+
+  // Initialize state for active preferred activities
   const [activePreferredActivities, setActivePreferredActivities] =
     useState("work");
+
+  // Initialize state for mobile menu option
   const [mobileMenuOption, setMobileMenuOption] = useState("stats");
 
   const { formData, setFormData, userSettings } = useDataContext();
-  console.log("[Settings.jsx] userSettings: ", userSettings);
+
+  // Initialize state for event subtype form data
   const [eventAddSubtypeFormData, setAddEventSubtypeFormData] = useState({
     subtype: "",
     parentType: "work",
@@ -38,8 +46,11 @@ export default function Settings() {
     useState("");
   const [displayAddSubtypeFormError, setDisplayAddSubtypeFormError] =
     useState(false);
+
+  // Initialize state for PWA deferred prompt
   const [deferredPrompt, setDeferredPrompt] = useState(null);
 
+  // Query for fetching user data
   const { data: userData, error: userError } = useQuery(QUERY_USER, {
     variables: { username: userProfile.data.username },
   });
@@ -49,6 +60,7 @@ export default function Settings() {
     return <div>Error fetching data.</div>;
   }
 
+  // Set form data after user data is loaded
   useEffect(() => {
     if (userData) {
       const eventSubtypes = userData?.user.eventSubtypes.map(
@@ -61,58 +73,33 @@ export default function Settings() {
     }
   }, [userData]);
 
+  // Check for PWA installation before showing install button
   if ("beforeinstallprompt" in window) {
-    console.log(
-      "[Settings.jsx] beforeinstallprompt event listener is supported"
-    );
-    // Check for PWA installation before showing install button
     window.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
 
       setDeferredPrompt(event);
-
-      console.log("[Settings.jsx] beforeinstallprompt fired");
-      console.log("[Settings.jsx] deferredPrompt:", deferredPrompt);
     });
-  } else {
-    console.log(
-      "[Settings.jsx] beforeinstallprompt event listener is not supported"
-    );
   }
 
+  // Handle PWA install button click
   const handleInstallButtonClick = () => {
-    console.log("[Settings.jsx] Install button clicked");
-    console.log("[Settings.jsx] deferredPrompt:", deferredPrompt);
     if (deferredPrompt) {
-      console.log("[Settings.jsx] Prompting user to install...");
       deferredPrompt.prompt();
 
       deferredPrompt.userChoice.then((choiceResult) => {
-        console.log("[Settings.jsx] User choice:", choiceResult);
-        if (choiceResult.outcome === "accepted") {
-          console.log("User accepted the install prompt");
-        } else {
-          console.log("User dismissed the install prompt");
-        }
-
         setDeferredPrompt(null);
       });
     }
   };
 
+  // Handle input changes
   const handleInputChange = (event) => {
     const { name, value } = event.target;
 
     if (name.startsWith("checkbox-")) {
-      console.log("[Settings.jsx] handleInputChange - checkbox");
-      console.log("[Settings.jsx] name:", name);
-
       const [_, checkboxCategory, checkboxName] = name.split("-");
       const currentState = formData?.user?.[checkboxCategory]?.[checkboxName];
-
-      console.log("[Settings.jsx] checkboxCategory:", checkboxCategory);
-      console.log("[Settings.jsx] checkboxName:", checkboxName);
-      console.log("[Settings.jsx] currentState:", currentState);
 
       setFormData({
         ...formData,
@@ -127,39 +114,16 @@ export default function Settings() {
     } else if (name.startsWith("eventSubtypes")) {
       setDisplayAddSubtypeFormError(false);
 
-      console.log("[Settings.jsx] handleInputChange - eventSubtypes");
-      console.log("[Settings.jsx] name:", name);
-
       const [eventSubtypeCategory, eventSubtypeName] = name.split("-");
       const currentSubtypes = formData?.user?.eventSubtypes;
-
-      console.log("[Settings.jsx] eventSubtypeCategory:", eventSubtypeCategory);
-      console.log("[Settings.jsx] eventSubtypeName:", eventSubtypeName);
-      console.log("[Settings.jsx] currentState:", currentSubtypes);
 
       setAddEventSubtypeFormData({
         ...eventAddSubtypeFormData,
         [eventSubtypeName]: value,
       });
-
-      console.log(
-        "[Settings.jsx] eventAddSubtypeFormData:",
-        eventAddSubtypeFormData
-      );
     } else if (name === "removeSubtypes") {
-      console.log("[Settings.jsx] handleInputChange - removeSubtypes");
-      console.log("[Settings.jsx] value:", value);
-
       setRemoveEventSubtypeFormData(value);
-
-      console.log(
-        "[Settings.jsx] eventRemoveSubtypeFormData:",
-        eventRemoveSubtypeFormData
-      );
     } else if (name === "layoutSettings-viewStyle") {
-      console.log("[Settings.jsx] handleInputChange - viewStyle");
-      console.log("[Settings.jsx] value:", value);
-
       changeEventView(value);
 
       setFormData({
@@ -173,9 +137,6 @@ export default function Settings() {
         },
       });
     } else if (name === "localizationSettings-timeZone") {
-      console.log("[Settings.jsx] handleInputChange - timeZone");
-      console.log("[Settings.jsx] value:", value);
-
       setFormData({
         ...formData,
         user: {
@@ -188,10 +149,6 @@ export default function Settings() {
       });
     } else {
       const [fieldCategory, fieldName] = name.split("-");
-      console.log("[Settings.jsx] handleInputChange - field");
-      console.log("[Settings.jsx] fieldCategory:", fieldCategory);
-      console.log("[Settings.jsx] fieldName:", fieldName);
-
       setFormData({
         ...formData,
         user: {
@@ -202,26 +159,14 @@ export default function Settings() {
           },
         },
       });
-
-      console.log("[Settings.jsx] formData:", formData);
     }
   };
 
+  // Handle add subtype form submission
   const handleAddSubtypeFormSubmit = async (event) => {
     event.preventDefault();
 
-    console.log("[Settings.jsx] handleAddSubtypeFormSubmit");
-    console.log(
-      "[Settings.jsx] eventAddSubtypeFormData:",
-      eventAddSubtypeFormData
-    );
-
     const { subtype, parentType } = eventAddSubtypeFormData;
-
-    console.log(
-      "[Settings.jsx] formData?.eventSubtypes:",
-      formData?.user?.eventSubtypes
-    );
 
     const existingSubtypes = formData?.user?.eventSubtypes;
 
@@ -230,18 +175,12 @@ export default function Settings() {
     );
 
     if (subtypeMatch) {
-      console.log("[Settings.jsx] Subtype already exists:", subtypeMatch);
       setDisplayAddSubtypeFormError(true);
     } else if (subtype && parentType) {
-      console.log("[Settings.jsx] subtype:", subtype);
-      console.log("[Settings.jsx] parentType:", parentType);
-
       const newSubtype = {
         subtype,
         parentType,
       };
-
-      console.log("[Settings.jsx] newSubtype:", newSubtype);
 
       setFormData({
         ...formData,
@@ -250,8 +189,6 @@ export default function Settings() {
           eventSubtypes: [...formData?.user?.eventSubtypes, newSubtype],
         },
       });
-
-      console.log("[Settings.jsx] formData:", formData);
     }
     setAddEventSubtypeFormData({
       subtype: "",
@@ -259,22 +196,15 @@ export default function Settings() {
     });
   };
 
+  // Handle remove subtype form submission
   const handleRemoveSubtypeFormSubmit = async (event) => {
     event.preventDefault();
 
-    console.log(
-      "[Settings.jsx] handleRemoveSubtypeFormSubmit - removeSubtypes"
-    );
-
     const currentSubtypes = formData?.user?.eventSubtypes;
-
-    console.log("[Settings.jsx] currentSubtypes:", currentSubtypes);
 
     const newSubtypes = currentSubtypes.filter(
       (element) => element.subtype !== eventRemoveSubtypeFormData
     );
-
-    console.log("[Settings.jsx] newSubtypes:", newSubtypes);
 
     setFormData({
       ...formData,
@@ -285,6 +215,7 @@ export default function Settings() {
     });
   };
 
+  // Handle mobile menu change
   const handleMobileMenuChange = (event) => {
     setMobileMenuOption(event.target.value);
     setSettingsScreen(event.target.value);

@@ -1,4 +1,5 @@
 // AboutUs.jsx
+// About Us page for the User Menu
 
 export default function AboutUs() {
   return (

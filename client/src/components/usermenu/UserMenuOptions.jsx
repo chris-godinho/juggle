@@ -1,4 +1,5 @@
-// UserMenu.jsx
+// UserMenuOptions.jsx
+// Options for user menu modal
 
 import { useState, useEffect } from "react";
 
@@ -11,10 +12,12 @@ import Auth from "../../utils/auth";
 export default function UserMenuOptions({ username, setUserMenuModalContent }) {
   const { userSettings, isLoadingSettings } = useUserSettings();
 
+  // Initialize state for profile picture URL
   const [profilePictureUrl, setProfilePictureUrl] = useState(
     null
   );
 
+  // Set profile picture URL after user settings are loaded
   useEffect(() => {
     if (!isLoadingSettings) {
       setProfilePictureUrl(
@@ -29,11 +32,6 @@ export default function UserMenuOptions({ username, setUserMenuModalContent }) {
     Auth.logout();
     window.location.href = "/";
   };
-
-  // TODO: Remove this useEffect after testing
-  useEffect(() => {
-    console.log("[UserMenuOptions.jsx] profilePictureUrl: ", profilePictureUrl);
-  }, [profilePictureUrl]);
 
   return (
     <div className="modal-inner-content-jg">
