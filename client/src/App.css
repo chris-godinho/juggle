@@ -3915,6 +3915,11 @@ path[class="firework-stroke-color-1-jg"] {
     opacity: 0.5;
   }
 
+.modal-content-jg {
+  padding-top: 5vh;
+  padding-bottom: 5vh;
+}
+
   .modal-content-jg,
   .modal-inner-content-jg {
     min-height: 100vh;
@@ -3936,7 +3941,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .event-details-modal-container-jg .modal-content-jg .modal-close-button-jg {
-    top: 0em;
+    top: 3em;
     right: 0em;
   }
 
