@@ -1,3 +1,6 @@
+// mutations.js
+// Defines the mutations used to interact with the GraphQL API
+
 import { gql } from "@apollo/client";
 
 export const LOGIN_USER = gql`

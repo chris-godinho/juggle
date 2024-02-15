@@ -1,3 +1,6 @@
+// Connection.js
+// Connect to the MongoDB database
+
 const path = require("path");
 const dotenv = require("dotenv").config({
     path: path.resolve(__dirname, "../../.env"),

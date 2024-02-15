@@ -1,3 +1,6 @@
+// typeDefs.js
+// Type definitions for the GraphQL schema
+
 const typeDefs = `
   type User {
     _id: ID

@@ -1,8 +1,9 @@
 // scheduleUtils.js
+// Utility functions for Schedule/TaskList components
 
 import { removeTypename, weekdayList } from "./helpers";
 
-// Function to assign class names to each event box according to the event type and time
+// Assign class names to each event box according to the event type and time
 const assignClassNames = (
   event,
   startsPreviousDay,
@@ -48,6 +49,7 @@ const assignClassNames = (
   return className;
 };
 
+// Function to find the new width for each event box
 const findEventW = (event, eventsInLine, receivedLayout) => {
   let newW;
 
@@ -90,6 +92,7 @@ const findEventW = (event, eventsInLine, receivedLayout) => {
   return newW;
 };
 
+// Function to find the new x position for each event box
 const findEventX = (event, eventsInLine, receivedLayout) => {
   let currentX;
 
@@ -116,6 +119,7 @@ const findEventX = (event, eventsInLine, receivedLayout) => {
   return currentX;
 };
 
+// Function to adjust the layout of overlapping events
 export const adjustOverlappingEvents = (receivedLayout, events) => {
   // Sort by "y" in ascending order, then by "h" in descending order
   receivedLayout.sort((a, b) => {
@@ -193,6 +197,7 @@ export const adjustOverlappingEvents = (receivedLayout, events) => {
   return receivedLayout;
 };
 
+// Set configurations for each event box
 export const buildEventBox = (event, displayDate) => {
   const nextDay = new Date(displayDate);
   nextDay.setDate(displayDate.getDate() + 1);
@@ -270,6 +275,7 @@ export const buildEventBox = (event, displayDate) => {
   return { adjustedBoxHeight, adjustedBoxPosition, className };
 };
 
+// Find the sleeping hours on a given day
 export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
   const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
 
@@ -324,10 +330,12 @@ export const calculateSleepingHoursForDay = (fetchedSettings, selectedDate) => {
   };
 };
 
+// Function to get the total number of minutes from a Date object
 const getTotalMinutes = (dateObject) => {
   return dateObject.getHours() * 60 + dateObject.getMinutes();
 };
 
+// Calculate pixel heights for sleeping hours in calendar view
 export const calculateSleepingHoursPixelHeights = (
   fetchedSettings,
   selectedDate
@@ -378,6 +386,7 @@ export const formatTime = (dateObject) => {
   return result;
 };
 
+// Order tasks by taskListOrder and assign default order numbers to tasks without taskListOrder
 export const buildOrderedTaskList = (eventListWithTaskOrderNumbers) => {
   console.log("[scheduleUtils.js] in buildOrderedTaskList()");
   console.log("[scheduleUtils.js] eventListWithTaskOrderNumbers:", eventListWithTaskOrderNumbers);

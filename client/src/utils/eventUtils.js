@@ -1,7 +1,9 @@
 // eventUtils.js
+// Utility functions for event-related operations
 
 import { removeTypename, weekdayList } from "./helpers";
 
+// Calculate an user's total sleeping hours
 export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
   const sleepingHoursMatrix = fetchedSettings?.sleepingHours || {};
   const filteredSleepingHoursMatrix = removeTypename(sleepingHoursMatrix);
@@ -31,6 +33,7 @@ export const calculateSleepingHours = (fetchedSettings, selectedDate) => {
   return sleepingHoursInMinutes;
 };
 
+// Calculate event statistics
 export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
   // Initialize counters
   let workCount = 0;
@@ -129,6 +132,7 @@ export const calculateEventStats = (events, fetchedSettings, selectedDate) => {
   };
 };
 
+// Calculate event statistics for a single event
 export const calculateSingleEventPercentage = (
   event,
   totalAlottedTime,
@@ -159,6 +163,7 @@ export const calculateSingleEventPercentage = (
   return eventPercentage;
 };
 
+// Calculate main percentage for work/life events
 export const findDisplayPercentage = (
   eventType,
   ignoreUnalotted,
@@ -209,6 +214,7 @@ export const findDisplayPercentage = (
   return displayPercentage;
 };
 
+// Find matching text for work/life stats based on user settings
 export const findDisplayText = (
   ignoreUnalotted,
   percentageBasis,
@@ -227,6 +233,7 @@ export const findDisplayText = (
   return displayText;
 };
 
+// Generate a list of recommendations for work/life events
 export const findRecommendations = (
   eventType,
   isOneBarLayout,
@@ -358,6 +365,7 @@ export const findRecommendations = (
   return recommendationList;
 };
 
+// Define which events to be considered for selected stat type
 const findEventPools = (events) => {
   // Get the current date
   const currentDate = new Date();
@@ -423,6 +431,7 @@ const findEventPools = (events) => {
   };
 };
 
+// Calculate total event time in minutes
 const calculateTotalEventTime = (events) => {
   let totalEventTime = 0;
 
@@ -443,6 +452,7 @@ const calculateTotalEventTime = (events) => {
   return totalEventTime;
 };
 
+// Format minutes as hours and minutes
 export const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
   const roundedTotalMinutes = Math.round(totalMinutes);
 
@@ -456,6 +466,7 @@ export const formatMinutesAsHoursAndMinutes = (totalMinutes) => {
   return `${formattedHours}${formattedMinutes}`;
 };
 
+// Calculate event pool statistics
 const calculateEventPoolsStats = (events) => {
   const totalEventCount = events.length;
 
@@ -538,6 +549,7 @@ const calculateEventPoolsStats = (events) => {
   };
 };
 
+// Calculate macro statistics for event pools
 export const calculateMacroStats = (events) => {
   const eventPools = findEventPools(events);
 
@@ -564,6 +576,7 @@ export const calculateMacroStats = (events) => {
   };
 };
 
+// Validate event form data for submission
 export const validateEventForm = (formData, showStats) => {
   console.log("[eventUtils.jsx] in validateEventForm()");
 

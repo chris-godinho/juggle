@@ -1,4 +1,5 @@
 // main.jsx
+// Main entry point for the client-side application
 
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
@@ -24,6 +25,7 @@ if ('serviceWorker' in navigator) {
     });
 }
 
+// Create a new router
 const router = createBrowserRouter([
   {
     path: "/",

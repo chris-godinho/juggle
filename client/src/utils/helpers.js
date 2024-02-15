@@ -1,4 +1,5 @@
 // helpers.js
+// Helper functions for the client
 
 // Helper function to validate email address
 export function validateEmail(email) {

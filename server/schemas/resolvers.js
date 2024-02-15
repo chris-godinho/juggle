@@ -1,21 +1,29 @@
+// resolvers.js
+// Resolvers for the GraphQL API
+
 const { User, Event } = require("../models");
 const { signToken, AuthenticationError } = require("../utils/auth");
 const { DateTimeResolver } = require("graphql-scalars");
 const { generatePresignedUrl, deleteFile } = require("../utils/awsS3.js");
 
 const resolvers = {
+  // Custom scalar type for DateTime
   DateTime: DateTimeResolver,
   Query: {
+    // Get all users
     users: async () => {
       return User.find().populate("events");
     },
+    // Get a user by username
     user: async (parent, { username }) => {
       return User.findOne({ username }).populate("events");
     },
+    // Get all events by user
     eventsByUser: async (parent, { user }) => {
       const params = user ? { user } : {};
       return Event.find(params).sort({ eventStart: 1 });
     },
+    // Get all events by date
     eventsByDate: async (
       parent,
       { user, selectedDateStart, selectedDateEnd }
@@ -38,17 +46,13 @@ const resolvers = {
       ];
 
       const result = await Event.find(params).sort({ eventStart: 1 });
-      /*
-      console.log(
-        "-----------------------------------------------------------------"
-      );
-      console.log("[resolvers.js] eventsByDate: result =", result);
-      */
       return result;
     },
+    // Get an event by ID
     event: async (parent, { eventId }) => {
       return Event.findOne({ _id: eventId });
     },
+    // Get a pre-signed URL for profile picture
     generatePresignedUrl: async (_, { username, fileName }) => {
       try {
         const url = await generatePresignedUrl(username, fileName);
@@ -61,6 +65,7 @@ const resolvers = {
   },
 
   Mutation: {
+    // Add a new user
     addUser: async (
       parent,
       { username, email, password, firstName, middleName, lastName }
@@ -76,6 +81,7 @@ const resolvers = {
       const token = signToken(user);
       return { token, user };
     },
+    // Log in a user to the application
     login: async (parent, { username, password }) => {
       const user = await User.findOne({ username });
 
@@ -93,6 +99,7 @@ const resolvers = {
 
       return { token, user };
     },
+    // Update user data
     updateUser: async (parent, { username, email, password, birthDate }) => {
       // Create an object to store the fields with values
       const updateFields = {};
@@ -111,6 +118,7 @@ const resolvers = {
 
       return { user };
     },
+    // Update user settings
     updateUserSettings: async (
       parent,
       {
@@ -126,32 +134,6 @@ const resolvers = {
         localizationSettings,
       }
     ) => {
-      console.log(
-        "-----------------------------------------------------------------"
-      );
-      console.log(
-        "[resolvers.js] updateUserSettings: username =",
-        username,
-        "colorModeSetting =",
-        colorModeSetting,
-        "eventSubtypes =",
-        eventSubtypes,
-        "statSettings =",
-        statSettings,
-        "sleepingHours =",
-        sleepingHours,
-        "lifePreferredActivities =",
-        lifePreferredActivities,
-        "workPreferredActivities =",
-        workPreferredActivities,
-        "eventSettings =",
-        eventSettings,
-        "layoutSettings =",
-        layoutSettings,
-        "localizationSettings =",
-        localizationSettings
-      );
-
       // Create an object to store the fields with values
       const updateFields = {};
 
@@ -169,14 +151,6 @@ const resolvers = {
       if (localizationSettings)
         updateFields.localizationSettings = localizationSettings;
 
-      console.log(
-        "-----------------------------------------------------------------"
-      );
-      console.log(
-        "[resolvers.js] updateUserSettings: updateFields =",
-        updateFields
-      );
-
       // Use the $set operator to update only the specified fields
       const user = await User.findOneAndUpdate(
         { username },
@@ -184,12 +158,9 @@ const resolvers = {
         { new: true }
       );
 
-      console.log(
-        "-----------------------------------------------------------------"
-      );
-      console.log("[resolvers.js] updateUserSettings: user =", user);
       return { user };
     },
+    // Delete a user from the database
     deleteUser: async (parent, { username }) => {
 
       try {
@@ -202,6 +173,7 @@ const resolvers = {
         return { success: false, message: "Error deleting user." };
       }
     },
+    // Add a new event
     addEvent: async (
       parent,
       {
@@ -244,6 +216,7 @@ const resolvers = {
 
       return event;
     },
+    // Update an event
     updateEvent: async (
       parent,
       {
@@ -287,9 +260,11 @@ const resolvers = {
 
       return event;
     },
+    // Delete an event
     removeEvent: async (parent, { eventId }) => {
       return Event.findOneAndDelete({ _id: eventId });
     },
+    // Delete user's profile picture
     deleteFile: async (__, { username, fileName }) => {
       return deleteFile(username, fileName);
     },

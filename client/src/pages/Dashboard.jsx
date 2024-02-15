@@ -1,4 +1,5 @@
 // Dashboard.jsx
+// Main dashboard page
 
 import React, { useEffect, useState } from "react";
 import { useQuery } from "@apollo/client";
@@ -23,11 +24,9 @@ export default function Dashboard() {
   const { userSettings, isLoadingSettings } = useUserSettings();
   const { isNotificationOpen } = useNotification();
 
+  // Get layout and event view settings from local storage as a fallback
   const localStorageLayout = localStorage.getItem("layout");
   const localStorageEventView = localStorage.getItem("eventView");
-
-  console.log("[Dashboard.jsx] localStorageLayout:", localStorageLayout);
-  console.log("[Dashboard.jsx] localStorageEventView:", localStorageEventView);
 
   // Set up date variables for queries and new events
   const localDate = new Date();
@@ -38,13 +37,20 @@ export default function Dashboard() {
   const [selectedDate, setSelectedDate] = useState(midnightLocalDate);
   const [tomorrowDate, setTomorrowDate] = useState(midnightTomorrowLocalDate);
 
+  // State variable for refreshing the Schedule component
   const [scheduleComponentRandomKey, setScheduleComponentRandomKey] = useState(
+    Math.random()
+  );
+
+  // State variable for refreshing the responsive grid
+  const [responsiveGridTimestampKey, setResponsiveGridTimestampKey] = useState(
     Math.random()
   );
 
   // Get user profile
   const userProfile = AuthService.getProfile();
 
+  // Set up state variable for fetched user settings
   const [fetchedSettings, setFetchedSettings] = useState({
     username: userProfile?.data?.username || "",
     userId: userProfile?.data?._id || "",
@@ -60,6 +66,7 @@ export default function Dashboard() {
     profilePictureUrl: null,
   });
 
+  // Set up state variable for processed event data
   const [fetchedEventData, setFetchedEventData] = useState({
     eventCount: 0,
     totalAlottedTime: 0,
@@ -81,16 +88,15 @@ export default function Dashboard() {
     lifePercentageIgnoreUnalotted: 0,
   });
 
+  // State variables for layout settings
   const [hasLeftSidebar, setHasLeftSidebar] = useState(true);
   const [hasRightSidebar, setHasRightSidebar] = useState(true);
   const [isOneBarLayout, setIsOneBarLayout] = useState(false);
 
+  // State variable for mobile view
   const [isMobileView, setIsMobileView] = useState(window.innerWidth <= 620);
 
-  const [responsiveGridTimestampKey, setResponsiveGridTimestampKey] = useState(
-    Math.random()
-  );
-
+  // Style for the schedule loading spinner
   const scheduleSpinnerStyle = {
     spinnerWidth: "100%",
     spinnerHeight: "80vh",
@@ -112,6 +118,7 @@ export default function Dashboard() {
 
   const events = eventsData?.eventsByDate || [];
 
+  // Refresh the responsive grid and schedule components
   const refreshResponsiveGrid = (refreshType = "change") => {
     console.log("refreshResponsiveGrid() called");
     setResponsiveGridTimestampKey(Math.random());
@@ -121,11 +128,7 @@ export default function Dashboard() {
     eventsRefetch();
   };
 
-  useEffect(() => {
-    console.log("[Dashboard.jsx] useEffect() - fetchedSettings has changed:", fetchedSettings);
-    console.log("[Dashboard.jsx] useEffect() - fetchedSettings.viewStyle:", fetchedSettings.viewStyle);
-  }, [fetchedSettings]);
-
+  // Add event listener for window resize
   useEffect(() => {
     const handleResize = () => {
       setIsMobileView(window.innerWidth < 450);
@@ -140,12 +143,9 @@ export default function Dashboard() {
     };
   }, []);
 
+  // Update fetchedSettings when user settings fetching is complete
   useEffect(() => {
     if (!isLoadingSettings) {
-      console.log(
-        "[Dashboard.jsx] Data fetching is complete, updating state variables..."
-      );
-      console.log("[Dashboard.jsx] userSettings:", userSettings);
       setFetchedSettings({
         username: userSettings?.username || "",
         userId: userSettings?._id || "",
@@ -182,6 +182,7 @@ export default function Dashboard() {
     }
   }, [isLoadingSettings, userSettings]);
 
+  // Update fetchedEventData when events processing is complete
   useEffect(() => {
     if (!eventsLoading) {
       try {
@@ -200,8 +201,8 @@ export default function Dashboard() {
     }
   }, [events, eventsLoading, fetchedSettings, selectedDate]);
 
+  // Refresh the responsive grid and schedule components when the selected date changes
   useEffect(() => {
-    console.log("[Dashboard.jsx] useEffect() - selectedDate has changed:", selectedDate);
     refreshResponsiveGrid("initial");
   }, [selectedDate]);
 

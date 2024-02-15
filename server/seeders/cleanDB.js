@@ -1,3 +1,6 @@
+// cleanDB.js
+// Clear the database prior to seeding
+
 const models = require('../models');
 const db = require('../config/connection');
 

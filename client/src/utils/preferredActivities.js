@@ -1,3 +1,6 @@
+// preferredActivitices.js
+// Contains all work/life preferred activities for recommendations
+
 export const lifeGoalActivities = [
   {
     key: "exercise",

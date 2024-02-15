@@ -1,3 +1,6 @@
+// seed.js
+// Seed the database with user and event data
+
 const db = require('../config/connection');
 const { User, Event } = require('../models');
 const userSeeds = require('./userSeeds.json');

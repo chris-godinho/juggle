@@ -1,3 +1,6 @@
+// Login.jsx
+// Login form
+
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
@@ -11,12 +14,15 @@ import Auth from "../utils/auth";
 
 const Login = (props) => {
 
+  // Notification context for error messages
   const { openNotification } = useNotification();
 
   const [formState, setFormState] = useState({ username: "", password: "" });
+
+  // Mutation for logging in user
   const [login, { error, data }] = useMutation(LOGIN_USER);
 
-  // update state based on form input changes
+  // Update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -26,6 +32,7 @@ const Login = (props) => {
     });
   };
 
+  // Handle error messages for login form
   const handleLoginError = (error) => {
     let errorMessage = "";
 
@@ -36,26 +43,27 @@ const Login = (props) => {
     } else {
       errorMessage = "An error occurred. Please try again.";
     }
-
     openNotification(errorMessage, "error");
   };
 
-  // submit form
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
     try {
+
+      // Use login mutation to log in user
       const { data } = await login({
         variables: { ...formState },
       });
 
+      // Log user in and redirect to dashboard
       Auth.login(data.login.token);
     } catch (e) {
       console.error(e);
       handleLoginError(e);
     }
 
-    // clear form values
+    // Clear form values
     setFormState({
       username: "",
       password: "",

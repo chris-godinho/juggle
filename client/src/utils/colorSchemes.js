@@ -1,3 +1,6 @@
+// colorSchemes.js
+// Color scheme data for selection in Welcome/Settings page
+
 export const colorSchemes = [
   {
     name: "Dark (Default)",

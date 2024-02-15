@@ -1,3 +1,6 @@
+// queries.js
+// Defines the queries used to interact with the GraphQL API
+
 import { gql } from "@apollo/client";
 
 export const QUERY_USER = gql`

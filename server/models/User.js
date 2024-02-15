@@ -1,4 +1,5 @@
-// User.js: User model
+// User.js
+// User model
 
 const { Schema, model } = require("mongoose");
 const bcrypt = require("bcrypt");

@@ -1,4 +1,5 @@
 // App.jsx
+// Root component for the application
 
 import {
   ApolloClient,

@@ -1,4 +1,5 @@
-// Event.js: Event model
+// Event.js
+// Event model
 
 const { Schema, model } = require("mongoose");
 

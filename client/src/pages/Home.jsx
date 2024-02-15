@@ -1,3 +1,6 @@
+// Home.jsx
+// Landing page for Juggler app
+
 import Header from "../components/other/Header";
 
 const Home = () => {

@@ -1,4 +1,5 @@
 // auth.js
+// Contains the logic for creating a JSON Web Token (JWT) and handling errors related to user authentication
 
 const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
@@ -8,6 +9,7 @@ const dotenv = require("dotenv").config({
   path: path.resolve(__dirname, "../../.env"),
 });
 
+// Set the JWT_SECRET and expiration time
 const secret = process.env.JWT_SECRET;
 const expiration = process.env.JWT_EXPIRATION || '24h';
 

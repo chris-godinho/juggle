@@ -1,4 +1,5 @@
 // Welcome.jsx
+// Welcome wizard for new users to customize their settings
 
 import React, { useState, useEffect, useRef } from "react";
 import { useQuery } from "@apollo/client";
@@ -20,21 +21,27 @@ import Fireworks from "../components/other/Fireworks.jsx";
 import AuthService from "../utils/auth.js";
 
 const Welcome = () => {
+
+  // Refs for the progress bar and each screen
   const progressBar = useRef(null);
   const welcomeScreens = Array.from({ length: 8 }, () => useRef(null));
 
   const { updateProviderUserSettings, profilePictureUploadKey } = useUserSettings();
 
+  // Get user profile
   const userProfile = AuthService.getProfile();
 
+  // State variables for current screen and form data
   const [currentScreen, setCurrentScreen] = useState(1);
   const [formData, setFormData] = useState({});
 
+  // Update progress bar width when current screen changes
   useEffect(() => {
     const newWidth = `${(currentScreen / 8) * 100}%`;
     progressBar.current.style.minWidth = newWidth;
   }, [currentScreen]);
 
+  // Query user data
   const { data: userData, error: userError } = useQuery(QUERY_USER, {
     variables: { username: userProfile.data.username },
   });
@@ -44,6 +51,7 @@ const Welcome = () => {
     return <div>Error fetching data.</div>;
   }
 
+  // Set form data to user data when available
   useEffect(() => {
     if (userData) {
       setFormData({
@@ -171,30 +179,31 @@ const Welcome = () => {
     }
   }, [userData]);
 
+  // Get user's first name
   const userFirstName = userData?.user.firstName;
 
+  // Save settings data to the database
   const saveSettingsData = async () => {
-    console.log("[Welcome.jsx] saveSettingsData() triggered.");
-    console.log("[Welcome.jsx] formData:", formData);
-
     updateProviderUserSettings(formData?.user);
   };
 
+  // Move to the next screen
   const nextScreen = () => {
+    // Redirect to the dashboard when the last screen is reached
     if (currentScreen === 8) {
       window.location.href = "/";
     } else {
       welcomeScreens[currentScreen - 1].current.classList.add("hidden-jg");
       welcomeScreens[currentScreen].current.classList.remove("hidden-jg");
+      // Save settings data when moving to the last screen
       if (currentScreen === 7) {
-        console.log("[Welcome.jsx] currentScreen is 7. Saving data...");
-        console.log("[Welcome.jsx] formData:", formData);
         saveSettingsData();
       }
       setCurrentScreen((prevScreen) => prevScreen + 1);
     }
   };
 
+  // Move to the previous screen
   const prevScreen = () => {
     welcomeScreens[currentScreen - 1].current.classList.add("hidden-jg");
     welcomeScreens[currentScreen - 2].current.classList.remove("hidden-jg");

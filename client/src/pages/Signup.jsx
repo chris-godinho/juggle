@@ -1,3 +1,6 @@
+// Signup.jsx
+// User signup form
+
 import { useState } from "react";
 import { useMutation } from "@apollo/client";
 
@@ -10,6 +13,8 @@ import { ADD_USER } from "../utils/mutations";
 import Auth from "../utils/auth";
 
 const Signup = () => {
+
+  // Notification context for error messages
   const { openNotification } = useNotification();
 
   const [formState, setFormState] = useState({
@@ -20,8 +25,11 @@ const Signup = () => {
     middleName: "",
     lastName: "",
   });
+
+  // Mutation for adding new user
   const [addUser, { error, data }] = useMutation(ADD_USER);
 
+  // update state based on form input changes
   const handleChange = (event) => {
     const { name, value } = event.target;
 
@@ -31,6 +39,7 @@ const Signup = () => {
     });
   };
 
+  // Handle error messages for signup form
   const handleSignupError = (error) => {
     let errorMessage = "";
 
@@ -92,15 +101,18 @@ const Signup = () => {
     openNotification(errorMessage, "error");
   };
 
+  // Handle form submission
   const handleFormSubmit = async (event) => {
     event.preventDefault();
     console.log(formState);
 
+    // Add user to database
     try {
       const { data } = await addUser({
         variables: { ...formState },
       });
 
+      // Log user in and redirect to welcome page
       Auth.login(data.addUser.token, true);
     } catch (e) {
       console.error(e);

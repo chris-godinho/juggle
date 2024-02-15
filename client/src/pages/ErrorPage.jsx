@@ -1,3 +1,6 @@
+// ErrorPage.jsx
+// Landing page for unexpected errors
+
 import { useRouteError } from "react-router-dom";
 
 import BackButton from "../components/other/BackButton";
@@ -7,6 +10,8 @@ import Auth from "../utils/auth";
 import "../App.css";
 
 export default function ErrorPage() {
+
+  // Get error message from route
   const error = useRouteError();
   console.error(error);
 
