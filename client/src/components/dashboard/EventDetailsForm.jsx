@@ -70,7 +70,6 @@ export default function EventDetailsForm({ formType, showStats }) {
         return newData;
       });
     }
-
   };
 
   // Handle priority change
@@ -88,7 +87,6 @@ export default function EventDetailsForm({ formType, showStats }) {
       ...prevData,
       priority: newPriority,
     }));
-
   };
 
   const handleTitleClick = () => {
@@ -197,7 +195,7 @@ export default function EventDetailsForm({ formType, showStats }) {
           </span>
         </div>
       </div>
-      <div className="event-details-line-jg">
+      <div className="event-details-line-jg event-full-length-label-input-jg">
         <p className="event-details-label-jg">Details</p>
         <input
           type="text"
@@ -209,152 +207,166 @@ export default function EventDetailsForm({ formType, showStats }) {
         />
       </div>
       <div className="event-details-line-jg">
-        <p className="event-details-label-jg">Start Date</p>
-        <Flatpickr
-          name="startDate"
-          value={formData.startDate || ""}
-          options={{
-            dateFormat: "m/d/Y",
-            allowInput: true,
-            closeOnSelect: true,
-            clickOpens: true,
-          }}
-          className="event-input-jg event-datepicker-jg"
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] startDate onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "startDate",
-                value: dateString,
-              },
-            });
-          }}
-        />
-        <p className="event-details-label-jg event-middle-label-jg">
-          Start Time
-        </p>
-        <Flatpickr
-          name="startTime"
-          value={formData.startTime || ""}
-          className="event-input-jg event-datepicker-jg"
-          options={{
-            noCalendar: true,
-            enableTime: true,
-            allowInput: true,
-            dateFormat: "h:i K",
-            closeOnSelect: true,
-            clickOpens: true,
-            minuteIncrement: 30,
-          }}
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] startTime onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "startTime",
-                value: dateString,
-              },
-            });
-          }}
-        />
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg">Start Date</p>
+          <Flatpickr
+            name="startDate"
+            value={formData.startDate || ""}
+            options={{
+              dateFormat: "m/d/Y",
+              allowInput: true,
+              closeOnSelect: true,
+              clickOpens: true,
+            }}
+            className="event-input-jg event-datepicker-jg event-left-input-jg"
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] startDate onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "startDate",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg event-middle-label-jg">
+            Start Time
+          </p>
+          <Flatpickr
+            name="startTime"
+            value={formData.startTime || ""}
+            className="event-input-jg event-datepicker-jg event-middle-input-jg"
+            options={{
+              noCalendar: true,
+              enableTime: true,
+              allowInput: true,
+              dateFormat: "h:i K",
+              closeOnSelect: true,
+              clickOpens: true,
+              minuteIncrement: 30,
+            }}
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] startTime onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "startTime",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
       </div>
       <div className="event-details-line-jg">
-        <p className="event-details-label-jg">End Date</p>
-        <Flatpickr
-          name="endDate"
-          value={formData.endDate || ""}
-          className="event-input-jg event-datepicker-jg"
-          options={{
-            dateFormat: "m/d/Y",
-            allowInput: true,
-            closeOnSelect: true,
-            clickOpens: true,
-          }}
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] endDate onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "endDate",
-                value: dateString,
-              },
-            });
-          }}
-        />
-        <p className="event-details-label-jg event-middle-label-jg">End Time</p>
-        <Flatpickr
-          name="endTime"
-          value={formData.endTime || ""}
-          className="event-input-jg event-datepicker-jg"
-          options={{
-            noCalendar: true,
-            enableTime: true,
-            allowInput: true,
-            dateFormat: "h:i K",
-            closeOnSelect: true,
-            clickOpens: true,
-            minuteIncrement: 30,
-          }}
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] endTime onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "endTime",
-                value: dateString,
-              },
-            });
-          }}
-        />
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg">End Date</p>
+          <Flatpickr
+            name="endDate"
+            value={formData.endDate || ""}
+            className="event-input-jg event-datepicker-jg event-left-input-jg"
+            options={{
+              dateFormat: "m/d/Y",
+              allowInput: true,
+              closeOnSelect: true,
+              clickOpens: true,
+            }}
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] endDate onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "endDate",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg event-middle-label-jg">
+            End Time
+          </p>
+          <Flatpickr
+            name="endTime"
+            value={formData.endTime || ""}
+            className="event-input-jg event-datepicker-jg event-middle-input-jg"
+            options={{
+              noCalendar: true,
+              enableTime: true,
+              allowInput: true,
+              dateFormat: "h:i K",
+              closeOnSelect: true,
+              clickOpens: true,
+              minuteIncrement: 30,
+            }}
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] endTime onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "endTime",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
       </div>
       {showStats && (
         <div className="event-details-line-jg">
-          <p className="event-details-label-jg">Category</p>
-          <select
-            className="event-input-jg event-select-jg"
-            name="subtype"
-            value={formData.subtype || ""}
-            onChange={handleInputChange}
-          >
-            <option value=""></option>
-            {eventSubtypes &&
-              eventSubtypes.map((subtype, index) => (
-                <option key={index} value={subtype.subtype}>
-                  {subtype.subtype}
-                </option>
-              ))}
-          </select>
-          <p className="event-details-label-jg event-middle-label-jg">Type</p>
-          <select
-            className="event-input-jg event-select-jg"
-            name="type"
-            value={formData.type || ""}
-            onChange={handleInputChange}
-          >
-            <option value=""></option>
-            <option value="work">Work</option>
-            <option value="life">Life</option>
-          </select>
+          <div className="event-half-length-label-input-jg">
+            <p className="event-details-label-jg">Category</p>
+            <select
+              className="event-input-jg event-select-jg event-left-input-jg"
+              name="subtype"
+              value={formData.subtype || ""}
+              onChange={handleInputChange}
+            >
+              <option value=""></option>
+              {eventSubtypes &&
+                eventSubtypes.map((subtype, index) => (
+                  <option key={index} value={subtype.subtype}>
+                    {subtype.subtype}
+                  </option>
+                ))}
+            </select>
+          </div>
+          <div className="event-half-length-label-input-jg">
+            <p className="event-details-label-jg event-middle-label-jg">Type</p>
+            <select
+              className="event-input-jg event-select-jg event-middle-input-jg"
+              name="type"
+              value={formData.type || ""}
+              onChange={handleInputChange}
+            >
+              <option value=""></option>
+              <option value="work">Work</option>
+              <option value="life">Life</option>
+            </select>
+          </div>
         </div>
       )}
-      <div className="event-details-line-jg">
+      <div className="event-details-line-jg event-full-length-label-input-jg">
         <p className="event-details-label-jg">Location</p>
         <input
           type="text"
@@ -366,63 +378,67 @@ export default function EventDetailsForm({ formType, showStats }) {
         />
       </div>
       <div className="event-details-line-jg">
-        <p className="event-details-label-jg">Reminder Date</p>
-        <Flatpickr
-          name="reminderDate"
-          value={formData.reminderDate || ""}
-          options={{
-            dateFormat: "m/d/Y",
-            allowInput: true,
-            closeOnSelect: true,
-            clickOpens: true,
-          }}
-          className="event-input-jg event-datepicker-jg"
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] reminderDate onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "reminderDate",
-                value: dateString,
-              },
-            });
-          }}
-        />
-        <p className="event-details-label-jg event-middle-label-jg">
-          Reminder Time
-        </p>
-        <Flatpickr
-          name="reminderTime"
-          value={formData.reminderTime || ""}
-          className="event-input-jg event-datepicker-jg"
-          options={{
-            noCalendar: true,
-            enableTime: true,
-            allowInput: true,
-            dateFormat: "h:i K",
-            closeOnSelect: true,
-            clickOpens: true,
-            minuteIncrement: 30,
-          }}
-          onChange={(selectedDates, dateString, instance) => {
-            console.log(
-              "[Dashboard.jsx] reminderTime onChange:",
-              selectedDates,
-              dateString,
-              instance
-            );
-            handleInputChange({
-              target: {
-                name: "reminderTime",
-                value: dateString,
-              },
-            });
-          }}
-        />
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg">Reminder Date</p>
+          <Flatpickr
+            name="reminderDate"
+            value={formData.reminderDate || ""}
+            options={{
+              dateFormat: "m/d/Y",
+              allowInput: true,
+              closeOnSelect: true,
+              clickOpens: true,
+            }}
+            className="event-input-jg event-datepicker-jg event-left-input-jg"
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] reminderDate onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "reminderDate",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
+        <div className="event-half-length-label-input-jg">
+          <p className="event-details-label-jg event-middle-label-jg">
+            Reminder Time
+          </p>
+          <Flatpickr
+            name="reminderTime"
+            value={formData.reminderTime || ""}
+            className="event-input-jg event-datepicker-jg event-middle-input-jg"
+            options={{
+              noCalendar: true,
+              enableTime: true,
+              allowInput: true,
+              dateFormat: "h:i K",
+              closeOnSelect: true,
+              clickOpens: true,
+              minuteIncrement: 30,
+            }}
+            onChange={(selectedDates, dateString, instance) => {
+              console.log(
+                "[Dashboard.jsx] reminderTime onChange:",
+                selectedDates,
+                dateString,
+                instance
+              );
+              handleInputChange({
+                target: {
+                  name: "reminderTime",
+                  value: dateString,
+                },
+              });
+            }}
+          />
+        </div>
       </div>
     </form>
   );

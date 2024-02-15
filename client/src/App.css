@@ -2781,6 +2781,12 @@ div.uppy-Dashboard-Item-preview
   margin-bottom: 1em;
 }
 
+.event-half-length-label-input-jg {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .event-details-label-jg {
   font-size: 0.8em;
   color: var(--input-placeholder-text-color);
@@ -4314,13 +4320,31 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .event-details-line-jg {
-    flex-direction: column;
     margin-bottom: 1em;
   }
 
+  .event-full-length-label-input-jg {
+    flex-direction: column;
+  }
+
+  .event-half-length-label-input-jg {
+    flex-direction: column;
+  }
+
+  .event-details-label-jg {
+    margin-right: 0;
+  }
+
   .event-middle-label-jg {
-    margin-top: 1em;
-    margin-left: 0.5em;
+    margin-left: 1.5em;
+  }
+
+  .event-left-input-jg {
+    margin-right: 1em;
+  }
+
+  .event-middle-input-jg {
+    margin-left: 1em;
   }
 
   .contact-form-container-jg button {
