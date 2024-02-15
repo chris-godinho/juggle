@@ -4794,6 +4794,11 @@ path[class="firework-stroke-color-1-jg"] {
     font-size: 1em;
   }
 
+  #color-scheme-jg > header > div.dashboard-mobile-header-top-jg > div.dashboard-header-mobile-button-container-jg > button {
+    height: 1.5em;
+    width: 1.5em;
+  }
+
   .user-profile-picture-jg {
     margin-top: 0;
     margin-bottom: 1vh;
@@ -4891,6 +4896,11 @@ path[class="firework-stroke-color-1-jg"] {
 
   .donate-logo-jg {
     margin: 0em;
+    height: 3em;
+  }
+
+  .donate-blurb-text-jg {
+    font-size: 0.9em;
   }
 
   .about-us-heading-jg {
@@ -4898,7 +4908,7 @@ path[class="firework-stroke-color-1-jg"] {
   }
 
   .about-us-container-jg p {
-    font-size: 1em;
+    font-size: 0.8em;
   }
 }
 
