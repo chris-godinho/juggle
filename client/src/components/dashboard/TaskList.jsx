@@ -159,11 +159,6 @@ export default function TaskList({ refreshResponsiveGrid }) {
           completed: newCompletedValue,
         },
       });
-
-      // Refetch events
-      if (data) {
-        refreshResponsiveGrid();
-      }
     } catch (error) {
       console.error(error);
     }
