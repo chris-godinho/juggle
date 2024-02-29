@@ -40,7 +40,7 @@ const Header = () => {
           <h2>Juggler</h2>
         </Link>
       </div>
-      <div>
+      <div className="header-button-container-jg">
         {Auth.loggedIn() ? (
           <>
             <p className="loggedin-text-jg">
